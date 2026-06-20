@@ -1,0 +1,62 @@
+[
+  {
+    "id": "culpeper-jul-2026",
+    "name": "Culpeper Methodist Mission Trip",
+    "dates": "July 1–7, 2026",
+    "location": "Honduras",
+    "group": "Culpeper United Methodist Church",
+    "coordinator": "CAMINO Staff",
+    "status": "Confirmed",
+    "participantCount": 0,
+    "slug": "trips/jul-2026-culpeper.html",
+    "hidden": true
+  },
+  {
+    "id": "jan-2026",
+    "name": "Winter Build — Rio Lindo, Cortes",
+    "dates": "January 18–25, 2026",
+    "location": "Rio Lindo, Cortes, Honduras",
+    "group": "Open enrollment",
+    "coordinator": "CAMINO Staff",
+    "status": "Confirmed",
+    "participantCount": 0,
+    "slug": "trips/jan-2026.html",
+    "hidden": false
+  },
+  {
+    "id": "mar-2026",
+    "name": "Spring Build — Rio Lindo, Cortes",
+    "dates": "March 8–15, 2026",
+    "location": "Rio Lindo, Cortes, Honduras",
+    "group": "Open enrollment",
+    "coordinator": "CAMINO Staff",
+    "status": "Confirmed",
+    "participantCount": 0,
+    "slug": "trips/mar-2026.html",
+    "hidden": false
+  },
+  {
+    "id": "jun-2026",
+    "name": "Summer Build — Northern Honduras",
+    "dates": "June 14–24, 2026",
+    "location": "Northern Honduras",
+    "group": "Open enrollment",
+    "coordinator": "CAMINO Staff",
+    "status": "Confirmed",
+    "participantCount": 0,
+    "slug": "trips/jun-2026.html",
+    "hidden": false
+  },
+  {
+    "id": "oct-2026",
+    "name": "Fall Mission — Northern Honduras",
+    "dates": "October 4–11, 2026",
+    "location": "Northern Honduras",
+    "group": "Open enrollment",
+    "coordinator": "CAMINO Staff",
+    "status": "Confirmed",
+    "participantCount": 0,
+    "slug": "trips/oct-2026.html",
+    "hidden": false
+  }
+]

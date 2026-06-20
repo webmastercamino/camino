@@ -80,14 +80,31 @@ if (orderForm) {
   });
 }
 
-// Contact form — simple client-side feedback
+// Contact form — submits to Formspree (action URL set on the form element)
 const form = document.getElementById('contactForm');
 if (form) {
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('button[type=submit]');
-    btn.textContent = 'Message sent — thank you!';
+    btn.textContent = 'Sending…';
     btn.disabled = true;
-    btn.style.background = '#0F6E56';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        btn.textContent = 'Message sent — thank you!';
+        btn.style.background = '#0F6E56';
+      } else {
+        btn.textContent = 'Send failed — email us directly';
+        btn.disabled = false;
+        btn.style.background = '#DC2626';
+      }
+    } catch {
+      btn.textContent = 'Send failed — email us directly';
+      btn.disabled = false;
+    }
   });
 }

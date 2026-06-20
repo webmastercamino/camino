@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAMINO Admin — Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sidebar-bg:   #1a1a2e;
+      --sidebar-w:    220px;
+      --teal:         #0F6E56;
+      --teal-light:   #E1F5EE;
+      --amber:        #BA7517;
+      --amber-light:  #FAEEDA;
+      --amber-dark:   #633806;
+      --coral:        #993C1D;
+      --surface:      #ffffff;
+      --bg:           #f0f0f0;
+      --border:       #e0e0e0;
+      --text:         #1a1a18;
+      --muted:        #6b6b68;
+      --red:          #DC2626;
+      --radius:       8px;
+      --radius-lg:    12px;
+    }
+
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--sidebar-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 20px 18px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-logo__mark {
+      width: 32px; height: 32px;
+      background: var(--amber);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 13px;
+      flex-shrink: 0;
+    }
+    .sidebar-logo__text { font-size: 14px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .sidebar-logo__sub  { font-size: 10px; color: rgba(255,255,255,.4); letter-spacing: .8px; text-transform: uppercase; }
+    .sidebar-tag {
+      margin: 12px 18px 4px;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+    .sidebar-nav { flex: 1; padding: 4px 10px 16px; overflow-y: auto; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px;
+      border-radius: var(--radius);
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,.6);
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      margin-bottom: 2px;
+      border: none; background: none; width: 100%; text-align: left;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.9); }
+    .nav-item.active { background: var(--teal); color: #fff; }
+    .nav-item__icon { font-size: 16px; flex-shrink: 0; }
+    .sidebar-footer {
+      padding: 14px 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 11px;
+      color: rgba(255,255,255,.3);
+      line-height: 1.5;
+    }
+    .sidebar-footer a { color: rgba(255,255,255,.4); text-decoration: none; }
+    .sidebar-footer a:hover { color: rgba(255,255,255,.7); }
+
+    /* ── Main ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+    .main-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .main-header h1 { font-size: 16px; font-weight: 700; }
+    .main-header__right { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); }
+    .badge-poc {
+      background: var(--amber-light); color: var(--amber-dark);
+      font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 20px;
+    }
+
+    .panel { display: none; padding: 28px; }
+    .panel.active { display: block; }
+
+    /* ── Cards / surface ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+    }
+    .card + .card { margin-top: 16px; }
+    .card-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .card-title .ct-icon { font-size: 18px; }
+
+    /* ── Panel header row ── */
+    .panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .panel-title { font-size: 20px; font-weight: 700; }
+    .panel-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; border: none; font-family: inherit; transition: opacity .15s, background .15s; }
+    .btn:hover { opacity: .88; }
+    .btn-primary { background: var(--teal); color: #fff; }
+    .btn-amber   { background: var(--amber); color: #fff; }
+    .btn-ghost   { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+    .btn-danger  { background: var(--red); color: #fff; }
+    .btn-sm      { padding: 5px 10px; font-size: 12px; }
+    .btn-icon    { padding: 6px 8px; }
+
+    /* ── Forms ── */
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px; font-family: inherit;
+      background: #fff; color: var(--text);
+      transition: border-color .15s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--teal); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+    /* ── Calendar ── */
+    .cal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .cal-title  { font-size: 16px; font-weight: 700; flex: 1; }
+    .cal-nav { display: flex; gap: 6px; }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7,1fr);
+      gap: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .cal-day-header {
+      padding: 8px 4px; text-align: center; font-size: 11px; font-weight: 700;
+      color: var(--muted); background: #f8f8f8;
+      border-bottom: 1px solid var(--border);
+    }
+    .cal-day {
+      min-height: 72px; padding: 6px; border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); cursor: pointer;
+      transition: background .12s; position: relative;
+      vertical-align: top; font-size: 12px;
+    }
+    .cal-day:hover { background: var(--teal-light); }
+    .cal-day.cal-today { background: var(--amber-light); }
+    .cal-day.cal-selected { background: #dff0ec; }
+    .cal-day.cal-empty { cursor: default; background: #fafafa; }
+    .cal-day:hover.cal-empty { background: #fafafa; }
+    .cal-day__num { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+    .cal-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin: 1px; }
+    .dot-fb { background: #1877F2; }
+    .dot-ig { background: #E1306C; }
+    .dot-tw { background: #000; }
+    .dot-li { background: #0077B5; }
+
+    /* Views */
+    .cal-views { display: flex; gap: 8px; margin-bottom: 16px; }
+    .view-tab { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border); background: #fff; transition: all .15s; }
+    .view-tab.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+    /* Day detail */
+    .day-detail { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 20px; margin-top: 16px; min-height: 80px; }
+    .day-detail h4 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+
+    /* Post rows */
+    .post-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .post-row:last-child { border-bottom: none; }
+    .post-platform { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
+    .plat-Facebook  { background: #E7F0FD; color: #1877F2; }
+    .plat-Instagram { background: #FCE4EC; color: #C2185B; }
+    .plat-X         { background: #f0f0f0; color: #000; }
+    .plat-LinkedIn  { background: #E3F2FD; color: #0077B5; }
+    .post-caption { flex: 1; color: var(--text); line-height: 1.5; }
+    .post-status { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
+    .status-Draft     { background: #f0f0f0; color: var(--muted); }
+    .status-Scheduled { background: var(--teal-light); color: var(--teal); }
+    .status-Published { background: #e8fce8; color: #166534; }
+    .post-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+    /* Trip cards */
+    .trips-list { display: flex; flex-direction: column; gap: 12px; }
+    .trip-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: flex; align-items: center; gap: 16px;
+      flex-wrap: wrap;
+    }
+    .trip-row__info { flex: 1; min-width: 200px; }
+    .trip-row__name { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .trip-row__meta { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .trip-row__actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .trip-count { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+    .count-btn { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--border); background: #fff; cursor: pointer; font-size: 16px; line-height: 1; display: flex; align-items: center; justify-content: center; font-family: inherit; transition: border-color .15s; }
+    .count-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .count-val { min-width: 28px; text-align: center; }
+
+    /* Status badges */
+    .status-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 3px 9px; border-radius: 20px; }
+    .pill-Planning   { background: #f0f0f0; color: var(--muted); }
+    .pill-Confirmed  { background: var(--teal-light); color: var(--teal); }
+    .pill-Completed  { background: #e8fce8; color: #166534; }
+
+    /* Copy button feedback */
+    .copy-feedback { font-size: 11px; color: var(--teal); font-weight: 600; opacity: 0; transition: opacity .3s; }
+    .copy-feedback.show { opacity: 1; }
+
+    /* Content page rows */
+    .page-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .page-row:last-child { border-bottom: none; }
+    .page-row__info { flex: 1; }
+    .page-row__name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .page-row__path { font-size: 12px; color: var(--muted); font-family: monospace; }
+    .page-row__note { width: 100%; margin-top: 8px; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 13px; font-family: inherit; color: var(--text); resize: none; min-height: 36px; }
+    .page-row__note:focus { outline: none; border-color: var(--teal); }
+    .page-row__actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    /* UTM block */
+    .utm-block { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .utm-code { flex: 1; font-family: monospace; font-size: 12px; background: #f5f5f5; border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 12px; color: var(--muted); word-break: break-all; }
+
+    /* Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.45); z-index: 500;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      max-width: 560px; width: calc(100% - 40px);
+      max-height: 90vh; overflow-y: auto;
+      position: relative;
+    }
+    .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+    .modal-close {
+      position: absolute; top: 16px; right: 18px;
+      background: none; border: none; font-size: 22px;
+      cursor: pointer; color: var(--muted); line-height: 1;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+
+    /* Toast */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #1a1a2e; color: #fff;
+      padding: 10px 18px; border-radius: var(--radius);
+      font-size: 13px; font-weight: 500;
+      transform: translateY(80px); opacity: 0;
+      transition: all .25s;
+      z-index: 1000;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ SIDEBAR ══════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo__mark">C</div>
+    <div>
+      <div class="sidebar-logo__text">CAMINO</div>
+      <div class="sidebar-logo__sub">Admin Panel</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="sidebar-tag">Content</div>
+    <button class="nav-item active" data-panel="calendar" onclick="switchPanel('calendar', this)">
+      <span class="nav-item__icon">📅</span> Social Calendar
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">Trips</div>
+    <button class="nav-item" data-panel="trips" onclick="switchPanel('trips', this)">
+      <span class="nav-item__icon">✈️</span> Mission Trips
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">Site</div>
+    <button class="nav-item" data-panel="content" onclick="switchPanel('content', this)">
+      <span class="nav-item__icon">📄</span> Pages
+    </button>
+    <button class="nav-item" data-panel="donations" onclick="switchPanel('donations', this)">
+      <span class="nav-item__icon">💛</span> Donations
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">Links</div>
+    <button class="nav-item" onclick="window.open('../index.html','_blank')">
+      <span class="nav-item__icon">🌐</span> View site ↗
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    POC — open, no auth.<br>
+    Backend: <a href="https://developers.cloudflare.com/workers/" target="_blank">Cloudflare Workers</a> planned.<br>
+    Data: localStorage (client-side).
+  </div>
+</aside>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main class="main">
+  <header class="main-header">
+    <h1 id="mainTitle">Social Calendar</h1>
+    <div class="main-header__right">
+      <span class="badge-poc">POC · No auth</span>
+      <span>CAMINO Honduras</span>
+    </div>
+  </header>
+
+  <!-- ══ PANEL: Social Calendar ══ -->
+  <div id="panel-calendar" class="panel active">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Social Calendar</div>
+        <div class="panel-sub">Schedule and track posts across Facebook, Instagram, X, and LinkedIn.</div>
+      </div>
+      <button class="btn btn-primary" onclick="openPostModal()">+ Add post</button>
+    </div>
+
+    <div class="cal-views">
+      <button class="view-tab active" onclick="setCalView('month', this)">Month</button>
+      <button class="view-tab" onclick="setCalView('list', this)">List view</button>
+    </div>
+
+    <!-- Month view -->
+    <div id="calMonthView">
+      <div class="cal-header">
+        <button class="btn btn-ghost btn-sm" onclick="changeMonth(-1)">&#8592;</button>
+        <div class="cal-title" id="calTitle"></div>
+        <button class="btn btn-ghost btn-sm" onclick="changeMonth(1)">&#8594;</button>
+        <button class="btn btn-ghost btn-sm" onclick="goToToday()">Today</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="day-detail" id="dayDetail" style="display:none">
+        <h4 id="dayDetailTitle">Posts for this day</h4>
+        <div id="dayDetailBody"></div>
+      </div>
+    </div>
+
+    <!-- List view -->
+    <div id="calListView" style="display:none">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="card-title" style="margin:0">All scheduled posts</div>
+          <select id="listFilterPlatform" onchange="renderList()" style="font-size:12px;padding:4px 8px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit">
+            <option value="">All platforms</option>
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>X</option>
+            <option>LinkedIn</option>
+          </select>
+        </div>
+        <div id="postsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: Mission Trips ══ -->
+  <div id="panel-trips" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Mission Trips</div>
+        <div class="panel-sub">Manage 2026 trip schedule, participant counts, and group portals.</div>
+      </div>
+      <button class="btn btn-primary" onclick="openTripModal()">+ Add trip</button>
+    </div>
+
+    <div id="tripsList" class="trips-list"></div>
+
+    <div class="card" style="margin-top:20px; background: #f9f9f9; border-style: dashed;">
+      <div style="font-size:12px;color:var(--muted);line-height:1.7">
+        <strong>Note:</strong> Edits save to <code>localStorage</code> — they persist in this browser but won't update <code>data/trips.json</code>. When Cloudflare Workers is wired up, save actions will POST to the KV backend.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: Content / Pages ══ -->
+  <div id="panel-content" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Site Pages</div>
+        <div class="panel-sub">Quick access and notes for each page. Notes saved in localStorage.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="pagesList"></div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: Donations ══ -->
+  <div id="panel-donations" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Donations</div>
+        <div class="panel-sub">Donation tracking and UTM links for trip fundraising.</div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--amber)">
+      <div class="card-title"><span class="ct-icon">🔌</span> Give Lively Integration</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px">
+        Connect the Give Lively webhook to receive real-time donation events here. Once connected, donations will appear with donor name, amount, designation, and trip UTM tag.
+      </p>
+      <div style="background:#f9f9f9;border:1.5px dashed var(--border);border-radius:var(--radius);padding:16px 20px;font-size:13px;color:var(--muted)">
+        <strong>Coming soon</strong> — Cloudflare Worker endpoint will accept<br>
+        <code>POST /api/donations</code> from Give Lively and store to KV.
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-title"><span class="ct-icon">🔗</span> Trip-tagged UTM links</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Copy these links to tag give.html traffic per trip. Paste into trip portals or donor emails.</p>
+
+      <div id="utmLinks"></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-title"><span class="ct-icon">📊</span> Giving summary</div>
+      <p style="font-size:13px;color:var(--muted)">Giving summary requires Give Lively webhook integration. Placeholder shown below.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px">
+        <div style="text-align:center;padding:20px;background:#f5f5f5;border-radius:var(--radius)">
+          <div style="font-size:28px;font-weight:700;color:var(--teal)">—</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Total raised YTD</div>
+        </div>
+        <div style="text-align:center;padding:20px;background:#f5f5f5;border-radius:var(--radius)">
+          <div style="font-size:28px;font-weight:700;color:var(--amber)">—</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Homes funded</div>
+        </div>
+        <div style="text-align:center;padding:20px;background:#f5f5f5;border-radius:var(--radius)">
+          <div style="font-size:28px;font-weight:700;color:var(--teal)">—</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Donors this month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ══════════════════ MODAL: Post ══════════════════ -->
+<div class="modal-overlay" id="postModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closePostModal()">×</button>
+    <div class="modal-title" id="postModalTitle">Add post</div>
+    <input type="hidden" id="postEditId" />
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="postDate" />
+      </div>
+      <div class="form-group">
+        <label>Platform</label>
+        <select id="postPlatform">
+          <option>Facebook</option>
+          <option>Instagram</option>
+          <option>X</option>
+          <option>LinkedIn</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Caption</label>
+      <textarea id="postCaption" rows="4" placeholder="Write your post caption here…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Image URL (optional)</label>
+      <input type="url" id="postImage" placeholder="https://…" />
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="postStatus">
+        <option>Draft</option>
+        <option>Scheduled</option>
+        <option>Published</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closePostModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePost()">Save post</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL: Trip ══════════════════ -->
+<div class="modal-overlay" id="tripModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeTripModal()">×</button>
+    <div class="modal-title" id="tripModalTitle">Add trip</div>
+    <input type="hidden" id="tripEditId" />
+    <div class="form-group">
+      <label>Trip name</label>
+      <input type="text" id="tripName" placeholder="e.g. Spring Build — Rio Lindo" />
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Dates</label>
+        <input type="text" id="tripDates" placeholder="e.g. March 8–15, 2026" />
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="tripStatus">
+          <option>Planning</option>
+          <option>Confirmed</option>
+          <option>Completed</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="tripLocation" placeholder="e.g. Rio Lindo, Cortes, Honduras" />
+      </div>
+      <div class="form-group">
+        <label>Group</label>
+        <input type="text" id="tripGroup" placeholder="e.g. Open enrollment" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Coordinator</label>
+        <input type="text" id="tripCoordinator" placeholder="e.g. Walker Somerville" />
+      </div>
+      <div class="form-group">
+        <label>Page slug (URL)</label>
+        <input type="text" id="tripSlug" placeholder="trips/jan-2026.html" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeTripModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTrip()">Save trip</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── Panel switching ──
+const PANEL_TITLES = {
+  calendar: 'Social Calendar',
+  trips: 'Mission Trips',
+  content: 'Site Pages',
+  donations: 'Donations'
+};
+
+function switchPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('mainTitle').textContent = PANEL_TITLES[id] || id;
+  if (id === 'trips') renderTrips();
+  if (id === 'content') renderPages();
+  if (id === 'donations') renderUTMLinks();
+}
+
+// ── Toast ──
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ═══════════════════════ CALENDAR ═══════════════════════
+let calYear, calMonth, calView = 'month', selectedDay = null;
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const PLAT_DOT = { Facebook: 'dot-fb', Instagram: 'dot-ig', X: 'dot-tw', LinkedIn: 'dot-li' };
+
+function getPosts() {
+  try { return JSON.parse(localStorage.getItem('camino_posts') || '[]'); } catch { return []; }
+}
+function savePosts(posts) {
+  localStorage.setItem('camino_posts', JSON.stringify(posts));
+}
+
+function initCal() {
+  const now = new Date();
+  calYear  = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCal();
+}
+
+function changeMonth(dir) { calMonth += dir; if (calMonth > 11) { calMonth = 0; calYear++; } if (calMonth < 0) { calMonth = 11; calYear--; } renderCal(); }
+function goToToday() { const n = new Date(); calYear = n.getFullYear(); calMonth = n.getMonth(); renderCal(); }
+
+function renderCal() {
+  document.getElementById('calTitle').textContent = MONTHS[calMonth] + ' ' + calYear;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  DAYS.forEach(d => {
+    const h = document.createElement('div');
+    h.className = 'cal-day-header'; h.textContent = d;
+    grid.appendChild(h);
+  });
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const today = new Date();
+  const posts = getPosts();
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement('div'); el.className = 'cal-day cal-empty'; grid.appendChild(el);
+  }
+  for (let day = 1; day <= daysInMonth; day++) {
+    const el   = document.createElement('div');
+    const dStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+    el.className = 'cal-day';
+    if (today.getFullYear()===calYear && today.getMonth()===calMonth && today.getDate()===day) el.classList.add('cal-today');
+    if (selectedDay === dStr) el.classList.add('cal-selected');
+    const dayPosts = posts.filter(p => p.date === dStr);
+    const numEl = document.createElement('div'); numEl.className = 'cal-day__num'; numEl.textContent = day;
+    el.appendChild(numEl);
+    const dotRow = document.createElement('div'); dotRow.style.display = 'flex'; dotRow.style.flexWrap = 'wrap'; dotRow.style.gap = '2px';
+    dayPosts.slice(0,6).forEach(p => {
+      const dot = document.createElement('span');
+      dot.className = 'cal-dot ' + (PLAT_DOT[p.platform] || '');
+      dot.title = p.platform + ': ' + p.caption.slice(0,40);
+      dotRow.appendChild(dot);
+    });
+    el.appendChild(dotRow);
+    el.addEventListener('click', () => { selectedDay = dStr; renderCal(); showDayDetail(dStr); });
+    grid.appendChild(el);
+  }
+}
+
+function showDayDetail(dStr) {
+  const detail = document.getElementById('dayDetail');
+  const title  = document.getElementById('dayDetailTitle');
+  const body   = document.getElementById('dayDetailBody');
+  const posts  = getPosts().filter(p => p.date === dStr);
+  const [y,m,d] = dStr.split('-');
+  title.textContent = MONTHS[parseInt(m)-1] + ' ' + parseInt(d) + ', ' + y + (posts.length ? ' — ' + posts.length + ' post' + (posts.length>1?'s':'') : ' — no posts');
+  body.innerHTML = '';
+  if (!posts.length) {
+    body.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:8px 0">No posts scheduled for this day. <button class="btn btn-sm btn-primary" style="margin-left:8px" onclick="openPostModal(\'' + dStr + '\')">+ Add one</button></p>';
+  } else {
+    posts.forEach(p => { body.appendChild(buildPostRow(p)); });
+  }
+  detail.style.display = 'block';
+}
+
+function buildPostRow(post) {
+  const row = document.createElement('div'); row.className = 'post-row';
+  row.innerHTML = `
+    <span class="post-platform plat-${post.platform}">${post.platform}</span>
+    <span class="post-caption">${escHtml(post.caption)}</span>
+    <span class="post-status status-${post.status}">${post.status}</span>
+    <div class="post-actions">
+      <button class="btn btn-ghost btn-sm btn-icon" title="Edit" onclick="openPostModal(null,'${post.id}')">✏️</button>
+      <button class="btn btn-ghost btn-sm btn-icon" title="Delete" onclick="deletePost('${post.id}')">🗑</button>
+    </div>`;
+  return row;
+}
+
+function renderList() {
+  const filter = document.getElementById('listFilterPlatform').value;
+  let posts = getPosts();
+  if (filter) posts = posts.filter(p => p.platform === filter);
+  posts.sort((a,b) => a.date.localeCompare(b.date));
+  const container = document.getElementById('postsList');
+  container.innerHTML = '';
+  if (!posts.length) { container.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0">No posts yet. Click "Add post" to get started.</p>'; return; }
+  posts.forEach(p => {
+    const row = buildPostRow(p);
+    // Prepend date
+    const dateEl = document.createElement('div');
+    dateEl.style.cssText = 'font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;padding-top:3px;min-width:80px';
+    const [y,m,d] = p.date.split('-');
+    dateEl.textContent = MONTHS[parseInt(m)-1].slice(0,3) + ' ' + parseInt(d) + ', ' + y;
+    row.prepend(dateEl);
+    container.appendChild(row);
+  });
+}
+
+function setCalView(view, el) {
+  calView = view;
+  document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('calMonthView').style.display = view === 'month' ? '' : 'none';
+  document.getElementById('calListView').style.display  = view === 'list'  ? '' : 'none';
+  if (view === 'list') renderList();
+}
+
+// Post modal
+function openPostModal(dateStr, editId) {
+  document.getElementById('postEditId').value   = editId || '';
+  document.getElementById('postModalTitle').textContent = editId ? 'Edit post' : 'Add post';
+  document.getElementById('postDate').value     = dateStr || selectedDay || new Date().toISOString().slice(0,10);
+  document.getElementById('postPlatform').value = 'Facebook';
+  document.getElementById('postCaption').value  = '';
+  document.getElementById('postImage').value    = '';
+  document.getElementById('postStatus').value   = 'Draft';
+  if (editId) {
+    const p = getPosts().find(x => x.id === editId);
+    if (p) {
+      document.getElementById('postDate').value     = p.date;
+      document.getElementById('postPlatform').value = p.platform;
+      document.getElementById('postCaption').value  = p.caption;
+      document.getElementById('postImage').value    = p.image || '';
+      document.getElementById('postStatus').value   = p.status;
+    }
+  }
+  document.getElementById('postModal').classList.add('open');
+}
+function closePostModal() { document.getElementById('postModal').classList.remove('open'); }
+
+function savePost() {
+  const date     = document.getElementById('postDate').value;
+  const platform = document.getElementById('postPlatform').value;
+  const caption  = document.getElementById('postCaption').value.trim();
+  const image    = document.getElementById('postImage').value.trim();
+  const status   = document.getElementById('postStatus').value;
+  const editId   = document.getElementById('postEditId').value;
+  if (!date || !caption) { alert('Date and caption are required.'); return; }
+  const posts = getPosts();
+  if (editId) {
+    const idx = posts.findIndex(p => p.id === editId);
+    if (idx > -1) posts[idx] = { ...posts[idx], date, platform, caption, image, status };
+  } else {
+    posts.push({ id: 'p_' + Date.now(), date, platform, caption, image, status });
+  }
+  savePosts(posts);
+  closePostModal();
+  renderCal();
+  if (selectedDay) showDayDetail(selectedDay);
+  if (calView === 'list') renderList();
+  toast('Post saved.');
+}
+
+function deletePost(id) {
+  if (!confirm('Delete this post?')) return;
+  savePosts(getPosts().filter(p => p.id !== id));
+  renderCal();
+  if (selectedDay) showDayDetail(selectedDay);
+  if (calView === 'list') renderList();
+  toast('Post deleted.');
+}
+
+// ═══════════════════════ TRIPS ═══════════════════════
+let tripsData = [];
+
+async function loadTrips() {
+  // Try fetching the JSON file, fall back to localStorage or defaults
+  const stored = localStorage.getItem('camino_trips');
+  if (stored) { try { tripsData = JSON.parse(stored); return; } catch {} }
+  try {
+    const res = await fetch('../data/trips.json');
+    if (res.ok) { tripsData = await res.json(); }
+  } catch {
+    tripsData = [];
+  }
+}
+
+function saveTripsLocal() { localStorage.setItem('camino_trips', JSON.stringify(tripsData)); }
+
+async function renderTrips() {
+  if (!tripsData.length) await loadTrips();
+  const list = document.getElementById('tripsList');
+  list.innerHTML = '';
+  if (!tripsData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:14px">No trips yet. Click "+ Add trip" to create one.</p>'; return; }
+  tripsData.forEach(trip => {
+    const row = document.createElement('div');
+    row.className = 'trip-row';
+    const baseURL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? window.location.origin + '/'
+      : 'https://webmastercamino.github.io/camino/';
+    const fullSlug = baseURL + trip.slug;
+    row.innerHTML = `
+      <div class="trip-row__info">
+        <div class="trip-row__name">${escHtml(trip.name)}</div>
+        <div class="trip-row__meta">
+          ${trip.dates} &nbsp;·&nbsp; ${trip.location}<br>
+          ${trip.group} &nbsp;·&nbsp; Coordinator: ${trip.coordinator}
+        </div>
+      </div>
+      <div class="trip-row__actions">
+        <span class="status-pill pill-${trip.status}">${trip.status}</span>
+        <div class="trip-count">
+          <button class="count-btn" onclick="adjustCount('${trip.id}', -1)">−</button>
+          <span class="count-val" id="count-${trip.id}">${trip.participantCount || 0}</span>
+          <button class="count-btn" onclick="adjustCount('${trip.id}', 1)">+</button>
+          <span style="font-size:11px;color:var(--muted)">participants</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="copyTripURL('${fullSlug}', this)" title="Copy trip URL">📋 Copy URL</button>
+        <span class="copy-feedback" id="cf-${trip.id}">Copied!</span>
+        <button class="btn btn-ghost btn-sm btn-icon" onclick="openTripModal('${trip.id}')" title="Edit">✏️</button>
+        <button class="btn btn-ghost btn-sm btn-icon" onclick="deleteTrip('${trip.id}')" title="Delete">🗑</button>
+      </div>`;
+    list.appendChild(row);
+  });
+}
+
+function adjustCount(id, delta) {
+  const trip = tripsData.find(t => t.id === id);
+  if (!trip) return;
+  trip.participantCount = Math.max(0, (trip.participantCount || 0) + delta);
+  saveTripsLocal();
+  const el = document.getElementById('count-' + id);
+  if (el) el.textContent = trip.participantCount;
+}
+
+function copyTripURL(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    toast('URL copied to clipboard.');
+  }).catch(() => {
+    prompt('Copy this URL:', url);
+  });
+}
+
+function openTripModal(editId) {
+  document.getElementById('tripEditId').value = editId || '';
+  document.getElementById('tripModalTitle').textContent = editId ? 'Edit trip' : 'Add trip';
+  ['Name','Dates','Status','Location','Group','Coordinator','Slug'].forEach(f => {
+    const el = document.getElementById('trip' + f);
+    if (el) el.value = '';
+  });
+  document.getElementById('tripStatus').value = 'Planning';
+  if (editId) {
+    const t = tripsData.find(x => x.id === editId);
+    if (t) {
+      document.getElementById('tripName').value        = t.name || '';
+      document.getElementById('tripDates').value       = t.dates || '';
+      document.getElementById('tripStatus').value      = t.status || 'Planning';
+      document.getElementById('tripLocation').value    = t.location || '';
+      document.getElementById('tripGroup').value       = t.group || '';
+      document.getElementById('tripCoordinator').value = t.coordinator || '';
+      document.getElementById('tripSlug').value        = t.slug || '';
+    }
+  }
+  document.getElementById('tripModal').classList.add('open');
+}
+function closeTripModal() { document.getElementById('tripModal').classList.remove('open'); }
+
+function saveTrip() {
+  const editId = document.getElementById('tripEditId').value;
+  const name   = document.getElementById('tripName').value.trim();
+  if (!name) { alert('Trip name is required.'); return; }
+  const data = {
+    id:            editId || 'trip_' + Date.now(),
+    name,
+    dates:         document.getElementById('tripDates').value.trim(),
+    status:        document.getElementById('tripStatus').value,
+    location:      document.getElementById('tripLocation').value.trim(),
+    group:         document.getElementById('tripGroup').value.trim(),
+    coordinator:   document.getElementById('tripCoordinator').value.trim(),
+    slug:          document.getElementById('tripSlug').value.trim(),
+    participantCount: 0,
+  };
+  if (editId) {
+    const idx = tripsData.findIndex(t => t.id === editId);
+    if (idx > -1) { data.participantCount = tripsData[idx].participantCount || 0; tripsData[idx] = data; }
+    else tripsData.push(data);
+  } else {
+    tripsData.push(data);
+  }
+  saveTripsLocal();
+  closeTripModal();
+  renderTrips();
+  toast('Trip saved.');
+}
+
+function deleteTrip(id) {
+  if (!confirm('Delete this trip?')) return;
+  tripsData = tripsData.filter(t => t.id !== id);
+  saveTripsLocal();
+  renderTrips();
+  toast('Trip deleted.');
+}
+
+// ═══════════════════════ PAGES ═══════════════════════
+const SITE_PAGES = [
+  { name: 'Home', path: '../index.html', key: 'index' },
+  { name: 'About', path: '../about.html', key: 'about' },
+  { name: 'Programs', path: '../programs.html', key: 'programs' },
+  { name: 'Mission Trips', path: '../trips.html', key: 'trips' },
+  { name: 'Stories', path: '../stories.html', key: 'stories' },
+  { name: 'Contact', path: '../contact.html', key: 'contact' },
+  { name: 'Give', path: '../give.html', key: 'give' },
+  { name: 'Swag Store', path: '../store/index.html', key: 'store' },
+  { name: 'Culpeper Jul 2026 Portal', path: '../trips/jul-2026-culpeper.html', key: 'culpeper-jul-2026' },
+];
+
+function getPageNotes() { try { return JSON.parse(localStorage.getItem('camino_page_notes') || '{}'); } catch { return {}; } }
+function savePageNotes(n) { localStorage.setItem('camino_page_notes', JSON.stringify(n)); }
+
+function renderPages() {
+  const notes = getPageNotes();
+  const list  = document.getElementById('pagesList');
+  list.innerHTML = '';
+  SITE_PAGES.forEach(page => {
+    const row = document.createElement('div');
+    row.className = 'page-row';
+    row.innerHTML = `
+      <div class="page-row__info" style="flex:1">
+        <div class="page-row__name">${page.name}</div>
+        <div class="page-row__path">${page.path.replace('../','')}</div>
+        <textarea class="page-row__note" placeholder="Notes…" rows="1"
+          oninput="saveNote('${page.key}', this.value)">${escHtml(notes[page.key] || '')}</textarea>
+      </div>
+      <div class="page-row__actions">
+        <a href="${page.path}" target="_blank" class="btn btn-ghost btn-sm">Open ↗</a>
+      </div>`;
+    list.appendChild(row);
+  });
+}
+
+function saveNote(key, value) {
+  const n = getPageNotes(); n[key] = value; savePageNotes(n);
+}
+
+// ═══════════════════════ DONATIONS / UTM ═══════════════════════
+function renderUTMLinks() {
+  const trips = tripsData.length ? tripsData : JSON.parse(localStorage.getItem('camino_trips') || '[]');
+  const container = document.getElementById('utmLinks');
+  if (!container) return;
+  const base = 'https://webmastercamino.github.io/camino/give.html';
+  const linksToShow = trips.length ? trips : [
+    { id: 'jan-2026', name: 'Winter Build Jan 2026' },
+    { id: 'mar-2026', name: 'Spring Build Mar 2026' },
+    { id: 'jun-2026', name: 'Summer Build Jun 2026' },
+    { id: 'oct-2026', name: 'Fall Mission Oct 2026' },
+  ];
+  container.innerHTML = '';
+  linksToShow.forEach(trip => {
+    const url = base + '?utm_source=trip&utm_medium=portal&utm_campaign=' + encodeURIComponent(trip.id);
+    const block = document.createElement('div');
+    block.className = 'utm-block';
+    block.innerHTML = `
+      <div style="min-width:160px;font-size:13px;font-weight:600">${escHtml(trip.name)}</div>
+      <div class="utm-code">${escHtml(url)}</div>
+      <button class="btn btn-ghost btn-sm" onclick="navigator.clipboard.writeText('${escHtml(url)}').then(()=>toast('Copied!'))">Copy</button>`;
+    container.appendChild(block);
+  });
+}
+
+// ═══════════════════════ UTILITIES ═══════════════════════
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Close modals on overlay click
+document.getElementById('postModal').addEventListener('click', e => { if (e.target === document.getElementById('postModal')) closePostModal(); });
+document.getElementById('tripModal').addEventListener('click', e => { if (e.target === document.getElementById('tripModal')) closeTripModal(); });
+
+// ═══════════════════════ INIT ═══════════════════════
+initCal();
+loadTrips(); // preload for donations panel
+</script>
+</body>
+</html>
