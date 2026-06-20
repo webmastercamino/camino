@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Strategy Roadmap — CAMINO Honduras</title>
+  <meta name="description" content="CAMINO Honduras digital strategy roadmap — site audit, top 15 improvement priorities, 3-phase implementation plan, and revenue opportunities.">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ── Roadmap hero ── */
+    .rdm-hero{background:linear-gradient(135deg,#0a0f0e 0%,#0f2318 50%,#1a140a 100%);padding:72px 48px 64px;text-align:center;position:relative;overflow:hidden}
+    .rdm-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(186,117,23,.25) 0%,transparent 65%);pointer-events:none}
+    .rdm-hero__inner{position:relative;z-index:1;max-width:780px;margin:0 auto}
+    .rdm-hero h1{font-size:clamp(26px,4vw,42px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.15}
+    .rdm-hero p{font-size:17px;color:rgba(255,255,255,.75);line-height:1.7;max-width:620px;margin:0 auto}
+    .rdm-meta{display:flex;gap:40px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+    .rdm-meta__item{text-align:center}
+    .rdm-meta__val{font-size:26px;font-weight:700;color:var(--amber-mid);display:block;margin-bottom:2px}
+    .rdm-meta__label{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase}
+
+    /* ── Wrapper ── */
+    .rdm-wrap{max-width:1100px;margin:0 auto;padding:0 48px}
+    .rdm-section{padding:60px 0}
+    .rdm-section + .rdm-section{border-top:1px solid var(--gray-200)}
+    .rdm-section--alt{background:var(--gray-100);padding:60px 48px;margin:0 -48px}
+    .rdm-h2{font-size:26px;font-weight:700;margin-bottom:8px}
+    .rdm-sub{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:32px;max-width:640px}
+
+    /* ── Scorecard ── */
+    .scorecard{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin-top:28px}
+    .score-card{background:white;border-radius:var(--radius-lg);padding:20px 16px;text-align:center;border:1.5px solid var(--gray-200)}
+    .score-card__grade{font-size:44px;font-weight:800;line-height:1;margin-bottom:6px}
+    .score-card__label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;line-height:1.3}
+    .score-bar{height:5px;background:var(--gray-200);border-radius:3px;overflow:hidden;margin-top:8px}
+    .score-fill{height:100%;border-radius:3px}
+    .grade-a{color:#16a34a}.fill-a{background:#16a34a}
+    .grade-b{color:var(--amber)}.fill-b{background:var(--amber)}
+    .grade-c{color:var(--coral)}.fill-c{background:var(--coral)}
+    .grade-d{color:#dc2626}.fill-d{background:#dc2626}
+
+    /* ── Priority badges ── */
+    .badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;white-space:nowrap;line-height:1.6}
+    .badge-high{background:#FEE2E2;color:#DC2626}
+    .badge-med{background:var(--amber-light);color:var(--amber-dark)}
+    .badge-low{background:var(--teal-light);color:var(--teal)}
+    .badge-cat{background:var(--gray-100);color:var(--gray-600);font-size:10px}
+
+    /* ── Gap cards ── */
+    .gap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:24px}
+    .gap-card{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px 22px}
+    .gap-card--high{border-left:4px solid #DC2626}
+    .gap-card--med{border-left:4px solid var(--amber)}
+    .gap-card--low{border-left:4px solid var(--teal)}
+    .gap-card__head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+    .gap-card__num{font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
+    .gap-card__title{font-size:15px;font-weight:700;margin-bottom:6px}
+    .gap-card__desc{font-size:13px;color:var(--text-muted);line-height:1.6}
+    .gap-card__meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+    /* ── Effort dots ── */
+    .effort{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--text-muted)}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--gray-200)}
+    .dot.on{background:var(--amber)}
+
+    /* ── Phase roadmap ── */
+    .phase-timeline{display:grid;grid-template-columns:100px 1fr;gap:24px;margin-bottom:28px;align-items:start}
+    .phase-badge{text-align:center}
+    .phase-circle{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin:0 auto 8px}
+    .pc-1{background:var(--coral)}
+    .pc-2{background:var(--amber)}
+    .pc-3{background:var(--teal)}
+    .phase-badge__title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted)}
+    .phase-badge__time{font-size:11px;color:var(--text-muted);margin-top:2px}
+    .phase-body{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px 24px}
+    .phase-item{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--gray-100)}
+    .phase-item:last-child{border-bottom:none}
+    .phase-item__icon{font-size:17px;flex-shrink:0;margin-top:2px}
+    .phase-item__body strong{font-size:14px;display:block;margin-bottom:1px}
+    .phase-item__body p{font-size:13px;color:var(--text-muted);margin:0;line-height:1.5}
+
+    /* ── Revenue table ── */
+    .rev-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px}
+    .rev-table th{text-align:left;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);padding:10px 14px;border-bottom:2px solid var(--gray-200)}
+    .rev-table td{padding:13px 14px;border-bottom:1px solid var(--gray-200);vertical-align:middle}
+    .rev-table tr:hover td{background:var(--gray-100)}
+    .rev-stream{font-weight:600}
+    .rev-current{color:var(--amber);font-weight:600}
+    .rev-potential{color:var(--teal);font-weight:700}
+
+    /* ── Tool cards ── */
+    .tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:24px}
+    .tool-card{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:18px 20px}
+    .tool-card__logo{font-size:28px;margin-bottom:8px}
+    .tool-card h4{font-size:14px;font-weight:700;margin-bottom:3px}
+    .tool-status{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+    .s-active{color:#16a34a}
+    .s-needed{color:#DC2626}
+    .s-optional{color:var(--amber)}
+    .tool-card p{font-size:13px;color:var(--text-muted);line-height:1.5}
+
+    /* ── Strength cards ── */
+    .strength-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px}
+    .strength-card{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:22px;border-left:4px solid var(--teal)}
+    .strength-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
+    .strength-card p{font-size:13px;color:var(--text-muted);line-height:1.6;margin:0}
+
+    /* ── Lever cards ── */
+    .lever-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:24px}
+    .lever-card{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:22px}
+    .lever-card__icon{font-size:28px;margin-bottom:10px}
+    .lever-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
+    .lever-card p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:10px}
+    .lever-card__impact{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);background:var(--teal-light);padding:3px 9px;border-radius:20px;display:inline-block}
+
+    /* ── Print button ── */
+    .print-bar{background:var(--gray-100);border-top:1px solid var(--gray-200);padding:16px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .print-bar p{font-size:13px;color:var(--text-muted);margin:0}
+
+    /* ── Responsive ── */
+    @media(max-width:768px){
+      .rdm-hero{padding:48px 20px 40px}
+      .rdm-wrap{padding:0 20px}
+      .rdm-section--alt{padding:48px 20px;margin:0 -20px}
+      .rdm-meta{gap:20px}
+      .phase-timeline{grid-template-columns:1fr}
+      .phase-badge{display:flex;align-items:center;gap:12px;text-align:left}
+      .phase-circle{margin:0;width:40px;height:40px;font-size:18px}
+      .rev-table{font-size:13px}
+      .rev-table th,.rev-table td{padding:10px 8px}
+    }
+
+    @media print{
+      .nav,.nav-mobile-menu,.nav-overlay,.print-bar{display:none!important}
+      .rdm-hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div><div class="logo-text">CAMINO</div><div class="logo-sub">Honduras</div></div>
+    </a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="stories.html">Stories</a>
+      <a href="programs.html">Programs</a>
+      <div class="nav-has-drop">
+        <a href="trips.html">Mission trips ▾</a>
+        <div class="nav-drop">
+          <span class="nav-drop-label">Demo</span>
+          <a href="trips/jul-2026-culpeper.html">↗ Culpeper group trip portal</a>
+        </div>
+      </div>
+      <a href="roadmap.html" style="color:var(--text);font-weight:600">Roadmap</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="give.html" class="nav-cta">Give now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-mobile-menu" id="mobileMenu">
+    <a href="about.html">About</a>
+    <a href="stories.html">Stories</a>
+    <a href="programs.html">Programs</a>
+    <a href="trips.html">Mission trips</a>
+    <a href="trips/jul-2026-culpeper.html" style="font-size:12px;padding-left:20px;color:var(--text-muted);font-style:italic">↗ Demo: Culpeper portal</a>
+    <a href="roadmap.html" style="color:var(--amber);font-weight:600">Roadmap</a>
+    <a href="contact.html">Contact</a>
+    <a href="give.html" style="color:var(--amber);font-weight:600">Give now</a>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Hero -->
+  <div class="rdm-hero" id="main">
+    <div class="rdm-hero__inner">
+      <div class="eyebrow" style="color:var(--amber-mid)">Strategic document · June 2026</div>
+      <h1>CAMINO Honduras<br>Digital Strategy Roadmap</h1>
+      <p>An executive audit of the current site — what's working, what's missing, and a phased plan to transform this redesign into a full donor-and-volunteer engine for CAMINO's next chapter of growth.</p>
+      <div class="rdm-meta">
+        <div class="rdm-meta__item"><span class="rdm-meta__val">17</span><span class="rdm-meta__label">Pages live</span></div>
+        <div class="rdm-meta__item"><span class="rdm-meta__val">74</span><span class="rdm-meta__label">Site score / 100</span></div>
+        <div class="rdm-meta__item"><span class="rdm-meta__val">15</span><span class="rdm-meta__label">Priority gaps</span></div>
+        <div class="rdm-meta__item"><span class="rdm-meta__val">3</span><span class="rdm-meta__label">Phase plan</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rdm-wrap">
+
+    <!-- Executive Summary -->
+    <div class="rdm-section">
+      <div class="section-eyebrow">Executive summary</div>
+      <div class="rdm-h2">Where CAMINO stands — and where the opportunity is</div>
+      <div class="rdm-sub">This is a strong foundation. The redesign delivers something most small nonprofits never build — a credible, visually coherent, multi-pathway site with real content. But the gap between "good site" and "growth engine" is still significant. Five critical conversion blockers need to be resolved first, then a content and trust layer will unlock the major donor and corporate giving channels that are currently closed.</div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:8px">
+        <div style="background:var(--teal-light);border:1.5px solid var(--teal-mid);border-radius:var(--radius-lg);padding:22px">
+          <div style="font-size:24px;margin-bottom:8px">✅</div>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;color:var(--teal)">Conversion-ready design</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;margin:0">The visual hierarchy, CTAs, and brand story are strong enough to convert warm traffic. Trip pages are best-in-class for a small nonprofit. The $2,000 home stat is a killer value proposition that maps directly to a giving decision.</p>
+        </div>
+        <div style="background:var(--amber-light);border:1.5px solid var(--amber-mid);border-radius:var(--radius-lg);padding:22px">
+          <div style="font-size:24px;margin-bottom:8px">⚠️</div>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;color:var(--amber-dark)">Broken at the seams</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;margin:0">The contact form doesn't work. The store is invisible to most visitors. There's no financial transparency or prayer page — both essential for faith-based donors. These are fixing problems, not adding features, and they should be Week 1 priorities.</p>
+        </div>
+        <div style="background:var(--coral-light);border:1.5px solid #f4b8a0;border-radius:var(--radius-lg);padding:22px">
+          <div style="font-size:24px;margin-bottom:8px">🚀</div>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;color:var(--coral)">Untapped upside</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;margin:0">Corporate church partnerships, peer-to-peer fundraising, and a blog/field-update stream could each 2–3× annual donor revenue. These require 2–6 weeks each but have a compounding effect — they permanently expand the top of the funnel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scorecard -->
+    <div class="rdm-section">
+      <div class="section-eyebrow">Site scorecard</div>
+      <div class="rdm-h2">Current performance by category</div>
+      <div class="rdm-sub">Graded against a benchmark of similar faith-based nonprofits: Adventures in Missions, Praying Pelican Missions, and small-org Habitat for Humanity chapters.</div>
+
+      <div class="scorecard">
+        <div class="score-card">
+          <div class="score-card__grade grade-a">A</div>
+          <div class="score-card__label">Design &amp; Brand</div>
+          <div class="score-bar"><div class="score-fill fill-a" style="width:92%"></div></div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">Warm, coherent, faith-authentic. Best-in-category for a small mission org.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card__grade grade-b">B+</div>
+          <div class="score-card__label">Trip Experience</div>
+          <div class="score-bar"><div class="score-fill fill-b" style="width:85%"></div></div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">Strong trip pages. Needs packing list printability + more social proof from past trips.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card__grade grade-b">B</div>
+          <div class="score-card__label">Donor Funnel</div>
+          <div class="score-bar"><div class="score-fill fill-b" style="width:78%"></div></div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">Give page is solid. Broken form + no 990 link undermine conversion.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card__grade grade-b">B−</div>
+          <div class="score-card__label">Mobile</div>
+          <div class="score-bar"><div class="score-fill fill-b" style="width:72%"></div></div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">Responsive layout is in place. Some sections need max-width + overflow fixes.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card__grade grade-c">C+</div>
+          <div class="score-card__label">SEO</div>
+          <div class="score-bar"><div class="score-fill fill-c" style="width:58%"></div></div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">Missing OG tags, schema.org, sitemap, and robots.txt. Being addressed this sprint.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card__grade grade-c">C</div>
+          <div class="score-card__label">Nonprofit Tools</div>
+          <div class="score-bar"><div class="score-fill fill-c" style="width:50%"></div></div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">No prayer page, no field blog, no transparency report. Major gaps vs. peers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strengths -->
+    <div class="rdm-section">
+      <div class="section-eyebrow">What's working</div>
+      <div class="rdm-h2">Competitive advantages to protect and build on</div>
+
+      <div class="strength-grid">
+        <div class="strength-card">
+          <h3>🏠 The $2,000 stat is a killer ask</h3>
+          <p>A specific, believable, emotionally resonant number tied directly to a complete deliverable. World Vision charges $39/month (opaque). CAMINO says "$2,000 = one family's life changes forever." That maps to a gift decision. Don't dilute it.</p>
+        </div>
+        <div class="strength-card">
+          <h3>✈️ Trip portal is best-in-class</h3>
+          <p>Countdown timer, day-by-day schedule, persistent packing checklist, emergency protocols, WhatsApp group link. No competitor site at this budget level comes close. This is a genuine differentiator that builds trust and reduces pre-trip anxiety.</p>
+        </div>
+        <div class="strength-card">
+          <h3>📣 Testimonials have emotional specificity</h3>
+          <p>"When Walker handed her the key, she just held it and shook." That's a real moment. Most nonprofits run generic quote filler. CAMINO's testimonials are the kind that get forwarded in a church email. Expand the archive.</p>
+        </div>
+        <div class="strength-card">
+          <h3>⛪ Faith-authentic without gatekeeping</h3>
+          <p>The site clearly states the Christian mission but never makes non-believers feel excluded. This is rare and extends the audience. Maintain it — don't water it down, but don't add language that reads as inside-group signaling.</p>
+        </div>
+        <div class="strength-card">
+          <h3>👨‍👩‍👧‍👦 Founder story is personal and credible</h3>
+          <p>Walker and Seiny Somerville's story is visible and specific. Founded 2014. First trip was a turning point. 115+ homes. This is the kind of origin story that drives major donor relationships. Most nonprofits bury the founder — CAMINO leads with them.</p>
+        </div>
+        <div class="strength-card">
+          <h3>📐 Multi-pathway engagement model</h3>
+          <p>The site already serves three distinct audiences (donors, volunteers, partners) with tailored messaging — without making anyone feel wrong-addressed. That architecture is more sophisticated than many organizations 10× CAMINO's size.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top 15 Gaps — alt background -->
+  <div class="rdm-section rdm-section--alt">
+    <div class="rdm-wrap">
+      <div class="section-eyebrow">Priority gaps</div>
+      <div class="rdm-h2">Top 15 missing pages &amp; features</div>
+      <div class="rdm-sub">Ranked by impact × urgency. High-priority items are conversion blockers or trust failures. Medium items expand reach and revenue. Low items are SEO/polish that compound over time.</div>
+
+      <div class="gap-grid">
+
+        <div class="gap-card gap-card--high">
+          <div class="gap-card__num">#1 · High Priority</div>
+          <div class="gap-card__title">Fix the contact form</div>
+          <div class="gap-card__desc">The form action still reads <code>YOUR_FORM_ID</code>. Every inquiry from a potential volunteer or donor silently fails. This is the most important 15-minute fix on the entire site.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-high">Critical</span>
+            <span class="badge badge-cat">Contact</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--high">
+          <div class="gap-card__num">#2 · High Priority</div>
+          <div class="gap-card__title">Financial transparency page</div>
+          <div class="gap-card__desc">The site claims "100% to Honduras" and "transparent &amp; accountable" but provides zero evidence. Link to the 990-N on ProPublica, publish a simple budget breakdown, or add a one-page annual report. Major donors won't give without this.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-high">Trust Blocker</span>
+            <span class="badge badge-cat">Donor</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--high">
+          <div class="gap-card__num">#3 · High Priority</div>
+          <div class="gap-card__title">Prayer page / prayer request</div>
+          <div class="gap-card__desc">Every peer mission org (Praying Pelican, Adventures in Missions, World Vision) has a dedicated prayer section. Faith donors who can't give money often give prayer — and those people become your future donors and ambassadors. A prayer page costs almost nothing to build.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-high">Faith Essential</span>
+            <span class="badge badge-cat">Engagement</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--high">
+          <div class="gap-card__num">#4 · High Priority</div>
+          <div class="gap-card__title">Privacy policy &amp; terms</div>
+          <div class="gap-card__desc">Footer links to "#" (dead). Collecting email addresses, contact form data, and trip inquiries without a published privacy policy creates legal exposure. A minimal one-page policy fixes this and is required by Gmail, Mailchimp, and most email providers.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-high">Legal Risk</span>
+            <span class="badge badge-cat">Compliance</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--high">
+          <div class="gap-card__num">#5 · High Priority</div>
+          <div class="gap-card__title">Swag store in main nav</div>
+          <div class="gap-card__desc">The store exists and all 4 trip pages are built, but it's invisible from the primary navigation on most pages. Volunteers are the store's core customer — and they access the site via the homepage. The store is currently hidden from them.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-high">Revenue</span>
+            <span class="badge badge-cat">Navigation</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--med">
+          <div class="gap-card__num">#6 · Medium Priority</div>
+          <div class="gap-card__title">Video content — even one video</div>
+          <div class="gap-card__desc">A 90-second video of a home dedication ceremony would outperform every block of text on the site. Faith nonprofits with video see 3–4× higher email signup and giving rates. Even a phone-recorded walkthrough from Walker would serve the purpose.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-med">Engagement</span>
+            <span class="badge badge-cat">Content</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--med">
+          <div class="gap-card__num">#7 · Medium Priority</div>
+          <div class="gap-card__title">Field blog / trip updates</div>
+          <div class="gap-card__desc">A simple blog with 1–2 posts per trip keeps donors engaged between giving cycles and provides 20–40 SEO-indexed pages per year. Competitors publishing weekly field updates have 3–10× more organic traffic. Even a single post per trip adds up fast.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-med">SEO + Retention</span>
+            <span class="badge badge-cat">Content</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--med">
+          <div class="gap-card__num">#8 · Medium Priority</div>
+          <div class="gap-card__title">Corporate &amp; church partnership track</div>
+          <div class="gap-card__desc">The "Adopt a community" card on give.html mentions corporate giving but doesn't have its own page, pricing, or contact flow. Church partnerships ($5,000–$50,000+/year) are the highest-leverage funding track for CAMINO's model. This needs a dedicated page.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-med">Revenue</span>
+            <span class="badge badge-cat">Corporate</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--med">
+          <div class="gap-card__num">#9 · Medium Priority</div>
+          <div class="gap-card__title">Impact dashboard / home map</div>
+          <div class="gap-card__desc">115+ homes built since 2014 with no visual proof. A simple numbered grid or an interactive Google Map showing home locations gives donors a visceral sense of scale. "Home #47 — Rodríguez family — 2022" is more convincing than any stat bar.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-med">Trust + Conversion</span>
+            <span class="badge badge-cat">Impact</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--med">
+          <div class="gap-card__num">#10 · Medium Priority</div>
+          <div class="gap-card__title">Volunteer opportunities beyond trips</div>
+          <div class="gap-card__desc">The site assumes all volunteers travel to Honduras. Most won't. Grant writers, social media coordinators, church liaisons, and fundraising volunteers are equally valuable — and there are far more of them. A US-based volunteer page opens a new segment of engaged supporters.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-med">Engagement</span>
+            <span class="badge badge-cat">Volunteer</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--med">
+          <div class="gap-card__num">#11 · Medium Priority</div>
+          <div class="gap-card__title">Partner &amp; church network page</div>
+          <div class="gap-card__desc">Social proof from partner churches, funding organizations, or NGOs dramatically increases donor trust. A "Church partners" section with logos — even 5–10 churches — changes the perception from "small startup" to "established mission network." Ask current church partners for logo permission.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-med">Trust</span>
+            <span class="badge badge-cat">Credibility</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--low">
+          <div class="gap-card__num">#12 · Lower Priority</div>
+          <div class="gap-card__title">501(c)(3) verification link</div>
+          <div class="gap-card__desc">Footer claims "501(c)(3) Non-Profit" but provides no verification link. Add a link to the CAMINO listing on ProPublica Nonprofit Explorer or IRS Tax Exempt Organization Search. First-time donors often check before giving.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-low">Trust</span>
+            <span class="badge badge-cat">Compliance</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--low">
+          <div class="gap-card__num">#13 · Lower Priority</div>
+          <div class="gap-card__title">Schema.org structured data</div>
+          <div class="gap-card__desc">Adding JSON-LD for NonProfit Organization and Event types helps Google display rich results — organization name, description, social links, and trip events in search. This is a set-once SEO improvement with lasting benefit.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-low">SEO</span>
+            <span class="badge badge-cat">Technical</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--low">
+          <div class="gap-card__num">#14 · Lower Priority</div>
+          <div class="gap-card__title">Spanish language option</div>
+          <div class="gap-card__desc">A Spanish version of at least the homepage and programs page opens the site to Spanish-speaking donors in the US (large demographic), Honduran diaspora, and community partners. Could start as a single translated landing page before expanding.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-low">Reach</span>
+            <span class="badge badge-cat">Localization</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card--low">
+          <div class="gap-card__num">#15 · Lower Priority</div>
+          <div class="gap-card__title">Story archive &amp; impact library</div>
+          <div class="gap-card__desc">Stories page has 3 stories. CAMINO has built 115+ homes. Each home is a story, and each story is SEO content, donor evidence, and re-sharing fuel. A browsable archive — even just 12–20 stories — transforms the site from a brochure into a living record of impact.</div>
+          <div class="gap-card__meta">
+            <span class="badge badge-low">Impact</span>
+            <span class="badge badge-cat">Content</span>
+            <span class="effort">Effort <span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="rdm-wrap">
+
+    <!-- 3-Phase Roadmap -->
+    <div class="rdm-section">
+      <div class="section-eyebrow">Implementation plan</div>
+      <div class="rdm-h2">3-phase roadmap</div>
+      <div class="rdm-sub">Ordered so that each phase removes a blocker that would limit the ROI of the next phase. Fix what's broken → build what's missing → scale what's working.</div>
+
+      <div class="phase-timeline">
+        <div class="phase-badge">
+          <div class="phase-circle pc-1">1</div>
+          <div class="phase-badge__title">Fix It</div>
+          <div class="phase-badge__time">Weeks 1–2</div>
+        </div>
+        <div class="phase-body" style="border-color:var(--coral);border-left:3px solid var(--coral)">
+          <div class="phase-item"><div class="phase-item__icon">🔧</div><div class="phase-item__body"><strong>Activate Formspree contact form</strong><p>Create a free account at formspree.io, replace YOUR_FORM_ID in contact.html, test end-to-end. 15 minutes. Unblocks primary lead capture.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">🔒</div><div class="phase-item__body"><strong>Publish privacy policy &amp; terms</strong><p>Create privacy.html with minimal language covering email collection, contact forms, and cookies. Fix the dead "#" links in every footer.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">🗺️</div><div class="phase-item__body"><strong>Add swag store to main nav</strong><p>Currently hidden from all main pages. Add "Store" link alongside Contact in the desktop nav — one PowerShell pass across all pages.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">📊</div><div class="phase-item__body"><strong>Wire up Mailchimp newsletter forms</strong><p>Replace the placeholder Mailchimp form action on index.html and stories.html with real u= and id= params. Newsletter captures are currently not being saved.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">🔍</div><div class="phase-item__body"><strong>Submit sitemap to Google Search Console</strong><p>sitemap.xml is now live. Register Google Search Console for the GitHub Pages domain, submit the sitemap, verify ownership. Unlocks performance tracking.</p></div></div>
+        </div>
+      </div>
+
+      <div class="phase-timeline">
+        <div class="phase-badge">
+          <div class="phase-circle pc-2">2</div>
+          <div class="phase-badge__title">Build It</div>
+          <div class="phase-badge__time">Weeks 3–8</div>
+        </div>
+        <div class="phase-body" style="border-color:var(--amber);border-left:3px solid var(--amber)">
+          <div class="phase-item"><div class="phase-item__icon">🙏</div><div class="phase-item__body"><strong>Create prayer page</strong><p>A prayer.html page with current CAMINO prayer needs (active trips, families, Walker &amp; Seiny, Honduras context), a prayer request form, and a "prayer partner" email list opt-in. Faith donors who can't give money give prayer first.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">📋</div><div class="phase-item__body"><strong>Publish transparency / annual report</strong><p>Create a one-page transparency.html with budget breakdown, 990-N filing link (ProPublica), homes built per year, and a simple impact statement. This is the #1 objection-handler for major donors.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">🏢</div><div class="phase-item__body"><strong>Build corporate &amp; church partnership page</strong><p>A dedicated partnerships.html with 3–4 tiers (Single Home Sponsor, Multi-Home Partner, Community Adoption), use cases for churches vs. businesses, an application form, and logos of current partners.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">🤝</div><div class="phase-item__body"><strong>Add US-based volunteer opportunities</strong><p>Expand about.html or create volunteer.html to describe US-based roles: grant writing, social media, church liaisons, fundraising events. Add an application form. Converts interested visitors who can't travel.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">📹</div><div class="phase-item__body"><strong>Record &amp; embed a 90-second video</strong><p>Walker's phone camera is enough. One video of a home dedication ceremony, embedded in index.html above the fold. No editing required — raw emotion converts. YouTube embed is free and boosts SEO.</p></div></div>
+        </div>
+      </div>
+
+      <div class="phase-timeline">
+        <div class="phase-badge">
+          <div class="phase-circle pc-3">3</div>
+          <div class="phase-badge__title">Scale It</div>
+          <div class="phase-badge__time">Months 3–6</div>
+        </div>
+        <div class="phase-body" style="border-color:var(--teal);border-left:3px solid var(--teal)">
+          <div class="phase-item"><div class="phase-item__icon">📰</div><div class="phase-item__body"><strong>Launch field blog</strong><p>One post per trip, 400–800 words, written by a volunteer. Each post is SEO content that indexes for "Honduras mission trip 2026," "CAMINO Honduras," and related searches. 8–10 posts/year = 8–10 new organic entry points per year, compounding.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">🗺️</div><div class="phase-item__body"><strong>Impact map / home archive</strong><p>Build a visual grid or map of all 115+ homes — home number, family name (with permission), year, and a 2-sentence story. This is the most powerful proof asset CAMINO has. Donors see their home on the map. They share it.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">📱</div><div class="phase-item__body"><strong>Spanish language landing page</strong><p>A single translated index page targeting Spanish-speaking donors and the Honduran diaspora in the US. Even a basic /es/ page with the mission statement, give link, and contact form opens a new audience segment.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">🎁</div><div class="phase-item__body"><strong>Interactive gift catalog</strong><p>Replace the static cost breakdown with an interactive catalog: $50 = cement bags (select quantity), $500 = a week of local labor, $2,000 = one home (name the family). Add a "Give this as a gift" flow for Christmas/birthday giving.</p></div></div>
+          <div class="phase-item"><div class="phase-item__icon">📈</div><div class="phase-item__body"><strong>Analytics &amp; conversion tracking</strong><p>Add Google Analytics 4 + goals (form submission, Give Now click, trip reservation, newsletter signup). With data, every subsequent decision is defensible. Without it, CAMINO is flying blind on what converts.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue levers -->
+    <div class="rdm-section">
+      <div class="section-eyebrow">Revenue analysis</div>
+      <div class="rdm-h2">Revenue streams — current vs. potential</div>
+      <div class="rdm-sub">Conservative estimates based on benchmarks from comparable faith nonprofits. These are achievable within 12 months with Phase 1–2 improvements fully implemented.</div>
+
+      <div style="overflow-x:auto">
+        <table class="rev-table">
+          <thead>
+            <tr>
+              <th>Revenue stream</th>
+              <th>Current state</th>
+              <th>12-month potential</th>
+              <th>What unlocks it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rev-stream">Individual donations</td>
+              <td class="rev-current">Moderate</td>
+              <td class="rev-potential">+40–80%</td>
+              <td style="font-size:13px;color:var(--text-muted)">Fixed contact form + transparency page</td>
+            </tr>
+            <tr>
+              <td class="rev-stream">Church partnerships</td>
+              <td style="color:var(--coral);font-weight:600">Not captured</td>
+              <td class="rev-potential">$5K–$50K/yr</td>
+              <td style="font-size:13px;color:var(--text-muted)">Dedicated partnerships page + tiered asks</td>
+            </tr>
+            <tr>
+              <td class="rev-stream">Trip fees</td>
+              <td class="rev-current">Primary stream</td>
+              <td class="rev-potential">+25%</td>
+              <td style="font-size:13px;color:var(--text-muted)">Calendar visibility + direct booking flow</td>
+            </tr>
+            <tr>
+              <td class="rev-stream">Swag / gear sales</td>
+              <td style="color:var(--coral);font-weight:600">Minimal (hidden)</td>
+              <td class="rev-potential">+300–500%</td>
+              <td style="font-size:13px;color:var(--text-muted)">Add to main nav, Printful fulfillment activation</td>
+            </tr>
+            <tr>
+              <td class="rev-stream">Peer-to-peer fundraising</td>
+              <td style="color:var(--coral);font-weight:600">Not captured</td>
+              <td class="rev-potential">$1K–$8K/trip</td>
+              <td style="font-size:13px;color:var(--text-muted)">Give Lively P2P + trip page integration</td>
+            </tr>
+            <tr>
+              <td class="rev-stream">Monthly recurring gifts</td>
+              <td class="rev-current">Low</td>
+              <td class="rev-potential">+150%</td>
+              <td style="font-size:13px;color:var(--text-muted)">Email list activation + Mailchimp drip sequence</td>
+            </tr>
+            <tr>
+              <td class="rev-stream">Newsletter sponsorships</td>
+              <td style="color:var(--coral);font-weight:600">Not pursued</td>
+              <td class="rev-potential">$200–$1K/yr</td>
+              <td style="font-size:13px;color:var(--text-muted)">Grow list to 500+ then approach local businesses</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Leverage section -->
+    <div class="rdm-section">
+      <div class="section-eyebrow">Strategic leverage</div>
+      <div class="rdm-h2">How to use this design to accelerate CAMINO's mission</div>
+      <div class="rdm-sub">The redesign isn't just an upgrade — it's a platform. These are the high-leverage plays specific to CAMINO's model that the current design enables.</div>
+
+      <div class="lever-grid">
+        <div class="lever-card">
+          <div class="lever-card__icon">✈️</div>
+          <h3>Trip portal as the primary lead magnet</h3>
+          <p>The trip portal pages (with countdown, schedule, and checklist) are unusual enough to drive word-of-mouth. When Trip Coordinator A shares it with Trip Coordinator B at a different church, CAMINO's quality is immediately visible. That's recruitment.</p>
+          <span class="lever-card__impact">Multiplier: volunteer acquisition</span>
+        </div>
+        <div class="lever-card">
+          <div class="lever-card__icon">🏠</div>
+          <h3>The key ceremony as a recurring content event</h3>
+          <p>Every home completion is a shareable moment — video, photo, quote. If Walker sends a 30-second video after each dedication, it becomes a story on the website, an email blast, an Instagram post, and a church slide. One event, five touchpoints.</p>
+          <span class="lever-card__impact">Multiplier: donor engagement</span>
+        </div>
+        <div class="lever-card">
+          <div class="lever-card__icon">📣</div>
+          <h3>Trip alumni as a distribution channel</h3>
+          <p>Every trip participant returns as a potential ambassador. The stories page asks them to share — but there's no formal alumni track. A simple "CAMINO alumni" email segment with a monthly field update becomes a 100-person+ outreach network at no cost.</p>
+          <span class="lever-card__impact">Multiplier: organic reach</span>
+        </div>
+        <div class="lever-card">
+          <div class="lever-card__icon">⛪</div>
+          <h3>Church-as-partner model</h3>
+          <p>The highest-leverage nonprofit model is church adoption — one congregation commits to CAMINO as their global missions partner, sends annual trips, and funds 3–5 homes/year. The partnerships page enables a formal pitch. At 5 church partners, CAMINO triples capacity without a single new donor.</p>
+          <span class="lever-card__impact">Multiplier: capacity &amp; funding</span>
+        </div>
+        <div class="lever-card">
+          <div class="lever-card__icon">💛</div>
+          <h3>Swag as missions awareness</h3>
+          <p>A CAMINO hat worn by a past volunteer to church, the gym, or the office is a passive billboard. When someone asks "what's CAMINO Honduras?" the answer opens a door. The swag store isn't just revenue — it's distributed awareness among exactly the demographic most likely to give.</p>
+          <span class="lever-card__impact">Multiplier: brand visibility</span>
+        </div>
+        <div class="lever-card">
+          <div class="lever-card__icon">🙏</div>
+          <h3>Prayer as the lowest-barrier entry point</h3>
+          <p>Not everyone can give $2,000. Not everyone can travel to Honduras. But almost anyone can commit to praying for a family once a week. Prayer partners become email subscribers. Email subscribers become donors. This is the most underused funnel in faith nonprofits.</p>
+          <span class="lever-card__impact">Multiplier: donor pipeline</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="rdm-section">
+      <div class="section-eyebrow">Tools &amp; integrations</div>
+      <div class="rdm-h2">Recommended nonprofit tech stack</div>
+      <div class="rdm-sub">All recommended tools have free tiers appropriate for CAMINO's current scale. Prioritize the "needed" tools first — they unblock the highest-priority gaps.</div>
+
+      <div class="tool-grid">
+        <div class="tool-card">
+          <div class="tool-card__logo">📋</div>
+          <h4>Formspree</h4>
+          <div class="tool-status s-needed">Needed now</div>
+          <p>Fix the contact form in 15 minutes. Free tier handles 50 submissions/month. Upgrade to $10/month if volume grows. Required for Phase 1.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card__logo">📧</div>
+          <h4>Mailchimp</h4>
+          <div class="tool-status s-needed">Needed now</div>
+          <p>Newsletter list is built — the u= and id= params need to be filled in. Free up to 500 contacts. The single most important donor retention tool.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card__logo">💰</div>
+          <h4>Give Lively</h4>
+          <div class="tool-status s-needed">Needed — Phase 2</div>
+          <p>Free for nonprofits. Replaces the placeholder "caminohonduras.com" give links with a real donation page. Supports one-time, monthly, and peer-to-peer fundraising.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card__logo">👕</div>
+          <h4>Printful</h4>
+          <div class="tool-status s-needed">Needed — Phase 2</div>
+          <p>Fulfills the swag store orders automatically. CAMINO sets retail price, Printful bills base cost, CAMINO keeps the markup. Zero inventory, zero risk.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card__logo">📊</div>
+          <h4>Google Analytics 4</h4>
+          <div class="tool-status s-needed">Needed — Phase 3</div>
+          <p>Free. Tracks every visitor, page, CTA click, and conversion. Without it, you can't know which pages drive donations or which trip listing converts the most reservations.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card__logo">🔍</div>
+          <h4>Google Search Console</h4>
+          <div class="tool-status s-needed">Needed — Phase 1</div>
+          <p>Free. Submit the new sitemap.xml to index all 17 pages. Monitor which search queries bring visitors. Takes 20 minutes to set up, shows results in 2–4 weeks.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card__logo">📱</div>
+          <h4>Buffer / Meta Planner</h4>
+          <div class="tool-status s-optional">Optional</div>
+          <p>Schedule social media posts for Facebook and Instagram. The admin panel has a social calendar — connect it to a scheduling tool to automate distribution.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card__logo">🎥</div>
+          <h4>YouTube</h4>
+          <div class="tool-status s-optional">Optional — Phase 2</div>
+          <p>Free hosting for trip videos. Even phone footage of a home dedication embedded on the homepage would outperform every other content asset on the site within 30 days.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Closing statement -->
+    <div class="rdm-section">
+      <div style="background:linear-gradient(135deg,var(--amber-dark) 0%,#854F0B 100%);border-radius:var(--radius-lg);padding:48px;text-align:center;color:white">
+        <div style="font-size:36px;margin-bottom:16px">🏠</div>
+        <h2 style="font-size:26px;font-weight:700;color:white;margin-bottom:12px">The bottom line</h2>
+        <p style="font-size:17px;color:rgba(255,255,255,.88);line-height:1.75;max-width:620px;margin:0 auto 28px">CAMINO Honduras already has a story worth sharing, a model worth funding, and a team worth trusting. The website's job is to make that visible and make the path from "interested" to "involved" as short as possible. Most of the gaps on this list are a few hours of work each. The upside is a site that works as hard as Walker does.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="contact.html" class="btn-primary" style="background:white;color:var(--amber-dark)">Start with Phase 1</a>
+          <a href="give.html" class="btn-secondary" style="border-color:rgba(255,255,255,.5);color:white">Give toward a home</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /rdm-wrap -->
+
+  <!-- Print bar -->
+  <div class="print-bar">
+    <p>CAMINO Honduras Digital Strategy Roadmap · June 2026 · For internal use</p>
+    <div style="display:flex;gap:10px">
+      <button onclick="window.print()" class="btn-secondary" style="font-size:13px;padding:8px 18px;cursor:pointer;font-family:inherit">Print / Save PDF</button>
+      <a href="index.html" class="btn-primary" style="font-size:13px;padding:8px 18px">← Back to site</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">C</div>
+          <div><div class="logo-text">CAMINO</div><div class="logo-sub">Honduras</div></div>
+        </a>
+        <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2014.</p>
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <a href="https://www.facebook.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Facebook</a>
+          <a href="https://www.instagram.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Roadmap</h4><a href="#main">Scorecard</a><a href="#main">Top 15 gaps</a><a href="#main">3-phase plan</a><a href="#main">Revenue levers</a></div>
+      <div class="footer-col"><h4>Site</h4><a href="about.html">About CAMINO</a><a href="programs.html">Programs</a><a href="trips.html">Mission trips</a><a href="give.html">Give</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="stories.html">Stories</a><a href="store/index.html">Swag store</a><a href="contact.html">Contact</a><a href="admin/index.html">Admin panel</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CAMINO Honduras · 501(c)(3) Non-Profit · Strategy document for internal use</span>
+      <span><a href="https://www.caminohonduras.com" target="_blank" rel="noopener">caminohonduras.com</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
