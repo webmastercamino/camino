@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — CAMINO Honduras</title>
+  <meta name="description" content="Contact CAMINO Honduras — reach out about mission trips, donations, partnerships, or any questions about our work in Honduras.">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">CAMINO</div>
+        <div class="logo-sub">Honduras</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="trips.html">Mission trips</a>
+      <a href="contact.html" style="color:var(--text);font-weight:600">Contact</a>
+    </div>
+    <a href="give.html" class="nav-cta">Give now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-mobile-menu" id="mobileMenu">
+    <a href="about.html">About</a>
+    <a href="programs.html">Programs</a>
+    <a href="trips.html">Mission trips</a>
+    <a href="contact.html">Contact</a>
+    <a href="give.html" style="color:var(--amber);font-weight:600">Give now</a>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="eyebrow">Get in touch</div>
+    <h1>We'd love to hear from you.</h1>
+    <p>Whether you're planning a mission trip, interested in donating, want to partner with us, or simply want to learn more — reach out. We're real people and we respond.</p>
+  </section>
+
+  <!-- Contact form + aside -->
+  <section class="contact-section">
+    <div class="contact-grid">
+
+      <!-- Form -->
+      <div class="contact-form">
+        <h2>Send us a message</h2>
+        <p>We'll get back to you within 2 business days.</p>
+
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First name</label>
+              <input type="text" id="firstName" name="firstName" placeholder="Jane" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="org">Church, organization, or company (optional)</label>
+            <input type="text" id="org" name="org" placeholder="First Baptist Church">
+          </div>
+          <div class="form-group">
+            <label for="subject">What can we help with?</label>
+            <select id="subject" name="subject">
+              <option value="">Select a topic...</option>
+              <option value="trip">Mission trip inquiry</option>
+              <option value="donate">Donation or sponsorship</option>
+              <option value="community">Adopt a community</option>
+              <option value="ambassador">Become an ambassador</option>
+              <option value="media">Media or press</option>
+              <option value="other">General question</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Your message</label>
+            <textarea id="message" name="message" placeholder="Tell us a bit about what's on your mind — the more detail the better." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;text-align:center;cursor:pointer;border:none;font-size:15px;font-family:inherit">Send message</button>
+        </form>
+      </div>
+
+      <!-- Aside -->
+      <div class="contact-aside">
+        <h3>Other ways to connect</h3>
+
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">🌐</div>
+          <div>
+            <strong>Main website</strong>
+            <a href="https://www.caminohonduras.com" target="_blank" rel="noopener" style="color:var(--amber)">caminohonduras.com</a>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">✈️</div>
+          <div>
+            <strong>Mission trips</strong>
+            Ready to bring a team to Honduras? Tell us your desired dates, group size, and any questions in the form. We'll send a full trip info packet.
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">💛</div>
+          <div>
+            <strong>Donations &amp; giving</strong>
+            For large donations, home sponsorships, or legacy giving inquiries, please reach out directly — we want to make sure your gift is handled with care.
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">🏘️</div>
+          <div>
+            <strong>Community partnerships</strong>
+            Churches and organizations interested in adopting a community long-term — we'd love to explore what that could look like together.
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div style="margin-top:32px;padding:24px;background:var(--amber-light);border:1px solid var(--amber-mid);border-radius:var(--radius-lg);">
+          <div style="font-size:13px;font-weight:600;color:#854F0B;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px">Quick links</div>
+          <a href="trips.html" style="display:block;font-size:14px;color:var(--amber-dark);font-weight:500;margin-bottom:10px">→ See 2026 mission trip dates</a>
+          <a href="give.html"  style="display:block;font-size:14px;color:var(--amber-dark);font-weight:500;margin-bottom:10px">→ Donate or sponsor a home</a>
+          <a href="about.html" style="display:block;font-size:14px;color:var(--amber-dark);font-weight:500;margin-bottom:10px">→ Learn about our work</a>
+          <a href="programs.html" style="display:block;font-size:14px;color:var(--amber-dark);font-weight:500">→ See our programs</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark">C</div>
+          <div>
+            <div class="logo-text">CAMINO</div>
+            <div class="logo-sub">Honduras</div>
+          </div>
+        </div>
+        <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2017.</p>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="about.html">Our story</a>
+        <a href="about.html">Mission &amp; vision</a>
+        <a href="contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <a href="programs.html">Housing</a>
+        <a href="programs.html">Infrastructure</a>
+        <a href="programs.html">Church planting</a>
+        <a href="trips.html">Mission trips</a>
+      </div>
+      <div class="footer-col">
+        <h4>Give</h4>
+        <a href="give.html">One-time gift</a>
+        <a href="give.html">Monthly giving</a>
+        <a href="give.html">Sponsor a home</a>
+        <a href="give.html">Legacy giving</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 CAMINO: Honduras. All rights reserved.</span>
+      <span><a href="https://www.caminohonduras.com" target="_blank" rel="noopener">caminohonduras.com</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
