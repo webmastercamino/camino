@@ -45,6 +45,22 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 - Next steps: ...
 -->
 
+### 2026-06-20 — WCAG 2.1 AA accessibility pass + WhatsApp group chat feature
+- What changed:
+  - **style.css**: Skip-link class (fixed, focus-reveals), global `:focus-visible` styles, nav dropdown `:focus-within` for keyboard access
+  - **main.js**: `aria-expanded`/`aria-controls` on mobile nav toggle; ARIA-aware tab switching with `aria-selected` + arrow-key navigation; flip card keyboard handler (Enter/Space); gallery keyboard handler + lightbox focus return + focus trap
+  - **All 9 root pages + trip portal + admin**: Skip-to-main link, `id="main"` target, `aria-expanded="false" aria-controls="mobileMenu"` on nav toggle
+  - **contact.html**: All 5 form inputs now have `id` attributes; all labels have matching `for` attributes
+  - **index.html + stories.html**: Newsletter email input `aria-label` added
+  - **trips/jul-2026-culpeper.html**: Full ARIA tablist (role, aria-selected, aria-controls, tabindex roving); tab bar inactive text contrast .72→.90; checklist `<span>`→`<label for="pack-X">` (21 items); flip cards tabindex=0 + keyboard; gallery tabindex=0 + keyboard + lightbox focus return + focus trap; WhatsApp group chat card in Logistics tab (qrcodejs QR code, placeholder detection, staff note fallback)
+  - **admin/index.html**: Skip link + `:focus-visible`; trip modal `for`/`id` label associations on all fields; new WhatsApp Group Link field saved to localStorage
+- Status: Complete. Committed 1770b25 and pushed to main (live on GitHub Pages).
+- Next steps:
+  1. Set real WhatsApp group link: change `data-whatsapp` on `#whatsappCard` in `trips/jul-2026-culpeper.html`
+  2. Replace placeholder gallery photos in `assets/images/trips/culpeper-jul-2026/`
+  3. Add Mailchimp `u=` and `id=` params to newsletter forms (index.html, stories.html)
+  4. Replace `YOUR_FORM_ID` in contact.html with actual Formspree form ID
+
 ### 2026-06-20 — Full site audit fixes + admin panel POC
 - What changed:
   - **Nav (all 8 pages)**: Removed duplicate "↗ Sample Mission" entry from both desktop dropdown and mobile menu — was pointing to the same URL as "Culpeper group trip portal"
