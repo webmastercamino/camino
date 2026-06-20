@@ -115,34 +115,41 @@
     .pwa-banner__install{background:white;color:var(--teal);font-weight:700;font-size:12px;padding:6px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0}
     .pwa-banner__dismiss{background:none;border:none;color:rgba(255,255,255,.7);font-size:22px;cursor:pointer;padding:0;line-height:1;flex-shrink:0}
 
-    /* ── Full-page sticky tab navigation ── */
-    .page-tab-bar{
+    /* ── Full-page sticky tab navigation ──
+       Uses #pageTabBar ID for high specificity so colors can't be
+       overridden by the global .tab-btn rules in style.css.         */
+    #pageTabBar{
       position:sticky;
       top:73px;
       z-index:99;
-      background:var(--teal);
+      background:#0F6E56;   /* explicit hex — no CSS-variable risk */
       display:flex;
       overflow-x:auto;
       scrollbar-width:none;
       -ms-overflow-style:none;
-      box-shadow:0 2px 10px rgba(0,0,0,.2);
+      box-shadow:0 3px 12px rgba(0,0,0,.25);
     }
-    .page-tab-bar::-webkit-scrollbar{display:none}
-    .page-tab-bar .tab-btn{
+    #pageTabBar::-webkit-scrollbar{display:none}
+    #pageTabBar .tab-btn{
       flex:0 0 auto;
-      color:rgba(255,255,255,.6);
+      color:rgba(255,255,255,.72);   /* clearly visible on dark green */
+      background:transparent;
+      border:none;
       border-bottom:3px solid transparent;
       padding:14px 22px;
       font-size:13.5px;
       font-weight:600;
       white-space:nowrap;
       border-radius:0;
+      cursor:pointer;
+      font-family:inherit;
+      transition:color .15s, border-color .15s, background .15s;
     }
-    .page-tab-bar .tab-btn:hover{color:rgba(255,255,255,.88)}
-    .page-tab-bar .tab-btn.active{
-      color:white;
-      border-bottom-color:var(--amber-brand);
-      background:rgba(255,255,255,.1);
+    #pageTabBar .tab-btn:hover{color:#fff}
+    #pageTabBar .tab-btn.active{
+      color:#fff;
+      border-bottom-color:#BA7517;
+      background:rgba(255,255,255,.12);
     }
 
     /* ── Section divider within tabs ── */
