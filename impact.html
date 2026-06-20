@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impact &amp; Transparency — CAMINO Honduras</title>
+  <meta name="description" content="12 years of impact in Honduras — interactive map of every home built, proposed projects needing funding, annual accomplishments, and full financial transparency.">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <style>
+    /* ── Hero ── */
+    .imp-hero{background:linear-gradient(135deg,#051009 0%,#0a1e12 50%,#0f1a09 100%);padding:60px 48px 52px;text-align:center}
+    .imp-hero h1{font-size:clamp(24px,3.5vw,38px);font-weight:700;color:#fff;margin-bottom:10px}
+    .imp-hero p{font-size:16px;color:rgba(255,255,255,.72);max-width:580px;margin:0 auto 32px;line-height:1.7}
+    .stub-banner{background:rgba(186,117,23,.18);border:1px solid rgba(186,117,23,.4);border-radius:var(--radius);padding:10px 18px;display:inline-block;font-size:13px;color:var(--amber-mid);margin-bottom:28px}
+
+    /* ── Stats row ── */
+    .imp-stats{display:flex;gap:0;background:#fff;border-bottom:1px solid var(--gray-200);flex-wrap:wrap}
+    .imp-stat{flex:1;min-width:130px;text-align:center;padding:22px 12px;border-right:1px solid var(--gray-200)}
+    .imp-stat:last-child{border-right:none}
+    .imp-stat__num{font-size:30px;font-weight:800;color:var(--amber);line-height:1;margin-bottom:4px}
+    .imp-stat__label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted)}
+
+    /* ── Section shells ── */
+    .imp-wrap{max-width:1100px;margin:0 auto;padding:0 48px}
+    .imp-section{padding:56px 0}
+    .imp-section+.imp-section{border-top:1px solid var(--gray-200)}
+    .imp-h2{font-size:24px;font-weight:700;margin-bottom:6px}
+    .imp-sub{font-size:14px;color:var(--text-muted);line-height:1.7;max-width:640px;margin-bottom:28px}
+
+    /* ── Map ── */
+    #camiMap{width:100%;height:520px;border-radius:var(--radius-lg);overflow:hidden;border:1.5px solid var(--gray-200)}
+    .map-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+    .map-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--text-muted)}
+    .leg-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle}
+    .filter-btn{font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;border:1.5px solid var(--gray-200);background:white;cursor:pointer;transition:all .15s;font-family:inherit}
+    .filter-btn.active,.filter-btn:hover{background:var(--teal);color:white;border-color:var(--teal)}
+    .filter-btn.fb-amber.active,.filter-btn.fb-amber:hover{background:var(--amber);border-color:var(--amber)}
+    .filter-btn.fb-coral.active,.filter-btn.fb-coral:hover{background:var(--coral);border-color:var(--coral)}
+
+    /* ── Proposed projects ── */
+    .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+    .proj-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:22px;border-top:4px solid var(--coral)}
+    .proj-card--partial{border-top-color:var(--amber)}
+    .proj-card--nearly{border-top-color:var(--teal)}
+    .proj-type{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+    .proj-title{font-size:16px;font-weight:700;margin-bottom:6px}
+    .proj-desc{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:14px}
+    .proj-bar-wrap{background:var(--gray-200);border-radius:20px;height:7px;margin-bottom:8px;overflow:hidden}
+    .proj-bar{height:100%;border-radius:20px;transition:width .6s ease}
+    .proj-amounts{display:flex;justify-content:space-between;font-size:12px;margin-bottom:12px}
+    .proj-raised{font-weight:700;color:var(--teal)}
+    .proj-goal{color:var(--text-muted)}
+
+    /* ── Annual bar chart ── */
+    .yr-chart{display:flex;align-items:flex-end;gap:6px;height:160px;margin-bottom:16px;padding:0 4px}
+    .yr-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+    .yr-bar{width:100%;border-radius:4px 4px 0 0;background:var(--teal);min-height:4px;transition:height .4s}
+    .yr-label{font-size:10px;color:var(--text-muted);font-weight:600;white-space:nowrap}
+    .yr-num{font-size:10px;font-weight:700;color:var(--text-muted)}
+
+    /* ── Annual table ── */
+    .ann-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px}
+    .ann-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);padding:9px 12px;border-bottom:2px solid var(--gray-200);white-space:nowrap}
+    .ann-table td{padding:10px 12px;border-bottom:1px solid var(--gray-200);vertical-align:middle}
+    .ann-table tr:hover td{background:var(--gray-100)}
+    .ann-table tr.yr-total td{font-weight:700;background:var(--gray-100);border-top:2px solid var(--gray-200)}
+    .cumul-pill{display:inline-block;background:var(--amber-light);color:var(--amber-dark);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+    .infra-tag{font-size:11px;color:var(--teal);font-weight:600}
+
+    /* ── Financial transparency ── */
+    .fin-grid{display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:start}
+    .donut-wrap{position:relative;width:180px;height:180px;flex-shrink:0}
+    .donut-chart{width:180px;height:180px;border-radius:50%;background:conic-gradient(var(--teal) 0% 82%,var(--amber) 82% 91%,var(--coral) 91% 95%,#94a3b8 95% 100%)}
+    .donut-hole{position:absolute;inset:30px;border-radius:50%;background:white;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+    .donut-pct{font-size:22px;font-weight:800;color:var(--teal);line-height:1}
+    .donut-lbl{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-top:2px}
+    .fin-legend{display:flex;flex-direction:column;gap:14px}
+    .fin-row{display:flex;align-items:center;gap:10px}
+    .fin-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+    .fin-desc{font-size:13px;color:var(--text-muted);flex:1}
+    .fin-pct{font-size:15px;font-weight:700;color:var(--text);min-width:36px;text-align:right}
+    .fin-compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:28px}
+    .fin-std{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:16px 18px}
+    .fin-std h4{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
+    .fin-std__val{font-size:20px;font-weight:800;margin-bottom:2px}
+    .fin-std p{font-size:11px;color:var(--text-muted);line-height:1.5;margin:0}
+    .camino-good{color:var(--teal)}
+    .std-grey{color:var(--gray-600)}
+    .disclaimer{font-size:12px;color:var(--text-muted);line-height:1.6;margin-top:20px;padding:14px 18px;background:var(--gray-100);border-radius:var(--radius);border-left:3px solid var(--amber)}
+
+    @media(max-width:768px){
+      .imp-hero{padding:40px 20px 36px}
+      .imp-wrap{padding:0 20px}
+      .fin-grid{grid-template-columns:1fr}
+      .donut-wrap{margin:0 auto}
+      #camiMap{height:380px}
+      .yr-chart{gap:3px}
+      .yr-label{font-size:9px}
+      .ann-table{font-size:12px}
+      .ann-table th,.ann-table td{padding:7px 8px}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div><div class="logo-text">CAMINO</div><div class="logo-sub">Honduras</div></div>
+    </a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="stories.html">Stories</a>
+      <a href="programs.html">Programs</a>
+      <div class="nav-has-drop">
+        <a href="trips.html">Mission trips ▾</a>
+        <div class="nav-drop">
+          <span class="nav-drop-label">Demo</span>
+          <a href="trips/jul-2026-culpeper.html">↗ Culpeper group trip portal</a>
+        </div>
+      </div>
+      <a href="impact.html" style="color:var(--text);font-weight:600">Impact</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="give.html" class="nav-cta">Give now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-mobile-menu" id="mobileMenu">
+    <a href="about.html">About</a>
+    <a href="stories.html">Stories</a>
+    <a href="programs.html">Programs</a>
+    <a href="trips.html">Mission trips</a>
+    <a href="trips/jul-2026-culpeper.html" style="font-size:12px;padding-left:20px;color:var(--text-muted);font-style:italic">↗ Demo: Culpeper portal</a>
+    <a href="impact.html" style="color:var(--teal);font-weight:600">Impact</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="contact.html">Contact</a>
+    <a href="give.html" style="color:var(--amber);font-weight:600">Give now</a>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Hero -->
+  <div class="imp-hero" id="main">
+    <div class="stub-banner">⚠️ Concept — figures are estimates. Walker: update with your real numbers via the admin panel.</div>
+    <h1>12 years of impact in Honduras</h1>
+    <p>Every home has a name. Every project has a story. This is the full record of what CAMINO Honduras has built — and what still needs your support.</p>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="imp-stats">
+    <div class="imp-stat"><div class="imp-stat__num">115+</div><div class="imp-stat__label">Homes built</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">700+</div><div class="imp-stat__label">Volunteers served</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">7</div><div class="imp-stat__label">Infrastructure projects</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">4</div><div class="imp-stat__label">Communities served</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">12</div><div class="imp-stat__label">Years operating</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">87¢</div><div class="imp-stat__label">Of every $ to Honduras</div></div>
+  </div>
+
+  <div class="imp-wrap">
+
+    <!-- MAP -->
+    <div class="imp-section">
+      <div class="section-eyebrow">Interactive map</div>
+      <div class="imp-h2">Where CAMINO has built</div>
+      <div class="imp-sub">Every pin is a family, a project, or a need. Click any marker for details. Filter by type using the buttons below.</div>
+
+      <div class="map-filter">
+        <span style="font-size:12px;font-weight:600;color:var(--text-muted);margin-right:4px">Show:</span>
+        <button class="filter-btn fb-amber active" id="fHomes" onclick="toggleLayer('homes',this)">🏠 Homes (115)</button>
+        <button class="filter-btn active" id="fInfra" onclick="toggleLayer('infra',this)">🔧 Infrastructure (7)</button>
+        <button class="filter-btn fb-coral active" id="fProposed" onclick="toggleLayer('proposed',this)">🎯 Needs funding (6)</button>
+      </div>
+
+      <div id="camiMap"></div>
+
+      <div class="map-legend">
+        <span><span class="leg-dot" style="background:#BA7517"></span>Completed home</span>
+        <span><span class="leg-dot" style="background:#0F6E56"></span>Infrastructure / community project</span>
+        <span><span class="leg-dot" style="background:#993C1D;opacity:.7"></span>Proposed / needs funding</span>
+      </div>
+    </div>
+
+    <!-- PROPOSED PROJECTS -->
+    <div class="imp-section">
+      <div class="section-eyebrow">Open needs</div>
+      <div class="imp-h2">Projects that need your support</div>
+      <div class="imp-sub">These are active funding needs in the communities CAMINO serves. Every dollar goes directly to Honduras. Stub data — Walker to confirm current amounts and priorities.</div>
+
+      <div class="proj-grid">
+        <div class="proj-card">
+          <div class="proj-type">🏠 Housing — 5 families</div>
+          <div class="proj-title">New homes — Las Brisas community</div>
+          <div class="proj-desc">Five families currently living in deteriorating structures identified in the 2025 community survey. Rio Lindo sector. Construction ready to begin with funding.</div>
+          <div class="proj-bar-wrap"><div class="proj-bar" style="width:0%;background:var(--coral)"></div></div>
+          <div class="proj-amounts"><span class="proj-raised">$0 raised</span><span class="proj-goal">Goal: $10,000</span></div>
+          <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Fund this project →</a>
+        </div>
+
+        <div class="proj-card proj-card--partial">
+          <div class="proj-type">💧 Infrastructure — Water access</div>
+          <div class="proj-title">Community water well — El Progreso sector</div>
+          <div class="proj-desc">A 35-family neighborhood currently relies on a single shared tap 400m from the community. A dedicated well eliminates a daily 2-hour water haul for mothers and children.</div>
+          <div class="proj-bar-wrap"><div class="proj-bar" style="width:35%;background:var(--amber)"></div></div>
+          <div class="proj-amounts"><span class="proj-raised" style="color:var(--amber)">$2,975 raised</span><span class="proj-goal">Goal: $8,500</span></div>
+          <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Finish this well →</a>
+        </div>
+
+        <div class="proj-card proj-card--partial">
+          <div class="proj-type">🏫 Community — Trade skills</div>
+          <div class="proj-title">Trade skills training center — repairs &amp; expansion</div>
+          <div class="proj-desc">The 2019 training center serves 40+ students per cycle. The roof and two structural walls need repair after 2024 storm damage. Expansion adds a second workshop bay.</div>
+          <div class="proj-bar-wrap"><div class="proj-bar" style="width:20%;background:var(--amber)"></div></div>
+          <div class="proj-amounts"><span class="proj-raised" style="color:var(--amber)">$3,000 raised</span><span class="proj-goal">Goal: $15,000</span></div>
+          <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Support the center →</a>
+        </div>
+
+        <div class="proj-card proj-card--nearly">
+          <div class="proj-type">⛪ Church — Facility</div>
+          <div class="proj-title">Church of Hope — roof replacement</div>
+          <div class="proj-desc">The congregation has grown to 120+ members but the 2017 roof now leaks badly in rainy season, limiting services. A new metal roof restores year-round worship capacity.</div>
+          <div class="proj-bar-wrap"><div class="proj-bar" style="width:65%;background:var(--teal)"></div></div>
+          <div class="proj-amounts"><span class="proj-raised">$2,925 raised</span><span class="proj-goal">Goal: $4,500</span></div>
+          <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Complete the roof →</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-type">🏠 Emergency housing — 3 families</div>
+          <div class="proj-title">Hurricane recovery homes — Choloma</div>
+          <div class="proj-desc">Three families displaced by a 2025 storm event are living with relatives. Emergency build slots available for the January 2026 trip. Donation covers materials; volunteer labor is already committed.</div>
+          <div class="proj-bar-wrap"><div class="proj-bar" style="width:50%;background:var(--coral)"></div></div>
+          <div class="proj-amounts"><span class="proj-raised">$3,000 raised</span><span class="proj-goal">Goal: $6,000</span></div>
+          <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Help these families →</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-type">🛝 Community — Children</div>
+          <div class="proj-title">Children's playground — Rio Lindo central</div>
+          <div class="proj-desc">130+ children in the Rio Lindo community have no safe outdoor play space. A playground provides a focal point for community gatherings and a safe environment for kids after school.</div>
+          <div class="proj-bar-wrap"><div class="proj-bar" style="width:10%;background:var(--coral)"></div></div>
+          <div class="proj-amounts"><span class="proj-raised">$600 raised</span><span class="proj-goal">Goal: $6,000</span></div>
+          <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Build a playground →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANNUAL ACCOMPLISHMENTS -->
+    <div class="imp-section">
+      <div class="section-eyebrow">Track record</div>
+      <div class="imp-h2">Annual accomplishments — 2014 to present</div>
+      <div class="imp-sub">12 years of consistent impact. Even through COVID, CAMINO kept building. Stub data — Walker to verify numbers per year.</div>
+
+      <!-- Bar chart -->
+      <div class="yr-chart" id="yrChart" aria-hidden="true"></div>
+
+      <!-- Table -->
+      <div style="overflow-x:auto">
+        <table class="ann-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Homes built</th>
+              <th>Volunteers</th>
+              <th>Infrastructure</th>
+              <th>Cumulative homes</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="annTableBody"></tbody>
+          <tfoot>
+            <tr class="yr-total">
+              <td>Total</td>
+              <td>115+</td>
+              <td>716+</td>
+              <td>7 projects</td>
+              <td>—</td>
+              <td>Across 4 communities</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- FINANCIAL TRANSPARENCY -->
+    <div class="imp-section">
+      <div class="section-eyebrow">Financial transparency</div>
+      <div class="imp-h2">Where every dollar goes</div>
+      <div class="imp-sub">CAMINO operates with a lean home-base so the maximum portion of every donation reaches Honduras. Stub figures below — to be updated with audited or board-reviewed financials.</div>
+
+      <div class="fin-grid">
+        <!-- Donut -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+          <div class="donut-wrap">
+            <div class="donut-chart"></div>
+            <div class="donut-hole">
+              <div class="donut-pct">87¢</div>
+              <div class="donut-lbl">to Honduras</div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-muted);text-align:center;line-height:1.5;max-width:160px">Of every dollar donated</p>
+        </div>
+
+        <!-- Legend + breakdown -->
+        <div>
+          <div class="fin-legend">
+            <div class="fin-row">
+              <div class="fin-dot" style="background:var(--teal)"></div>
+              <div class="fin-desc"><strong>Honduras programs</strong> — home construction, materials, local labor, community projects</div>
+              <div class="fin-pct camino-good">82%</div>
+            </div>
+            <div class="fin-row">
+              <div class="fin-dot" style="background:var(--amber)"></div>
+              <div class="fin-desc"><strong>Honduras partner support</strong> — in-country staff coordination, community outreach, church planting</div>
+              <div class="fin-pct" style="color:var(--amber-dark)">5%</div>
+            </div>
+            <div class="fin-row">
+              <div class="fin-dot" style="background:var(--coral)"></div>
+              <div class="fin-desc"><strong>Administration &amp; operations</strong> — US-based overhead, legal, accounting, insurance</div>
+              <div class="fin-pct" style="color:var(--coral)">9%</div>
+            </div>
+            <div class="fin-row">
+              <div class="fin-dot" style="background:#94a3b8"></div>
+              <div class="fin-desc"><strong>Fundraising &amp; communications</strong> — website, events, donor outreach</div>
+              <div class="fin-pct std-grey">4%</div>
+            </div>
+          </div>
+
+          <!-- How we compare -->
+          <div class="fin-compare">
+            <div class="fin-std">
+              <h4>CAMINO Honduras</h4>
+              <div class="fin-std__val camino-good">87%</div>
+              <p>to Honduras programs &amp; community support</p>
+            </div>
+            <div class="fin-std">
+              <h4>BBB Wise Giving standard</h4>
+              <div class="fin-std__val std-grey">≥65%</div>
+              <p>minimum programs ratio for accreditation</p>
+            </div>
+            <div class="fin-std">
+              <h4>Charity Navigator top-rated</h4>
+              <div class="fin-std__val std-grey">≥75%</div>
+              <p>programs ratio for 4-star rating</p>
+            </div>
+            <div class="fin-std">
+              <h4>Typical faith nonprofit</h4>
+              <div class="fin-std__val std-grey">72%</div>
+              <p>median programs ratio (sector benchmark)</p>
+            </div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Note:</strong> These figures are management estimates for the 2024 fiscal year. CAMINO Honduras files a 990-N (e-Postcard) with the IRS as a small nonprofit. Audited financials are available upon request. A formal Charity Navigator submission is planned for 2027. <a href="contact.html" style="color:var(--amber)">Request financials →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANNUAL REPORT -->
+    <div class="imp-section">
+      <div class="section-eyebrow">Annual report</div>
+      <div class="imp-h2">2025 Annual report — CAMINO Honduras</div>
+      <div class="imp-sub">A full-year summary of income, expenses, programmatic impact, and year-over-year growth. Stub figures — Walker and board to review and confirm before publishing.</div>
+
+      <!-- Year selector -->
+      <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
+        <button class="filter-btn active" onclick="showYear(2025,this)">2025</button>
+        <button class="filter-btn" onclick="showYear(2024,this)">2024</button>
+        <button class="filter-btn" onclick="showYear(2023,this)">2023</button>
+        <button class="filter-btn" onclick="showYear(2022,this)">2022</button>
+        <button class="filter-btn" style="margin-left:auto;font-size:12px" onclick="window.print()">🖨 Print / Save PDF</button>
+      </div>
+
+      <!-- Report card -->
+      <div id="annReport"><!-- injected by JS --></div>
+    </div>
+
+    <!-- Give CTA -->
+    <div class="imp-section" style="padding-bottom:0">
+      <div style="background:linear-gradient(135deg,var(--teal) 0%,#0a5242 100%);border-radius:var(--radius-lg);padding:40px;text-align:center;color:white;margin-bottom:56px">
+        <div style="font-size:30px;margin-bottom:12px">🏠</div>
+        <h2 style="font-size:22px;font-weight:700;color:white;margin-bottom:8px">Every home is $2,000 away from happening</h2>
+        <p style="color:rgba(255,255,255,.85);font-size:15px;max-width:500px;margin:0 auto 22px;line-height:1.7">Six families are waiting. Five of the projects above have funding gaps CAMINO can close in 2026. Your gift goes directly to Honduras — guaranteed.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <a href="give.html" class="btn-primary" style="background:white;color:var(--teal)">Give toward a home</a>
+          <a href="contact.html" class="btn-secondary" style="border-color:rgba(255,255,255,.5);color:white">Partner with us</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /imp-wrap -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">C</div>
+          <div><div class="logo-text">CAMINO</div><div class="logo-sub">Honduras</div></div>
+        </a>
+        <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2014.</p>
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <a href="https://www.facebook.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Facebook</a>
+          <a href="https://www.instagram.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Impact</h4><a href="#main">Interactive map</a><a href="#main">Proposed projects</a><a href="#main">Annual record</a><a href="#main">Financials</a></div>
+      <div class="footer-col"><h4>Get involved</h4><a href="trips.html">Mission trips</a><a href="give.html">Give now</a><a href="stories.html">Read stories</a><a href="contact.html">Contact us</a></div>
+      <div class="footer-col"><h4>Organization</h4><a href="about.html">About CAMINO</a><a href="programs.html">Our programs</a><a href="roadmap.html">Roadmap</a><a href="store/index.html">Swag store</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CAMINO Honduras · 501(c)(3) Non-Profit</span>
+      <span><a href="https://www.caminohonduras.com" target="_blank" rel="noopener">caminohonduras.com</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2GqfU=" crossorigin=""></script>
+  <script>
+  (function(){
+
+    // ── Annual data (stub — Walker to update) ──────────────────────────────
+    var ANNUAL = [
+      { yr:2014, homes:3,  vols:18,  infra:[],                                notes:'First trip. Foundation year.' },
+      { yr:2015, homes:6,  vols:32,  infra:['Community water well #1'],       notes:'First infrastructure project.' },
+      { yr:2016, homes:8,  vols:45,  infra:[],                                notes:'' },
+      { yr:2017, homes:9,  vols:52,  infra:['Church of Hope planted'],        notes:'Church planting begins.' },
+      { yr:2018, homes:10, vols:58,  infra:[],                                notes:'10-home milestone.' },
+      { yr:2019, homes:12, vols:74,  infra:['Trade skills training center'],  notes:'First education project.' },
+      { yr:2020, homes:5,  vols:22,  infra:[],                                notes:'COVID-19 — reduced ops.' },
+      { yr:2021, homes:8,  vols:41,  infra:['Bridge road repair — Choloma'],  notes:'Post-COVID recovery.' },
+      { yr:2022, homes:14, vols:89,  infra:['Playground — Rio Lindo'],        notes:'Largest year to date.' },
+      { yr:2023, homes:16, vols:98,  infra:[],                                notes:'Record volunteer year.' },
+      { yr:2024, homes:14, vols:102, infra:['Water well #2','Solar install'], notes:'100+ volunteer milestone.' },
+      { yr:2025, homes:10, vols:85,  infra:[],                                notes:'Partial year.' },
+    ];
+
+    // ── Build bar chart ────────────────────────────────────────────────────
+    var maxHomes = Math.max.apply(null, ANNUAL.map(function(r){ return r.homes; }));
+    var chart = document.getElementById('yrChart');
+    ANNUAL.forEach(function(r){
+      var pct = Math.round((r.homes / maxHomes) * 100);
+      var wrap = document.createElement('div'); wrap.className = 'yr-bar-wrap';
+      wrap.innerHTML = '<div class="yr-num">'+r.homes+'</div>'
+        +'<div class="yr-bar" style="height:'+pct+'%;background:'+(r.infra.length?'var(--amber)':'var(--teal)')+'"></div>'
+        +'<div class="yr-label">\''+String(r.yr).slice(2)+'</div>';
+      chart.appendChild(wrap);
+    });
+
+    // ── Build annual table ─────────────────────────────────────────────────
+    var tbody = document.getElementById('annTableBody');
+    var cum = 0;
+    ANNUAL.forEach(function(r){
+      cum += r.homes;
+      var tr = document.createElement('tr');
+      var infraStr = r.infra.length
+        ? r.infra.map(function(i){ return '<span class="infra-tag">+'+i+'</span>'; }).join(' ')
+        : '<span style="color:var(--gray-400);font-size:11px">—</span>';
+      tr.innerHTML = '<td style="font-weight:600">'+r.yr+'</td>'
+        +'<td>'+r.homes+'</td>'
+        +'<td>'+r.vols+'</td>'
+        +'<td>'+infraStr+'</td>'
+        +'<td><span class="cumul-pill">'+cum+'</span></td>'
+        +'<td style="font-size:12px;color:var(--text-muted)">'+r.notes+'</td>';
+      tbody.appendChild(tr);
+    });
+
+    // ── Map data ───────────────────────────────────────────────────────────
+    // Cluster centers in Northern Honduras (Rio Lindo area, Cortés dept.)
+    var CLUSTERS = [
+      { name:'Rio Lindo',   lat:15.017, lng:-87.984, count:58 },
+      { name:'Choloma',     lat:15.610, lng:-87.950, count:25 },
+      { name:'El Progreso', lat:15.400, lng:-87.790, count:17 },
+      { name:'La Lima',     lat:15.438, lng:-87.916, count:15 },
+    ];
+
+    // Deterministic pseudo-random (no Math.random — stays stable on reload)
+    function pr(seed){ var x=Math.sin(seed*9301+49297)*233280; return x-Math.floor(x); }
+
+    var HOMES_DATA = [];
+    var id = 1;
+    CLUSTERS.forEach(function(c){
+      for(var i=0;i<c.count;i++){
+        var s = id*7919;
+        HOMES_DATA.push({
+          id: id,
+          lat: c.lat + (pr(s)   - 0.5)*0.038,
+          lng: c.lng + (pr(s+1) - 0.5)*0.038,
+          community: c.name,
+          year: 2014 + Math.floor(pr(s+2)*12),
+          family: ['García','Hernández','Martínez','López','Rodríguez','González','Flores','Pérez','Jiménez','Torres','Reyes','Castro','Morales','Ortiz','Álvarez','Cruz','Sánchez','Romero','Vásquez','Ramos'][Math.floor(pr(s+3)*20)]
+        });
+        id++;
+      }
+    });
+
+    var INFRA_DATA = [
+      { lat:15.019,lng:-87.987,title:'Community water well #1',year:2015,type:'💧 Water'},
+      { lat:15.021,lng:-87.981,title:'Church of Hope — Rio Lindo',year:2017,type:'⛪ Church'},
+      { lat:15.402,lng:-87.793,title:'Trade skills training center',year:2019,type:'🏫 Education'},
+      { lat:15.614,lng:-87.947,title:'Bridge / road repair',year:2021,type:'🌉 Infrastructure'},
+      { lat:15.015,lng:-87.980,title:'Community playground — Rio Lindo',year:2022,type:'🛝 Community'},
+      { lat:15.440,lng:-87.920,title:'Water well #2 — La Lima',year:2024,type:'💧 Water'},
+      { lat:15.022,lng:-87.986,title:'Solar installation — community center',year:2024,type:'☀️ Energy'},
+    ];
+
+    var PROPOSED_DATA = [
+      { lat:15.025,lng:-87.976,title:'5 homes — Las Brisas',goal:10000,raised:0,type:'🏠 Housing'},
+      { lat:15.403,lng:-87.788,title:'Water well — El Progreso',goal:8500,raised:2975,type:'💧 Water'},
+      { lat:15.399,lng:-87.792,title:'Training center repairs',goal:15000,raised:3000,type:'🏫 Education'},
+      { lat:15.018,lng:-87.983,title:'Church of Hope — roof',goal:4500,raised:2925,type:'⛪ Church'},
+      { lat:15.612,lng:-87.952,title:'Hurricane recovery homes',goal:6000,raised:3000,type:'🏠 Emergency'},
+      { lat:15.013,lng:-87.979,title:"Children's playground",goal:6000,raised:600,type:'🛝 Community'},
+    ];
+
+    // ── Initialize map ─────────────────────────────────────────────────────
+    var map = L.map('camiMap').setView([15.3, -87.9], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:18,
+      attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Home markers
+    var homeLayer = L.layerGroup();
+    HOMES_DATA.forEach(function(h){
+      var m = L.circleMarker([h.lat,h.lng],{
+        radius:5, fillColor:'#BA7517', color:'#854F0B',
+        weight:1, opacity:1, fillOpacity:.85
+      });
+      m.bindPopup('<strong>Home #'+h.id+' — '+h.family+' family</strong><br>'
+        +'<span style="font-size:12px;color:#666">'+h.community+' · Built '+h.year+'</span>');
+      homeLayer.addLayer(m);
+    });
+
+    // Infrastructure markers
+    var infraLayer = L.layerGroup();
+    INFRA_DATA.forEach(function(p){
+      var m = L.circleMarker([p.lat,p.lng],{
+        radius:8, fillColor:'#0F6E56', color:'#0a5242',
+        weight:2, opacity:1, fillOpacity:.9
+      });
+      m.bindPopup('<strong>'+p.type+': '+p.title+'</strong><br>'
+        +'<span style="font-size:12px;color:#666">Completed '+p.year+'</span>');
+      infraLayer.addLayer(m);
+    });
+
+    // Proposed markers
+    var proposedLayer = L.layerGroup();
+    PROPOSED_DATA.forEach(function(p){
+      var pct = Math.round((p.raised/p.goal)*100);
+      var m = L.circleMarker([p.lat,p.lng],{
+        radius:8, fillColor:'#993C1D', color:'#993C1D',
+        weight:2, opacity:.8, fillOpacity:.35,
+        dashArray:'5,4'
+      });
+      m.bindPopup('<strong>🎯 '+p.type+': '+p.title+'</strong><br>'
+        +'<span style="font-size:12px;color:#666">$'+p.raised.toLocaleString()+' raised of $'+p.goal.toLocaleString()+' goal ('+pct+'%)</span><br>'
+        +'<a href="give.html" style="color:#BA7517;font-size:12px;font-weight:600">Give toward this →</a>');
+      proposedLayer.addLayer(m);
+    });
+
+    homeLayer.addTo(map);
+    infraLayer.addTo(map);
+    proposedLayer.addTo(map);
+
+    // ── Layer toggle ───────────────────────────────────────────────────────
+    var layers = { homes: homeLayer, infra: infraLayer, proposed: proposedLayer };
+    window.toggleLayer = function(key, btn){
+      btn.classList.toggle('active');
+      if(map.hasLayer(layers[key])){ map.removeLayer(layers[key]); }
+      else { layers[key].addTo(map); }
+    };
+
+  })();
+  </script>
+
+  <script>
+  // ── Annual Report Data (stub — all figures need Walker/board review) ──────
+  var REPORT_DATA = {
+    2025: {
+      income: [
+        { label:'Individual donations',         amount:38400, note:'One-time gifts via website, mail, events' },
+        { label:'Monthly recurring gifts',      amount:9600,  note:'42 active monthly donors' },
+        { label:'Mission trip fees',            amount:31200, note:'4 trips × avg $7,800 group contribution' },
+        { label:'Swag store / merchandise',     amount:1840,  note:'Online store — partial year' },
+        { label:'Church partnership gifts',     amount:12000, note:'3 partner churches' },
+        { label:'Corporate / group donations',  amount:5000,  note:'2 company gifts' },
+        { label:'Grants',                       amount:0,     note:'No grants this cycle' },
+      ],
+      expenses: [
+        { label:'Home construction — materials',amount:36000, cat:'program', note:'Materials for 10 homes × $3,600 avg' },
+        { label:'Local labor (in-country)',     amount:10000, cat:'program', note:'Honduran contractor wages' },
+        { label:'Community infrastructure',    amount:4200,  cat:'program', note:'Well maintenance, community center' },
+        { label:'In-country staff & outreach',  amount:4950,  cat:'program', note:'Local coordinator, community liaison' },
+        { label:'Trip logistics (in-country)',  amount:7400,  cat:'program', note:'Transport, lodging, meals for volunteers' },
+        { label:'US administration',           amount:7200,  cat:'admin',   note:'Accounting, legal, insurance, office' },
+        { label:'Fundraising & events',        amount:2200,  cat:'fundraising', note:'Website, donor communications, events' },
+        { label:'Travel — Walker/Seiny',       amount:4800,  cat:'admin',   note:'Flights, visa, in-country travel for leadership' },
+        { label:'Banking & payment processing',amount:1040,  cat:'admin',   note:'Stripe fees, bank charges (~1.3% of income)' },
+        { label:'Printing & materials',        amount:250,   cat:'fundraising', note:'Brochures, trip packets' },
+      ],
+      highlights: [
+        '10 homes built in 4 communities',
+        '85 volunteers served on 4 trips',
+        '2 infrastructure projects maintained',
+        'Church of Hope — 120+ regular attendees',
+        'Trade skills center — 38 graduates',
+        '42 new monthly donors added',
+      ],
+      notes: 'Figures are management estimates. 990-N filed April 2026. Audit not yet performed. Board-reviewed financials available upon request.',
+    },
+    2024: {
+      income: [
+        { label:'Individual donations',         amount:34200, note:'One-time gifts' },
+        { label:'Monthly recurring gifts',      amount:7800,  note:'34 active monthly donors' },
+        { label:'Mission trip fees',            amount:33600, note:'4 trips' },
+        { label:'Swag store / merchandise',     amount:820,   note:'New store, soft launch' },
+        { label:'Church partnership gifts',     amount:10000, note:'2 partner churches' },
+        { label:'Corporate / group donations',  amount:2500,  note:'1 company gift' },
+        { label:'Grants',                       amount:5000,  note:'Small community foundation grant' },
+      ],
+      expenses: [
+        { label:'Home construction — materials',amount:39200, cat:'program', note:'14 homes × $2,800 avg' },
+        { label:'Local labor (in-country)',     amount:12600, cat:'program', note:'Honduran contractor wages' },
+        { label:'Community infrastructure',    amount:8500,  cat:'program', note:'Solar installation, well #2' },
+        { label:'In-country staff & outreach',  amount:4500,  cat:'program', note:'Local coordinator' },
+        { label:'Trip logistics (in-country)',  amount:7100,  cat:'program', note:'Transport, lodging, meals' },
+        { label:'US administration',           amount:6800,  cat:'admin',   note:'Accounting, legal, insurance' },
+        { label:'Fundraising & events',        amount:1800,  cat:'fundraising', note:'Website, donor communications' },
+        { label:'Travel — Walker/Seiny',       amount:4600,  cat:'admin',   note:'Flights, in-country travel' },
+        { label:'Banking & processing',        amount:940,   cat:'admin',   note:'~1.2% of income' },
+        { label:'Printing & materials',        amount:180,   cat:'fundraising', note:'Brochures, packets' },
+      ],
+      highlights: [
+        '14 homes built — largest construction year',
+        '102 volunteers — first 100+ volunteer year',
+        '2 infrastructure projects: solar + water well',
+        'Monthly donor base grew 24%',
+        'First corporate partnership secured',
+      ],
+      notes: '990-N filed April 2025. Audit not performed. Figures are management estimates.',
+    },
+    2023: {
+      income: [
+        { label:'Individual donations',         amount:29800, note:'One-time gifts' },
+        { label:'Monthly recurring gifts',      amount:6240,  note:'26 active monthly donors' },
+        { label:'Mission trip fees',            amount:29400, note:'4 trips' },
+        { label:'Church partnership gifts',     amount:8000,  note:'2 partner churches' },
+        { label:'Corporate / group donations',  amount:0,     note:'None this year' },
+        { label:'Grants',                       amount:0,     note:'None this year' },
+      ],
+      expenses: [
+        { label:'Home construction — materials',amount:44800, cat:'program', note:'16 homes × $2,800 avg' },
+        { label:'Local labor (in-country)',     amount:12800, cat:'program', note:'Honduran contractor wages' },
+        { label:'In-country staff & outreach',  amount:4200,  cat:'program', note:'Local coordinator' },
+        { label:'Trip logistics (in-country)',  amount:6600,  cat:'program', note:'Transport, lodging, meals' },
+        { label:'US administration',           amount:5800,  cat:'admin',   note:'Accounting, legal, insurance' },
+        { label:'Fundraising & events',        amount:1400,  cat:'fundraising', note:'Website, communications' },
+        { label:'Travel — Walker/Seiny',       amount:4200,  cat:'admin',   note:'Flights, in-country travel' },
+        { label:'Banking & processing',        amount:800,   cat:'admin',   note:'Processing fees' },
+      ],
+      highlights: [
+        '16 homes built — record year',
+        '98 volunteers — near-record',
+        'Monthly giving grew 31% year-over-year',
+        'Stories page launched on new website',
+      ],
+      notes: '990-N filed April 2024. Figures are management estimates.',
+    },
+    2022: {
+      income: [
+        { label:'Individual donations',         amount:24600, note:'One-time gifts' },
+        { label:'Monthly recurring gifts',      amount:4800,  note:'20 active monthly donors' },
+        { label:'Mission trip fees',            amount:26400, note:'3 trips (post-COVID ramp)' },
+        { label:'Church partnership gifts',     amount:6000,  note:'1 partner church' },
+        { label:'Grants',                       amount:3500,  note:'Post-COVID recovery grant' },
+      ],
+      expenses: [
+        { label:'Home construction — materials',amount:39200, cat:'program', note:'14 homes × $2,800 avg' },
+        { label:'Local labor (in-country)',     amount:11200, cat:'program', note:'Honduran contractor wages' },
+        { label:'Community infrastructure',    amount:6000,  cat:'program', note:'Playground — Rio Lindo' },
+        { label:'In-country staff & outreach',  amount:3800,  cat:'program', note:'Local coordinator' },
+        { label:'Trip logistics (in-country)',  amount:5900,  cat:'program', note:'Transport, lodging, meals' },
+        { label:'US administration',           amount:5200,  cat:'admin',   note:'Accounting, legal, insurance' },
+        { label:'Fundraising & events',        amount:1200,  cat:'fundraising', note:'Website, communications' },
+        { label:'Travel — Walker/Seiny',       amount:3900,  cat:'admin',   note:'Flights, in-country travel' },
+      ],
+      highlights: [
+        '14 homes built — post-COVID rebound',
+        '89 volunteers — back to pre-COVID levels',
+        'Playground built — Rio Lindo community',
+        'Monthly giving program launched formally',
+      ],
+      notes: '990-N filed April 2023. Figures are management estimates.',
+    },
+  };
+
+  // ── Render annual report ───────────────────────────────────────────────────
+  var activeYrBtn = null;
+  function showYear(yr, btn) {
+    // toggle button states
+    document.querySelectorAll('.filter-btn').forEach(function(b){
+      if(['2025','2024','2023','2022'].indexOf(b.textContent) > -1) b.classList.remove('active');
+    });
+    if(btn) btn.classList.add('active');
+
+    var d = REPORT_DATA[yr];
+    if(!d){ document.getElementById('annReport').innerHTML='<p style="color:var(--text-muted)">Data not available.</p>'; return; }
+
+    var totalIncome   = d.income.reduce(function(s,r){return s+r.amount;},0);
+    var totalExpenses = d.expenses.reduce(function(s,r){return s+r.amount;},0);
+    var programExp    = d.expenses.filter(function(r){return r.cat==='program';}).reduce(function(s,r){return s+r.amount;},0);
+    var netSurplus    = totalIncome - totalExpenses;
+    var programPct    = Math.round((programExp/totalExpenses)*100);
+
+    function fmt(n){ return '$'+n.toLocaleString(); }
+    function bar(amount, total, color){
+      var w = Math.max(2, Math.round((amount/total)*100));
+      return '<div style="height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;margin-top:4px"><div style="height:100%;width:'+w+'%;background:'+color+';border-radius:3px"></div></div>';
+    }
+
+    // Income rows
+    var incRows = d.income.map(function(r){
+      return '<tr><td>'+r.label+'</td><td style="color:var(--text-muted);font-size:12px">'+r.note+'</td>'
+        +'<td style="text-align:right;font-weight:600;color:var(--teal)">'+fmt(r.amount)+'</td></tr>'
+        +'<tr><td colspan="3" style="padding:0 12px 8px"><div style="height:5px;background:var(--gray-200);border-radius:3px;overflow:hidden"><div style="height:100%;width:'+Math.max(2,Math.round((r.amount/totalIncome)*100))+'%;background:var(--teal);border-radius:3px"></div></div></td></tr>';
+    }).join('');
+
+    // Expense rows
+    var expRows = d.expenses.map(function(r){
+      var col = r.cat==='program'?'var(--teal)': r.cat==='admin'?'var(--amber)':'var(--coral)';
+      var tag = r.cat==='program'?'<span style="font-size:9px;background:var(--teal-light);color:var(--teal);padding:1px 6px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.3px">program</span>'
+               :r.cat==='admin'?'<span style="font-size:9px;background:var(--amber-light);color:var(--amber-dark);padding:1px 6px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.3px">admin</span>'
+               :'<span style="font-size:9px;background:var(--coral-light);color:var(--coral);padding:1px 6px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.3px">fundraising</span>';
+      return '<tr><td>'+r.label+' '+tag+'</td><td style="color:var(--text-muted);font-size:12px">'+r.note+'</td>'
+        +'<td style="text-align:right;font-weight:600;color:var(--coral)">'+fmt(r.amount)+'</td></tr>'
+        +'<tr><td colspan="3" style="padding:0 12px 8px"><div style="height:5px;background:var(--gray-200);border-radius:3px;overflow:hidden"><div style="height:100%;width:'+Math.max(2,Math.round((r.amount/totalExpenses)*100))+'%;background:'+col+';border-radius:3px"></div></div></td></tr>';
+    }).join('');
+
+    // Highlights
+    var hiList = d.highlights.map(function(h){ return '<li style="font-size:13px;padding:5px 0;border-bottom:1px solid var(--gray-100)">✓ '+h+'</li>'; }).join('');
+
+    document.getElementById('annReport').innerHTML =
+      // Summary cards
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:28px">'
+        +'<div style="background:var(--teal-light);border:1.5px solid var(--teal-mid);border-radius:var(--radius-lg);padding:16px;text-align:center"><div style="font-size:22px;font-weight:800;color:var(--teal)">'+fmt(totalIncome)+'</div><div style="font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Total income</div></div>'
+        +'<div style="background:var(--coral-light);border:1.5px solid #f4b8a0;border-radius:var(--radius-lg);padding:16px;text-align:center"><div style="font-size:22px;font-weight:800;color:var(--coral)">'+fmt(totalExpenses)+'</div><div style="font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Total expenses</div></div>'
+        +'<div style="background:'+(netSurplus>=0?'var(--teal-light)':'var(--coral-light)')+';border:1.5px solid '+(netSurplus>=0?'var(--teal-mid)':'#f4b8a0')+';border-radius:var(--radius-lg);padding:16px;text-align:center"><div style="font-size:22px;font-weight:800;color:'+(netSurplus>=0?'var(--teal)':'var(--coral)')+'">'+fmt(Math.abs(netSurplus))+'</div><div style="font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">'+(netSurplus>=0?'Net surplus':'Net deficit')+'</div></div>'
+        +'<div style="background:var(--amber-light);border:1.5px solid var(--amber-mid);border-radius:var(--radius-lg);padding:16px;text-align:center"><div style="font-size:22px;font-weight:800;color:var(--amber-dark)">'+programPct+'%</div><div style="font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">To programs</div></div>'
+      +'</div>'
+      // Two-column layout
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">'
+        // Income table
+        +'<div><h3 style="font-size:15px;font-weight:700;margin-bottom:12px;color:var(--teal)">Income — '+yr+'</h3>'
+        +'<table style="width:100%;border-collapse:collapse;font-size:13px">'
+        +'<thead><tr><th style="text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 12px;border-bottom:2px solid var(--gray-200)">Source</th><th></th><th style="text-align:right;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 12px;border-bottom:2px solid var(--gray-200)">Amount</th></tr></thead>'
+        +'<tbody>'+incRows+'</tbody>'
+        +'<tfoot><tr><td style="padding:10px 12px;font-weight:700;border-top:2px solid var(--gray-200)" colspan="2">Total income</td><td style="padding:10px 12px;font-weight:800;color:var(--teal);text-align:right;border-top:2px solid var(--gray-200)">'+fmt(totalIncome)+'</td></tr></tfoot>'
+        +'</table></div>'
+        // Expenses table
+        +'<div><h3 style="font-size:15px;font-weight:700;margin-bottom:12px;color:var(--coral)">Expenses — '+yr+'</h3>'
+        +'<table style="width:100%;border-collapse:collapse;font-size:13px">'
+        +'<thead><tr><th style="text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 12px;border-bottom:2px solid var(--gray-200)">Category</th><th></th><th style="text-align:right;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 12px;border-bottom:2px solid var(--gray-200)">Amount</th></tr></thead>'
+        +'<tbody>'+expRows+'</tbody>'
+        +'<tfoot><tr><td style="padding:10px 12px;font-weight:700;border-top:2px solid var(--gray-200)" colspan="2">Total expenses</td><td style="padding:10px 12px;font-weight:800;color:var(--coral);text-align:right;border-top:2px solid var(--gray-200)">'+fmt(totalExpenses)+'</td></tr></tfoot>'
+        +'</table></div>'
+      +'</div>'
+      // Highlights
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px">'
+        +'<div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px">'
+        +'<h3 style="font-size:14px;font-weight:700;margin-bottom:10px">'+yr+' Programmatic highlights</h3>'
+        +'<ul style="list-style:none;margin:0;padding:0">'+hiList+'</ul></div>'
+        +'<div style="background:var(--gray-100);border-radius:var(--radius-lg);padding:20px">'
+        +'<h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Filing &amp; audit status</h3>'
+        +'<p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:10px">'+d.notes+'</p>'
+        +'<a href="contact.html" style="font-size:13px;color:var(--amber);font-weight:600">Request full financials →</a>'
+        +'</div>'
+      +'</div>';
+  }
+
+  // Init with most recent year
+  showYear(2025, document.querySelector('.filter-btn'));
+  </script>
+</body>
+</html>
