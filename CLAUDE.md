@@ -45,6 +45,20 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 - Next steps: ...
 -->
 
+### 2026-06-20 — Roadmap executive brief + nav link on all 19 pages
+- What changed:
+  - **roadmap.html**: New page — site scorecard (6 categories A–C), Top 15 priority gaps, 3-phase plan (Phase 1 Fix It / Phase 2 Build It / Phase 3 Scale It), revenue table, strategic leverage section, tool stack, print/PDF bar
+  - **sitemap.xml**: Added roadmap.html entry; **robots.txt** committed (was untracked)
+  - **All 19 public pages**: Added Roadmap link in desktop nav + mobile menu
+- Status: Complete. Committed b63af42 and pushed to main.
+- Deadline: User wants site fully vetted by Thanksgiving 2026 (Nov 27) to hit holiday giving season.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Fill in Mailchimp u= and id= in index.html + stories.html newsletter forms
+  3. Add Store to main nav on all pages (currently hidden)
+  4. Create privacy.html (fix dead `#` footer links)
+  5. Phase 2: prayer.html, transparency.html, partnerships.html (corporate/church), volunteer.html
+
 ### 2026-06-20 — WCAG 2.1 AA accessibility pass + WhatsApp group chat feature
 - What changed:
   - **style.css**: Skip-link class (fixed, focus-reveals), global `:focus-visible` styles, nav dropdown `:focus-within` for keyboard access
