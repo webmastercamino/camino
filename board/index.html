@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board Portal — CAMINO Honduras (Private)</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* ── Auth gate ── */
+    #authGate{position:fixed;inset:0;background:linear-gradient(135deg,#051009 0%,#0a1e12 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px}
+    .auth-box{background:white;border-radius:16px;padding:40px 44px;max-width:440px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+    .auth-logo{width:54px;height:54px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:white;margin:0 auto 18px}
+    .auth-box h1{font-size:20px;font-weight:700;margin-bottom:6px}
+    .auth-box p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:24px}
+    .auth-input{width:100%;padding:11px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit;box-sizing:border-box;margin-bottom:12px}
+    .auth-input:focus{outline:none;border-color:var(--teal)}
+    .auth-btn{width:100%;padding:12px;background:var(--teal);color:white;border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px}
+    .auth-btn:hover{opacity:.9}
+    .auth-error{color:var(--coral);font-size:12px;margin-bottom:10px;display:none}
+    .cf-note{font-size:11px;color:var(--text-muted);line-height:1.6;margin-top:18px;padding-top:14px;border-top:1px solid var(--gray-200)}
+    .cf-badge{display:inline-block;background:#F6821F;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;margin-right:4px}
+
+    /* ── Board header ── */
+    .board-header{background:#071a10;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+    .board-header__brand{display:flex;align-items:center;gap:10px;color:white}
+    .board-header__brand strong{font-size:15px;font-weight:700}
+    .board-header__brand span{font-size:11px;opacity:.6;margin-left:6px}
+    .board-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.8)}
+    .board-header__meta{font-size:12px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:16px}
+    .board-header__meta a{color:rgba(255,255,255,.5);text-decoration:none;font-size:11px}
+    .board-header__meta a:hover{color:white}
+    .logout-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:5px 12px;border-radius:4px;font-size:11px;cursor:pointer;font-family:inherit}
+    .logout-btn:hover{border-color:rgba(255,255,255,.5);color:white}
+
+    /* ── Tab bar ── */
+    #boardTabBar{background:#0a2416;display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid rgba(255,255,255,.08)}
+    #boardTabBar::-webkit-scrollbar{display:none}
+    #boardTabBar .btab{flex:0 0 auto;padding:13px 22px;font-size:13px;font-weight:600;color:rgba(255,255,255,.65);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s}
+    #boardTabBar .btab:hover{color:#fff}
+    #boardTabBar .btab.active{color:#fff;border-bottom-color:#BA7517;background:rgba(255,255,255,.07)}
+    .btab-badge{background:var(--coral);color:white;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:middle}
+
+    /* ── Tab panels ── */
+    .board-panel{display:none;padding:32px 28px;max-width:1140px;margin:0 auto}
+    @media(max-width:640px){.board-panel{padding:20px 16px}}
+    .board-panel.active{display:block}
+
+    /* ── Utility ── */
+    .sample-tag{display:inline-block;background:rgba(186,117,23,.15);color:var(--amber-dark);font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.3px;vertical-align:middle}
+    .section-h{font-size:18px;font-weight:700;margin-bottom:4px;margin-top:0}
+    .section-sub{font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6}
+    .divider{border:none;border-top:1.5px solid var(--gray-200);margin:36px 0}
+
+    /* ── KPI cards ── */
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:28px}
+    .kpi{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:18px 20px}
+    .kpi__label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+    .kpi__val{font-size:28px;font-weight:800;line-height:1;margin-bottom:3px}
+    .kpi__sub{font-size:11px;color:var(--text-muted)}
+    .kpi--good .kpi__val{color:var(--teal)}
+    .kpi--warn .kpi__val{color:var(--amber-dark)}
+    .kpi--alert .kpi__val{color:var(--coral)}
+
+    /* ── Budget vs actual table ── */
+    .fin-table{width:100%;border-collapse:collapse;font-size:13px}
+    .fin-table th{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-muted);padding:8px 12px;border-bottom:2px solid var(--gray-200);text-align:right}
+    .fin-table th:first-child{text-align:left}
+    .fin-table td{padding:10px 12px;border-bottom:1px solid var(--gray-200);text-align:right;vertical-align:middle}
+    .fin-table td:first-child{text-align:left;font-weight:600}
+    .fin-table tr.section-head td{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);background:var(--gray-100);padding:8px 12px}
+    .fin-table tr.total-row td{font-weight:700;background:var(--gray-100);border-top:2px solid var(--gray-200)}
+    .fin-table tr.surplus td{font-weight:700;color:var(--teal);background:#f0fdf4}
+    .fin-table tr.deficit td{font-weight:700;color:var(--coral);background:#fff1f2}
+    .pct-bar-wrap{display:inline-flex;align-items:center;gap:6px;min-width:80px}
+    .pct-bar-track{flex:1;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;width:50px}
+    .pct-bar-fill{height:100%;border-radius:3px;background:var(--teal);transition:width .4s}
+    .pct-bar-fill--warn{background:var(--amber)}
+    .pct-bar-fill--alert{background:var(--coral)}
+    .pct-num{font-size:11px;color:var(--text-muted);min-width:30px;text-align:right}
+    .variance-pos{color:var(--teal);font-weight:600}
+    .variance-neg{color:var(--coral);font-weight:600}
+
+    /* ── Multi-year plan table ── */
+    .myr-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+    .myr-table th{background:var(--teal);color:white;padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+    .myr-table th:first-child{text-align:left}
+    .myr-table td{padding:10px 14px;border-bottom:1px solid var(--gray-200);text-align:right}
+    .myr-table td:first-child{text-align:left;font-weight:600}
+    .myr-table tr.current-yr{background:var(--amber-light)}
+    .myr-table tr.forecast{color:var(--text-muted);font-style:italic}
+    .myr-table tr.forecast td:first-child{font-style:normal}
+    .homes-cell{color:var(--teal);font-weight:700}
+
+    /* ── Meeting cards ── */
+    .meeting-upcoming{background:var(--teal-light);border:2px solid var(--teal);border-radius:var(--radius-lg);padding:22px 26px;margin-bottom:28px}
+    .meeting-upcoming h3{color:var(--teal);font-size:16px;margin-bottom:4px}
+    .agenda-list{margin:12px 0 0;padding:0;list-style:none}
+    .agenda-list li{padding:8px 0;border-top:1px solid rgba(15,110,86,.15);font-size:13px;display:flex;gap:12px;align-items:baseline}
+    .agenda-list li:first-child{border-top:none}
+    .agenda-time{font-size:11px;font-weight:700;color:var(--teal);min-width:48px}
+    .minutes-list{display:flex;flex-direction:column;gap:10px}
+    .minutes-item{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden}
+    .minutes-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none}
+    .minutes-header:hover{background:var(--gray-100)}
+    .minutes-header h4{font-size:14px;font-weight:700;margin:0}
+    .minutes-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+    .minutes-toggle{font-size:18px;color:var(--text-muted);transition:transform .2s;flex-shrink:0}
+    .minutes-body{display:none;padding:16px 18px;border-top:1px solid var(--gray-200);font-size:13px;color:var(--text-muted);line-height:1.7}
+    .minutes-item.open .minutes-toggle{transform:rotate(180deg)}
+    .minutes-item.open .minutes-body{display:block}
+
+    /* ── Document library ── */
+    .doc-folder{margin-bottom:8px}
+    .doc-folder-header{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--gray-100);border-radius:var(--radius);cursor:pointer;user-select:none;border:1.5px solid var(--gray-200)}
+    .doc-folder-header:hover{background:var(--gray-200)}
+    .doc-folder-name{font-size:14px;font-weight:700;flex:1}
+    .doc-folder-count{font-size:11px;color:var(--text-muted)}
+    .doc-folder-toggle{font-size:16px;color:var(--text-muted);transition:transform .2s}
+    .doc-folder.open .doc-folder-toggle{transform:rotate(90deg)}
+    .doc-file-list{display:none;padding:4px 0 4px 32px;gap:4px;flex-direction:column}
+    .doc-folder.open .doc-file-list{display:flex}
+    .doc-file{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius);border:1px solid var(--gray-200);background:white;font-size:13px}
+    .doc-file__icon{font-size:18px;flex-shrink:0}
+    .doc-file__name{flex:1;font-weight:500}
+    .doc-file__date{font-size:11px;color:var(--text-muted)}
+    .doc-status{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.3px}
+    .doc-status--ok{background:#dcfce7;color:#16a34a}
+    .doc-status--missing{background:#fee2e2;color:#dc2626}
+    .doc-status--pending{background:var(--amber-light);color:var(--amber-dark)}
+    .doc-status--draft{background:var(--gray-200);color:var(--gray-600)}
+
+    /* ── Risk registry ── */
+    .risk-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:22px}
+    .risk-summary-card{border-radius:var(--radius);padding:14px 16px;text-align:center}
+    .risk-summary-card__num{font-size:28px;font-weight:800;line-height:1}
+    .risk-summary-card__label{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-top:3px}
+    .risk-critical{background:#fee2e2;color:#dc2626}
+    .risk-high{background:#ffedd5;color:#c2410c}
+    .risk-medium{background:#fef9c3;color:#854d0e}
+    .risk-low{background:#dcfce7;color:#15803d}
+    .risk-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+    .rfbtn{font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:white;cursor:pointer;font-family:inherit;transition:all .15s;letter-spacing:.3px}
+    .rfbtn.active{background:var(--teal);color:white;border-color:var(--teal)}
+    .risk-table-wrap{overflow-x:auto}
+    .risk-table{width:100%;border-collapse:collapse;font-size:12px;min-width:720px}
+    .risk-table th{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-muted);padding:8px 12px;border-bottom:2px solid var(--gray-200);text-align:left;cursor:pointer;white-space:nowrap}
+    .risk-table th:hover{color:var(--text)}
+    .risk-table td{padding:10px 12px;border-bottom:1px solid var(--gray-200);vertical-align:top}
+    .risk-table tr:hover td{background:var(--gray-100)}
+    .risk-score{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:12px;font-weight:800;color:white;flex-shrink:0}
+    .rs-critical{background:#dc2626}
+    .rs-high{background:#ea580c}
+    .rs-medium{background:#ca8a04}
+    .rs-low{background:#16a34a}
+    .risk-cat{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.3px;white-space:nowrap}
+    .rc-gov{background:#ede9fe;color:#6d28d9}
+    .rc-travel{background:#dbeafe;color:#1d4ed8}
+    .rc-fin{background:var(--amber-light);color:var(--amber-dark)}
+    .rc-ops{background:var(--teal-light);color:var(--teal)}
+    .rc-legal{background:var(--gray-200);color:var(--gray-600)}
+    .risk-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.3px}
+    .rs-unmitigated{background:#fee2e2;color:#dc2626}
+    .rs-inprogress{background:#fef9c3;color:#854d0e}
+    .rs-mitigated{background:#dcfce7;color:#16a34a}
+    .risk-owner{font-size:11px;color:var(--text-muted)}
+    .risk-deadline{font-size:11px;font-weight:600;color:var(--coral)}
+
+    /* ── What-if scenarios ── */
+    .whatif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:20px}
+    .whatif-card{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px 22px}
+    .whatif-card__trigger{font-size:13px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+    .whatif-card__impact{font-size:12px;color:var(--text-muted);line-height:1.65;margin-bottom:10px}
+    .whatif-card__response{font-size:12px;background:var(--gray-100);border-radius:var(--radius);padding:10px 12px;line-height:1.6}
+    .whatif-card__response strong{display:block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px}
+
+    @media(max-width:640px){
+      .auth-box{padding:28px 20px}
+      .risk-table th,.risk-table td{padding:8px 8px}
+      .whatif-grid{grid-template-columns:1fr}
+      .kpi-grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── AUTH GATE ── -->
+<div id="authGate">
+  <div class="auth-box">
+    <div class="auth-logo">C</div>
+    <h1>Board Portal</h1>
+    <p>This area is restricted to CAMINO Honduras board members and officers. Enter the board access code to continue.</p>
+    <input type="password" id="authInput" class="auth-input" placeholder="Board access code" autocomplete="current-password" />
+    <div class="auth-error" id="authError">Incorrect access code. Contact Walker Somerville.</div>
+    <button class="auth-btn" onclick="tryAuth()">Access board portal →</button>
+    <div class="cf-note">
+      <span class="cf-badge">CF</span> <strong>Cloudflare Access integration pending.</strong> Once configured, board members will log in with their email — no password needed. This demo code is temporary. Contact David Taylor to configure Cloudflare Access for this domain.
+    </div>
+  </div>
+</div>
+
+<!-- ── BOARD HEADER ── -->
+<div class="board-header" id="boardPortal" style="display:none">
+  <div class="board-header__brand">
+    <span style="font-size:20px;font-weight:800;color:white">C</span>
+    <div>
+      <strong>CAMINO Honduras</strong>
+      <span>Board Portal</span>
+    </div>
+    <span class="board-badge">Private</span>
+  </div>
+  <div class="board-header__meta">
+    <span id="boardDate"></span>
+    <a href="../index.html">← Public site</a>
+    <button class="logout-btn" onclick="logout()">Sign out</button>
+  </div>
+</div>
+
+<!-- ── TAB BAR ── -->
+<div id="boardTabBar" style="display:none">
+  <button class="btab active" data-tab="dashboard">📊 Dashboard</button>
+  <button class="btab" data-tab="financials">💰 Financials</button>
+  <button class="btab" data-tab="meetings">📋 Meetings</button>
+  <button class="btab" data-tab="documents">📁 Documents</button>
+  <button class="btab" data-tab="risk">⚠️ Risk Registry <span class="btab-badge" id="critBadge">5</span></button>
+</div>
+
+<!-- ═══════════════ TAB: DASHBOARD ═══════════════ -->
+<div class="board-panel active" id="tab-dashboard" style="display:none">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px">
+    <div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Board overview · June 2026</div>
+      <h2 style="font-size:22px;font-weight:700;margin:0">CAMINO Honduras Board Dashboard <span class="sample-tag">Sample data</span></h2>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted)">FY2026 · Mid-year review</div>
+  </div>
+
+  <!-- KPI row -->
+  <div class="kpi-grid">
+    <div class="kpi kpi--good">
+      <div class="kpi__label">YTD Income</div>
+      <div class="kpi__val">$59,600</div>
+      <div class="kpi__sub">Budget: $60,000 (50% of yr) — on track</div>
+    </div>
+    <div class="kpi kpi--good">
+      <div class="kpi__label">YTD Expenses</div>
+      <div class="kpi__val">$58,300</div>
+      <div class="kpi__sub">$1,300 favorable vs. plan</div>
+    </div>
+    <div class="kpi kpi--good">
+      <div class="kpi__label">Net YTD</div>
+      <div class="kpi__val">+$1,300</div>
+      <div class="kpi__sub">Slight surplus — healthy</div>
+    </div>
+    <div class="kpi kpi--good">
+      <div class="kpi__label">Homes built YTD</div>
+      <div class="kpi__val">7</div>
+      <div class="kpi__sub">Target: 17 FY2026</div>
+    </div>
+    <div class="kpi kpi--warn">
+      <div class="kpi__label">Operating reserve</div>
+      <div class="kpi__val">$4,200</div>
+      <div class="kpi__sub">Target: 3 months ($30K) — LOW</div>
+    </div>
+    <div class="kpi kpi--alert">
+      <div class="kpi__label">Critical risks open</div>
+      <div class="kpi__val">5</div>
+      <div class="kpi__sub">D&O, liability, board governance</div>
+    </div>
+  </div>
+
+  <!-- Alert bar -->
+  <div style="background:#fff1f2;border:1.5px solid #fca5a5;border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:24px;font-size:13px;line-height:1.7">
+    <strong style="color:#dc2626">⚠ 5 critical items require board action before Thanksgiving 2026 launch:</strong>
+    <ul style="margin:8px 0 0;padding-left:20px;color:var(--text)">
+      <li>Purchase D&amp;O and general liability insurance (deadline: Aug 1)</li>
+      <li>Form a formal board of directors (min. 3 independent members)</li>
+      <li>Establish operating reserve policy (target: 3-month minimum)</li>
+      <li>Complete succession plan for Walker Somerville</li>
+      <li>Adopt conflict of interest and whistleblower policies</li>
+    </ul>
+  </div>
+
+  <!-- Two columns: Upcoming + action items -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">Upcoming events</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--gray-200)">
+          <div style="background:var(--amber-light);border-radius:var(--radius);padding:6px 10px;text-align:center;flex-shrink:0"><div style="font-size:11px;font-weight:700;color:var(--amber-dark)">JUL</div><div style="font-size:18px;font-weight:800;color:var(--amber-dark)">1</div></div>
+          <div><div style="font-size:13px;font-weight:700">Culpeper mission trip departs</div><div style="font-size:12px;color:var(--text-muted)">14 participants · Rio Lindo, Cortés</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--gray-200)">
+          <div style="background:var(--teal-light);border-radius:var(--radius);padding:6px 10px;text-align:center;flex-shrink:0"><div style="font-size:11px;font-weight:700;color:var(--teal)">AUG</div><div style="font-size:18px;font-weight:800;color:var(--teal)">15</div></div>
+          <div><div style="font-size:13px;font-weight:700">Q3 Board Meeting</div><div style="font-size:12px;color:var(--text-muted)">Insurance decision required</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--gray-200)">
+          <div style="background:var(--gray-100);border-radius:var(--radius);padding:6px 10px;text-align:center;flex-shrink:0"><div style="font-size:11px;font-weight:700;color:var(--text-muted)">OCT</div><div style="font-size:18px;font-weight:800;color:var(--text-muted)">4</div></div>
+          <div><div style="font-size:13px;font-weight:700">Fall mission trip</div><div style="font-size:12px;color:var(--text-muted)">Oct 4–11 · Open enrollment</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="background:var(--amber-light);border-radius:var(--radius);padding:6px 10px;text-align:center;flex-shrink:0"><div style="font-size:11px;font-weight:700;color:var(--amber-dark)">NOV</div><div style="font-size:18px;font-weight:800;color:var(--amber-dark)">27</div></div>
+          <div><div style="font-size:13px;font-weight:700">Thanksgiving 2026 — Site fully live</div><div style="font-size:12px;color:var(--text-muted)">All Phase 1 issues resolved. Holiday giving push.</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">Action items — open</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+        <div style="display:flex;gap:8px;padding:8px 10px;background:#fee2e2;border-radius:var(--radius);align-items:flex-start"><span style="font-size:16px;flex-shrink:0">🔴</span><div><strong>Purchase D&amp;O + liability insurance</strong><br><span style="font-size:11px;color:var(--text-muted)">Owner: Walker · Due Aug 1</span></div></div>
+        <div style="display:flex;gap:8px;padding:8px 10px;background:#fee2e2;border-radius:var(--radius);align-items:flex-start"><span style="font-size:16px;flex-shrink:0">🔴</span><div><strong>Recruit 2–3 independent board members</strong><br><span style="font-size:11px;color:var(--text-muted)">Owner: Walker · Due Sep 1</span></div></div>
+        <div style="display:flex;gap:8px;padding:8px 10px;background:#ffedd5;border-radius:var(--radius);align-items:flex-start"><span style="font-size:16px;flex-shrink:0">🟠</span><div><strong>Connect Formspree contact form</strong><br><span style="font-size:11px;color:var(--text-muted)">Owner: David T. · Due Jul 1</span></div></div>
+        <div style="display:flex;gap:8px;padding:8px 10px;background:#ffedd5;border-radius:var(--radius);align-items:flex-start"><span style="font-size:16px;flex-shrink:0">🟠</span><div><strong>Write succession plan document</strong><br><span style="font-size:11px;color:var(--text-muted)">Owner: Walker · Due Aug 15</span></div></div>
+        <div style="display:flex;gap:8px;padding:8px 10px;background:#fef9c3;border-radius:var(--radius);align-items:flex-start"><span style="font-size:16px;flex-shrink:0">🟡</span><div><strong>Adopt conflict of interest policy</strong><br><span style="font-size:11px;color:var(--text-muted)">Owner: Board · Next meeting</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB: FINANCIALS ═══════════════ -->
+<div class="board-panel" id="tab-financials" style="display:none">
+  <!-- Sub-tabs -->
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px">
+    <button class="rfbtn active" onclick="showFinTab('finYTD',this)">2026 Budget vs. Actual</button>
+    <button class="rfbtn" onclick="showFinTab('fin1yr',this)">1-Year Plan</button>
+    <button class="rfbtn" onclick="showFinTab('fin3yr',this)">3-Year Plan</button>
+    <button class="rfbtn" onclick="showFinTab('fin5yr',this)">5-Year Plan</button>
+    <button class="rfbtn" onclick="showFinTab('finHistory',this)">Historical</button>
+  </div>
+
+  <!-- YTD vs Budget -->
+  <div id="finYTD">
+    <div class="section-h">FY2026 Budget vs. Actual <span class="sample-tag">Sample</span></div>
+    <div class="section-sub">Through June 30, 2026 (50% of fiscal year elapsed). Walker to update with actual bank and donation figures.</div>
+    <div style="overflow-x:auto">
+      <table class="fin-table">
+        <thead>
+          <tr><th>Line item</th><th>Annual budget</th><th>YTD budget (50%)</th><th>YTD actual</th><th>Progress</th><th>Variance</th></tr>
+        </thead>
+        <tbody>
+          <tr class="section-head"><td colspan="6">INCOME</td></tr>
+          <tr><td>Individual donations</td><td>$54,000</td><td>$27,000</td><td>$28,400</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:52%"></div></div><span class="pct-num">52%</span></div></td><td class="variance-pos">+$1,400</td></tr>
+          <tr><td>Mission trip fees</td><td>$30,000</td><td>$15,000</td><td>$18,000</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:60%"></div></div><span class="pct-num">60%</span></div></td><td class="variance-pos">+$3,000</td></tr>
+          <tr><td>Church partnerships</td><td>$24,000</td><td>$12,000</td><td>$11,200</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill pct-bar-fill--warn" style="width:47%"></div></div><span class="pct-num">47%</span></div></td><td class="variance-neg">−$800</td></tr>
+          <tr><td>Corporate &amp; grants</td><td>$12,000</td><td>$6,000</td><td>$2,000</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill pct-bar-fill--alert" style="width:17%"></div></div><span class="pct-num">17%</span></div></td><td class="variance-neg">−$4,000</td></tr>
+          <tr class="total-row"><td>Total income</td><td>$120,000</td><td>$60,000</td><td>$59,600</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:50%"></div></div><span class="pct-num">50%</span></div></td><td class="variance-neg">−$400</td></tr>
+
+          <tr class="section-head"><td colspan="6">EXPENSES</td></tr>
+          <tr><td>Honduras construction (homes)</td><td>$66,000</td><td>$33,000</td><td>$32,400</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:49%"></div></div><span class="pct-num">49%</span></div></td><td class="variance-pos">+$600</td></tr>
+          <tr><td>Honduras infrastructure &amp; programs</td><td>$24,000</td><td>$12,000</td><td>$11,800</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:49%"></div></div><span class="pct-num">49%</span></div></td><td class="variance-pos">+$200</td></tr>
+          <tr><td>Walker travel &amp; operations</td><td>$14,400</td><td>$7,200</td><td>$7,200</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:50%"></div></div><span class="pct-num">50%</span></div></td><td>$0</td></tr>
+          <tr><td>US overhead (admin, legal, accounting)</td><td>$9,600</td><td>$4,800</td><td>$4,100</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:43%"></div></div><span class="pct-num">43%</span></div></td><td class="variance-pos">+$700</td></tr>
+          <tr><td>Fundraising &amp; communications</td><td>$6,000</td><td>$3,000</td><td>$2,800</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:47%"></div></div><span class="pct-num">47%</span></div></td><td class="variance-pos">+$200</td></tr>
+          <tr class="total-row"><td>Total expenses</td><td>$120,000</td><td>$60,000</td><td>$58,300</td><td><div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:49%"></div></div><span class="pct-num">49%</span></div></td><td class="variance-pos">+$1,700</td></tr>
+          <tr class="surplus"><td colspan="4"><strong>Net YTD surplus / (deficit)</strong></td><td>—</td><td class="variance-pos">+$1,300</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:12px;padding:12px 16px;background:var(--gray-100);border-radius:var(--radius);border-left:3px solid var(--amber)">
+      <strong>Note:</strong> Corporate &amp; grants line is behind plan (17% vs. 50% elapsed). Walker to follow up with pending church pledges. All figures are Sample — update with actual QuickBooks or bank data.
+    </div>
+  </div>
+
+  <!-- 1-Year Plan -->
+  <div id="fin1yr" style="display:none">
+    <div class="section-h">FY2026 Full-Year Budget <span class="sample-tag">Sample</span></div>
+    <div class="section-sub">Board-approved operating budget for fiscal year 2026. Reflects planned growth from improved digital presence and Thanksgiving giving push.</div>
+    <div style="overflow-x:auto">
+      <table class="myr-table">
+        <thead><tr><th>Category</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Full Year</th><th>% of total</th></tr></thead>
+        <tbody>
+          <tr><td colspan="7" style="background:var(--gray-100);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:8px 14px">INCOME</td></tr>
+          <tr><td>Individual donations</td><td>$11,000</td><td>$17,400</td><td>$12,000</td><td>$13,600</td><td><strong>$54,000</strong></td><td>45%</td></tr>
+          <tr><td>Mission trip fees</td><td>$6,600</td><td>$11,400</td><td>$0</td><td>$12,000</td><td><strong>$30,000</strong></td><td>25%</td></tr>
+          <tr><td>Church partnerships</td><td>$5,000</td><td>$6,200</td><td>$6,500</td><td>$6,300</td><td><strong>$24,000</strong></td><td>20%</td></tr>
+          <tr><td>Corporate &amp; grants</td><td>$2,000</td><td>$0</td><td>$4,000</td><td>$6,000</td><td><strong>$12,000</strong></td><td>10%</td></tr>
+          <tr class="current-yr"><td><strong>Total income</strong></td><td><strong>$24,600</strong></td><td><strong>$35,000</strong></td><td><strong>$22,500</strong></td><td><strong>$37,900</strong></td><td><strong>$120,000</strong></td><td>100%</td></tr>
+          <tr><td colspan="7" style="background:var(--gray-100);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:8px 14px">EXPENSES</td></tr>
+          <tr><td>Honduras construction</td><td>$15,000</td><td>$17,400</td><td>$18,000</td><td>$15,600</td><td><strong>$66,000</strong></td><td>55%</td></tr>
+          <tr><td>Infrastructure &amp; programs</td><td>$5,500</td><td>$6,300</td><td>$6,400</td><td>$5,800</td><td><strong>$24,000</strong></td><td>20%</td></tr>
+          <tr><td>Walker travel &amp; ops</td><td>$3,600</td><td>$3,600</td><td>$3,600</td><td>$3,600</td><td><strong>$14,400</strong></td><td>12%</td></tr>
+          <tr><td>US overhead</td><td>$2,400</td><td>$1,700</td><td>$2,600</td><td>$2,900</td><td><strong>$9,600</strong></td><td>8%</td></tr>
+          <tr><td>Fundraising &amp; comms</td><td>$1,500</td><td>$1,300</td><td>$1,400</td><td>$1,800</td><td><strong>$6,000</strong></td><td>5%</td></tr>
+          <tr class="current-yr"><td><strong>Total expenses</strong></td><td><strong>$28,000</strong></td><td><strong>$30,300</strong></td><td><strong>$32,000</strong></td><td><strong>$29,700</strong></td><td><strong>$120,000</strong></td><td>100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3-Year Plan -->
+  <div id="fin3yr" style="display:none">
+    <div class="section-h">3-Year Financial Plan: 2026–2028 <span class="sample-tag">Sample</span></div>
+    <div class="section-sub">Conservative growth model. Revenue assumes improved digital presence driving 15–25% annual donation growth. All figures are estimates.</div>
+    <div style="overflow-x:auto">
+      <table class="myr-table">
+        <thead><tr><th>Category</th><th>2026 (current)</th><th>2027</th><th>2028</th><th>3-yr total</th></tr></thead>
+        <tbody>
+          <tr><td colspan="5" style="background:var(--gray-100);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:8px 14px">INCOME</td></tr>
+          <tr><td>Individual donations</td><td>$54,000</td><td>$66,000</td><td>$80,000</td><td>$200,000</td></tr>
+          <tr><td>Mission trip fees</td><td>$30,000</td><td>$38,000</td><td>$46,000</td><td>$114,000</td></tr>
+          <tr><td>Church partnerships</td><td>$24,000</td><td>$28,000</td><td>$32,000</td><td>$84,000</td></tr>
+          <tr><td>Corporate &amp; grants</td><td>$12,000</td><td>$18,000</td><td>$27,000</td><td>$57,000</td></tr>
+          <tr class="current-yr"><td><strong>Total income</strong></td><td><strong>$120,000</strong></td><td><strong>$150,000</strong></td><td><strong>$185,000</strong></td><td><strong>$455,000</strong></td></tr>
+          <tr><td colspan="5" style="background:var(--gray-100);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);padding:8px 14px">EXPENSES</td></tr>
+          <tr><td>Honduras programs (construction + infra)</td><td>$90,000</td><td>$114,000</td><td>$143,000</td><td>$347,000</td></tr>
+          <tr><td>Operations (Walker travel + US overhead)</td><td>$24,000</td><td>$28,000</td><td>$32,000</td><td>$84,000</td></tr>
+          <tr><td>Fundraising &amp; comms</td><td>$6,000</td><td>$8,000</td><td>$10,000</td><td>$24,000</td></tr>
+          <tr class="current-yr"><td><strong>Total expenses</strong></td><td><strong>$120,000</strong></td><td><strong>$150,000</strong></td><td><strong>$185,000</strong></td><td><strong>$455,000</strong></td></tr>
+          <tr><td><strong>Homes built (est.)</strong></td><td class="homes-cell">17</td><td class="homes-cell">22</td><td class="homes-cell">32</td><td class="homes-cell">71</td></tr>
+          <tr><td><strong>Program efficiency ratio</strong></td><td>75%</td><td>76%</td><td>77%</td><td>—</td></tr>
+          <tr><td><strong>Operating reserve target</strong></td><td>$10,000</td><td>$18,750</td><td>$30,800</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 5-Year Plan -->
+  <div id="fin5yr" style="display:none">
+    <div class="section-h">5-Year Strategic Financial Plan: 2026–2030 <span class="sample-tag">Sample</span></div>
+    <div class="section-sub">Assumes successful Phase 2 digital buildout (corporate mission trips live by 2027), CNN Heroes nomination visibility, and 15th anniversary campaign (2029). Walker to validate assumptions with actual fundraising history.</div>
+    <div style="overflow-x:auto">
+      <table class="myr-table">
+        <thead><tr><th>Year</th><th>Total income</th><th>Total expenses</th><th>Net</th><th>Homes built</th><th>Cumulative homes</th><th>Key milestone</th></tr></thead>
+        <tbody>
+          <tr class="current-yr"><td>2026</td><td>$120,000</td><td>$120,000</td><td>$0</td><td class="homes-cell">17</td><td class="homes-cell">132</td><td>Thanksgiving site launch</td></tr>
+          <tr class="forecast"><td>2027</td><td>$150,000</td><td>$145,000</td><td style="color:var(--teal)">+$5,000</td><td class="homes-cell">22</td><td class="homes-cell">154</td><td>Corporate trip page live</td></tr>
+          <tr class="forecast"><td>2028</td><td>$185,000</td><td>$178,000</td><td style="color:var(--teal)">+$7,000</td><td class="homes-cell">32</td><td class="homes-cell">186</td><td>CNN Heroes nomination prep</td></tr>
+          <tr class="forecast"><td>2029</td><td>$230,000</td><td>$218,000</td><td style="color:var(--teal)">+$12,000</td><td class="homes-cell">38</td><td class="homes-cell">224</td><td>15th anniversary · 150+ homes</td></tr>
+          <tr class="forecast"><td>2030</td><td>$265,000</td><td>$250,000</td><td style="color:var(--teal)">+$15,000</td><td class="homes-cell">43</td><td class="homes-cell">267</td><td>Endowment seed target: $50K</td></tr>
+          <tr style="font-weight:700;background:var(--amber-light)"><td>5-yr total</td><td>$950,000</td><td>$911,000</td><td style="color:var(--teal)">+$39,000</td><td class="homes-cell">152</td><td class="homes-cell">—</td><td>Near 2× current impact</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px;font-size:12px;color:var(--text-muted);background:var(--gray-100);border-radius:var(--radius);padding:14px 18px;border-left:3px solid var(--amber)">
+      <strong>Key assumptions:</strong> 20–25% annual income growth from improved digital presence. Corporate mission trips launch 2027 (+$30K/yr). 2029 anniversary campaign (+$30K one-time). No major geopolitical/pandemic disruption. Reserve fund grows to 3 months ($46K) by 2030.
+    </div>
+  </div>
+
+  <!-- Historical -->
+  <div id="finHistory" style="display:none">
+    <div class="section-h">Historical Financials: 2019–2025 <span class="sample-tag">Sample — Walker to verify actuals</span></div>
+    <div class="section-sub">Estimated annual figures based on program activity. CAMINO files a 990-N (e-Postcard) — audited financials not yet available.</div>
+    <div style="overflow-x:auto">
+      <table class="myr-table">
+        <thead><tr><th>Year</th><th>Est. income</th><th>Est. expenses</th><th>Est. net</th><th>Homes built</th><th>Volunteers</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>2019</td><td>$70,000</td><td>$67,500</td><td style="color:var(--teal)">+$2,500</td><td class="homes-cell">12</td><td>68</td><td>501(c)(3) granted</td></tr>
+          <tr><td>2020</td><td>$52,000</td><td>$50,000</td><td style="color:var(--teal)">+$2,000</td><td class="homes-cell">5</td><td>22</td><td>COVID-19 — reduced ops</td></tr>
+          <tr><td>2021</td><td>$74,000</td><td>$71,000</td><td style="color:var(--teal)">+$3,000</td><td class="homes-cell">10</td><td>41</td><td>Post-COVID recovery</td></tr>
+          <tr><td>2022</td><td>$90,000</td><td>$87,000</td><td style="color:var(--teal)">+$3,000</td><td class="homes-cell">16</td><td>89</td><td>Largest year to date</td></tr>
+          <tr><td>2023</td><td>$104,000</td><td>$100,500</td><td style="color:var(--teal)">+$3,500</td><td class="homes-cell">20</td><td>98</td><td>Record volunteer year</td></tr>
+          <tr><td>2024</td><td>$112,000</td><td>$109,000</td><td style="color:var(--teal)">+$3,000</td><td class="homes-cell">22</td><td>102</td><td>100+ homes milestone</td></tr>
+          <tr><td>2025</td><td>$118,000</td><td>$115,500</td><td style="color:var(--teal)">+$2,500</td><td class="homes-cell">17</td><td>85</td><td>Partial year</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB: MEETINGS ═══════════════ -->
+<div class="board-panel" id="tab-meetings" style="display:none">
+  <div class="section-h">Board Meetings</div>
+  <div class="section-sub">Meeting agendas, minutes, and action item tracking. All documents stored in the Documents tab.</div>
+
+  <!-- Upcoming meeting -->
+  <div class="meeting-upcoming">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);margin-bottom:6px">Upcoming meeting</div>
+    <h3>Q3 2026 Board Meeting — August 15, 2026 · 10:00 AM Eastern</h3>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px">Video call (Zoom link to be sent) · Estimated duration: 90 minutes · Quorum required: 3 members</div>
+    <ul class="agenda-list">
+      <li><span class="agenda-time">10:00</span> Call to order — approval of Q2 minutes</li>
+      <li><span class="agenda-time">10:10</span> <strong>Financial report — Walker: YTD vs. budget review, corporate/grants gap</strong></li>
+      <li><span class="agenda-time">10:30</span> <strong>🔴 Insurance decision: D&amp;O + general liability — approve purchase</strong></li>
+      <li><span class="agenda-time">10:50</span> Programs update: Culpeper trip debrief, fall trip preparation</li>
+      <li><span class="agenda-time">11:05</span> <strong>Governance: board composition — recruit 2–3 independent members</strong></li>
+      <li><span class="agenda-time">11:20</span> Risk register review: succession plan status, operating reserve</li>
+      <li><span class="agenda-time">11:35</span> Website &amp; digital update: Thanksgiving launch checklist</li>
+      <li><span class="agenda-time">11:45</span> New business / adjournment</li>
+    </ul>
+  </div>
+
+  <!-- Past minutes -->
+  <div style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">Past meeting minutes</div>
+  <div class="minutes-list">
+    <div class="minutes-item">
+      <div class="minutes-header" onclick="toggleMinutes(this)">
+        <div><h4>Q2 2026 Board Meeting — June 20, 2026</h4><div class="minutes-meta">Attendees: Walker Somerville, David Taylor · Action items: 6 · Status: Approved</div></div>
+        <span class="minutes-toggle">▾</span>
+      </div>
+      <div class="minutes-body">
+        <strong>Decisions made:</strong><br>
+        1. Approved $12,000 Q3 construction budget for Tapiquilares community.<br>
+        2. Authorized website Thanksgiving launch target (Phase 1 completion by Nov 15).<br>
+        3. Approved incorporation of ROI brief into board materials for donor conversations.<br><br>
+        <strong>Action items from this meeting:</strong><br>
+        • Walker: Obtain insurance quotes from GuideOne and Brotherhood Mutual by Aug 1.<br>
+        • Walker: Draft succession plan outline by Aug 15.<br>
+        • David Taylor: Complete Phase 1 website gap list (Formspree, Mailchimp) by Jul 15.<br>
+        • Walker: Reach out to 2 prospective board candidates by Sep 1.<br><br>
+        <em style="font-size:11px">Sample minutes — Walker to update with actual meeting notes.</em>
+      </div>
+    </div>
+    <div class="minutes-item">
+      <div class="minutes-header" onclick="toggleMinutes(this)">
+        <div><h4>Q1 2026 Board Meeting — March 14, 2026</h4><div class="minutes-meta">Attendees: Walker Somerville · Action items: 4 · Status: Approved</div></div>
+        <span class="minutes-toggle">▾</span>
+      </div>
+      <div class="minutes-body">
+        <strong>Decisions made:</strong><br>
+        1. Approved FY2026 operating budget of $120,000.<br>
+        2. Set Thanksgiving 2026 as website launch deadline.<br>
+        3. Agreed to pursue corporate mission trip channel as Phase 2 priority.<br><br>
+        <strong>Financial highlights:</strong> Q1 income $24,600 vs. budget $24,600 — on plan. Operating reserve stands at $4,200 — below target minimum.<br><br>
+        <em style="font-size:11px">Sample minutes — Walker to update with actual meeting notes.</em>
+      </div>
+    </div>
+    <div class="minutes-item">
+      <div class="minutes-header" onclick="toggleMinutes(this)">
+        <div><h4>Q4 2025 Annual Review — December 12, 2025</h4><div class="minutes-meta">Attendees: Walker Somerville · Action items: 5 · Status: Approved</div></div>
+        <span class="minutes-toggle">▾</span>
+      </div>
+      <div class="minutes-body">
+        <strong>Annual summary:</strong> 17 homes built in 2025. 65 families on waitlist. $118,000 income vs. $115,500 expenses — surplus of $2,500.<br><br>
+        <strong>2026 priorities set:</strong> Website redesign, board formation, insurance purchase, corporate channel launch.<br><br>
+        <em style="font-size:11px">Sample minutes — Walker to update with actual meeting notes.</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB: DOCUMENTS ═══════════════ -->
+<div class="board-panel" id="tab-documents" style="display:none">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+    <div>
+      <div class="section-h">Board Document Library</div>
+      <div class="section-sub" style="margin-bottom:0">Central repository for all governance, financial, and legal documents. Link each item to its Google Drive or OneDrive file. Items marked <span class="doc-status doc-status--missing">missing</span> are compliance gaps.</div>
+    </div>
+    <div style="background:var(--amber-light);border-radius:var(--radius);padding:12px 16px;font-size:12px;max-width:260px;flex-shrink:0">
+      <strong>Storage note:</strong> Actual files should live in a shared Google Drive or OneDrive folder. This registry links out to those files. Replace "#" hrefs with real Drive links.
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+
+    <!-- Financials folder -->
+    <div class="doc-folder open">
+      <div class="doc-folder-header" onclick="toggleFolder(this)">
+        <span style="font-size:20px">💰</span>
+        <span class="doc-folder-name">Financials</span>
+        <span class="doc-folder-count">6 items</span>
+        <span class="doc-folder-toggle">▶</span>
+      </div>
+      <div class="doc-file-list">
+        <div class="doc-file"><span class="doc-file__icon">📊</span><span class="doc-file__name"><a href="#" style="color:var(--text)">2026 Operating Budget (Board Approved)</a></span><span class="doc-status doc-status--ok">Current</span><span class="doc-file__date">Jan 2026</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📊</span><span class="doc-file__name"><a href="#" style="color:var(--text)">2025 Annual Financial Summary</a></span><span class="doc-status doc-status--ok">Filed</span><span class="doc-file__date">Feb 2026</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">IRS 990-N e-Postcard — FY2024</a></span><span class="doc-status doc-status--ok">Filed</span><span class="doc-file__date">Nov 2024</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">IRS 990-N e-Postcard — FY2023</a></span><span class="doc-status doc-status--ok">Filed</span><span class="doc-file__date">Nov 2023</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📈</span><span class="doc-file__name"><a href="roi.html" style="color:var(--teal)">Digital ROI Brief (internal)</a></span><span class="doc-status doc-status--ok">Current</span><span class="doc-file__date">Jun 2026</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Audited financial statements</span><span class="doc-status doc-status--missing">Missing</span><span class="doc-file__date">—</span></div>
+      </div>
+    </div>
+
+    <!-- Legal folder -->
+    <div class="doc-folder open">
+      <div class="doc-folder-header" onclick="toggleFolder(this)">
+        <span style="font-size:20px">⚖️</span>
+        <span class="doc-folder-name">Legal &amp; Governance</span>
+        <span class="doc-folder-count">7 items</span>
+        <span class="doc-folder-toggle">▶</span>
+      </div>
+      <div class="doc-file-list">
+        <div class="doc-file"><span class="doc-file__icon">📜</span><span class="doc-file__name"><a href="#" style="color:var(--text)">IRS Determination Letter — 501(c)(3)</a></span><span class="doc-status doc-status--ok">2019</span><span class="doc-file__date">Aug 2019</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Articles of Incorporation — Texas</a></span><span class="doc-status doc-status--ok">Filed</span><span class="doc-file__date">2019</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Bylaws v1.0</a></span><span class="doc-status doc-status--pending">Needs update</span><span class="doc-file__date">2019</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Conflict of Interest Policy</span><span class="doc-status doc-status--missing">Missing</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Whistleblower Policy</span><span class="doc-status doc-status--missing">Missing</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Document Retention Policy</span><span class="doc-status doc-status--missing">Missing</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Succession Plan — Executive Director</span><span class="doc-status doc-status--missing">Missing — HIGH PRIORITY</span><span class="doc-file__date">—</span></div>
+      </div>
+    </div>
+
+    <!-- Insurance folder -->
+    <div class="doc-folder open">
+      <div class="doc-folder-header" onclick="toggleFolder(this)">
+        <span style="font-size:20px">🛡️</span>
+        <span class="doc-folder-name">Insurance</span>
+        <span class="doc-folder-count">4 items</span>
+        <span class="doc-folder-toggle">▶</span>
+      </div>
+      <div class="doc-file-list">
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Directors &amp; Officers (D&amp;O) Policy</span><span class="doc-status doc-status--missing">NOT PURCHASED</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">General Liability Policy</span><span class="doc-status doc-status--missing">NOT PURCHASED</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Volunteer Accident Coverage</span><span class="doc-status doc-status--missing">NOT PURCHASED</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📋</span><span class="doc-file__name" style="color:var(--text-muted)">Volunteer Liability Waiver (template)</span><span class="doc-status doc-status--pending">Draft needed</span><span class="doc-file__date">—</span></div>
+      </div>
+    </div>
+
+    <!-- Meetings folder -->
+    <div class="doc-folder">
+      <div class="doc-folder-header" onclick="toggleFolder(this)">
+        <span style="font-size:20px">📋</span>
+        <span class="doc-folder-name">Meeting Minutes &amp; Agendas</span>
+        <span class="doc-folder-count">5 items</span>
+        <span class="doc-folder-toggle">▶</span>
+      </div>
+      <div class="doc-file-list">
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Q3 2026 Agenda (Aug 15)</a></span><span class="doc-status doc-status--draft">Draft</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Q2 2026 Minutes (Jun 20)</a></span><span class="doc-status doc-status--ok">Approved</span><span class="doc-file__date">Jun 2026</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Q1 2026 Minutes (Mar 14)</a></span><span class="doc-status doc-status--ok">Approved</span><span class="doc-file__date">Mar 2026</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Q4 2025 Annual Review (Dec 12)</a></span><span class="doc-status doc-status--ok">Approved</span><span class="doc-file__date">Dec 2025</span></div>
+      </div>
+    </div>
+
+    <!-- Trip safety folder -->
+    <div class="doc-folder">
+      <div class="doc-folder-header" onclick="toggleFolder(this)">
+        <span style="font-size:20px">✈️</span>
+        <span class="doc-folder-name">Trip Safety &amp; Emergency Protocols</span>
+        <span class="doc-folder-count">4 items</span>
+        <span class="doc-folder-toggle">▶</span>
+      </div>
+      <div class="doc-file-list">
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Emergency Response Protocol — Honduras</a></span><span class="doc-status doc-status--ok">Current</span><span class="doc-file__date">Jan 2026</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">Volunteer Medical Release Form</a></span><span class="doc-status doc-status--ok">Current</span><span class="doc-file__date">Jan 2026</span></div>
+        <div class="doc-file"><span class="doc-file__icon">⚠️</span><span class="doc-file__name" style="color:var(--text-muted)">Volunteer Liability Waiver (attorney-reviewed)</span><span class="doc-status doc-status--missing">Missing</span><span class="doc-file__date">—</span></div>
+        <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">US State Dept. Honduras Travel Advisory (Level 3)</a></span><span class="doc-status doc-status--pending">Monitor</span><span class="doc-file__date">Current</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB: RISK REGISTRY ═══════════════ -->
+<div class="board-panel" id="tab-risk" style="display:none">
+  <div class="section-h">Risk Registry</div>
+  <div class="section-sub">Live risk register tracking organizational, travel, financial, and operational risks. Score = Likelihood (1–5) × Impact (1–5). Last reviewed: June 2026.</div>
+
+  <!-- Summary -->
+  <div class="risk-summary-grid">
+    <div class="risk-summary-card risk-critical"><div class="risk-summary-card__num">5</div><div class="risk-summary-card__label">Critical (20–25)</div></div>
+    <div class="risk-summary-card risk-high"><div class="risk-summary-card__num">8</div><div class="risk-summary-card__label">High (12–19)</div></div>
+    <div class="risk-summary-card risk-medium"><div class="risk-summary-card__num">6</div><div class="risk-summary-card__label">Medium (6–11)</div></div>
+    <div class="risk-summary-card risk-low"><div class="risk-summary-card__num">3</div><div class="risk-summary-card__label">Low (1–5)</div></div>
+  </div>
+
+  <!-- Filter -->
+  <div class="risk-filter">
+    <span style="font-size:11px;font-weight:700;color:var(--text-muted)">Filter:</span>
+    <button class="rfbtn active" onclick="filterRisk('all',this)">All (22)</button>
+    <button class="rfbtn" onclick="filterRisk('Governance',this)">Governance</button>
+    <button class="rfbtn" onclick="filterRisk('Travel',this)">Travel / Safety</button>
+    <button class="rfbtn" onclick="filterRisk('Financial',this)">Financial</button>
+    <button class="rfbtn" onclick="filterRisk('Operations',this)">Operations</button>
+    <button class="rfbtn" onclick="filterRisk('Legal',this)">Legal</button>
+  </div>
+
+  <!-- Risk table -->
+  <div class="risk-table-wrap">
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Category</th>
+          <th>Risk</th>
+          <th style="text-align:center">L</th>
+          <th style="text-align:center">I</th>
+          <th style="text-align:center">Score</th>
+          <th>Status</th>
+          <th>Owner</th>
+          <th>Deadline</th>
+        </tr>
+      </thead>
+      <tbody id="riskTableBody"></tbody>
+    </table>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- What-if scenarios -->
+  <div class="section-h">What-If Scenario Analysis</div>
+  <div class="section-sub">Specific high-impact scenarios with response plans. Board should review and assign owners annually.</div>
+
+  <div class="whatif-grid">
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">🏥</span> <strong>Walker has a serious health crisis</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> All Honduras operations halt. Community partnerships at risk. 65+ waitlist families affected. Donor relationships severed. Estimated 6–12 month disruption.</div>
+      <div class="whatif-card__response"><strong>Response plan (not yet written):</strong> Designate interim field director. Identify Honduran national co-leader. Cross-train on all donor relationships. Complete succession plan document (due Aug 15, 2026). Consider key-man life insurance.</div>
+    </div>
+
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">👨‍👩‍👧</span> <strong>Walker family health crisis</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> Walker returns to US for extended period. Honduras programs pause. Staff team may fragment without Walker's relational leadership.</div>
+      <div class="whatif-card__response"><strong>Response plan:</strong> Same as health crisis above. Additionally: establish CAMINO Honduras local leadership team so operations can continue in Walker's absence. Document all community partner contacts.</div>
+    </div>
+
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">🗳️</span> <strong>Honduras geopolitical crisis (coup, election dispute)</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> US Embassy issues Level 4 "Do Not Travel." All scheduled trips cancelled. Walker and family may need emergency evacuation. Community projects suspended. Possible 1–2 year gap.</div>
+      <div class="whatif-card__response"><strong>Response plan:</strong> Monitor State Dept. advisories monthly. Pre-define evacuation protocol with US Embassy (register at step.state.gov). Escrow trip deposits for 18 months. Maintain $15K emergency reserve for evacuation costs. Donors notified proactively via email.</div>
+    </div>
+
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">🦠</span> <strong>Pandemic / global health emergency</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> International travel suspended. Mission trips cancelled for 1–2+ years. Trip fee revenue ($30K/yr) disappears. Construction halts. 2020 showed 55% drop in homes built.</div>
+      <div class="whatif-card__response"><strong>Response plan:</strong> Convert to virtual fundraising immediately (virtual tours, live builds). Activate "pandemic fund" campaign targeting existing donors. Maintain Honduras local staff relationships remotely. Pre-approved 30% budget reduction scenario ready.</div>
+    </div>
+
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">🌀</span> <strong>Category 4+ hurricane hits Cortés region</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> Rio Lindo retreat center damaged or destroyed. Community infrastructure lost. Homes CAMINO built may need reconstruction. Walker's team displaced. Build season delayed 3–6 months.</div>
+      <div class="whatif-card__response"><strong>Response plan:</strong> Emergency campaign ("Honduras Hurricane Relief") — typically raises 2–3× normal. Redirect construction capacity to hurricane recovery. Contact UMCOR (United Methodist Committee on Relief) for disaster-response partnership. Insurance on the retreat center is critical.</div>
+    </div>
+
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">⚖️</span> <strong>Volunteer injured on a build site</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> Medical costs $5,000–$50,000+. Without liability insurance, CAMINO is personally liable. Legal action possible. Volunteer program could be suspended. Mission trip revenue at risk.</div>
+      <div class="whatif-card__response"><strong>Response plan:</strong> Requires general liability + volunteer accident insurance (currently unmitigated — CRITICAL). Require signed waivers from all participants. Ensure all volunteers have personal travel insurance as a trip requirement.</div>
+    </div>
+
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">💸</span> <strong>Major donor (>20% of revenue) withdraws</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> $24,000+ annual gap. Honduras construction slows by 30%. Staff operations strained. May require emergency cuts to overhead.</div>
+      <div class="whatif-card__response"><strong>Response plan:</strong> No single donor should exceed 15% of revenue (policy to be adopted). Diversify through corporate channel (Phase 2) and Mailchimp recurring donor program. Build operating reserve to 3-month minimum ($30K by 2027).</div>
+    </div>
+
+    <div class="whatif-card">
+      <div class="whatif-card__trigger"><span style="font-size:20px">🇺🇸🇭🇳</span> <strong>US imposes Honduras travel ban or sanctions</strong></div>
+      <div class="whatif-card__impact"><strong>Impact:</strong> All US volunteers barred from travel. Mission trip revenue ceases immediately. Walker (US citizen) may be unable to operate in-country. Organization mission threatened.</div>
+      <div class="whatif-card__response"><strong>Response plan:</strong> Low probability but catastrophic. Mitigate by building Honduran national leadership team capable of independent operation. Maintain legal compliance with OFAC and State Dept. regulations. Consult international nonprofit attorney annually.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Auth gate ────────────────────────────────────────────────────────────────
+var BOARD_CODE = 'camino2026'; // Temporary demo code — replace with Cloudflare Access
+function tryAuth(){
+  var val = document.getElementById('authInput').value.trim();
+  if(val === BOARD_CODE){
+    sessionStorage.setItem('board-auth','1');
+    showPortal();
+  } else {
+    document.getElementById('authError').style.display='block';
+    document.getElementById('authInput').select();
+  }
+}
+document.getElementById('authInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter') tryAuth();
+});
+function logout(){
+  sessionStorage.removeItem('board-auth');
+  location.reload();
+}
+function showPortal(){
+  document.getElementById('authGate').style.display='none';
+  document.getElementById('boardPortal').style.display='flex';
+  document.getElementById('boardTabBar').style.display='flex';
+  document.querySelectorAll('.board-panel').forEach(function(p){ p.style.display='none'; });
+  document.getElementById('tab-dashboard').style.display='block';
+  document.getElementById('tab-dashboard').classList.add('active');
+  document.getElementById('boardDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  buildRiskTable('all');
+}
+if(sessionStorage.getItem('board-auth')==='1') showPortal();
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+document.querySelectorAll('#boardTabBar .btab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('#boardTabBar .btab').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var tab = btn.getAttribute('data-tab');
+    document.querySelectorAll('.board-panel').forEach(function(p){ p.style.display='none'; });
+    document.getElementById('tab-'+tab).style.display='block';
+  });
+});
+
+// ── Financial sub-tabs ────────────────────────────────────────────────────────
+function showFinTab(id, btn){
+  ['finYTD','fin1yr','fin3yr','fin5yr','finHistory'].forEach(function(t){
+    var el = document.getElementById(t);
+    if(el) el.style.display = (t===id ? 'block' : 'none');
+  });
+  document.querySelectorAll('#tab-financials .rfbtn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+// ── Meetings accordion ─────────────────────────────────────────────────────────
+function toggleMinutes(header){
+  var item = header.closest('.minutes-item');
+  item.classList.toggle('open');
+}
+
+// ── Document folders ───────────────────────────────────────────────────────────
+function toggleFolder(header){
+  var folder = header.closest('.doc-folder');
+  folder.classList.toggle('open');
+}
+
+// ── Risk data ─────────────────────────────────────────────────────────────────
+var RISKS = [
+  {id:'R-01',cat:'Governance',title:"No D&O (Directors & Officers) Insurance",l:4,i:5,status:'Unmitigated',owner:'Walker',deadline:'2026-08-01',detail:'Board members have zero personal liability protection. One lawsuit destroys the organization and personal finances.'},
+  {id:'R-02',cat:'Governance',title:'No general liability / organizational insurance',l:4,i:5,status:'Unmitigated',owner:'Walker',deadline:'2026-08-01',detail:'No coverage for construction accidents, volunteer injuries, or third-party property claims in Honduras.'},
+  {id:'R-03',cat:'Governance',title:'No formal board of directors (sole officer)',l:5,i:4,status:'Unmitigated',owner:'Walker',deadline:'2026-09-01',detail:'Currently Walker Somerville is sole officer. IRS best practice requires minimum 3 independent board members for 501(c)(3).'},
+  {id:'R-04',cat:'Operations',title:'Walker Somerville — key-man single point of failure',l:2,i:5,status:'Unmitigated',owner:'Board',deadline:'2026-08-15',detail:'All community relationships, donor relationships, Honduras operations, and organizational knowledge reside with Walker.'},
+  {id:'R-05',cat:'Governance',title:'No succession plan document',l:4,i:4,status:'Unmitigated',owner:'Walker',deadline:'2026-08-15',detail:'No written succession plan exists. Board cannot activate continuity if Walker becomes unavailable.'},
+  {id:'R-06',cat:'Travel',title:'US State Dept. Honduras Level 3 advisory (current)',l:4,i:4,status:'In Progress',owner:'Walker',deadline:'Ongoing',detail:'Honduras is currently at Level 3 "Reconsider Travel." Board must monitor monthly. Level 4 would require suspending all trips.'},
+  {id:'R-07',cat:'Travel',title:'Volunteer injury on construction site — no coverage',l:3,i:4,status:'Unmitigated',owner:'Walker',deadline:'2026-08-01',detail:'CAMINO hosts 80–100 volunteers/year on active construction sites. No accident coverage, no signed waivers.'},
+  {id:'R-08',cat:'Travel',title:'US volunteer medical emergency in Honduras',l:3,i:4,status:'In Progress',owner:'Walker',deadline:'Ongoing',detail:'Medical facilities in Cortés are limited. CAMINO has no medical emergency fund or medevac arrangement.'},
+  {id:'R-09',cat:'Financial',title:'Revenue concentration risk (church + 1–2 major donors)',l:3,i:4,status:'In Progress',owner:'Walker',deadline:'2026-12-31',detail:'Estimated top 3 donors represent 30–40% of revenue. Loss of any one donor creates immediate deficit.'},
+  {id:'R-10',cat:'Financial',title:'No operating reserve fund (currently $4,200)',l:4,i:3,status:'In Progress',owner:'Board',deadline:'2027-12-31',detail:'Target minimum is 3 months of operating expenses (~$30,000). Current reserve is critically low at $4,200.'},
+  {id:'R-11',cat:'Operations',title:'Walker family health crisis — extended US absence',l:2,i:4,status:'Unmitigated',owner:'Walker',deadline:'2026-08-15',detail:'No coverage plan if Walker must return to US for family medical reasons for months at a time.'},
+  {id:'R-12',cat:'Travel',title:'Pandemic / global health emergency (border closure)',l:2,i:5,status:'In Progress',owner:'Board',deadline:'Ongoing',detail:'COVID showed 55% drop in homes built. Trip revenue ($30K+/yr) disappears entirely. Requires pre-approved budget reduction scenario.'},
+  {id:'R-13',cat:'Travel',title:'Honduras political instability (coup / election dispute)',l:2,i:4,status:'Monitored',owner:'Walker',deadline:'Ongoing',detail:'Honduras has history of political instability. Level 4 advisory would halt all operations indefinitely.'},
+  {id:'R-14',cat:'Travel',title:'Category 4+ hurricane — direct hit on Cortés region',l:3,i:4,status:'Monitored',owner:'Walker',deadline:'Ongoing',detail:'Hurricane season June–November. Rio Lindo retreat center and community infrastructure at risk. No property insurance confirmed.'},
+  {id:'R-15',cat:'Travel',title:'Violent crime / kidnapping risk (Cortés dept.)',l:2,i:5,status:'In Progress',owner:'Walker',deadline:'Ongoing',detail:'Cortés has active gang presence. CAMINO operates in rural communities — lower risk than cities but not zero. No formal security protocol documented.'},
+  {id:'R-16',cat:'Legal',title:'990-N e-Postcard compliance lapse',l:2,i:4,status:'Mitigated',owner:'Walker',deadline:'Annual (Nov)',detail:'Failure to file for 3 consecutive years results in automatic revocation of 501(c)(3) status. Calendar reminder must be set.'},
+  {id:'R-17',cat:'Legal',title:'Honduras legal / registration compliance',l:2,i:3,status:'Monitored',owner:'Walker',deadline:'Ongoing',detail:'Foreign NGO operating in Honduras may require local registration. Legal requirements should be reviewed with Honduran attorney annually.'},
+  {id:'R-18',cat:'Legal',title:'Volunteer data privacy / liability',l:2,i:2,status:'In Progress',owner:'Walker',deadline:'2026-10-01',detail:'Website collects email addresses and trip registrant data. Privacy policy and data retention policy do not yet exist.'},
+  {id:'R-19',cat:'Governance',title:'No conflict of interest policy',l:3,i:3,status:'Unmitigated',owner:'Board',deadline:'2026-09-01',detail:'IRS Form 990 asks whether organization has a conflict of interest policy. Required for Charity Navigator and GuideStar profile.'},
+  {id:'R-20',cat:'Financial',title:'Currency devaluation (Honduran Lempira)',l:3,i:2,status:'Mitigated',owner:'Walker',deadline:'Ongoing',detail:'CAMINO sends USD to Honduras — favorable when Lempira weakens. Risk is if USD weakens significantly vs. HNL.'},
+  {id:'R-21',cat:'Operations',title:'Community partner relationship breakdown',l:2,i:3,status:'Monitored',owner:'Walker',deadline:'Ongoing',detail:'CAMINO depends on trust of 12+ community leaders. Loss of a key community partnership could derail operations in that area.'},
+  {id:'R-22',cat:'Legal',title:'OFAC / Foreign Corrupt Practices Act compliance',l:1,i:5,status:'Monitored',owner:'Walker',deadline:'Ongoing',detail:'Low probability but sending USD to Honduras requires OFAC compliance. Consult international attorney if grant-funded operations expand.'},
+];
+
+function scoreClass(s){
+  if(s>=20) return 'rs-critical';
+  if(s>=12) return 'rs-high';
+  if(s>=6)  return 'rs-medium';
+  return 'rs-low';
+}
+function catClass(c){
+  var m = {Governance:'rc-gov',Travel:'rc-travel',Financial:'rc-fin',Operations:'rc-ops',Legal:'rc-legal'};
+  return m[c]||'rc-legal';
+}
+function statusClass(s){
+  if(s==='Unmitigated') return 'rs-unmitigated';
+  if(s==='In Progress'||s==='Monitored') return 'rs-inprogress';
+  return 'rs-mitigated';
+}
+
+function buildRiskTable(filter){
+  var tbody = document.getElementById('riskTableBody');
+  if(!tbody) return;
+  tbody.innerHTML='';
+  var list = filter==='all' ? RISKS : RISKS.filter(function(r){ return r.cat===filter; });
+  list.forEach(function(r){
+    var score = r.l * r.i;
+    var tr = document.createElement('tr');
+    tr.setAttribute('data-cat', r.cat);
+    tr.innerHTML = '<td style="font-size:11px;font-weight:700;color:var(--text-muted)">'+r.id+'</td>'
+      +'<td><span class="risk-cat '+catClass(r.cat)+'">'+r.cat+'</span></td>'
+      +'<td style="min-width:200px"><strong>'+r.title+'</strong><br><span style="font-size:11px;color:var(--text-muted)">'+r.detail+'</span></td>'
+      +'<td style="text-align:center;font-weight:700">'+r.l+'</td>'
+      +'<td style="text-align:center;font-weight:700">'+r.i+'</td>'
+      +'<td style="text-align:center"><span class="risk-score '+scoreClass(score)+'">'+score+'</span></td>'
+      +'<td><span class="risk-status '+statusClass(r.status)+'">'+r.status+'</span></td>'
+      +'<td class="risk-owner">'+r.owner+'</td>'
+      +'<td class="risk-deadline">'+r.deadline+'</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function filterRisk(cat, btn){
+  document.querySelectorAll('.risk-filter .rfbtn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  buildRiskTable(cat);
+}
+</script>
+</body>
+</html>
