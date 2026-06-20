@@ -35,3 +35,17 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 - **Mission**: Housing-first community development in Honduras
 - **Key programs**: Home construction ($5,500/home), community infrastructure, church planting, mission trips (4–25 people, week-long)
 - **Primary site**: [caminohonduras.com](https://www.caminohonduras.com/) — this repo is a redesign
+
+## Session Log
+
+<!-- Most recent session at the top. Format:
+### [DATE] — [brief title]
+- What changed: ...
+- Status: ...
+- Next steps: ...
+-->
+
+### 2026-06-20 — Add "Before You Go" callout to Logistics tab
+- What changed: `trips/jul-2026-culpeper.html` — added `.byg-card` CSS + "Before You Go" callout card near top of Logistics tab with STEP registration (step.state.gov link) and CBP One app (App Store + Google Play links) action items
+- Status: Complete. Committed and pushed to main (live on GitHub Pages).
+- Next steps: Replace placeholder gallery photos with real trip photos in `assets/images/trips/culpeper-jul-2026/`
