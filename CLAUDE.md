@@ -45,6 +45,18 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 - Next steps: ...
 -->
 
+### 2026-06-20 — Board of Directors & leadership page
+- What changed:
+  - **about/board.html**: New public page — hero, 6-member Board of Directors grid (teal avatar placeholders, name/role/bio/LinkedIn), 4-person Staff/Leadership section, Join the Board CTA, 990/GuideStar transparency section; full ADA compliance (skip-link, aria-labels, tabindex on cards, focus-visible)
+  - **9 public pages** (index, about, programs, trips, stories, contact, give, impact, roadmap): About nav link converted to `nav-has-drop` dropdown with "Our Board" sub-item; mobile menu gains indented "↳ Our Board" sub-link
+- Status: Complete. Committed b451ef0 and pushed to main.
+- Next steps:
+  1. Replace placeholder board member names/bios/photos with real data
+  2. Replace `#` LinkedIn links with real profile URLs
+  3. Replace `#` 990/GuideStar links once documents are uploaded
+  4. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  5. Add Mailchimp params to newsletter forms (index.html, stories.html)
+
 ### 2026-06-20 — Roadmap executive brief + nav link on all 19 pages
 - What changed:
   - **roadmap.html**: New page — site scorecard (6 categories A–C), Top 15 priority gaps, 3-phase plan (Phase 1 Fix It / Phase 2 Build It / Phase 3 Scale It), revenue table, strategic leverage section, tool stack, print/PDF bar
