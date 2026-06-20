@@ -47,7 +47,6 @@
       <a href="../stories.html">Stories</a>
       <a href="../programs.html">Programs</a>
       <a href="../trips.html">Mission trips</a>
-      <a href="index.html" style="color:var(--text);font-weight:600">Swag store</a>
       <a href="../contact.html">Contact</a>
     </div>
     <a href="../give.html" class="nav-cta">Give now</a>
@@ -60,18 +59,28 @@
     <a href="../stories.html">Stories</a>
     <a href="../programs.html">Programs</a>
     <a href="../trips.html">Mission trips</a>
-    <a href="index.html">Swag store</a>
     <a href="../contact.html">Contact</a>
     <a href="../give.html" style="color:var(--amber);font-weight:600">Give now</a>
   </nav>
   <div class="nav-overlay" id="navOverlay"></div>
 
-  <!-- Store Hero -->
-  <div class="store-hero">
-    <div class="eyebrow">CAMINO Honduras</div>
-    <h1>Gear up. Represent Honduras.</h1>
-    <p>Official CAMINO gear and custom mission trip apparel — wear your trip home and share the story everywhere you go.</p>
+  <!-- Store Gate: shown when no valid ?trip= parameter -->
+  <div id="store-gate">
+    <div class="store-hero" style="min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
+      <div class="eyebrow">Access restricted</div>
+      <h1 style="font-size:26px;margin:0">Trip participants only</h1>
+      <p style="max-width:480px;margin:0">Swag store access is available exclusively for registered CAMINO trip participants. Please use the link provided by your trip coordinator.</p>
+      <div style="margin-top:8px"><a href="../trips.html" class="btn-secondary">View 2026 trips</a></div>
+    </div>
   </div>
+
+  <!-- Store Content: shown when valid ?trip= parameter is present -->
+  <div id="store-main" style="display:none">
+    <div class="store-hero">
+      <div id="store-eyebrow" class="eyebrow">CAMINO Honduras</div>
+      <h1 id="store-title">Gear up. Represent Honduras.</h1>
+      <p id="store-subtitle">Official CAMINO gear and custom mission trip apparel — wear your trip home and share the story everywhere you go.</p>
+    </div>
 
   <!-- CAMINO gear -->
   <div class="store-section">
@@ -157,6 +166,8 @@
     </div>
   </div>
 
+  </div><!-- /store-main -->
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
@@ -202,6 +213,28 @@
     </div>
   </footer>
 
+  <script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var trip = params.get('trip');
+    var TRIPS = {
+      'culpeper-jul-2026': 'Culpeper Methodist Mission Trip — July 2026',
+      'jan-2026': 'Winter Build Trip — January 2026',
+      'mar-2026': 'Spring Build Trip — March 2026',
+      'jun-2026': 'Summer Build Trip — June 2026',
+      'oct-2026': 'Fall Mission Trip — October 2026'
+    };
+    if (trip && TRIPS[trip]) {
+      document.getElementById('store-gate').style.display = 'none';
+      document.getElementById('store-main').style.display = '';
+      var name = TRIPS[trip];
+      document.getElementById('store-eyebrow').textContent = name;
+      document.getElementById('store-title').textContent = name + ' — Gear';
+      document.getElementById('store-subtitle').textContent = 'Exclusive gear for the ' + name + ' team. Order before your departure date.';
+      document.title = name + ' Gear — CAMINO Honduras';
+    }
+  })();
+  </script>
   <script src="../assets/js/main.js"></script>
 </body>
 </html>
