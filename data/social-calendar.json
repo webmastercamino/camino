@@ -588,5 +588,196 @@
     "category": "Impact",
     "status": "Draft",
     "imageNote": "A montage or grid of 2026 trip photos, or a before/after of a completed home"
+  },
+
+  {
+    "id": "hnd-new-year",
+    "date": "2026-01-01",
+    "platform": "Facebook",
+    "caption": "As we welcome 2026, we celebrate alongside our partners in Honduras where families are gathering, faith is strong, and communities are looking ahead with hope. ¡Feliz Año Nuevo! From CAMINO Honduras to yours — may this year bring new homes, new friendships, and new beginnings. 🎉🇭🇳",
+    "hashtags": "#FelizAñoNuevo #Honduras #CAMINO #NuevoAño2026 #MissionPartners",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "A Honduran family celebrating New Year together — community gathering, fireworks, or a quiet moment of reflection at midnight"
+  },
+  {
+    "id": "hnd-back-to-school",
+    "date": "2026-02-02",
+    "platform": "Facebook",
+    "caption": "Schools are back in session in Honduras! 📚 The Honduran school year runs February through November — a rhythm completely different from the US calendar. CAMINO volunteers helped build and repair classrooms in communities across Northern Honduras last year. Because every child deserves a classroom as solid as their dreams.",
+    "hashtags": "#BackToSchool #Honduras #CAMINO #EducationHonduras #BuildingFutures #RioLindo",
+    "category": "Awareness",
+    "status": "Draft",
+    "imageNote": "Honduran children in school uniforms heading to class, or a freshly painted classroom in a CAMINO-served community"
+  },
+  {
+    "id": "hnd-dia-amor",
+    "date": "2026-02-14",
+    "platform": "Facebook",
+    "caption": "In Honduras, today is Día del Amor y la Amistad — a day for ALL kinds of love. Not just romantic love, but friendship, family, and community. 💚 The bonds CAMINO volunteers form with the communities they serve in Rio Lindo and Northern Honduras are a kind of love too — the kind that doesn't end when the plane takes off.",
+    "hashtags": "#DíaDelAmor #DíaDelAmorYLaAmistad #Honduras #CAMINO #AmistadSinFronteras",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "A volunteer and a Honduran community member sharing a genuine moment — friendship across cultures, warm and authentic"
+  },
+  {
+    "id": "region-northern-hnd",
+    "date": "2026-03-14",
+    "platform": "Facebook",
+    "caption": "Did you know that in rural areas of Northern Honduras, access to clean water is still a daily struggle for millions of families? 💧 CAMINO is committed to community development that goes beyond four walls — because a home is only as strong as the community around it. Your support helps build infrastructure that lasts. Learn how at the link in bio.",
+    "hashtags": "#NorthernHonduras #Honduras #CAMINO #CleanWater #CommunityDevelopment #RuralHonduras",
+    "category": "Awareness",
+    "status": "Draft",
+    "imageNote": "A rural water source or infrastructure project in Northern Honduras — real and grounded, showing the challenge and the solution"
+  },
+  {
+    "id": "hnd-semana-santa",
+    "date": "2026-03-30",
+    "platform": "Instagram",
+    "caption": "Holy Week — Semana Santa — is sacred in Honduras. 🌺 Streets fill with processions. Families spend days laying intricate alfombras — elaborate sawdust carpets — honoring the passion of Christ. Churches overflow. Time slows. It is one of the most beautiful expressions of faith we've ever witnessed. This week, we pause alongside our Honduran family. 🙏",
+    "hashtags": "#SemanaSanta #Honduras #CAMINO #HolyWeek #AlfombrasHonduras #SemanaSantaHN",
+    "category": "Religious",
+    "status": "Draft",
+    "imageNote": "A Semana Santa street procession in Honduras, or an intricate alfombra (sawdust carpet) laid in the road — vivid colors, reverent atmosphere, culturally rich"
+  },
+  {
+    "id": "hnd-garifuna-apr",
+    "date": "2026-04-12",
+    "platform": "Facebook",
+    "caption": "Some Garifuna communities along the Honduran coast celebrate their settlement heritage today. 🌊🥁 The Garifuna people — whose roots weave together West African, Arawak, and Carib ancestry — have called the Honduran coastline home for centuries. Their culture, music, language, and resilience are a gift to Honduras and the world. CAMINO is honored to be guests in the land they've long called home.",
+    "hashtags": "#Garifuna #Honduras #CAMINO #GarifunaCulture #HondurasHeritage #CoastalHonduras",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "Garifuna cultural celebration — traditional dress, drumming, coastal Honduras setting — vibrant and dignified"
+  },
+  {
+    "id": "hnd-dia-americas",
+    "date": "2026-04-14",
+    "platform": "Facebook",
+    "caption": "Happy Día de las Américas — Pan American Day! 🌎 Today Honduras and nations across the hemisphere celebrate the bonds that connect us. CAMINO lives this out every day: two countries, one mission. We are grateful for the partnership between the people of the US and the people of Honduras that makes this work possible. Juntos es mejor.",
+    "hashtags": "#DíaDeLasAméricas #PanAmericanDay #Honduras #CAMINO #AmericasUnited #JuntosSomosMás",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "US and Honduran flags together, or a group shot of American volunteers working side by side with Honduran families"
+  },
+  {
+    "id": "region-rio-lindo",
+    "date": "2026-04-25",
+    "platform": "Facebook",
+    "caption": "Rio Lindo, Cortes — this is where CAMINO works. 🏡 Tucked in the Cortes department of Northern Honduras, Rio Lindo is home to families who are building something better, block by block. We've built homes here. Planted a church here. Made lifelong friends here. This place has our hearts — and your generosity is why we can keep showing up. 🇭🇳",
+    "hashtags": "#RioLindo #Cortes #Honduras #CAMINO #NorthernHonduras #WhereWeWork",
+    "category": "Mission",
+    "status": "Draft",
+    "imageNote": "A landscape or street view of Rio Lindo, Cortes — the community, surrounding hills, or a CAMINO build site there. Show the real place."
+  },
+  {
+    "id": "hnd-dia-madre",
+    "date": "2026-05-10",
+    "platform": "Facebook",
+    "caption": "Honduras celebrates Día de la Madre today — and unlike the US, it's always May 10, no matter the day of the week. ❤️ We honor every madre in our partner communities in Rio Lindo and Northern Honduras who raises her family with faith, grit, and unshakeable love. Feliz Día de la Madre. 🌸",
+    "hashtags": "#DíaDeLaMadre #Honduras #CAMINO #MadresHondureñas #RioLindo #MothersDay",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "A Honduran mother with her children — ideally in or near a CAMINO-built home — warm, dignified, celebratory"
+  },
+  {
+    "id": "region-lenca",
+    "date": "2026-05-16",
+    "platform": "Instagram",
+    "caption": "Honduras is home to many cultures — and we are humbled by the richness of them all. The Lenca people, the largest indigenous group in Honduras, have lived in these mountains for thousands of years. Their wisdom, land stewardship, and community values inspire us. As CAMINO serves in Honduras, we commit to doing so with humility and deep respect for all who call this land home. 🏔️",
+    "hashtags": "#Lenca #Honduras #CAMINO #IndigenousHonduras #CulturalHumility #HondurasHeritage",
+    "category": "Awareness",
+    "status": "Draft",
+    "imageNote": "Lenca cultural imagery — traditional pottery, weaving, mountain landscape of Western Honduras, or a Lenca community — respectful and dignified, not touristy"
+  },
+  {
+    "id": "hnd-dia-nino",
+    "date": "2026-06-01",
+    "platform": "Facebook",
+    "caption": "Today Honduras celebrates Día del Niño — Children's Day! 🎉👧🧒 Every child in our partner communities in Rio Lindo and Northern Honduras deserves hope, health, and opportunity. That's why CAMINO builds more than homes — we build the kind of stable communities where children can grow up safe and know they are loved.",
+    "hashtags": "#DíaDelNiño #ChildrensDay #Honduras #CAMINO #NorthernHonduras #RioLindo #ChildrenMatter",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "Honduran children celebrating Children's Day — playing, laughing, at a community event in a CAMINO-served neighborhood. Full of joy."
+  },
+  {
+    "id": "region-comayagua",
+    "date": "2026-08-20",
+    "platform": "Facebook",
+    "caption": "Honduras is a land of many regions, many communities, many stories. From the coastal lowlands to the mountain highlands, beauty and need exist side by side. CAMINO's work is rooted in Northern Honduras — and we're always learning more about this country we love. Every corner of Honduras has shaped us. 🇭🇳🏔️",
+    "hashtags": "#Honduras #CAMINO #CommunityDevelopment #NorthernHonduras #MissionWork #HondurasLandscape",
+    "category": "Mission",
+    "status": "Draft",
+    "imageNote": "A scenic landscape of Honduras — mountains, valleys, a rural community — showing the geographic diversity of the country CAMINO serves"
+  },
+  {
+    "id": "hnd-independence-day",
+    "date": "2026-09-15",
+    "platform": "All",
+    "caption": "¡Feliz Día de la Independencia, Honduras! 🇭🇳 215 years of resilience, culture, and community. Today Honduras celebrates its independence — and we celebrate alongside the Honduran people, our partners, our friends, our family. We are honored to walk with you. ¡Que viva Honduras!",
+    "hashtags": "#HondurasIndependence #Honduras #CAMINO #FelizIndependencia #QueVivaHonduras #Sep15",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "Honduran flag waving proudly, a community independence celebration in blue and white — festive, proud, and joyful"
+  },
+  {
+    "id": "hnd-morazan-day",
+    "date": "2026-10-03",
+    "platform": "Facebook",
+    "caption": "Today Honduras honors Francisco Morazán — general, statesman, and champion of Central American unity. Morazán dreamed of a region united by shared values and mutual dignity. CAMINO shares that spirit: cross-cultural, collaborative, always building something larger than ourselves. ¡Viva Morazán! 🦁",
+    "hashtags": "#FranciscoMorazán #Honduras #CAMINO #DíaDeMorazán #CentralAmerica #HondurasHistory",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "A Honduran national holiday scene — flags, community gatherings — or an artistic nod to Central American heritage and history"
+  },
+  {
+    "id": "hnd-dia-raza",
+    "date": "2026-10-12",
+    "platform": "Facebook",
+    "caption": "On this day — Día de la Raza in Honduras — we pause to honor the indigenous communities who have called this land home for thousands of years: the Lenca, Garifuna, Miskito, Ch'orti', Tawahka, Pech, and more. CAMINO serves in Honduras with deep respect for the peoples and cultures who have long stewarded this land. We are guests here, and we don't forget it.",
+    "hashtags": "#DíaDeLaRaza #IndigenousPeoplesDay #Honduras #CAMINO #Lenca #Garifuna #Miskito #IndigenousHonduras",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "Honduran indigenous cultural imagery — traditional dress, crafts, or a community gathering — respectful, honoring, not exploitative"
+  },
+  {
+    "id": "hnd-dia-difuntos",
+    "date": "2026-11-02",
+    "platform": "Facebook",
+    "caption": "Today is Día de los Difuntos — All Souls Day — observed throughout Honduras with visits to cemeteries, marigold flowers, and quiet remembrance of those we've lost. 🕯️🌼 CAMINO joins our Honduran family in honoring loved ones and community members who have passed. We carry them with us in the work. Que en paz descansen.",
+    "hashtags": "#DíaDeLosMusrtos #AllSoulsDay #Honduras #CAMINO #Difuntos #RecordandoConAmor",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "Marigold flowers at a Honduran cemetery, candlelight offerings, or a family visiting a loved one's grave — reflective, respectful, colorful"
+  },
+  {
+    "id": "hnd-school-year-end",
+    "date": "2026-11-14",
+    "platform": "Facebook",
+    "caption": "Another school year wrapping up in Honduras! 🎉📚 The Honduran school year runs February through November — and students in our partner communities in Rio Lindo and across Northern Honduras have worked hard this year. Congratulations to the students, teachers, and families. You are the future of Honduras. 🇭🇳",
+    "hashtags": "#EndOfSchoolYear #Honduras #CAMINO #RioLindo #NorthernHonduras #EducaciónHonduras",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "Honduran students celebrating the end of the school year — happy, proud, in or near a CAMINO-served community"
+  },
+  {
+    "id": "hnd-garifuna-nov",
+    "date": "2026-11-26",
+    "platform": "Instagram",
+    "caption": "Today is National Garifuna Day in Honduras! 🥁🌊 The Garifuna people are a cornerstone of Honduran coastal culture — their music (punta!), food, language, and spirit are unlike anything else in the world. CAMINO is honored to be a guest in the land that the Garifuna have called home for centuries. ¡Lela bai — let's celebrate! 🎉",
+    "hashtags": "#GarifunaDay #Garifuna #Honduras #CAMINO #NationalGarifunaDay #PuntaRock #HondurasHeritage",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "Garifuna celebration — drumming, traditional dress, coastal Honduras, punta dancers — vibrant, joyful, culturally specific"
+  },
+  {
+    "id": "hnd-guadalupe",
+    "date": "2026-12-12",
+    "platform": "Facebook",
+    "caption": "Today, December 12, Catholic communities across Honduras celebrate the feast of the Virgen de Guadalupe — a beloved tradition throughout Latin America. Her image graces homes, churches, and roadside shrines throughout the communities we serve. CAMINO respects and honors the faith traditions of our Honduran partners. 🌹",
+    "hashtags": "#VirgenDeGuadalupe #Honduras #CAMINO #Guadalupe #FaithAndService #Honduras",
+    "category": "Cultural",
+    "status": "Draft",
+    "imageNote": "A Virgen de Guadalupe image or shrine in a Honduran community — respectful, warm, culturally genuine; or a small neighborhood celebration"
   }
 ]
