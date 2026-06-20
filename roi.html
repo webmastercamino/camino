@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital ROI Brief — CAMINO Honduras (Internal)</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ── Layout ── */
+    body{background:var(--gray-100)}
+    .roi-wrap{max-width:960px;margin:0 auto;padding:40px 32px 80px}
+    @media(max-width:640px){.roi-wrap{padding:24px 16px 60px}}
+
+    /* ── Top bar ── */
+    .roi-topbar{background:var(--teal);color:white;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px}
+    .roi-topbar a{color:rgba(255,255,255,.8);text-decoration:none;font-size:12px}
+    .roi-topbar a:hover{color:white}
+    .roi-internal-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+
+    /* ── Hero ── */
+    .roi-hero{background:linear-gradient(135deg,#051009 0%,#0a1e12 60%,#0f2a15 100%);border-radius:var(--radius-lg);padding:48px 44px;margin-bottom:36px;color:white}
+    .roi-hero h1{font-size:clamp(22px,3.5vw,34px);font-weight:800;margin-bottom:10px;line-height:1.2}
+    .roi-hero p{font-size:15px;color:rgba(255,255,255,.75);max-width:600px;line-height:1.7;margin-bottom:28px}
+    .roi-hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px}
+    .roi-hero-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:18px 20px}
+    .roi-hero-stat__num{font-size:28px;font-weight:800;color:var(--amber-brand);line-height:1;margin-bottom:4px}
+    .roi-hero-stat__label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.65)}
+
+    /* ── Section cards ── */
+    .roi-card{background:white;border-radius:var(--radius-lg);padding:32px 36px;margin-bottom:24px;border:1.5px solid var(--gray-200)}
+    @media(max-width:640px){.roi-card{padding:22px 18px}}
+    .roi-card__eyebrow{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+    .roi-card__title{font-size:20px;font-weight:700;margin-bottom:6px}
+    .roi-card__sub{font-size:14px;color:var(--text-muted);line-height:1.7;max-width:640px;margin-bottom:24px}
+
+    /* ── Phase 1 item list ── */
+    .p1-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:24px}
+    .p1-item{background:var(--gray-100);border-radius:var(--radius);padding:14px 16px;border-left:3px solid var(--teal)}
+    .p1-item__title{font-size:13px;font-weight:700;margin-bottom:3px}
+    .p1-item__desc{font-size:12px;color:var(--text-muted);line-height:1.5}
+    .p1-item__val{font-size:12px;font-weight:700;color:var(--amber-dark);margin-top:6px}
+
+    /* ── Value table ── */
+    .val-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+    .val-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--text-muted);padding:8px 12px;border-bottom:2px solid var(--gray-200)}
+    .val-table td{padding:10px 12px;border-bottom:1px solid var(--gray-200);vertical-align:top}
+    .val-table tr:last-child td{border-bottom:none}
+    .val-table tr.total-row td{font-weight:700;background:var(--gray-100);border-top:2px solid var(--gray-200)}
+    .val-range{font-weight:700;color:var(--teal);white-space:nowrap}
+    .badge-phase{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.4px}
+    .badge-p1{background:var(--teal-light);color:var(--teal)}
+    .badge-p2{background:var(--amber-light);color:var(--amber-dark)}
+
+    /* ── Scenario table ── */
+    .scenario-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+    .scenario-card{border-radius:var(--radius-lg);padding:22px 20px;border:1.5px solid}
+    .scenario-card--conservative{background:#f0fdf4;border-color:#86efac}
+    .scenario-card--moderate{background:#fffbeb;border-color:var(--amber-mid)}
+    .scenario-card--aggressive{background:#fff1f2;border-color:#fca5a5}
+    .scenario-label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
+    .scenario-card--conservative .scenario-label{color:#16a34a}
+    .scenario-card--moderate .scenario-label{color:var(--amber-dark)}
+    .scenario-card--aggressive .scenario-label{color:#dc2626}
+    .scenario-uplift{font-size:28px;font-weight:800;line-height:1;margin-bottom:4px}
+    .scenario-desc{font-size:12px;color:var(--text-muted);line-height:1.55}
+
+    /* ── ROI meter ── */
+    .roi-meter{background:var(--gray-100);border-radius:var(--radius-lg);padding:28px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:28px;text-align:center}
+    @media(max-width:640px){.roi-meter{grid-template-columns:1fr}}
+    .roi-meter__num{font-size:40px;font-weight:800;line-height:1;margin-bottom:4px}
+    .roi-meter__label{font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--text-muted)}
+    .roi-meter__note{font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.4}
+
+    /* ── Projection table ── */
+    .proj-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+    .proj-table th{background:var(--teal);color:white;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:10px 14px;text-align:center}
+    .proj-table th:first-child{text-align:left}
+    .proj-table td{padding:10px 14px;border-bottom:1px solid var(--gray-200);text-align:center}
+    .proj-table td:first-child{text-align:left;font-weight:600}
+    .proj-table tr:last-child td{border-bottom:none;font-weight:700;background:var(--amber-light)}
+    .proj-homes{color:var(--teal);font-weight:700}
+    .proj-note{font-size:11px;color:var(--text-muted);margin-top:12px;line-height:1.6;font-style:italic}
+
+    /* ── Dollar effect ── */
+    .dollar-effect{background:linear-gradient(135deg,var(--teal) 0%,#0a5242 100%);border-radius:var(--radius-lg);padding:36px 40px;color:white;text-align:center;margin-top:24px}
+    .dollar-effect h3{color:white;font-size:20px;margin-bottom:8px}
+    .dollar-effect p{color:rgba(255,255,255,.8);font-size:14px;max-width:520px;margin:0 auto 24px;line-height:1.7}
+    .dollar-math{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:16px;font-weight:700}
+    .dollar-box{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius);padding:12px 20px;text-align:center}
+    .dollar-box__num{font-size:28px;font-weight:800;color:var(--amber-brand)}
+    .dollar-box__label{font-size:11px;color:rgba(255,255,255,.7);margin-top:2px}
+    .dollar-arrow{font-size:24px;color:rgba(255,255,255,.5)}
+
+    /* ── Phase 2 features ── */
+    .p2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+    .p2-item{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:18px 20px;border-left:4px solid var(--amber)}
+    .p2-item__phase{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber-dark);margin-bottom:5px}
+    .p2-item__title{font-size:14px;font-weight:700;margin-bottom:4px}
+    .p2-item__desc{font-size:12px;color:var(--text-muted);line-height:1.55}
+    .p2-item__val{font-size:12px;font-weight:700;color:var(--amber-dark);margin-top:8px}
+
+    /* ── Key assumptions box ── */
+    .assumptions{background:var(--gray-100);border-radius:var(--radius);padding:18px 22px;font-size:12px;color:var(--text-muted);line-height:1.7;border-left:3px solid var(--amber);margin-top:20px}
+    .assumptions strong{color:var(--text)}
+  </style>
+</head>
+<body>
+
+  <!-- Internal banner -->
+  <div class="roi-topbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="roi-internal-badge">Internal</span>
+      <span>CAMINO Honduras · Digital Investment ROI Brief · June 2026</span>
+    </div>
+    <a href="roadmap.html">← Full roadmap</a>
+  </div>
+
+  <div class="roi-wrap">
+
+    <!-- Hero -->
+    <div class="roi-hero">
+      <div class="roi-card__eyebrow" style="color:rgba(255,255,255,.5);margin-bottom:10px">Digital strategy · Internal brief</div>
+      <h1>The website is a fundraising tool.<br>Here's the math.</h1>
+      <p>This brief quantifies what has been built, what Phase 2 is worth, and the realistic return on the full digital investment — measured in dollars raised, trips filled, and homes built.</p>
+
+      <div class="roi-hero-stats">
+        <div class="roi-hero-stat">
+          <div class="roi-hero-stat__num">$35K</div>
+          <div class="roi-hero-stat__label">Phase 1 value built</div>
+        </div>
+        <div class="roi-hero-stat">
+          <div class="roi-hero-stat__num">9×</div>
+          <div class="roi-hero-stat__label">Projected 3-yr ROI (moderate)</div>
+        </div>
+        <div class="roi-hero-stat">
+          <div class="roi-hero-stat__num">+95</div>
+          <div class="roi-hero-stat__label">Additional homes possible</div>
+        </div>
+        <div class="roi-hero-stat">
+          <div class="roi-hero-stat__num">Nov '26</div>
+          <div class="roi-hero-stat__label">Thanksgiving deadline</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1: What was built -->
+    <div class="roi-card">
+      <div class="roi-card__eyebrow">Phase 1 — already delivered</div>
+      <div class="roi-card__title">What the website includes now</div>
+      <div class="roi-card__sub">A full production site was built from scratch — design system, 20 pages, interactive features, and a content management strategy. Equivalent agency cost: <strong>$24,800–$39,300.</strong></div>
+
+      <div class="p1-grid">
+        <div class="p1-item">
+          <div class="p1-item__title">Brand design system</div>
+          <div class="p1-item__desc">Amber/teal palette, typography, responsive CSS framework used across all 20 pages</div>
+          <div class="p1-item__val">Value: $3,000–5,000</div>
+        </div>
+        <div class="p1-item">
+          <div class="p1-item__title">Core website (9 pages)</div>
+          <div class="p1-item__desc">Home, About, Programs, Trips, Give, Contact, Stories, Store, 404</div>
+          <div class="p1-item__val">Value: $6,000–9,000</div>
+        </div>
+        <div class="p1-item">
+          <div class="p1-item__title">4 trip portals + 1 custom</div>
+          <div class="p1-item__desc">Jan, Mar, Jun, Oct + Culpeper group portal with tabs, countdown, checklist, QR code</div>
+          <div class="p1-item__val">Value: $3,500–5,500</div>
+        </div>
+        <div class="p1-item">
+          <div class="p1-item__title">Admin CMS panel</div>
+          <div class="p1-item__desc">Social calendar, trip manager, donation tracker — full browser-based CMS in localStorage</div>
+          <div class="p1-item__val">Value: $3,000–5,000</div>
+        </div>
+        <div class="p1-item">
+          <div class="p1-item__title">Impact &amp; transparency page</div>
+          <div class="p1-item__desc">Interactive Leaflet map, 9 real communities, annual bar chart, donut chart, annual report</div>
+          <div class="p1-item__val">Value: $2,000–3,500</div>
+        </div>
+        <div class="p1-item">
+          <div class="p1-item__title">Roadmap strategy brief</div>
+          <div class="p1-item__desc">Site scorecard, Top 15 gaps, 3-phase plan, revenue table, CNN Heroes readiness, tool stack</div>
+          <div class="p1-item__val">Value: $1,500–2,500</div>
+        </div>
+        <div class="p1-item">
+          <div class="p1-item__title">WCAG 2.1 AA accessibility</div>
+          <div class="p1-item__desc">Skip links, ARIA, keyboard navigation, focus traps, screen reader support across all pages</div>
+          <div class="p1-item__val">Value: $2,000–3,000</div>
+        </div>
+        <div class="p1-item">
+          <div class="p1-item__title">Real data integration</div>
+          <div class="p1-item__desc">9 real Honduras communities, correct founding timeline, Kindful links, trip cost, Facebook</div>
+          <div class="p1-item__val">Value: $1,000–1,500</div>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="val-table">
+          <thead>
+            <tr>
+              <th>Deliverable</th>
+              <th>Phase</th>
+              <th>Freelance range</th>
+              <th>Nonprofit agency range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Design + CSS system</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$3,000–5,000</td><td class="val-range">$5,000–10,000</td></tr>
+            <tr><td>Core site (9 pages)</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$6,000–9,000</td><td class="val-range">$12,000–20,000</td></tr>
+            <tr><td>Trip portals (5 total)</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$3,500–5,500</td><td class="val-range">$6,000–12,000</td></tr>
+            <tr><td>Admin CMS panel</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$3,000–5,000</td><td class="val-range">$5,000–10,000</td></tr>
+            <tr><td>Impact / transparency page</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$2,000–3,500</td><td class="val-range">$4,000–8,000</td></tr>
+            <tr><td>Accessibility (WCAG 2.1 AA)</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$2,000–3,000</td><td class="val-range">$3,000–6,000</td></tr>
+            <tr><td>Strategy + roadmap doc</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$1,500–2,500</td><td class="val-range">$3,000–5,000</td></tr>
+            <tr><td>Data research + integration</td><td><span class="badge-phase badge-p1">P1</span></td><td class="val-range">$1,000–1,500</td><td class="val-range">$1,500–3,000</td></tr>
+            <tr class="total-row"><td>Phase 1 total</td><td>—</td><td class="val-range">$22,000–35,000</td><td class="val-range">$39,500–74,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Phase 2: What's next -->
+    <div class="roi-card">
+      <div class="roi-card__eyebrow">Phase 2 — Weeks 3–8</div>
+      <div class="roi-card__title">What Phase 2 builds</div>
+      <div class="roi-card__sub">Phase 2 turns the static site into a content engine — blog publishing, social automation, and a corporate giving channel. Estimated additional value: <strong>$8,000–$15,000.</strong></div>
+
+      <div class="p2-grid">
+        <div class="p2-item">
+          <div class="p2-item__phase">Content</div>
+          <div class="p2-item__title">Blog / stories CMS (Decap)</div>
+          <div class="p2-item__desc">Walker publishes field updates directly from the browser. No developer needed. Posts are committed to GitHub automatically.</div>
+          <div class="p2-item__val">Replaces $50–200/mo CMS subscription · Value: $2,000–3,500</div>
+        </div>
+        <div class="p2-item">
+          <div class="p2-item__phase">Social</div>
+          <div class="p2-item__title">Auto-post to Facebook + Instagram</div>
+          <div class="p2-item__desc">New blog post → RSS feed → IFTTT/Make → Buffer → publishes to social automatically. Consistent content without manual posting.</div>
+          <div class="p2-item__val">Replaces $15–99/mo social tool · Value: $1,500–2,500</div>
+        </div>
+        <div class="p2-item">
+          <div class="p2-item__phase">Revenue</div>
+          <div class="p2-item__title">Corporate mission trip page</div>
+          <div class="p2-item__desc">Dedicated landing page for companies and HR departments. Corporate teams pay $15K–25K/group. Two groups = a year's construction budget.</div>
+          <div class="p2-item__val">Revenue potential: $30K–50K/yr · Value: $2,500–4,000</div>
+        </div>
+        <div class="p2-item">
+          <div class="p2-item__phase">Engagement</div>
+          <div class="p2-item__title">Prayer wall page</div>
+          <div class="p2-item__desc">Community prayer board with family request cards. Deepens donor connection beyond financial giving — increases retention and repeat gifts.</div>
+          <div class="p2-item__val">Value: $800–1,200</div>
+        </div>
+        <div class="p2-item">
+          <div class="p2-item__phase">Giving</div>
+          <div class="p2-item__title">Mailchimp newsletter integration</div>
+          <div class="p2-item__desc">Connect the email signup forms on homepage and stories to Mailchimp. Monthly field updates → repeat donors. Email converts 3–5× higher than social.</div>
+          <div class="p2-item__val">Value: $500–800</div>
+        </div>
+        <div class="p2-item">
+          <div class="p2-item__phase">Trust</div>
+          <div class="p2-item__title">Volunteer + transparency pages</div>
+          <div class="p2-item__desc">Volunteer landing page and financial transparency page with IRS 990 link. Both improve search SEO and donor trust signals.</div>
+          <div class="p2-item__val">Value: $1,000–1,800</div>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="val-table" style="margin-top:20px">
+          <thead>
+            <tr><th>Phase 2 item</th><th>Phase</th><th>Freelance value</th><th>Annual revenue potential</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Blog CMS (Decap)</td><td><span class="badge-phase badge-p2">P2</span></td><td class="val-range">$2,000–3,500</td><td>—</td></tr>
+            <tr><td>Social auto-posting</td><td><span class="badge-phase badge-p2">P2</span></td><td class="val-range">$1,500–2,500</td><td>—</td></tr>
+            <tr><td>Corporate mission page</td><td><span class="badge-phase badge-p2">P2</span></td><td class="val-range">$2,500–4,000</td><td class="val-range">$30,000–50,000</td></tr>
+            <tr><td>Newsletter + Mailchimp</td><td><span class="badge-phase badge-p2">P2</span></td><td class="val-range">$500–800</td><td>—</td></tr>
+            <tr><td>Volunteer / prayer / transparency</td><td><span class="badge-phase badge-p2">P2</span></td><td class="val-range">$1,800–3,200</td><td>—</td></tr>
+            <tr class="total-row"><td>Phase 2 total</td><td>—</td><td class="val-range">$8,300–14,000</td><td class="val-range">$30,000–50,000+</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Overall ROI -->
+    <div class="roi-card">
+      <div class="roi-card__eyebrow">Return on investment</div>
+      <div class="roi-card__title">What the digital investment unlocks — annually</div>
+      <div class="roi-card__sub">Three independent revenue streams the improved site enables. Figures use conservative, moderate, and aggressive assumptions on donation uplift, trip fill rate, and corporate bookings. All financial figures are Sample estimates — Walker to validate with real donation history.</div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:28px">
+
+        <div style="background:var(--gray-100);border-radius:var(--radius-lg);padding:20px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Stream 1</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px">📣 Donation uplift</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65">A redesigned site with clear CTAs, impact data, and trust signals typically increases online giving 15–35%. CAMINO's estimated annual donation base: ~$80,000–$120,000.</div>
+          <div style="margin-top:12px;font-size:13px">Conservative: <strong style="color:#16a34a">+$10,000/yr</strong><br>Moderate: <strong style="color:var(--amber-dark)">+$22,000/yr</strong><br>Aggressive: <strong style="color:#dc2626">+$40,000/yr</strong></div>
+        </div>
+
+        <div style="background:var(--gray-100);border-radius:var(--radius-lg);padding:20px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Stream 2</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px">✈️ Trip registrations</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65">Each additional trip participant = $1,100 in fees ($600 R&amp;B + $500 project fund). If the trip portals and marketing drive 10–20 extra participants/year above current enrollment.</div>
+          <div style="margin-top:12px;font-size:13px">Conservative: <strong style="color:#16a34a">+$6,600/yr</strong> (6 people)<br>Moderate: <strong style="color:var(--amber-dark)">+$13,200/yr</strong> (12 people)<br>Aggressive: <strong style="color:#dc2626">+$22,000/yr</strong> (20 people)</div>
+        </div>
+
+        <div style="background:var(--gray-100);border-radius:var(--radius-lg);padding:20px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Stream 3 — Phase 2</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px">🏢 Corporate mission trips</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65">Companies that run Habitat builds domestically pay $1,000–2,500/person for a day. A CAMINO week-long trip for 10 people could be positioned at $15,000–25,000/group (R&amp;B + project fund).</div>
+          <div style="margin-top:12px;font-size:13px">1 group/yr: <strong style="color:#16a34a">+$15,000</strong><br>2 groups/yr: <strong style="color:var(--amber-dark)">+$30,000</strong><br>4 groups/yr: <strong style="color:#dc2626">+$60,000</strong></div>
+        </div>
+      </div>
+
+      <!-- Scenario summary -->
+      <div class="scenario-grid">
+        <div class="scenario-card scenario-card--conservative">
+          <div class="scenario-label">Conservative</div>
+          <div class="scenario-uplift" style="color:#16a34a">+$31,600</div>
+          <div style="font-size:11px;color:#16a34a;font-weight:600;margin-bottom:8px">per year</div>
+          <div class="scenario-desc">10% donation uplift · 6 more trip participants · 1 corporate group. Only Phase 1 features needed.</div>
+        </div>
+        <div class="scenario-card scenario-card--moderate">
+          <div class="scenario-label">Moderate ← most likely</div>
+          <div class="scenario-uplift" style="color:var(--amber-dark)">+$65,200</div>
+          <div style="font-size:11px;color:var(--amber-dark);font-weight:600;margin-bottom:8px">per year</div>
+          <div class="scenario-desc">20% donation uplift · 12 more participants · 2 corporate groups. Requires Phase 2 (corporate page, newsletter).</div>
+        </div>
+        <div class="scenario-card scenario-card--aggressive">
+          <div class="scenario-label">Aggressive</div>
+          <div class="scenario-uplift" style="color:#dc2626">+$122,000</div>
+          <div style="font-size:11px;color:#dc2626;font-weight:600;margin-bottom:8px">per year</div>
+          <div class="scenario-desc">35% donation uplift · 20 more participants · 4 corporate groups. Requires Phase 2 + Phase 3 + active marketing.</div>
+        </div>
+      </div>
+
+      <!-- ROI meter -->
+      <div class="roi-meter">
+        <div>
+          <div class="roi-meter__num" style="color:var(--teal)">$35K</div>
+          <div class="roi-meter__label">Total investment equivalent</div>
+          <div class="roi-meter__note">Phase 1 + Phase 2 combined (agency cost would be $47K–88K)</div>
+        </div>
+        <div>
+          <div class="roi-meter__num" style="color:var(--amber)">$196K</div>
+          <div class="roi-meter__label">3-yr return (moderate)</div>
+          <div class="roi-meter__note">$65,200/yr × 3 years of improved fundraising</div>
+        </div>
+        <div>
+          <div class="roi-meter__num" style="color:var(--coral)">5.6×</div>
+          <div class="roi-meter__label">3-year ROI multiple</div>
+          <div class="roi-meter__note">$196K return ÷ $35K investment. Payback in ~6 months.</div>
+        </div>
+      </div>
+
+      <!-- 5-year projection -->
+      <div style="overflow-x:auto">
+        <table class="proj-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Donation uplift</th>
+              <th>Trip revenue</th>
+              <th>Corporate trips</th>
+              <th>Total annual uplift</th>
+              <th>Homes funded</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026 (Thanksgiving launch)</td>
+              <td>$8,000</td>
+              <td>$6,600</td>
+              <td>—</td>
+              <td><strong>$14,600</strong></td>
+              <td class="proj-homes">+7 homes</td>
+            </tr>
+            <tr>
+              <td>2027 (Phase 2 live)</td>
+              <td>$18,000</td>
+              <td>$11,000</td>
+              <td>$15,000</td>
+              <td><strong>$44,000</strong></td>
+              <td class="proj-homes">+22 homes</td>
+            </tr>
+            <tr>
+              <td>2028 (full operation)</td>
+              <td>$22,000</td>
+              <td>$13,200</td>
+              <td>$30,000</td>
+              <td><strong>$65,200</strong></td>
+              <td class="proj-homes">+32 homes</td>
+            </tr>
+            <tr>
+              <td>2029 (15th anniversary)</td>
+              <td>$25,000</td>
+              <td>$16,500</td>
+              <td>$35,000</td>
+              <td><strong>$76,500</strong></td>
+              <td class="proj-homes">+38 homes</td>
+            </tr>
+            <tr>
+              <td>2030</td>
+              <td>$28,000</td>
+              <td>$18,700</td>
+              <td>$40,000</td>
+              <td><strong>$86,700</strong></td>
+              <td class="proj-homes">+43 homes</td>
+            </tr>
+            <tr>
+              <td>5-year total (2026–2030)</td>
+              <td>$101,000</td>
+              <td>$66,000</td>
+              <td>$120,000</td>
+              <td><strong>$287,000</strong></td>
+              <td class="proj-homes">+143 homes</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="proj-note">⚠ Sample projections — based on estimated donation baseline of $100K/year. Walker to validate with actual donation history. All figures are illustrative. Corporate trip revenue assumes Phase 2 corporate page is live by Q1 2027.</p>
+      </div>
+    </div>
+
+    <!-- Dollar effect -->
+    <div class="dollar-effect">
+      <h3>What the ROI looks like in homes</h3>
+      <p>The moderate scenario generates enough additional revenue over 5 years to fund 143 more homes — nearly doubling CAMINO's 12-year total in just 5 years, powered by a stronger digital presence.</p>
+      <div class="dollar-math">
+        <div class="dollar-box">
+          <div class="dollar-box__num">$287K</div>
+          <div class="dollar-box__label">5-yr digital uplift</div>
+        </div>
+        <div class="dollar-arrow">÷</div>
+        <div class="dollar-box">
+          <div class="dollar-box__num">$2,000</div>
+          <div class="dollar-box__label">Cost per home</div>
+        </div>
+        <div class="dollar-arrow">=</div>
+        <div class="dollar-box">
+          <div class="dollar-box__num">143</div>
+          <div class="dollar-box__label">More homes for families</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key assumptions -->
+    <div class="roi-card" style="margin-top:24px">
+      <div class="roi-card__eyebrow">What needs to happen</div>
+      <div class="roi-card__title">Prerequisites for these projections</div>
+      <div class="p1-grid">
+        <div class="p1-item" style="border-color:var(--coral)">
+          <div class="p1-item__title">🔴 Fix first (Phase 1 gaps)</div>
+          <div class="p1-item__desc">Formspree contact form ID · Mailchimp u= and id= in newsletter · Real photos replacing placeholders · Real testimonials replacing "Sample" quotes</div>
+        </div>
+        <div class="p1-item" style="border-color:var(--amber)">
+          <div class="p1-item__title">🟡 Phase 2 (Weeks 3–8)</div>
+          <div class="p1-item__desc">Corporate mission trip page · Blog CMS (Decap) · Instagram/Facebook auto-posting · Mailchimp newsletter active · Privacy + volunteer pages</div>
+        </div>
+        <div class="p1-item" style="border-color:var(--teal)">
+          <div class="p1-item__title">🟢 Phase 3 (Months 3–6)</div>
+          <div class="p1-item__desc">Charity Navigator registration (2027 target) · Annual report published · SEO optimization · CNN Heroes prep (target: 2028 nomination)</div>
+        </div>
+        <div class="p1-item" style="border-color:#94a3b8">
+          <div class="p1-item__title">📊 Baseline needed</div>
+          <div class="p1-item__desc">Walker to share actual donation totals by year so projections can be grounded in real numbers rather than estimates. 3-year history is enough.</div>
+        </div>
+      </div>
+      <div class="assumptions">
+        <strong>Key assumptions (Sample):</strong> Annual donation baseline ~$100K. Trip enrollment ~60 participants/year. Corporate rate $15K–25K/group. Home cost $2,000. Donation uplift modeled at 10/20/35% for conservative/moderate/aggressive. All financial projections should be re-run once Walker provides actual donation history.
+      </div>
+    </div>
+
+  </div><!-- /roi-wrap -->
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
