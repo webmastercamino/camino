@@ -2,7 +2,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --amber:        #BA7517;
+  --amber:        #9B6213;
+  --amber-brand:  #BA7517;
   --amber-light:  #FAEEDA;
   --amber-mid:    #FAC775;
   --amber-dark:   #633806;
@@ -46,7 +47,7 @@ a  { text-decoration: none; color: inherit; }
 .logo { display: flex; align-items: center; gap: 10px; }
 .logo-mark {
   width: 36px; height: 36px;
-  background: var(--amber);
+  background: var(--amber-brand);
   border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center;
   color: #fff; font-weight: 600; font-size: 14px;
