@@ -779,5 +779,55 @@
     "category": "Cultural",
     "status": "Draft",
     "imageNote": "A Virgen de Guadalupe image or shrine in a Honduran community — respectful, warm, culturally genuine; or a small neighborhood celebration"
+  },
+  {
+    "id": "milestone-12yr",
+    "date": "2026-09-01",
+    "platform": "Facebook",
+    "caption": "12 years ago, Walker and Seiny Somerville took a leap of faith. This September we celebrate 12 years of CAMINO Honduras — 115+ homes, hundreds of volunteers, and thousands of lives forever changed. We're just getting started. Thank you for being part of the story. 🏠❤️",
+    "hashtags": "#CAMINO12 #CAMINOHonduras #Honduras #12Years #MissionTrip #BuildingHope",
+    "category": "Milestone",
+    "status": "Draft",
+    "imageNote": "Collage of home dedications over the years — families receiving keys, volunteers celebrating, Walker on site"
+  },
+  {
+    "id": "milestone-15yr-teaser",
+    "date": "2026-09-15",
+    "platform": "Instagram",
+    "caption": "Year 12. 115+ homes built. Hundreds of volunteers. And we're already dreaming about Year 15. 🎯 In 2029, CAMINO turns 15 — and we're setting a goal: 150 homes by our 15th birthday. Want to be part of that story? Trip spots are open for 2026. Link in bio.",
+    "hashtags": "#CAMINO15 #150Homes #Honduras #CAMINOHonduras #MissionTrip #BuildingHope",
+    "category": "Milestone",
+    "status": "Draft",
+    "imageNote": "Bold graphic: '150 Homes by Year 15 — 2029' with CAMINO branding, amber background"
+  },
+  {
+    "id": "milestone-15yr-launch",
+    "date": "2029-09-01",
+    "platform": "Facebook",
+    "caption": "15 years. 150 homes. One family at a time. 🏠🎉 Today CAMINO Honduras celebrates 15 years of building homes, transforming communities, and watching faith come to life in Northern Honduras. Every home has a name. Every family has a story. Every volunteer changed something inside themselves too. Thank you. Here's to the next 15. Give toward home #151 today — link in bio.",
+    "hashtags": "#CAMINO15 #15Years #150Homes #Honduras #CAMINOHonduras #MissionTrip #BuildingHope #Faith",
+    "category": "Milestone",
+    "status": "Draft",
+    "imageNote": "Professional photo: Walker and Seiny in front of a home with the family, 15-year banner. Or a powerful aerial shot of the community showing multiple CAMINO homes."
+  },
+  {
+    "id": "milestone-20yr-teaser",
+    "date": "2033-09-01",
+    "platform": "Facebook",
+    "caption": "Year 19. We're one year away from something big. In 2034, CAMINO Honduras turns 20 — and we're building toward 250 homes and an endowment that funds 10 homes every year, forever. If you've ever wanted to leave a legacy in Honduras, this is the moment. Reply or message us to learn about our 20th Anniversary Legacy Giving program.",
+    "hashtags": "#CAMINO20 #LegacyGiving #Honduras #CAMINOHonduras #250Homes #Endowment",
+    "category": "Milestone",
+    "status": "Draft",
+    "imageNote": "Graphic: '20th Anniversary — 2034 — 250 Homes, Building Forever' — use gold/teal color scheme to mark the occasion"
+  },
+  {
+    "id": "milestone-20yr-launch",
+    "date": "2034-09-01",
+    "platform": "Facebook",
+    "caption": "Twenty years. 250+ homes. One enduring mission. 🏆 In 2014, Walker and Seiny started with a single trip and a prayer. Today, CAMINO Honduras celebrates 20 years of changing lives in Northern Honduras — and we're just getting started. This year we're launching our Endowment Fund: $1,000,000 to build 10 homes every year, forever, regardless of what the future holds. Will you be a founding donor? Link in bio.",
+    "hashtags": "#CAMINO20 #20Years #Honduras #CAMINOHonduras #Endowment #LegacyGiving #BuildingForever",
+    "category": "Milestone",
+    "status": "Draft",
+    "imageNote": "Walker and Seiny at a home dedication, 20 years older, with the same joy. Side by side with the first-ever trip photo from 2014 — the arc of 20 years."
   }
 ]
