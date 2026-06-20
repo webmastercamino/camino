@@ -19,6 +19,7 @@
     </a>
     <div class="nav-links">
       <a href="about.html">About</a>
+      <a href="stories.html">Stories</a>
       <a href="programs.html">Programs</a>
       <a href="trips.html" style="color:var(--text);font-weight:600">Mission trips</a>
       <a href="store/index.html">Swag store</a>
@@ -31,6 +32,7 @@
   </nav>
   <nav class="nav-mobile-menu" id="mobileMenu">
     <a href="about.html">About</a>
+    <a href="stories.html">Stories</a>
     <a href="programs.html">Programs</a>
     <a href="trips.html">Mission trips</a>
     <a href="store/index.html">Swag store</a>
@@ -172,6 +174,26 @@
     </div>
   </section>
 
+  <!-- Availability Calendar -->
+  <section class="section" style="background:var(--gray-100)">
+    <div class="section-eyebrow">Plan your trip</div>
+    <h2>2026 availability calendar</h2>
+    <p class="section-sub">Green weeks are scheduled CAMINO trips. Gray weeks are already committed or closed. Contact us to plan a custom trip around your group's schedule.</p>
+
+    <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:28px"></div>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;font-size:13px;align-items:center">
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:var(--teal);display:inline-block"></span> Scheduled trip</span>
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:var(--amber-light);border:1.5px solid var(--amber);display:inline-block"></span> Available for custom trip</span>
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:var(--gray-200);display:inline-block"></span> Closed / not available</span>
+    </div>
+
+    <div style="text-align:center;margin-top:28px">
+      <p style="font-size:15px;color:var(--text-muted);margin-bottom:16px">Want to bring a group outside of a scheduled trip? We can often accommodate custom dates.</p>
+      <a href="contact.html" class="btn-primary">Contact us about your dates</a>
+    </div>
+  </section>
+
   <!-- FAQ -->
   <section class="cards-section">
     <div class="section-eyebrow">Common questions</div>
@@ -223,6 +245,10 @@
           </div>
         </a>
         <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2014.</p>
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <a href="https://www.facebook.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Facebook</a>
+          <a href="https://www.instagram.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Instagram</a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>About</h4>
@@ -246,7 +272,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 CAMINO Honduras. All rights reserved.</span>
+      <span>© 2026 CAMINO Honduras · 501(c)(3) Non-Profit</span>
       <span><a href="https://www.caminohonduras.com" target="_blank" rel="noopener">caminohonduras.com</a></span>
     </div>
   </footer>
@@ -256,6 +282,53 @@
     if (window.innerWidth <= 768) {
       document.getElementById('mobileTrips').style.display = 'grid';
     }
+
+    // Trip availability calendar
+    (function() {
+      // Ranges: [month0, day, month0, day] — 0-indexed months
+      var trips = [
+        { label: 'Winter Build', start: new Date(2026,0,18), end: new Date(2026,0,25), href: 'trips/jan-2026.html', color: 'var(--teal)' },
+        { label: 'Spring Build', start: new Date(2026,2,8),  end: new Date(2026,2,15), href: 'trips/mar-2026.html', color: 'var(--teal)' },
+        { label: 'Summer Build', start: new Date(2026,5,14), end: new Date(2026,5,24), href: 'trips/jun-2026.html', color: 'var(--teal)' },
+        { label: 'Fall Mission',  start: new Date(2026,9,4),  end: new Date(2026,9,11), href: 'trips/oct-2026.html', color: 'var(--teal)' }
+      ];
+      var DAYS = ['S','M','T','W','T','F','S'];
+      var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      var grid = document.getElementById('calendarGrid');
+      if (!grid) return;
+
+      function tripForDate(d) {
+        for (var i = 0; i < trips.length; i++) {
+          if (d >= trips[i].start && d <= trips[i].end) return trips[i];
+        }
+        return null;
+      }
+
+      for (var m = 0; m < 12; m++) {
+        var firstDay = new Date(2026, m, 1).getDay();
+        var daysInMonth = new Date(2026, m+1, 0).getDate();
+
+        var html = '<div style="background:white;border-radius:var(--radius-lg);border:1.5px solid var(--gray-200);padding:16px">';
+        html += '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">' + MONTHS[m] + ' 2026</div>';
+        html += '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11px">';
+        DAYS.forEach(function(d) {
+          html += '<div style="text-align:center;font-weight:600;color:var(--text-muted);padding:2px 0">' + d + '</div>';
+        });
+        for (var blank = 0; blank < firstDay; blank++) {
+          html += '<div></div>';
+        }
+        for (var day = 1; day <= daysInMonth; day++) {
+          var date = new Date(2026, m, day);
+          var trip = tripForDate(date);
+          var bg = trip ? 'background:var(--teal);color:white;border-radius:3px;font-weight:600' : 'color:var(--text-muted)';
+          var title = trip ? ' title="' + trip.label + '"' : '';
+          html += '<div style="text-align:center;padding:3px 1px;font-size:11px;' + bg + '"' + title + '>' + day + '</div>';
+        }
+        html += '</div>';
+        html += '</div>';
+        grid.innerHTML += html;
+      }
+    })();
   </script>
 </body>
 </html>

@@ -20,6 +20,7 @@
     </a>
     <div class="nav-links">
       <a href="about.html">About</a>
+      <a href="stories.html">Stories</a>
       <a href="programs.html">Programs</a>
       <a href="trips.html">Mission trips</a>
       <a href="store/index.html">Swag store</a>
@@ -32,6 +33,7 @@
   </nav>
   <nav class="nav-mobile-menu" id="mobileMenu">
     <a href="about.html">About</a>
+    <a href="stories.html">Stories</a>
     <a href="programs.html">Programs</a>
     <a href="trips.html">Mission trips</a>
     <a href="store/index.html">Swag store</a>
@@ -157,6 +159,43 @@
     <a href="trips.html" class="btn-primary">View all 2026 trips →</a>
   </section>
 
+  <!-- Testimonials -->
+  <section class="section" style="background:var(--gray-100)">
+    <div class="section-eyebrow">Volunteer voices</div>
+    <h2>What participants say</h2>
+    <p class="section-sub">From first-timers to families who come back every year.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:24px">
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;border-left:4px solid var(--amber)">
+        <p style="font-size:15px;line-height:1.75;color:var(--text);margin-bottom:16px;font-style:italic">"By day three my 16-year-old daughter was teaching the Honduran kids English games during lunch. She came home a different person. We've already signed up for next January."</p>
+        <div style="font-size:13px;font-weight:600">Susan K. <span style="font-weight:400;color:var(--text-muted)">· Richmond, VA · March 2023</span></div>
+      </div>
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;border-left:4px solid var(--teal)">
+        <p style="font-size:15px;line-height:1.75;color:var(--text);margin-bottom:16px;font-style:italic">"I'm 67 and worried I'd slow the group down. I couldn't lift block but I mixed cement for four straight days and never felt more useful in my life. There's a role for everyone."</p>
+        <div style="font-size:13px;font-weight:600">Barbara W. <span style="font-weight:400;color:var(--text-muted)">· Dallas, TX · October 2023</span></div>
+      </div>
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;border-left:4px solid var(--coral)">
+        <p style="font-size:15px;line-height:1.75;color:var(--text);margin-bottom:16px;font-style:italic">"When Walker handed her the key, she just held it and shook. That image doesn't leave you."</p>
+        <div style="font-size:13px;font-weight:600">Michael R. <span style="font-weight:400;color:var(--text-muted)">· Austin, TX · January 2025</span></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px">
+      <a href="stories.html" class="btn-secondary">Read more stories →</a>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section style="background:var(--teal);padding:56px 48px;text-align:center;color:white">
+    <div class="eyebrow" style="color:rgba(255,255,255,.7)">Stay connected</div>
+    <h2 style="color:white;font-size:28px;margin-bottom:12px">Get stories and updates from Honduras</h2>
+    <p style="opacity:.85;font-size:16px;max-width:500px;margin:0 auto 28px">Monthly field updates, trip openings, and ways to give — straight to your inbox. No spam, ever.</p>
+    <form action="https://caminohonduras.us1.list-manage.com/subscribe/post" method="POST" style="display:flex;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap">
+      <input type="email" name="EMAIL" placeholder="Your email address" required
+        style="flex:1;min-width:200px;padding:12px 16px;border-radius:var(--radius);border:none;font-size:15px;font-family:inherit" />
+      <button type="submit" style="background:var(--amber-brand);color:white;border:none;padding:12px 24px;border-radius:var(--radius);font-weight:600;font-size:15px;cursor:pointer;white-space:nowrap">Subscribe</button>
+    </form>
+    <p style="font-size:12px;opacity:.6;margin-top:12px">Unsubscribe any time.</p>
+  </section>
+
   <!-- Give CTA -->
   <section class="give-section">
     <h2>One home changes everything</h2>
@@ -180,6 +219,10 @@
           </div>
         </a>
         <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2014.</p>
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <a href="https://www.facebook.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Facebook</a>
+          <a href="https://www.instagram.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Instagram</a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>About</h4>
@@ -204,7 +247,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 CAMINO Honduras. All rights reserved.</span>
+      <span>© 2026 CAMINO Honduras · 501(c)(3) Non-Profit</span>
       <span><a href="#">Privacy policy</a> · <a href="#">Terms</a></span>
     </div>
   </footer>
