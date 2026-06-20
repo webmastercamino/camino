@@ -38,6 +38,18 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Travel docs tracker + board org chart with election tracking
+- What changed:
+  - **admin/index.html**: New "Travel Docs" panel — 4 Somerville family members with color-coded passport expiry badges (EXPIRING SOON/WATCH/VALID), last-4 reference field, Honduras entry notes, residency status, inline edit form (saves to localStorage), Remind Me flag stub, summary alert bar, amber security warning. Seed data as JS constants; localStorage overrides on edit.
+  - **about/board.html**: CSS org chart below board grid (Board → Executive Director → 3 staff, connecting lines, teal/amber colors, stacks on mobile). New "Board Seats & Terms" section — 8-row governance table with term dates and badges (Founder seat / Current / Up for re-election / Open seat needed).
+- Status: Complete. Committed f0c53ed and pushed to main.
+- Next steps:
+  1. Replace `[Member]` placeholder names in board governance table with real board member names
+  2. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  3. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  4. Replace placeholder board photos/LinkedIn links in about/board.html
+  5. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+
 <!-- Most recent session at the top. Format:
 ### [DATE] — [brief title]
 - What changed: ...
