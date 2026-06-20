@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMINO Honduras — Real Data Audit</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f8f5f0;
+    color: #2c2c2c;
+    line-height: 1.6;
+    padding: 24px 16px 60px;
+  }
+  .page-header {
+    background: #BA7517;
+    color: #fff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 700; }
+  .page-header p { opacity: .85; margin-top: 6px; font-size: .95rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; }
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px 22px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    overflow-x: auto;
+  }
+  .card.full { grid-column: 1 / -1; }
+  .card h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #BA7517;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f0e8d8;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  th { text-align: left; background: #f5f0e8; padding: 7px 10px; font-weight: 600; color: #5a4a2a; }
+  td { padding: 7px 10px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-weight: 500; white-space: nowrap; }
+  blockquote {
+    border-left: 4px solid #BA7517;
+    padding: 10px 16px;
+    margin: 10px 0;
+    background: #fdf8f0;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    font-size: .93rem;
+    color: #3a2a0a;
+  }
+  blockquote cite { display: block; font-style: normal; font-weight: 600; margin-top: 6px; font-size: .82rem; color: #6b5020; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: .78rem;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  .badge-green { background: #d1f5d3; color: #1a6b20; }
+  .badge-red { background: #fde8e8; color: #8b1a1a; }
+  .badge-yellow { background: #fef3cd; color: #7a5800; }
+  ul { padding-left: 18px; }
+  li { margin-bottom: 4px; font-size: .88rem; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-box {
+    background: #fdf8f0;
+    border: 2px solid #e8d8b8;
+    border-radius: 8px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .stat-box .num { font-size: 1.6rem; font-weight: 800; color: #BA7517; }
+  .stat-box .label { font-size: .78rem; color: #6b5020; margin-top: 2px; }
+  .warn {
+    background: #fef9e7;
+    border: 1px solid #f5c842;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: .85rem;
+    color: #7a5800;
+    margin-top: 10px;
+  }
+  .materials-list { columns: 2; column-gap: 20px; }
+  .materials-list li { font-size: .83rem; break-inside: avoid; }
+  @media (max-width: 500px) { .materials-list { columns: 1; } }
+  code { background: #f0ece4; padding: 1px 6px; border-radius: 4px; font-size: .88em; }
+</style>
+</head>
+<body>
+
+<div style="max-width:1200px; margin: 0 auto;">
+
+<div class="page-header">
+  <h1>CAMINO Honduras — Real Data Audit</h1>
+  <p>Scraped from caminohonduras.com on 2026-06-20. Use this to replace stub/placeholder figures in the redesign.</p>
+</div>
+
+<div class="grid">
+
+  <!-- IDENTITY -->
+  <div class="card">
+    <h2>Organization Identity</h2>
+    <table>
+      <tr><td>Legal name</td><td>Central American Ministry Outreach</td></tr>
+      <tr><td>Brand / DBA</td><td>CAMINO: Honduras</td></tr>
+      <tr><td>Tax status</td><td>501(c)(3) nonprofit</td></tr>
+      <tr><td>501(c)(3) granted</td><td>2019</td></tr>
+      <tr><td>Missionary work began</td><td>2014</td></tr>
+      <tr><td>First home built</td><td>Fall 2017</td></tr>
+      <tr><td>EIN / Tax ID</td><td><span class="badge badge-red">NOT PUBLISHED</span></td></tr>
+      <tr><td>Donation platform</td><td>Kindful — <code>caminohonduras.kindful.com</code></td></tr>
+      <tr><td>Website platform</td><td>Squarespace</td></tr>
+    </table>
+  </div>
+
+  <!-- FOUNDERS -->
+  <div class="card">
+    <h2>Founders &amp; Leadership</h2>
+    <table>
+      <tr>
+        <th>Name</th><th>Role</th>
+      </tr>
+      <tr><td>Walker Somerville</td><td>Founder / Missionary; Pastor of El Camino (UMC-designated)</td></tr>
+      <tr><td>Seiny Somerville</td><td>Co-founder / Missionary</td></tr>
+    </table>
+    <div class="warn">⚠ The /team-project page shows "Carolyn Phelps," "Lucas Dupont," "January Blum" — these are Squarespace Lorem Ipsum placeholders. NOT real staff.</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="card full">
+    <h2>Key Impact Statistics</h2>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">100–115+</div><div class="label">Homes built</div></div>
+      <div class="stat-box"><div class="num">12+</div><div class="label">Communities served</div></div>
+      <div class="stat-box"><div class="num">65</div><div class="label">Families on waiting list</div></div>
+      <div class="stat-box"><div class="num">2</div><div class="label">UMC church plants</div></div>
+      <div class="stat-box"><div class="num">73.6%</div><div class="label">Honduras poverty rate (post-Eta/Iota)</div></div>
+      <div class="stat-box"><div class="num">53.7%</div><div class="label">Extreme poverty rate</div></div>
+      <div class="stat-box"><div class="num">~18%</div><div class="label">Super extreme poverty</div></div>
+      <div class="stat-box"><div class="num">$2,000</div><div class="label">Cost per home</div></div>
+    </div>
+    <div class="warn" style="margin-top:16px">Homepage says "100+" homes; /what-is-camino-honduras says "over 115." Use "115+" or "100+" — either is sourced. Infrastructure: 1 well, 1 bridge, 1 playground, 1 multi-purpose church, 1 activities center, 1 trade school.</div>
+  </div>
+
+  <!-- MISSION/VISION -->
+  <div class="card full">
+    <h2>Mission &amp; Vision Statements</h2>
+    <blockquote>
+      "As CAMINO, we aim to provide hope and a future for impoverished communities across Honduras."
+      <cite>Mission statement — homepage</cite>
+    </blockquote>
+    <blockquote>
+      "CAMINO envisions a world where all Honduran families have the opportunity to thrive."
+      <cite>Vision statement — /our-vision, /about</cite>
+    </blockquote>
+    <blockquote>
+      "We are working to address the spiritual, physical, social, and economic needs of Honduran families."
+      <cite>Core description — /about</cite>
+    </blockquote>
+    <blockquote>
+      "holistic transformation can only be achieved when all of these areas are addressed."
+      <cite>/what-is-camino-honduras — philosophy statement</cite>
+    </blockquote>
+    <p style="margin-top:10px; font-size:.85rem; color:#666">Term used for their approach: <strong>Integral mission</strong> — "an approach to Christian mission that seeks to address the whole person, both spiritually and materially."</p>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card">
+    <h2>Contact Information</h2>
+    <table>
+      <tr><td>Email</td><td><code>CAMINO.ContactUs@gmail.com</code> <span class="badge badge-green">REAL</span></td></tr>
+      <tr><td>Phone (US)</td><td>540-445-1023 <span class="badge badge-green">REAL</span></td></tr>
+      <tr><td>Mailing address</td><td>Central American Ministry Outreach<br>6122 Autumn Forest Dr.<br>Houston, Texas 77092 <span class="badge badge-green">REAL</span></td></tr>
+      <tr><td>Physical office</td><td><span class="badge badge-red">NOT PUBLISHED</span></td></tr>
+      <tr><td>Facebook</td><td><code>facebook.com/7606855</code> <span class="badge badge-yellow">VERIFY</span></td></tr>
+      <tr><td>Instagram</td><td><span class="badge badge-red">NOT ON SITE</span></td></tr>
+      <tr><td>YouTube</td><td><span class="badge badge-red">NOT ON SITE</span></td></tr>
+    </table>
+    <div class="warn">⚠ /contact-project has fake data (123 Main St Nashville, 555-555-3584, placeholder@example.com) — ignore it.</div>
+  </div>
+
+  <!-- GIVING -->
+  <div class="card">
+    <h2>Giving / Donation Details</h2>
+    <table>
+      <tr><th>Amount</th><th>What it funds</th></tr>
+      <tr><td>$2,000</td><td>Complete house (full materials)</td></tr>
+      <tr><td>$1,500</td><td>House (older/different model — Martinez family story)</td></tr>
+      <tr><td>$3,000</td><td>Wooden church building, La Union</td></tr>
+      <tr><td>$10,000</td><td>Cinderblock church building, La Union</td></tr>
+      <tr><td>$600/person</td><td>Mission trip R&amp;B (food, lodging, transport, side trip)</td></tr>
+      <tr><td>$500/person</td><td>Mission trip project fund contribution</td></tr>
+    </table>
+    <p style="margin-top:12px; font-size:.85rem">Online: <strong>https://caminohonduras.kindful.com/</strong><br>
+    Checks payable to <em>"Central American Ministry Outreach"</em> or <em>"CAMINO"</em> (all caps only).<br>
+    Tax-deductible. Monthly recurring giving available. No EIN published on site.</p>
+  </div>
+
+  <!-- PROGRAMS -->
+  <div class="card full">
+    <h2>Programs</h2>
+    <table>
+      <tr>
+        <th>Program</th><th>Description</th><th>Key facts</th>
+      </tr>
+      <tr>
+        <td>Family Security (Housing)</td>
+        <td>Housing-first development model</td>
+        <td>$2,000/house; 100–115+ built; 65 on waiting list</td>
+      </tr>
+      <tr>
+        <td>Evangelism &amp; Discipleship</td>
+        <td>Church plants + local church support</td>
+        <td>2 UMC church plants (El Camino retreat center + El Belen); trade school built</td>
+      </tr>
+      <tr>
+        <td>SMA Scholarship Program</td>
+        <td>Education scholarships</td>
+        <td>Page exists; no cost/count/school name published yet</td>
+      </tr>
+      <tr>
+        <td>Economic Development</td>
+        <td>Trades training</td>
+        <td>Trade school operational; no cost/enrollment data published</td>
+      </tr>
+      <tr>
+        <td>Water &amp; Solar</td>
+        <td>Infrastructure projects for families</td>
+        <td>Multiple families served (Diaz, Martinez, Paz, Gomez); costs vary</td>
+      </tr>
+      <tr>
+        <td>Mission Trips</td>
+        <td>1-week volunteer trips</td>
+        <td>8 days; $600 R&amp;B + $500 project/person; 2026 summer &amp; fall dates available</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- HOUSE COST BREAKDOWN -->
+  <div class="card">
+    <h2>$2,000 House — Full Materials List</h2>
+    <p style="font-size:.82rem; color:#666; margin-bottom:10px">Exact from /house-cost page:</p>
+    <ul class="materials-list">
+      <li>21 × 1in × 12in × 12ft boards</li>
+      <li>21 × 1in × 12in × 16ft boards</li>
+      <li>5 × 4in × 4in × 10ft posts</li>
+      <li>4 × 2in × 4in × 10ft posts</li>
+      <li>3 × 2in × 4in × 16ft rafters</li>
+      <li>14 × 2in × 2in × 10ft roof supports</li>
+      <li>6 × 16ft metal roofing sheets</li>
+      <li>1 dump truck load of sand</li>
+      <li>10 bags of portland cement</li>
+      <li>8 lbs of nails</li>
+      <li>85 roofing screws</li>
+      <li>1 gal termite treatment solution</li>
+      <li>1 × 5-gal bucket of paint (they pick the color)</li>
+      <li>1 paint kit (roller, 2 brushes, pan)</li>
+      <li>1 day labor — professional cement floor pour</li>
+      <li>1 set door hardware (hinges, hasp, lock &amp; key)</li>
+    </ul>
+  </div>
+
+  <!-- COMMUNITIES -->
+  <div class="card">
+    <h2>Communities Served in Honduras</h2>
+    <table>
+      <tr><th>Community</th><th>Context</th></tr>
+      <tr><td>Rio Lindo, Cortes</td><td>Retreat center / original property (Northern Honduras)</td></tr>
+      <tr><td>La Union</td><td>Playground; church project ($3K–$10K); farming community near Rio Lindo / Yojoa</td></tr>
+      <tr><td>La Calera</td><td>Playground project</td></tr>
+      <tr><td>El Crique</td><td>Playground project</td></tr>
+      <tr><td>Tapiquilares</td><td>Playground project</td></tr>
+      <tr><td>Belen (El Belen)</td><td>UMC church plant; CAMINO-built activities center; permanent church planned 2024</td></tr>
+      <tr><td>La Coroza</td><td>UMC church plant</td></tr>
+      <tr><td>Caracol</td><td>Church project</td></tr>
+      <tr><td>Buena Vista</td><td>Reformed Church; retaining wall, kitchen, tables, fans (completed-projects)</td></tr>
+      <tr><td>Southern Sula Valley</td><td>General service region</td></tr>
+    </table>
+  </div>
+
+  <!-- QUOTES -->
+  <div class="card full">
+    <h2>Exact Quotes</h2>
+    <blockquote>
+      "Building a new home is a new beginning for a family. It is a time of reflection for them and for those of us involved."
+      <cite>— Seiny Somerville, Co-founder</cite>
+    </blockquote>
+    <blockquote>
+      "Building a new home is a new beginning for a family. It is a time of reflection … this is a chain of change, that starts with God."
+      <cite>— Seiny Somerville, Co-founder (extended version)</cite>
+    </blockquote>
+    <blockquote>
+      "Every Family and Community Deserves to Have a Place to Learn and Grow in Christ!"
+      <cite>— Organization tagline (ministry/church program page)</cite>
+    </blockquote>
+  </div>
+
+  <!-- TESTIMONIAL FAMILIES -->
+  <div class="card full">
+    <h2>Featured Families / Testimonials</h2>
+    <table>
+      <tr>
+        <th>Family</th><th>Details</th><th>Source</th>
+      </tr>
+      <tr>
+        <td>Martinez — Marili</td>
+        <td>Widowed during pandemic; 6 children; income: firewood, recycling, hand-washing laundry. House cost: $1,500</td>
+        <td>/martinez-family</td>
+      </tr>
+      <tr>
+        <td>Jose &amp; Yanira</td>
+        <td>Featured in /about page photo caption — two daughters; completed home</td>
+        <td>/about</td>
+      </tr>
+      <tr>
+        <td>Paz Family (Reina &amp; Celso)</td>
+        <td>Two daughters; completed home + solar; water pressure project planned</td>
+        <td>/water-and-solar</td>
+      </tr>
+      <tr>
+        <td>11 families on /family-photos</td>
+        <td>Aguilar, Amaya, Castillo, Macilla, Hernandez ×2, Lopez, Enriquez, Rivera, Gomez, Vasquez</td>
+        <td>/family-photos</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- PARTNER ORGS -->
+  <div class="card">
+    <h2>Partner Organizations</h2>
+    <table>
+      <tr><td>United Methodist Church (UMC) of Honduras</td><td>Denomination partner for church plants; Walker Somerville UMC-designated pastor</td></tr>
+      <tr><td>Buena Vista Reformed Church</td><td>Local church partner in Buena Vista community</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:.85rem; color:#666">No corporate, foundation, or US church partners named on site.</p>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="card">
+    <h2>Certifications / Ratings</h2>
+    <p style="color:#8b1a1a; font-size:.9rem;">None found. Charity Navigator, GuideStar/Candid, BBB Wise Giving, and ECFA are not mentioned anywhere on the site.</p>
+  </div>
+
+  <!-- PAGE INVENTORY -->
+  <div class="card full">
+    <h2>Page Inventory — What Exists &amp; What's Placeholder</h2>
+    <table>
+      <tr><th>URL</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>/</td><td><span class="badge badge-green">REAL</span></td><td>Homepage with full content</td></tr>
+      <tr><td>/about</td><td><span class="badge badge-green">REAL</span></td><td>Vision + philosophy</td></tr>
+      <tr><td>/our-vision</td><td><span class="badge badge-green">REAL</span></td><td>Vision statement, 4 program areas</td></tr>
+      <tr><td>/what-is-camino-honduras</td><td><span class="badge badge-green">REAL</span></td><td>Best "about" page — founding story, 115+ homes, 4 programs</td></tr>
+      <tr><td>/contact</td><td><span class="badge badge-green">REAL</span></td><td>Real email + phone; address is placeholder</td></tr>
+      <tr><td>/mission-trips</td><td><span class="badge badge-green">REAL</span></td><td>Costs, communities, 65-family waitlist</td></tr>
+      <tr><td>/donate-1</td><td><span class="badge badge-green">REAL</span></td><td>Kindful URL, mailing address, check instructions</td></tr>
+      <tr><td>/house-cost</td><td><span class="badge badge-green">REAL</span></td><td>Full $2,000 materials list</td></tr>
+      <tr><td>/elcamino</td><td><span class="badge badge-green">REAL</span></td><td>El Camino church plant details</td></tr>
+      <tr><td>/church</td><td><span class="badge badge-green">REAL</span></td><td>Ministry outreach; Buena Vista church; poverty stats</td></tr>
+      <tr><td>/church-projects</td><td><span class="badge badge-green">REAL</span></td><td>La Union church — $3K or $10K</td></tr>
+      <tr><td>/water-and-solar</td><td><span class="badge badge-green">REAL</span></td><td>Paz family story</td></tr>
+      <tr><td>/completed-projects</td><td><span class="badge badge-green">REAL</span></td><td>41 project names; no dates/costs</td></tr>
+      <tr><td>/family-photos</td><td><span class="badge badge-green">REAL</span></td><td>11 families with names</td></tr>
+      <tr><td>/martinez-family</td><td><span class="badge badge-green">REAL</span></td><td>Featured family testimonial</td></tr>
+      <tr><td>/sma-scholarship-program</td><td><span class="badge badge-yellow">STUB</span></td><td>Page exists; no program details published</td></tr>
+      <tr><td>/team-project</td><td><span class="badge badge-red">FAKE</span></td><td>Lorem Ipsum names — NOT real staff</td></tr>
+      <tr><td>/the-facts-project</td><td><span class="badge badge-red">FAKE</span></td><td>100% Lorem Ipsum — never populated</td></tr>
+      <tr><td>/news-project/*</td><td><span class="badge badge-red">FAKE</span></td><td>Lorem Ipsum content throughout</td></tr>
+      <tr><td>/contact-project</td><td><span class="badge badge-red">FAKE</span></td><td>Fake 123 Main St Nashville address</td></tr>
+      <tr><td>/give, /donate, /programs, /gallery, /blog, /stories</td><td><span class="badge badge-red">404</span></td><td>These URLs do not exist</td></tr>
+    </table>
+  </div>
+
+  <!-- GAPS -->
+  <div class="card full">
+    <h2>Data Still Unknown / Not Published on Site</h2>
+    <ul style="columns: 2; gap: 24px;">
+      <li>EIN / Federal Tax ID number</li>
+      <li>Annual budget or revenue figures</li>
+      <li>Annual report</li>
+      <li>Charity Navigator / GuideStar profile</li>
+      <li>Physical office address (only mailing: Houston TX)</li>
+      <li>Real Facebook URL (only numeric ID — needs verify)</li>
+      <li>Instagram, YouTube, Twitter handles</li>
+      <li>SMA Scholarship details (school, cost, student count)</li>
+      <li>Board of directors names</li>
+      <li>Total dollars raised to date</li>
+      <li>Number of annual mission trip volunteers</li>
+      <li>Specific 2026 trip dates</li>
+    </ul>
+  </div>
+
+</div><!-- .grid -->
+</div><!-- page wrapper -->
+
+</body>
+</html>

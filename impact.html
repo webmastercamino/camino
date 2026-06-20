@@ -6,7 +6,7 @@
   <title>Impact &amp; Transparency — CAMINO Honduras</title>
   <meta name="description" content="12 years of impact in Honduras — interactive map of every home built, proposed projects needing funding, annual accomplishments, and full financial transparency.">
   <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     /* ── Hero ── */
     .imp-hero{background:linear-gradient(135deg,#051009 0%,#0a1e12 50%,#0f1a09 100%);padding:60px 48px 52px;text-align:center}
@@ -153,11 +153,11 @@
   <!-- Stats bar -->
   <div class="imp-stats">
     <div class="imp-stat"><div class="imp-stat__num">115+</div><div class="imp-stat__label">Homes built</div></div>
-    <div class="imp-stat"><div class="imp-stat__num">700+</div><div class="imp-stat__label">Volunteers served</div></div>
-    <div class="imp-stat"><div class="imp-stat__num">7</div><div class="imp-stat__label">Infrastructure projects</div></div>
-    <div class="imp-stat"><div class="imp-stat__num">4</div><div class="imp-stat__label">Communities served</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">12+</div><div class="imp-stat__label">Communities served</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">65</div><div class="imp-stat__label">Families on waitlist</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">2</div><div class="imp-stat__label">UMC church plants</div></div>
     <div class="imp-stat"><div class="imp-stat__num">12</div><div class="imp-stat__label">Years operating</div></div>
-    <div class="imp-stat"><div class="imp-stat__num">87¢</div><div class="imp-stat__label">Of every $ to Honduras</div></div>
+    <div class="imp-stat"><div class="imp-stat__num">87¢</div><div class="imp-stat__label">Of every $ to Honduras (Sample)</div></div>
   </div>
 
   <div class="imp-wrap">
@@ -170,9 +170,9 @@
 
       <div class="map-filter">
         <span style="font-size:12px;font-weight:600;color:var(--text-muted);margin-right:4px">Show:</span>
-        <button class="filter-btn fb-amber active" id="fHomes" onclick="toggleLayer('homes',this)">🏠 Homes (115)</button>
-        <button class="filter-btn active" id="fInfra" onclick="toggleLayer('infra',this)">🔧 Infrastructure (7)</button>
-        <button class="filter-btn fb-coral active" id="fProposed" onclick="toggleLayer('proposed',this)">🎯 Needs funding (6)</button>
+        <button class="filter-btn fb-amber active" id="fHomes" onclick="toggleLayer('homes',this)">🏠 Homes 115+ (Sample locations)</button>
+        <button class="filter-btn active" id="fInfra" onclick="toggleLayer('infra',this)">⛪💧 Projects (7)</button>
+        <button class="filter-btn fb-coral active" id="fProposed" onclick="toggleLayer('proposed',this)">🎯 Needs funding — Sample</button>
       </div>
 
       <div id="camiMap"></div>
@@ -187,14 +187,14 @@
     <!-- PROPOSED PROJECTS -->
     <div class="imp-section">
       <div class="section-eyebrow">Open needs</div>
-      <div class="imp-h2">Projects that need your support</div>
-      <div class="imp-sub">These are active funding needs in the communities CAMINO serves. Every dollar goes directly to Honduras. Stub data — Walker to confirm current amounts and priorities.</div>
+      <div class="imp-h2">Projects that need your support <span style="font-size:14px;font-weight:400;color:var(--coral)">⚠ Sample — Walker to confirm amounts</span></div>
+      <div class="imp-sub">Placeholder needs across the 12+ communities CAMINO serves. Funding amounts marked "Sample" — Walker to update with current figures before publishing.</div>
 
       <div class="proj-grid">
         <div class="proj-card">
           <div class="proj-type">🏠 Housing — 5 families</div>
-          <div class="proj-title">New homes — Las Brisas community</div>
-          <div class="proj-desc">Five families currently living in deteriorating structures identified in the 2025 community survey. Rio Lindo sector. Construction ready to begin with funding.</div>
+          <div class="proj-title">New homes — La Union community <span style="font-size:11px;color:var(--coral)">(Sample)</span></div>
+          <div class="proj-desc">Five families currently living in deteriorating structures. La Union is one of CAMINO's active communities in Cortés. Construction ready to begin with funding.</div>
           <div class="proj-bar-wrap"><div class="proj-bar" style="width:0%;background:var(--coral)"></div></div>
           <div class="proj-amounts"><span class="proj-raised">$0 raised</span><span class="proj-goal">Goal: $10,000</span></div>
           <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Fund this project →</a>
@@ -202,8 +202,8 @@
 
         <div class="proj-card proj-card--partial">
           <div class="proj-type">💧 Infrastructure — Water access</div>
-          <div class="proj-title">Community water well — El Progreso sector</div>
-          <div class="proj-desc">A 35-family neighborhood currently relies on a single shared tap 400m from the community. A dedicated well eliminates a daily 2-hour water haul for mothers and children.</div>
+          <div class="proj-title">Community water well — La Calera <span style="font-size:11px;color:var(--coral)">(Sample)</span></div>
+          <div class="proj-desc">A 35-family neighborhood currently relies on a single shared tap. A dedicated well eliminates a daily multi-hour water haul for mothers and children in La Calera.</div>
           <div class="proj-bar-wrap"><div class="proj-bar" style="width:35%;background:var(--amber)"></div></div>
           <div class="proj-amounts"><span class="proj-raised" style="color:var(--amber)">$2,975 raised</span><span class="proj-goal">Goal: $8,500</span></div>
           <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Finish this well →</a>
@@ -211,8 +211,8 @@
 
         <div class="proj-card proj-card--partial">
           <div class="proj-type">🏫 Community — Trade skills</div>
-          <div class="proj-title">Trade skills training center — repairs &amp; expansion</div>
-          <div class="proj-desc">The 2019 training center serves 40+ students per cycle. The roof and two structural walls need repair after 2024 storm damage. Expansion adds a second workshop bay.</div>
+          <div class="proj-title">Trade skills training center — repairs &amp; expansion <span style="font-size:11px;color:var(--coral)">(Sample)</span></div>
+          <div class="proj-desc">CAMINO's training center serves 40+ students per cycle. Sample: roof and walls need repair. Walker to confirm current condition and funding need before publishing.</div>
           <div class="proj-bar-wrap"><div class="proj-bar" style="width:20%;background:var(--amber)"></div></div>
           <div class="proj-amounts"><span class="proj-raised" style="color:var(--amber)">$3,000 raised</span><span class="proj-goal">Goal: $15,000</span></div>
           <a href="give.html" class="btn-primary" style="font-size:13px;padding:9px 18px;display:inline-block">Support the center →</a>
@@ -250,8 +250,8 @@
     <!-- ANNUAL ACCOMPLISHMENTS -->
     <div class="imp-section">
       <div class="section-eyebrow">Track record</div>
-      <div class="imp-h2">Annual accomplishments — 2014 to present</div>
-      <div class="imp-sub">12 years of consistent impact. Even through COVID, CAMINO kept building. Stub data — Walker to verify numbers per year.</div>
+      <div class="imp-h2">Annual accomplishments — 2014 to present ⚠ Sample figures</div>
+      <div class="imp-sub">CAMINO arrived as missionaries in 2014; the first home was built in fall 2017. Year-by-year figures below are estimates — Walker to verify per-year actuals.</div>
 
       <!-- Bar chart -->
       <div class="yr-chart" id="yrChart" aria-hidden="true"></div>
@@ -277,7 +277,7 @@
               <td>716+</td>
               <td>7 projects</td>
               <td>—</td>
-              <td>Across 4 communities</td>
+              <td>Across 12+ communities</td>
             </tr>
           </tfoot>
         </table>
@@ -287,8 +287,8 @@
     <!-- FINANCIAL TRANSPARENCY -->
     <div class="imp-section">
       <div class="section-eyebrow">Financial transparency</div>
-      <div class="imp-h2">Where every dollar goes</div>
-      <div class="imp-sub">CAMINO operates with a lean home-base so the maximum portion of every donation reaches Honduras. Stub figures below — to be updated with audited or board-reviewed financials.</div>
+      <div class="imp-h2">Where every dollar goes <span style="font-size:14px;font-weight:400;color:var(--coral)">⚠ Sample figures</span></div>
+      <div class="imp-sub">CAMINO operates with a lean home-base so the maximum portion of every donation reaches Honduras. Percentages below are management estimates — to be updated with board-reviewed or audited financials.</div>
 
       <div class="fin-grid">
         <!-- Donut -->
@@ -362,8 +362,8 @@
     <!-- ANNUAL REPORT -->
     <div class="imp-section">
       <div class="section-eyebrow">Annual report</div>
-      <div class="imp-h2">2025 Annual report — CAMINO Honduras</div>
-      <div class="imp-sub">A full-year summary of income, expenses, programmatic impact, and year-over-year growth. Stub figures — Walker and board to review and confirm before publishing.</div>
+      <div class="imp-h2">2025 Annual report — CAMINO Honduras <span style="font-size:14px;font-weight:400;color:var(--coral)">⚠ Sample figures</span></div>
+      <div class="imp-sub">A full-year summary of income, expenses, and programmatic impact. All figures are estimates — Walker and board to review and confirm before publishing.</div>
 
       <!-- Year selector -->
       <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
@@ -402,7 +402,7 @@
         </a>
         <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2014.</p>
         <div style="display:flex;gap:12px;margin-top:12px">
-          <a href="https://www.facebook.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Facebook</a>
+          <a href="https://www.facebook.com/Caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Facebook</a>
           <a href="https://www.instagram.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Instagram</a>
         </div>
       </div>
@@ -417,24 +417,25 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2GqfU=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
   (function(){
 
-    // ── Annual data (stub — Walker to update) ──────────────────────────────
+    // ── Annual data (Sample — Walker to update with verified per-year figures) ─
+    // Note: CAMINO arrived as missionaries in 2014; first home built fall 2017.
     var ANNUAL = [
-      { yr:2014, homes:3,  vols:18,  infra:[],                                notes:'First trip. Foundation year.' },
-      { yr:2015, homes:6,  vols:32,  infra:['Community water well #1'],       notes:'First infrastructure project.' },
-      { yr:2016, homes:8,  vols:45,  infra:[],                                notes:'' },
-      { yr:2017, homes:9,  vols:52,  infra:['Church of Hope planted'],        notes:'Church planting begins.' },
-      { yr:2018, homes:10, vols:58,  infra:[],                                notes:'10-home milestone.' },
-      { yr:2019, homes:12, vols:74,  infra:['Trade skills training center'],  notes:'First education project.' },
-      { yr:2020, homes:5,  vols:22,  infra:[],                                notes:'COVID-19 — reduced ops.' },
-      { yr:2021, homes:8,  vols:41,  infra:['Bridge road repair — Choloma'],  notes:'Post-COVID recovery.' },
-      { yr:2022, homes:14, vols:89,  infra:['Playground — Rio Lindo'],        notes:'Largest year to date.' },
-      { yr:2023, homes:16, vols:98,  infra:[],                                notes:'Record volunteer year.' },
-      { yr:2024, homes:14, vols:102, infra:['Water well #2','Solar install'], notes:'100+ volunteer milestone.' },
-      { yr:2025, homes:10, vols:85,  infra:[],                                notes:'Partial year.' },
+      { yr:2014, homes:0,  vols:12,  infra:[],                                         notes:'Sample · Arrived as missionaries. Community relationship-building.' },
+      { yr:2015, homes:0,  vols:18,  infra:[],                                         notes:'Sample · Groundwork. No homes built yet.' },
+      { yr:2016, homes:0,  vols:24,  infra:[],                                         notes:'Sample · Community development. Infrastructure prep.' },
+      { yr:2017, homes:5,  vols:38,  infra:['Church of Hope — Rio Lindo planted'],     notes:'Sample · First home built fall 2017. Church planting begins.' },
+      { yr:2018, homes:8,  vols:52,  infra:['Community water well #1'],               notes:'Sample · First infrastructure project.' },
+      { yr:2019, homes:12, vols:68,  infra:['Trade skills training center'],           notes:'Sample · 501(c)(3) granted. First education project.' },
+      { yr:2020, homes:5,  vols:22,  infra:[],                                         notes:'Sample · COVID-19 — reduced operations.' },
+      { yr:2021, homes:10, vols:41,  infra:['Bridge / road repair — La Union'],        notes:'Sample · Post-COVID recovery.' },
+      { yr:2022, homes:16, vols:89,  infra:['Playground — Rio Lindo'],                notes:'Sample · Largest year to date.' },
+      { yr:2023, homes:20, vols:98,  infra:['Second UMC church plant'],               notes:'Sample · Record volunteer year.' },
+      { yr:2024, homes:22, vols:102, infra:['Water well #2','Solar install'],          notes:'Sample · 100+ homes milestone.' },
+      { yr:2025, homes:17, vols:85,  infra:[],                                         notes:'Sample · Partial year · 65 families on waitlist.' },
     ];
 
     // ── Build bar chart ────────────────────────────────────────────────────
@@ -468,12 +469,18 @@
     });
 
     // ── Map data ───────────────────────────────────────────────────────────
-    // Cluster centers in Northern Honduras (Rio Lindo area, Cortés dept.)
+    // Real CAMINO communities — all in Cortés dept., Northern Honduras.
+    // Home counts per community are Sample — Walker to verify.
     var CLUSTERS = [
-      { name:'Rio Lindo',   lat:15.017, lng:-87.984, count:58 },
-      { name:'Choloma',     lat:15.610, lng:-87.950, count:25 },
-      { name:'El Progreso', lat:15.400, lng:-87.790, count:17 },
-      { name:'La Lima',     lat:15.438, lng:-87.916, count:15 },
+      { name:'Rio Lindo',    lat:15.017, lng:-87.984, count:32 },
+      { name:'La Union',     lat:15.028, lng:-87.958, count:18 },
+      { name:'La Calera',    lat:15.008, lng:-87.997, count:14 },
+      { name:'El Crique',    lat:15.042, lng:-88.005, count:12 },
+      { name:'Tapiquilares', lat:15.038, lng:-87.972, count:10 },
+      { name:'Belen',        lat:15.050, lng:-87.945, count:9  },
+      { name:'La Coroza',    lat:14.998, lng:-87.965, count:8  },
+      { name:'Caracol',      lat:15.062, lng:-87.992, count:7  },
+      { name:'Buena Vista',  lat:15.025, lng:-87.928, count:5  },
     ];
 
     // Deterministic pseudo-random (no Math.random — stays stable on reload)
@@ -497,22 +504,23 @@
     });
 
     var INFRA_DATA = [
-      { lat:15.019,lng:-87.987,title:'Community water well #1',year:2015,type:'💧 Water'},
-      { lat:15.021,lng:-87.981,title:'Church of Hope — Rio Lindo',year:2017,type:'⛪ Church'},
-      { lat:15.402,lng:-87.793,title:'Trade skills training center',year:2019,type:'🏫 Education'},
-      { lat:15.614,lng:-87.947,title:'Bridge / road repair',year:2021,type:'🌉 Infrastructure'},
+      { lat:15.019,lng:-87.987,title:'Community water well #1 — Rio Lindo',year:2018,type:'💧 Water'},
+      { lat:15.021,lng:-87.981,title:'Church of Hope (UMC) — Rio Lindo',year:2017,type:'⛪ Church'},
+      { lat:15.029,lng:-87.955,title:'Trade skills training center',year:2019,type:'🏫 Education'},
+      { lat:15.031,lng:-87.961,title:'Bridge / road repair — La Union',year:2021,type:'🌉 Infrastructure'},
       { lat:15.015,lng:-87.980,title:'Community playground — Rio Lindo',year:2022,type:'🛝 Community'},
-      { lat:15.440,lng:-87.920,title:'Water well #2 — La Lima',year:2024,type:'💧 Water'},
-      { lat:15.022,lng:-87.986,title:'Solar installation — community center',year:2024,type:'☀️ Energy'},
+      { lat:15.046,lng:-87.944,title:'Second UMC church plant — Belen',year:2023,type:'⛪ Church'},
+      { lat:15.022,lng:-87.986,title:'Solar installation — community center (Sample)',year:2024,type:'☀️ Energy'},
     ];
 
+    // Sample funding amounts — Walker to update with current figures
     var PROPOSED_DATA = [
-      { lat:15.025,lng:-87.976,title:'5 homes — Las Brisas',goal:10000,raised:0,type:'🏠 Housing'},
-      { lat:15.403,lng:-87.788,title:'Water well — El Progreso',goal:8500,raised:2975,type:'💧 Water'},
-      { lat:15.399,lng:-87.792,title:'Training center repairs',goal:15000,raised:3000,type:'🏫 Education'},
-      { lat:15.018,lng:-87.983,title:'Church of Hope — roof',goal:4500,raised:2925,type:'⛪ Church'},
-      { lat:15.612,lng:-87.952,title:'Hurricane recovery homes',goal:6000,raised:3000,type:'🏠 Emergency'},
-      { lat:15.013,lng:-87.979,title:"Children's playground",goal:6000,raised:600,type:'🛝 Community'},
+      { lat:15.025,lng:-87.976,title:'5 homes — La Union (Sample)',goal:10000,raised:0,type:'🏠 Housing'},
+      { lat:15.032,lng:-87.962,title:'Water well — La Calera (Sample)',goal:8500,raised:2975,type:'💧 Water'},
+      { lat:15.029,lng:-87.955,title:'Training center repairs (Sample)',goal:15000,raised:3000,type:'🏫 Education'},
+      { lat:15.018,lng:-87.983,title:'Church of Hope — roof (Sample)',goal:4500,raised:2925,type:'⛪ Church'},
+      { lat:15.040,lng:-87.972,title:'Tapiquilares recovery homes (Sample)',goal:6000,raised:3000,type:'🏠 Emergency'},
+      { lat:15.013,lng:-87.979,title:"Children's playground (Sample)",goal:6000,raised:600,type:'🛝 Community'},
     ];
 
     // ── Initialize map ─────────────────────────────────────────────────────
