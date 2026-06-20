@@ -61,11 +61,6 @@
     .doc-card h3{font-size:16px;font-weight:700;margin:0}
     .doc-card p{font-size:13px;color:var(--text-muted);line-height:1.65;margin:0;flex:1}
 
-    /* ── Swag CTA within tabs ── */
-    .swag-inline{background:var(--amber-light);border:2px solid var(--amber);border-radius:var(--radius-lg);padding:28px;text-align:center;margin-top:40px}
-    .swag-inline h3{font-size:18px;font-weight:700;color:var(--amber-dark);margin-bottom:8px}
-    .swag-inline p{font-size:14px;color:var(--text-muted);line-height:1.65;margin-bottom:18px}
-
     /* ── Responsive ── */
     @media(max-width:768px){
       .share-grid{grid-template-columns:1fr}
@@ -120,7 +115,42 @@
     .pwa-banner__install{background:white;color:var(--teal);font-weight:700;font-size:12px;padding:6px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0}
     .pwa-banner__dismiss{background:none;border:none;color:rgba(255,255,255,.7);font-size:22px;cursor:pointer;padding:0;line-height:1;flex-shrink:0}
 
+    /* ── Full-page sticky tab navigation ── */
+    .page-tab-bar{
+      position:sticky;
+      top:73px;
+      z-index:99;
+      background:var(--teal);
+      display:flex;
+      overflow-x:auto;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+      box-shadow:0 2px 10px rgba(0,0,0,.2);
+    }
+    .page-tab-bar::-webkit-scrollbar{display:none}
+    .page-tab-bar .tab-btn{
+      flex:0 0 auto;
+      color:rgba(255,255,255,.6);
+      border-bottom:3px solid transparent;
+      padding:14px 22px;
+      font-size:13.5px;
+      font-weight:600;
+      white-space:nowrap;
+      border-radius:0;
+    }
+    .page-tab-bar .tab-btn:hover{color:rgba(255,255,255,.88)}
+    .page-tab-bar .tab-btn.active{
+      color:white;
+      border-bottom-color:var(--amber-brand);
+      background:rgba(255,255,255,.1);
+    }
+
+    /* ── Section divider within tabs ── */
+    .tab-section-divider{border:none;border-top:2px solid var(--gray-200);margin:48px 0}
+
     @media(max-width:768px){
+      .page-tab-bar{top:69px}
+      .page-tab-bar .tab-btn{padding:12px 16px;font-size:12px}
       .gallery-grid{grid-template-columns:repeat(2,1fr)}
       .phrase-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
       .flip-card{height:100px}
@@ -166,47 +196,95 @@
     <button class="pwa-banner__dismiss" id="pwaDismiss" aria-label="Dismiss">×</button>
   </div>
 
-  <!-- ── Trip Hero ── -->
-  <section class="trip-hero">
-    <div class="trip-hero__content">
-      <div class="portal-badges">
-        <span class="badge badge--private">Private group trip</span>
-        <span class="badge badge--confirmed">Confirmed</span>
-      </div>
-      <div class="eyebrow">July 2026 · Rio Lindo, Cortes, Honduras</div>
-      <h1>Culpeper Methodist<br>Mission Trip</h1>
-      <p>July 1–7, 2026 · 7 days · Culpeper United Methodist Church</p>
-
-      <div class="countdown" data-departure="2026-07-01">
-        <div class="countdown__unit"><span class="countdown__num" data-unit="days">—</span><span class="countdown__label">Days</span></div>
-        <div class="countdown__sep">:</div>
-        <div class="countdown__unit"><span class="countdown__num" data-unit="hours">—</span><span class="countdown__label">Hours</span></div>
-        <div class="countdown__sep">:</div>
-        <div class="countdown__unit"><span class="countdown__num" data-unit="mins">—</span><span class="countdown__label">Minutes</span></div>
-        <div class="countdown__sep">:</div>
-        <div class="countdown__unit"><span class="countdown__num" data-unit="secs">—</span><span class="countdown__label">Seconds</span></div>
-      </div>
-
-      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
-        <a href="../store/index.html?trip=culpeper-jul-2026" class="btn-primary">🛍 Shop trip gear →</a>
-        <a href="#share" class="btn-secondary">📣 Share your trip</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Tabs ── -->
-  <div class="tab-bar">
-    <button class="tab-btn active" data-tab="schedule">Schedule</button>
+  <!-- ── Full-page sticky tab bar ── -->
+  <div class="page-tab-bar" id="pageTabBar">
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="schedule">Schedule</button>
     <button class="tab-btn" data-tab="prep">Prep &amp; Packing</button>
     <button class="tab-btn" data-tab="logistics">Logistics</button>
-    <button class="tab-btn" data-tab="emergency">Emergency</button>
     <button class="tab-btn" data-tab="spanish">Mission Spanish</button>
+    <button class="tab-btn" data-tab="photos">Photos</button>
+    <button class="tab-btn" data-tab="swag">Swag Store</button>
+    <button class="tab-btn" data-tab="share">Share &amp; Fundraise</button>
   </div>
+
+  <!-- ══════════════════════════════════════════
+       Tab: Overview
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel active" id="overview" style="padding:0">
+
+    <!-- Trip Hero -->
+    <section class="trip-hero">
+      <div class="trip-hero__content">
+        <div class="portal-badges">
+          <span class="badge badge--private">Private group trip</span>
+          <span class="badge badge--confirmed">Confirmed</span>
+        </div>
+        <div class="eyebrow">July 2026 · Rio Lindo, Cortes, Honduras</div>
+        <h1>Culpeper Methodist<br>Mission Trip</h1>
+        <p>July 1–7, 2026 · 7 days · Culpeper United Methodist Church</p>
+
+        <div class="countdown" data-departure="2026-07-01">
+          <div class="countdown__unit"><span class="countdown__num" data-unit="days">—</span><span class="countdown__label">Days</span></div>
+          <div class="countdown__sep">:</div>
+          <div class="countdown__unit"><span class="countdown__num" data-unit="hours">—</span><span class="countdown__label">Hours</span></div>
+          <div class="countdown__sep">:</div>
+          <div class="countdown__unit"><span class="countdown__num" data-unit="mins">—</span><span class="countdown__label">Minutes</span></div>
+          <div class="countdown__sep">:</div>
+          <div class="countdown__unit"><span class="countdown__num" data-unit="secs">—</span><span class="countdown__label">Seconds</span></div>
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="../store/index.html?trip=culpeper-jul-2026" class="btn-primary">🛍 Shop trip gear →</a>
+          <button onclick="document.querySelector('[data-tab=share]').click();window.scrollTo({top:0,behavior:'smooth'})" class="btn-secondary" style="cursor:pointer">📣 Share your trip</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trip at a glance -->
+    <div class="section" style="padding-top:40px;padding-bottom:48px">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:4px">Trip at a glance</h3>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:4px">Key details for your Culpeper UMC mission trip.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card__label">Dates</div>
+          <div class="info-card__value">July 1–7, 2026</div>
+          <div class="info-card__sub">7 days / 6 nights</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Group</div>
+          <div class="info-card__value">Culpeper United Methodist Church</div>
+          <div class="info-card__sub">Private group trip</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Location</div>
+          <div class="info-card__value">Rio Lindo, Cortes</div>
+          <div class="info-card__sub">Northern Honduras</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Trip coordinator</div>
+          <div class="info-card__value">Walker Somerville</div>
+          <div class="info-card__sub"><a href="tel:5404451023" style="color:var(--amber)">(540) 445-1023</a></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Trip size</div>
+          <div class="info-card__value">Contact coordinator</div>
+          <div class="info-card__sub">Max 25 participants</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Trip cost / payment</div>
+          <div class="info-card__value">Contact coordinator</div>
+          <div class="info-card__sub">Includes lodging, meals &amp; transport</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab: overview -->
 
   <!-- ══════════════════════════════════════════
        Tab: Schedule
   ══════════════════════════════════════════ -->
-  <div class="tab-panel active" id="schedule">
+  <div class="tab-panel" id="schedule">
     <div class="section">
       <div class="section-eyebrow">Day-by-day</div>
       <h2>Trip schedule</h2>
@@ -265,13 +343,8 @@
         <div class="schedule-event"><span class="schedule-event__time">All day</span><span class="schedule-event__desc">Travel home. You will not be the same person who left.</span></div>
       </div>
 
-      <div class="swag-inline">
-        <h3>🛍 Your trip gear is waiting</h3>
-        <p>Custom Culpeper UMC Mission Trip shirts, hats, and accessories — order before your departure date to receive before you go.</p>
-        <a href="../store/index.html?trip=culpeper-jul-2026" class="btn-primary">Shop trip gear →</a>
-      </div>
     </div>
-  </div>
+  </div><!-- /tab: schedule -->
 
   <!-- ══════════════════════════════════════════
        Tab: Prep & Packing
@@ -369,55 +442,18 @@
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- /tab: prep -->
 
   <!-- ══════════════════════════════════════════
        Tab: Logistics
   ══════════════════════════════════════════ -->
   <div class="tab-panel" id="logistics">
     <div class="section">
-      <div class="section-eyebrow">Travel &amp; trip details</div>
+      <div class="section-eyebrow">Travel, meals &amp; safety</div>
       <h2>Logistics</h2>
-      <p class="section-sub">Everything you need to know about getting there, getting around, and what's included.</p>
+      <p class="section-sub">Getting there, getting around, eating well, staying safe, and submitting your documents.</p>
 
-      <!-- Trip info cards -->
-      <div style="margin-bottom:40px">
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:4px">Trip at a glance</h3>
-        <div class="info-grid">
-          <div class="info-card">
-            <div class="info-card__label">Dates</div>
-            <div class="info-card__value">July 1–7, 2026</div>
-            <div class="info-card__sub">7 days / 6 nights</div>
-          </div>
-          <div class="info-card">
-            <div class="info-card__label">Group</div>
-            <div class="info-card__value">Culpeper United Methodist Church</div>
-            <div class="info-card__sub">Private group trip</div>
-          </div>
-          <div class="info-card">
-            <div class="info-card__label">Location</div>
-            <div class="info-card__value">Rio Lindo, Cortes</div>
-            <div class="info-card__sub">Northern Honduras</div>
-          </div>
-          <div class="info-card">
-            <div class="info-card__label">Trip coordinator</div>
-            <div class="info-card__value">Walker Somerville</div>
-            <div class="info-card__sub"><a href="tel:5404451023" style="color:var(--amber)">(540) 445-1023</a></div>
-          </div>
-          <div class="info-card">
-            <div class="info-card__label">Trip size</div>
-            <div class="info-card__value">Contact coordinator</div>
-            <div class="info-card__sub">Max 25 participants</div>
-          </div>
-          <div class="info-card">
-            <div class="info-card__label">Trip cost / payment</div>
-            <div class="info-card__value">Contact coordinator</div>
-            <div class="info-card__sub">Includes lodging, meals &amp; transport</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Travel info -->
+      <!-- Getting there + In-country transport -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
         <div>
           <h3 style="font-size:16px;font-weight:700;margin-bottom:16px">✈️ Getting there</h3>
@@ -452,7 +488,7 @@
         </div>
       </div>
 
-      <!-- Meals section -->
+      <!-- Meals -->
       <div style="margin-top:48px">
         <h3 style="font-size:16px;font-weight:700;margin-bottom:16px">🍽️ Meals</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
@@ -482,84 +518,142 @@
           </div>
         </div>
       </div>
+
+      <hr class="tab-section-divider">
+
+      <!-- Emergency information -->
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:8px">Safety</div>
+        <h3 style="font-size:22px;font-weight:700;margin-bottom:8px">Emergency information</h3>
+        <p style="font-size:15px;color:var(--text-muted);margin-bottom:24px">Save these contacts before you travel. CAMINO staff are your first point of contact for any issue — day or night.</p>
+
+        <div class="emergency-alert">
+          <strong>In any emergency, contact CAMINO staff first.</strong> We have protocols and local contacts to respond quickly. Do not leave the group without notifying a CAMINO team member. Do not call 911 before speaking to CAMINO staff.
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px">
+          <div class="emergency-card">
+            <div class="emergency-card__label">CAMINO 24/7 (WhatsApp + Call)</div>
+            <div class="emergency-card__number">(540) 445-1023</div>
+            <div class="emergency-card__note">Walker Somerville — available any hour during your trip. WhatsApp preferred for faster response.</div>
+          </div>
+          <div class="emergency-card">
+            <div class="emergency-card__label">U.S. Embassy Honduras</div>
+            <div class="emergency-card__number">+504 2236-9320</div>
+            <div class="emergency-card__note">Located in Tegucigalpa. Passport emergencies, citizen services, and after-hours emergencies for US citizens.</div>
+          </div>
+          <div class="emergency-card">
+            <div class="emergency-card__label">Honduras National Emergency</div>
+            <div class="emergency-card__number">911</div>
+            <div class="emergency-card__note">Works in Honduras. CAMINO staff will assist with communication — call CAMINO first if possible.</div>
+          </div>
+          <div class="emergency-card">
+            <div class="emergency-card__label">Hospital Leonardo Martínez</div>
+            <div class="emergency-card__number">+504 2550-1000</div>
+            <div class="emergency-card__note">San Pedro Sula — nearest major hospital. ~40 min from Rio Lindo. CAMINO staff will transport you.</div>
+          </div>
+          <div class="emergency-card">
+            <div class="emergency-card__label">Team house address</div>
+            <div class="emergency-card__number">Rio Lindo, Cortes</div>
+            <div class="emergency-card__note">Full address provided to participants on departure day. Keep it saved on your phone offline.</div>
+          </div>
+          <div class="emergency-card">
+            <div class="emergency-card__label">Trip coordinator emergency</div>
+            <div class="emergency-card__number">Contact coordinator</div>
+            <div class="emergency-card__note">Your trip leader from Culpeper UMC — confirm name and number with your church before departure.</div>
+          </div>
+        </div>
+
+        <h4 style="font-size:18px;margin-bottom:16px">Emergency protocols</h4>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="protocol-step">
+            <div class="protocol-step__num">1</div>
+            <div><strong>Medical issue:</strong> Notify CAMINO staff immediately. Minor injuries: team house has a first-aid kit and a staff member trained in first aid. For anything serious, CAMINO will transport you to Hospital Leonardo Martínez in San Pedro Sula (~40 min). Do not attempt to self-transport.</div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-step__num">2</div>
+            <div><strong>Lost passport:</strong> Contact CAMINO staff, then call the U.S. Embassy (+504 2236-9320). Your flight booking and a photo ID copy (carry one separately from your passport) will help expedite an emergency travel document. Do not panic — CAMINO has navigated this before.</div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-step__num">3</div>
+            <div><strong>Separated from the group:</strong> Stay in a public, well-lit area. Call Walker immediately. Do not wander. Do not attempt to navigate independently. Stay put and wait for CAMINO pickup. This is a very low likelihood scenario — CAMINO counts heads constantly.</div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-step__num">4</div>
+            <div><strong>Security concern:</strong> Alert CAMINO staff immediately — do not engage or confront. CAMINO field staff have deep local relationships and will adjust plans immediately. Trust their judgment about when and how to move.</div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-step__num">5</div>
+            <div><strong>Flight cancellation / disruption:</strong> Contact CAMINO before rebooking anything. We have a protocol for extended stays and can arrange accommodations. Do not book hotels or alternate flights without checking with Walker first.</div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-step__num">6</div>
+            <div><strong>Mental health / emotional distress:</strong> This week can be emotionally intense. If you're struggling, tell your trip coordinator or Walker. CAMINO staff are experienced with this. There is no shame in asking for support.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="tab-section-divider">
+
+      <!-- Trip documents -->
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:8px">Pre-trip paperwork</div>
+        <h3 style="font-size:22px;font-weight:700;margin-bottom:8px">Trip documents</h3>
+        <p style="font-size:15px;color:var(--text-muted);margin-bottom:4px">Complete all required documents before your departure date. Contact Walker if you have questions about any form.</p>
+
+        <div class="doc-grid">
+          <div class="doc-card doc-card--pending">
+            <div class="doc-card__icon">📋</div>
+            <span class="doc-card__status">Action required</span>
+            <h3>Participant Waiver</h3>
+            <p>CAMINO release and assumption of risk form. Required for all participants. Print, sign, and email a scan to Walker before July 1.</p>
+            <a href="../contact.html" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Contact Walker to get form →</a>
+          </div>
+
+          <div class="doc-card doc-card--pending">
+            <div class="doc-card__icon">🛂</div>
+            <span class="doc-card__status">Action required</span>
+            <h3>Passport Copy</h3>
+            <p>Email a clear photo or scan of your passport data page to Walker before departure. This is critical for emergency situations — do not skip this step.</p>
+            <a href="mailto:Camino.contactus@gmail.com?subject=Passport+copy+-+Culpeper+July+2026" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Email passport copy →</a>
+          </div>
+
+          <div class="doc-card doc-card--pending">
+            <div class="doc-card__icon">🩺</div>
+            <span class="doc-card__status">Action required</span>
+            <h3>Medical Information Form</h3>
+            <p>List any medical conditions, allergies, current medications, and emergency contacts. Required for all participants. Kept confidential by CAMINO staff.</p>
+            <a href="../contact.html" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Contact Walker to get form →</a>
+          </div>
+
+          <div class="doc-card doc-card--soon">
+            <div class="doc-card__icon">✈️</div>
+            <span class="doc-card__status">Optional</span>
+            <h3>Flight Details</h3>
+            <p>Share your flight itinerary with Walker so CAMINO can coordinate airport pickup times and handle any delays proactively.</p>
+            <a href="mailto:Camino.contactus@gmail.com?subject=Flight+details+-+Culpeper+July+2026" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Email flight details →</a>
+          </div>
+
+          <div class="doc-card doc-card--soon">
+            <div class="doc-card__icon">💉</div>
+            <span class="doc-card__status">Recommended</span>
+            <h3>Vaccination Record</h3>
+            <p>Not required but recommended. If you have a vaccination record including Hepatitis A and Typhoid, keep a copy in your travel documents. No formal submission needed.</p>
+            <div style="font-size:13px;color:var(--text-muted)">No action required — for your own records.</div>
+          </div>
+
+          <div class="doc-card doc-card--soon">
+            <div class="doc-card__icon">🔐</div>
+            <span class="doc-card__status">Coming soon</span>
+            <h3>Online Document Upload</h3>
+            <p>Secure document upload portal for waivers, medical forms, and passport copies — all in one place. Currently in development.</p>
+            <div style="font-size:13px;color:var(--text-muted);font-style:italic">Use email in the meantime. Coming in a future CAMINO portal update.</div>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       Tab: Emergency
-  ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="emergency">
-    <div class="section">
-      <div class="section-eyebrow">Safety</div>
-      <h2>Emergency information</h2>
-      <p class="section-sub">Save these contacts before you travel. CAMINO staff are your first point of contact for any issue — day or night.</p>
-
-      <div class="emergency-alert">
-        <strong>In any emergency, contact CAMINO staff first.</strong> We have protocols and local contacts to respond quickly. Do not leave the group without notifying a CAMINO team member. Do not call 911 before speaking to CAMINO staff.
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px">
-        <div class="emergency-card">
-          <div class="emergency-card__label">CAMINO 24/7 (WhatsApp + Call)</div>
-          <div class="emergency-card__number">(540) 445-1023</div>
-          <div class="emergency-card__note">Walker Somerville — available any hour during your trip. WhatsApp preferred for faster response.</div>
-        </div>
-        <div class="emergency-card">
-          <div class="emergency-card__label">U.S. Embassy Honduras</div>
-          <div class="emergency-card__number">+504 2236-9320</div>
-          <div class="emergency-card__note">Located in Tegucigalpa. Passport emergencies, citizen services, and after-hours emergencies for US citizens.</div>
-        </div>
-        <div class="emergency-card">
-          <div class="emergency-card__label">Honduras National Emergency</div>
-          <div class="emergency-card__number">911</div>
-          <div class="emergency-card__note">Works in Honduras. CAMINO staff will assist with communication — call CAMINO first if possible.</div>
-        </div>
-        <div class="emergency-card">
-          <div class="emergency-card__label">Hospital Leonardo Martínez</div>
-          <div class="emergency-card__number">+504 2550-1000</div>
-          <div class="emergency-card__note">San Pedro Sula — nearest major hospital. ~40 min from Rio Lindo. CAMINO staff will transport you.</div>
-        </div>
-        <div class="emergency-card">
-          <div class="emergency-card__label">Team house address</div>
-          <div class="emergency-card__number">Rio Lindo, Cortes</div>
-          <div class="emergency-card__note">Full address provided to participants on departure day. Keep it saved on your phone offline.</div>
-        </div>
-        <div class="emergency-card">
-          <div class="emergency-card__label">Trip coordinator emergency</div>
-          <div class="emergency-card__number">Contact coordinator</div>
-          <div class="emergency-card__note">Your trip leader from Culpeper UMC — confirm name and number with your church before departure.</div>
-        </div>
-      </div>
-
-      <h3 style="font-size:18px;margin-bottom:16px">Emergency protocols</h3>
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="protocol-step">
-          <div class="protocol-step__num">1</div>
-          <div><strong>Medical issue:</strong> Notify CAMINO staff immediately. Minor injuries: team house has a first-aid kit and a staff member trained in first aid. For anything serious, CAMINO will transport you to Hospital Leonardo Martínez in San Pedro Sula (~40 min). Do not attempt to self-transport.</div>
-        </div>
-        <div class="protocol-step">
-          <div class="protocol-step__num">2</div>
-          <div><strong>Lost passport:</strong> Contact CAMINO staff, then call the U.S. Embassy (+504 2236-9320). Your flight booking and a photo ID copy (carry one separately from your passport) will help expedite an emergency travel document. Do not panic — CAMINO has navigated this before.</div>
-        </div>
-        <div class="protocol-step">
-          <div class="protocol-step__num">3</div>
-          <div><strong>Separated from the group:</strong> Stay in a public, well-lit area. Call Walker immediately. Do not wander. Do not attempt to navigate independently. Stay put and wait for CAMINO pickup. This is a very low likelihood scenario — CAMINO counts heads constantly.</div>
-        </div>
-        <div class="protocol-step">
-          <div class="protocol-step__num">4</div>
-          <div><strong>Security concern:</strong> Alert CAMINO staff immediately — do not engage or confront. CAMINO field staff have deep local relationships and will adjust plans immediately. Trust their judgment about when and how to move.</div>
-        </div>
-        <div class="protocol-step">
-          <div class="protocol-step__num">5</div>
-          <div><strong>Flight cancellation / disruption:</strong> Contact CAMINO before rebooking anything. We have a protocol for extended stays and can arrange accommodations. Do not book hotels or alternate flights without checking with Walker first.</div>
-        </div>
-        <div class="protocol-step">
-          <div class="protocol-step__num">6</div>
-          <div><strong>Mental health / emotional distress:</strong> This week can be emotionally intense. If you're struggling, tell your trip coordinator or Walker. CAMINO staff are experienced with this. There is no shame in asking for support.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </div><!-- /tab: logistics -->
 
   <!-- ══════════════════════════════════════════
        Tab: Mission Spanish
@@ -619,185 +713,132 @@
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- /tab: spanish -->
 
   <!-- ══════════════════════════════════════════
-       Section: Trip Swag Store
+       Tab: Photos
   ══════════════════════════════════════════ -->
-  <section class="section" style="background:var(--amber-light)">
-    <div style="max-width:700px;margin:0 auto;text-align:center">
-      <div class="section-eyebrow">Exclusive for Culpeper UMC · July 2026</div>
-      <h2>Your trip gear is ready</h2>
-      <p style="color:var(--text-muted);font-size:16px;line-height:1.75;margin-bottom:32px">Custom shirts, hats, and accessories for the Culpeper United Methodist Mission Trip. Your group name, trip dates, and CAMINO branding — printed together. Order before June 15 to guarantee delivery before departure.</p>
-      <a href="../store/index.html?trip=culpeper-jul-2026" class="btn-primary" style="font-size:16px;padding:14px 40px">Shop trip gear →</a>
-      <p style="font-size:13px;color:var(--text-muted);margin-top:16px">Exclusive access for registered Culpeper UMC participants · Ships to your home address</p>
-    </div>
-  </section>
+  <div class="tab-panel" id="photos">
+    <div class="section">
+      <div class="section-eyebrow">Memories from the field</div>
+      <h2>Trip photos</h2>
+      <p class="section-sub">Click any photo to view full-size. Photos are cached offline once loaded — available without signal after your first visit.</p>
 
-  <!-- ══════════════════════════════════════════
-       Section: Share Your Trip
-  ══════════════════════════════════════════ -->
-  <section class="section" id="share">
-    <div class="section-eyebrow">Help spread the word</div>
-    <h2>Share your trip</h2>
-    <p class="section-sub">Every post helps CAMINO reach more volunteers and donors. Your network is one of our most powerful tools — and your enthusiasm is contagious.</p>
-
-    <div class="share-grid">
-
-      <!-- Card A: Share the trip -->
-      <div class="share-card">
-        <div class="share-card__eyebrow">Share your trip</div>
-        <h3>Tell your people you're going</h3>
-        <p>Share this with your friends, family, and church community. Let them know where you'll be and who you'll be serving.</p>
-        <div class="post-text-box" id="trip-post-text">I'm heading to Honduras with @CAMINOHonduras July 1–7 to build homes for families in need. Follow along — this is going to change me. #CAMINOHonduras #MissionTrip #Honduras #Culpeper</div>
-        <div class="share-btns">
-          <a id="fb-trip-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--fb">📘 Facebook</a>
-          <a id="tw-trip-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--tw">✕ Post</a>
-          <button onclick="copyText('trip-post-text','copy-trip-btn')" id="copy-trip-btn" class="share-btn share-btn--ig">📋 Copy for Instagram</button>
+      <div class="gallery-staff-note">
+        <div class="gallery-staff-note__icon">📸</div>
+        <div>
+          <p><strong>CAMINO staff:</strong> Replace these placeholder images with actual trip photos. Put images in <code>assets/images/trips/culpeper-jul-2026/</code>. Update the <code>src</code> attributes and captions in <code>trips/jul-2026-culpeper.html</code>. Recommended: 1200×800px JPG, under 300 KB each.</p>
         </div>
-        <p class="share-note">Share to your own feed or story. Tag <strong>@caminohonduras</strong> and we'll reshare your post.</p>
       </div>
 
-      <!-- Card B: Fundraising -->
-      <div class="share-card share-card--fund">
-        <div class="share-card__eyebrow">Raise support</div>
-        <h3>Let your network fund a home</h3>
-        <p>Many CAMINO participants raise part or all of their trip cost — and some raise enough to sponsor a full home ($2,000) alongside it. Your personal ask is more powerful than any ad.</p>
-        <div class="post-text-box" id="fund-post-text" style="background:white">I'm going to Honduras with CAMINO July 1–7 to build homes for families in extreme poverty. Will you help me get there — or sponsor a home alongside me? Even $50 makes a real difference. Give here: <span id="fund-url-inline">[loading link…]</span> #CAMINOHonduras #Honduras</div>
-        <div class="share-btns">
-          <a id="fb-fund-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--fb">📘 Facebook</a>
-          <a id="tw-fund-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--tw">✕ Post</a>
-          <button onclick="copyText('fund-post-text','copy-fund-btn')" id="copy-fund-btn" class="share-btn share-btn--ig">📋 Copy for Instagram</button>
+      <div class="gallery-grid">
+        <div class="gallery-item" data-caption="Rio Lindo build site · July 2026">
+          <img src="https://picsum.photos/seed/camino1/1200/800" alt="Build site, Rio Lindo" loading="lazy" />
+          <div class="gallery-caption">Rio Lindo build site · July 2026</div>
         </div>
-        <a href="#fundraising-coming-soon" class="btn-secondary" style="align-self:flex-start;display:inline-block;margin-top:4px" title="Personal fundraising pages with individual goal trackers coming in a future update">Set up your fundraising page →</a>
-        <p class="share-note" style="border-color:var(--amber-mid)">
-          <strong>Your donation link is pre-tagged to your trip</strong> — gifts tracked here go toward the Culpeper July 2026 team.<br>
-          <em style="opacity:.75">Personal fundraising pages with individual goal trackers (via Give Lively) — coming in a future update.</em>
-        </p>
+        <div class="gallery-item" data-caption="Foundation day · CAMINO crew">
+          <img src="https://picsum.photos/seed/camino2/1200/800" alt="Foundation work" loading="lazy" />
+          <div class="gallery-caption">Foundation day · CAMINO crew</div>
+        </div>
+        <div class="gallery-item" data-caption="Walls going up · Day 3">
+          <img src="https://picsum.photos/seed/camino3/1200/800" alt="Block walls rising" loading="lazy" />
+          <div class="gallery-caption">Walls going up · Day 3</div>
+        </div>
+        <div class="gallery-item" data-caption="Community lunch · local families">
+          <img src="https://picsum.photos/seed/camino4/1200/800" alt="Lunch on site" loading="lazy" />
+          <div class="gallery-caption">Community lunch · local families</div>
+        </div>
+        <div class="gallery-item" data-caption="Home dedication ceremony">
+          <img src="https://picsum.photos/seed/camino5/1200/800" alt="Key ceremony" loading="lazy" />
+          <div class="gallery-caption">Home dedication ceremony</div>
+        </div>
+        <div class="gallery-item" data-caption="Team debrief · end of day">
+          <img src="https://picsum.photos/seed/camino6/1200/800" alt="Evening debrief" loading="lazy" />
+          <div class="gallery-caption">Team debrief · end of day</div>
+        </div>
+        <div class="gallery-item" data-caption="School visit · Rio Lindo">
+          <img src="https://picsum.photos/seed/camino7/1200/800" alt="School visit" loading="lazy" />
+          <div class="gallery-caption">School visit · Rio Lindo</div>
+        </div>
+        <div class="gallery-item" data-caption="Local church service · Friday night">
+          <img src="https://picsum.photos/seed/camino8/1200/800" alt="Church service" loading="lazy" />
+          <div class="gallery-caption">Local church service · Friday night</div>
+        </div>
+        <div class="gallery-item" data-caption="The finished home · Culpeper UMC built this">
+          <img src="https://picsum.photos/seed/camino9/1200/800" alt="Completed home" loading="lazy" />
+          <div class="gallery-caption">The finished home · Culpeper UMC built this</div>
+        </div>
       </div>
     </div>
-  </section>
+  </div><!-- /tab: photos -->
 
   <!-- ══════════════════════════════════════════
-       Section: Photo Gallery
+       Tab: Swag Store
   ══════════════════════════════════════════ -->
-  <section class="section">
-    <div class="section-eyebrow">Memories from the field</div>
-    <h2>Trip photos</h2>
-    <p class="section-sub">Click any photo to view full-size. Photos are cached offline once loaded — available without signal after your first visit.</p>
+  <div class="tab-panel" id="swag">
+    <section class="section" style="background:var(--amber-light);min-height:60vh;display:flex;align-items:center">
+      <div style="max-width:700px;margin:0 auto;text-align:center;width:100%">
+        <div class="section-eyebrow">Exclusive for Culpeper UMC · July 2026</div>
+        <h2>Your trip gear is ready</h2>
+        <p style="color:var(--text-muted);font-size:16px;line-height:1.75;margin-bottom:32px">Custom shirts, hats, and accessories for the Culpeper United Methodist Mission Trip. Your group name, trip dates, and CAMINO branding — printed together. Order before June 15 to guarantee delivery before departure.</p>
+        <a href="../store/index.html?trip=culpeper-jul-2026" class="btn-primary" style="font-size:16px;padding:14px 40px">Shop trip gear →</a>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px">Exclusive access for registered Culpeper UMC participants · Ships to your home address</p>
+      </div>
+    </section>
+  </div><!-- /tab: swag -->
 
-    <div class="gallery-staff-note">
-      <div class="gallery-staff-note__icon">📸</div>
-      <div>
-        <p><strong>CAMINO staff:</strong> Replace these placeholder images with actual trip photos. Put images in <code>assets/images/trips/culpeper-jul-2026/</code>. Update the <code>src</code> attributes and captions in <code>trips/jul-2026-culpeper.html</code>. Recommended: 1200×800px JPG, under 300 KB each.</p>
+  <!-- ══════════════════════════════════════════
+       Tab: Share & Fundraise
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="share">
+    <div class="section">
+      <div class="section-eyebrow">Help spread the word</div>
+      <h2>Share your trip</h2>
+      <p class="section-sub">Every post helps CAMINO reach more volunteers and donors. Your network is one of our most powerful tools — and your enthusiasm is contagious.</p>
+
+      <div class="share-grid">
+
+        <!-- Card A: Share the trip -->
+        <div class="share-card">
+          <div class="share-card__eyebrow">Share your trip</div>
+          <h3>Tell your people you're going</h3>
+          <p>Share this with your friends, family, and church community. Let them know where you'll be and who you'll be serving.</p>
+          <div class="post-text-box" id="trip-post-text">I'm heading to Honduras with @CAMINOHonduras July 1–7 to build homes for families in need. Follow along — this is going to change me. #CAMINOHonduras #MissionTrip #Honduras #Culpeper</div>
+          <div class="share-btns">
+            <a id="fb-trip-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--fb">📘 Facebook</a>
+            <a id="tw-trip-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--tw">✕ Post</a>
+            <button onclick="copyText('trip-post-text','copy-trip-btn')" id="copy-trip-btn" class="share-btn share-btn--ig">📋 Copy for Instagram</button>
+          </div>
+          <p class="share-note">Share to your own feed or story. Tag <strong>@caminohonduras</strong> and we'll reshare your post.</p>
+        </div>
+
+        <!-- Card B: Fundraising -->
+        <div class="share-card share-card--fund">
+          <div class="share-card__eyebrow">Raise support</div>
+          <h3>Let your network fund a home</h3>
+          <p>Many CAMINO participants raise part or all of their trip cost — and some raise enough to sponsor a full home ($2,000) alongside it. Your personal ask is more powerful than any ad.</p>
+          <div class="post-text-box" id="fund-post-text" style="background:white">I'm going to Honduras with CAMINO July 1–7 to build homes for families in extreme poverty. Will you help me get there — or sponsor a home alongside me? Even $50 makes a real difference. Give here: <span id="fund-url-inline">[loading link…]</span> #CAMINOHonduras #Honduras</div>
+          <div class="share-btns">
+            <a id="fb-fund-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--fb">📘 Facebook</a>
+            <a id="tw-fund-share" href="#" target="_blank" rel="noopener" class="share-btn share-btn--tw">✕ Post</a>
+            <button onclick="copyText('fund-post-text','copy-fund-btn')" id="copy-fund-btn" class="share-btn share-btn--ig">📋 Copy for Instagram</button>
+          </div>
+          <a href="#fundraising-coming-soon" class="btn-secondary" style="align-self:flex-start;display:inline-block;margin-top:4px" title="Personal fundraising pages with individual goal trackers coming in a future update">Set up your fundraising page →</a>
+          <p class="share-note" style="border-color:var(--amber-mid)">
+            <strong>Your donation link is pre-tagged to your trip</strong> — gifts tracked here go toward the Culpeper July 2026 team.<br>
+            <em style="opacity:.75">Personal fundraising pages with individual goal trackers (via Give Lively) — coming in a future update.</em>
+          </p>
+        </div>
       </div>
     </div>
+  </div><!-- /tab: share -->
 
-    <div class="gallery-grid">
-      <div class="gallery-item" data-caption="Rio Lindo build site · July 2026">
-        <img src="https://picsum.photos/seed/camino1/1200/800" alt="Build site, Rio Lindo" loading="lazy" />
-        <div class="gallery-caption">Rio Lindo build site · July 2026</div>
-      </div>
-      <div class="gallery-item" data-caption="Foundation day · CAMINO crew">
-        <img src="https://picsum.photos/seed/camino2/1200/800" alt="Foundation work" loading="lazy" />
-        <div class="gallery-caption">Foundation day · CAMINO crew</div>
-      </div>
-      <div class="gallery-item" data-caption="Walls going up · Day 3">
-        <img src="https://picsum.photos/seed/camino3/1200/800" alt="Block walls rising" loading="lazy" />
-        <div class="gallery-caption">Walls going up · Day 3</div>
-      </div>
-      <div class="gallery-item" data-caption="Community lunch · local families">
-        <img src="https://picsum.photos/seed/camino4/1200/800" alt="Lunch on site" loading="lazy" />
-        <div class="gallery-caption">Community lunch · local families</div>
-      </div>
-      <div class="gallery-item" data-caption="Home dedication ceremony">
-        <img src="https://picsum.photos/seed/camino5/1200/800" alt="Key ceremony" loading="lazy" />
-        <div class="gallery-caption">Home dedication ceremony</div>
-      </div>
-      <div class="gallery-item" data-caption="Team debrief · end of day">
-        <img src="https://picsum.photos/seed/camino6/1200/800" alt="Evening debrief" loading="lazy" />
-        <div class="gallery-caption">Team debrief · end of day</div>
-      </div>
-      <div class="gallery-item" data-caption="School visit · Rio Lindo">
-        <img src="https://picsum.photos/seed/camino7/1200/800" alt="School visit" loading="lazy" />
-        <div class="gallery-caption">School visit · Rio Lindo</div>
-      </div>
-      <div class="gallery-item" data-caption="Local church service · Friday night">
-        <img src="https://picsum.photos/seed/camino8/1200/800" alt="Church service" loading="lazy" />
-        <div class="gallery-caption">Local church service · Friday night</div>
-      </div>
-      <div class="gallery-item" data-caption="The finished home · Culpeper UMC built this">
-        <img src="https://picsum.photos/seed/camino9/1200/800" alt="Completed home" loading="lazy" />
-        <div class="gallery-caption">The finished home · Culpeper UMC built this</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Lightbox -->
+  <!-- ── Lightbox (fixed overlay — lives outside tabs) ── -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
     <button class="lightbox-close" id="lightboxClose" aria-label="Close photo viewer">×</button>
     <img id="lightboxImg" src="" alt="" />
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
-
-  <!-- ══════════════════════════════════════════
-       Section: Documents
-  ══════════════════════════════════════════ -->
-  <section class="section" style="background:var(--gray-100)">
-    <div class="section-eyebrow">Pre-trip paperwork</div>
-    <h2>Trip documents</h2>
-    <p class="section-sub">Complete all required documents before your departure date. Contact Walker if you have questions about any form.</p>
-
-    <div class="doc-grid">
-      <div class="doc-card doc-card--pending">
-        <div class="doc-card__icon">📋</div>
-        <span class="doc-card__status">Action required</span>
-        <h3>Participant Waiver</h3>
-        <p>CAMINO release and assumption of risk form. Required for all participants. Print, sign, and email a scan to Walker before July 1.</p>
-        <a href="../contact.html" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Contact Walker to get form →</a>
-      </div>
-
-      <div class="doc-card doc-card--pending">
-        <div class="doc-card__icon">🛂</div>
-        <span class="doc-card__status">Action required</span>
-        <h3>Passport Copy</h3>
-        <p>Email a clear photo or scan of your passport data page to Walker before departure. This is critical for emergency situations — do not skip this step.</p>
-        <a href="mailto:Camino.contactus@gmail.com?subject=Passport+copy+-+Culpeper+July+2026" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Email passport copy →</a>
-      </div>
-
-      <div class="doc-card doc-card--pending">
-        <div class="doc-card__icon">🩺</div>
-        <span class="doc-card__status">Action required</span>
-        <h3>Medical Information Form</h3>
-        <p>List any medical conditions, allergies, current medications, and emergency contacts. Required for all participants. Kept confidential by CAMINO staff.</p>
-        <a href="../contact.html" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Contact Walker to get form →</a>
-      </div>
-
-      <div class="doc-card doc-card--soon">
-        <div class="doc-card__icon">✈️</div>
-        <span class="doc-card__status">Optional</span>
-        <h3>Flight Details</h3>
-        <p>Share your flight itinerary with Walker so CAMINO can coordinate airport pickup times and handle any delays proactively.</p>
-        <a href="mailto:Camino.contactus@gmail.com?subject=Flight+details+-+Culpeper+July+2026" class="btn-secondary" style="align-self:flex-start;font-size:13px;padding:8px 14px">Email flight details →</a>
-      </div>
-
-      <div class="doc-card doc-card--soon">
-        <div class="doc-card__icon">💉</div>
-        <span class="doc-card__status">Recommended</span>
-        <h3>Vaccination Record</h3>
-        <p>Not required but recommended. If you have a vaccination record including Hepatitis A and Typhoid, keep a copy in your travel documents. No formal submission needed.</p>
-        <div style="font-size:13px;color:var(--text-muted)">No action required — for your own records.</div>
-      </div>
-
-      <div class="doc-card doc-card--soon">
-        <div class="doc-card__icon">🔐</div>
-        <span class="doc-card__status">Coming soon</span>
-        <h3>Online Document Upload</h3>
-        <p>Secure document upload portal for waivers, medical forms, and passport copies — all in one place. Currently in development.</p>
-        <div style="font-size:13px;color:var(--text-muted);font-style:italic">Use email in the meantime. Coming in a future CAMINO portal update.</div>
-      </div>
-    </div>
-  </section>
 
   <!-- ── Footer ── -->
   <footer class="footer">
@@ -814,9 +855,10 @@
       </div>
       <div class="footer-col">
         <h4>This trip</h4>
-        <a href="#schedule" onclick="document.querySelector('[data-tab=schedule]').click()">Schedule</a>
-        <a href="#prep" onclick="document.querySelector('[data-tab=prep]').click()">Prep &amp; packing</a>
-        <a href="#logistics" onclick="document.querySelector('[data-tab=logistics]').click()">Logistics</a>
+        <a href="#" onclick="document.querySelector('[data-tab=overview]').click();window.scrollTo({top:0});return false">Overview</a>
+        <a href="#" onclick="document.querySelector('[data-tab=schedule]').click();window.scrollTo({top:0});return false">Schedule</a>
+        <a href="#" onclick="document.querySelector('[data-tab=prep]').click();window.scrollTo({top:0});return false">Prep &amp; packing</a>
+        <a href="#" onclick="document.querySelector('[data-tab=logistics]').click();window.scrollTo({top:0});return false">Logistics</a>
         <a href="../store/index.html?trip=culpeper-jul-2026">Trip swag store</a>
       </div>
       <div class="footer-col">
@@ -850,7 +892,7 @@
     var basePath = window.location.pathname.replace(/trips\/jul-2026-culpeper\.html$/, '');
     var fundUrl  = origin + basePath + 'give.html?trip=culpeper-jul-2026&ref=participant';
 
-    var fundText = "I’m going to Honduras with CAMINO July 1–7 to build homes for families in extreme poverty. Will you help me get there — or sponsor a home alongside me? Even $50 makes a real difference. Give here: " + fundUrl + " #CAMINOHonduras #Honduras";
+    var fundText = "I'm going to Honduras with CAMINO July 1–7 to build homes for families in extreme poverty. Will you help me get there — or sponsor a home alongside me? Even $50 makes a real difference. Give here: " + fundUrl + " #CAMINOHonduras #Honduras";
 
     // Inject fund URL into the visible post text box
     var inlineEl = document.getElementById('fund-url-inline');
@@ -978,6 +1020,18 @@
       this.classList.toggle('is-flipped');
     });
   });
+
+  // ── Scroll to top when switching tabs (reveals new content from top) ──
+  (function() {
+    var bar = document.getElementById('pageTabBar');
+    if (!bar) return;
+    bar.addEventListener('click', function(e) {
+      if (!e.target.closest('[data-tab]')) return;
+      if (window.pageYOffset > 0) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  })();
   </script>
 </body>
 </html>
