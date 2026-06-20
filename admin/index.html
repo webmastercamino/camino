@@ -179,10 +179,11 @@
     .cal-day:hover.cal-empty { background: #fafafa; }
     .cal-day__num { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
     .cal-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin: 1px; }
-    .dot-fb { background: #1877F2; }
-    .dot-ig { background: #E1306C; }
-    .dot-tw { background: #000; }
-    .dot-li { background: #0077B5; }
+    .dot-fb  { background: #1877F2; }
+    .dot-ig  { background: #E1306C; }
+    .dot-tw  { background: #000; }
+    .dot-li  { background: #0077B5; }
+    .dot-all { background: #7c3aed; }
 
     /* Views */
     .cal-views { display: flex; gap: 8px; margin-bottom: 16px; }
@@ -205,6 +206,8 @@
     .plat-Instagram { background: #FCE4EC; color: #C2185B; }
     .plat-X         { background: #f0f0f0; color: #000; }
     .plat-LinkedIn  { background: #E3F2FD; color: #0077B5; }
+    .plat-All       { background: #f3e8ff; color: #7c3aed; }
+    .post-seeded    { font-size: 10px; color: #7c3aed; flex-shrink: 0; user-select: none; }
     .post-caption { flex: 1; color: var(--text); line-height: 1.5; }
     .post-status { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
     .status-Draft     { background: #f0f0f0; color: var(--muted); }
@@ -368,7 +371,11 @@
         <div class="panel-title">Social Calendar</div>
         <div class="panel-sub">Schedule and track posts across Facebook, Instagram, X, and LinkedIn.</div>
       </div>
-      <button class="btn btn-primary" onclick="openPostModal()">+ Add post</button>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="loadSeedPosts()" title="Load pre-written 2026 posts from data/social-calendar.json">🌱 Load seed posts</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:var(--red)" onclick="clearSeedPosts()" title="Remove seeded posts only — your added posts stay">Clear seeds</button>
+        <button class="btn btn-primary" onclick="openPostModal()">+ Add post</button>
+      </div>
     </div>
 
     <div class="cal-views">
@@ -402,6 +409,7 @@
             <option>Instagram</option>
             <option>X</option>
             <option>LinkedIn</option>
+            <option>All</option>
           </select>
         </div>
         <div id="postsList"></div>
@@ -508,6 +516,7 @@
           <option>Instagram</option>
           <option>X</option>
           <option>LinkedIn</option>
+          <option>All</option>
         </select>
       </div>
     </div>
@@ -623,7 +632,7 @@ function toast(msg) {
 let calYear, calMonth, calView = 'month', selectedDay = null;
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const PLAT_DOT = { Facebook: 'dot-fb', Instagram: 'dot-ig', X: 'dot-tw', LinkedIn: 'dot-li' };
+const PLAT_DOT = { Facebook: 'dot-fb', Instagram: 'dot-ig', X: 'dot-tw', LinkedIn: 'dot-li', All: 'dot-all' };
 
 function getPosts() {
   try { return JSON.parse(localStorage.getItem('camino_posts') || '[]'); } catch { return []; }
@@ -698,9 +707,11 @@ function showDayDetail(dStr) {
 
 function buildPostRow(post) {
   const row = document.createElement('div'); row.className = 'post-row';
+  const seedBadge = post.seeded ? '<span class="post-seeded" title="Seeded post — from data/social-calendar.json">🌱</span>' : '';
   row.innerHTML = `
     <span class="post-platform plat-${post.platform}">${post.platform}</span>
     <span class="post-caption">${escHtml(post.caption)}</span>
+    ${seedBadge}
     <span class="post-status status-${post.status}">${post.status}</span>
     <div class="post-actions">
       <button class="btn btn-ghost btn-sm btn-icon" title="Edit" onclick="openPostModal(null,'${post.id}')">✏️</button>
@@ -791,6 +802,43 @@ function deletePost(id) {
   if (selectedDay) showDayDetail(selectedDay);
   if (calView === 'list') renderList();
   toast('Post deleted.');
+}
+
+async function loadSeedPosts() {
+  try {
+    const res = await fetch('../data/social-calendar.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const seeds = await res.json();
+    const posts = getPosts();
+    const existingIds = new Set(posts.map(p => p.id));
+    let added = 0;
+    seeds.forEach(seed => {
+      if (!existingIds.has(seed.id)) {
+        posts.push({ ...seed, seeded: true });
+        added++;
+      }
+    });
+    savePosts(posts);
+    renderCal();
+    if (selectedDay) showDayDetail(selectedDay);
+    if (calView === 'list') renderList();
+    toast(added === 0 ? 'All seed posts already loaded.' : added + ' seed post' + (added !== 1 ? 's' : '') + ' loaded into your calendar.');
+  } catch (err) {
+    toast('Error loading seed posts — check console.');
+    console.error('loadSeedPosts:', err);
+  }
+}
+
+function clearSeedPosts() {
+  const before = getPosts();
+  const seeded = before.filter(p => p.seeded);
+  if (!seeded.length) { toast('No seed posts to remove.'); return; }
+  if (!confirm('Remove ' + seeded.length + ' seeded post' + (seeded.length !== 1 ? 's' : '') + '? Your manually added posts will stay.')) return;
+  savePosts(before.filter(p => !p.seeded));
+  renderCal();
+  if (selectedDay) showDayDetail(selectedDay);
+  if (calView === 'list') renderList();
+  toast(seeded.length + ' seed post' + (seeded.length !== 1 ? 's' : '') + ' removed.');
 }
 
 // ═══════════════════════ TRIPS ═══════════════════════
