@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board of Directors &amp; Leadership — CAMINO Honduras</title>
+  <meta name="description" content="Meet the volunteer board of directors and leadership team guiding CAMINO Honduras — a 501(c)(3) nonprofit building homes and transforming communities in Honduras.">
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* ── Board member grid (3-col → 2-col → 1-col) ── */
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    @media (max-width: 860px) { .board-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .board-grid { grid-template-columns: 1fr; } }
+
+    .board-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .board-card:focus { outline: 3px solid var(--teal); outline-offset: 3px; }
+
+    .board-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      margin: 0 auto 16px;
+      flex-shrink: 0;
+      letter-spacing: 1px;
+    }
+
+    .board-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .board-role {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 12px;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+    .board-bio {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+    .board-li {
+      font-size: 12px;
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 600;
+      border: 1.5px solid var(--teal);
+      border-radius: 20px;
+      padding: 4px 14px;
+      transition: background .15s, color .15s;
+      display: inline-block;
+    }
+    .board-li:hover, .board-li:focus-visible {
+      background: var(--teal);
+      color: white;
+      outline: none;
+    }
+
+    /* ── Staff grid (2-col → 1-col) ── */
+    .staff-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    @media (max-width: 620px) { .staff-grid { grid-template-columns: 1fr; } }
+
+    .staff-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .staff-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--amber-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+      letter-spacing: .5px;
+    }
+
+    .staff-info { flex: 1; min-width: 0; }
+    .staff-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .staff-role {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 8px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .staff-bio { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── Join the Board CTA card ── */
+    .join-card {
+      background: var(--teal-light);
+      border: 1.5px solid var(--teal);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+    }
+    @media (max-width: 600px) { .join-card { padding: 24px 20px; } }
+
+    /* ── Transparency card ── */
+    .transp-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .transp-icon { font-size: 40px; flex-shrink: 0; line-height: 1; padding-top: 4px; }
+    .transp-body { flex: 1; min-width: 240px; }
+    .transp-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .transp-body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+    .transp-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="../index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">CAMINO</div>
+        <div class="logo-sub">Honduras</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <div class="nav-has-drop">
+        <a href="../about.html" style="color:var(--text);font-weight:600">About ▾</a>
+        <div class="nav-drop">
+          <a href="board.html" style="color:var(--teal);font-weight:600">Our Board</a>
+        </div>
+      </div>
+      <a href="../stories.html">Stories</a>
+      <a href="../programs.html">Programs</a>
+      <div class="nav-has-drop">
+        <a href="../trips.html">Mission trips ▾</a>
+        <div class="nav-drop">
+          <span class="nav-drop-label">Demo</span>
+          <a href="../trips/jul-2026-culpeper.html">↗ Culpeper group trip portal</a>
+        </div>
+      </div>
+      <a href="../impact.html">Impact</a>
+      <a href="../roadmap.html">Roadmap</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+    <a href="../give.html" class="nav-cta">Give now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-mobile-menu" id="mobileMenu">
+    <a href="../about.html" style="color:var(--text);font-weight:600">About</a>
+    <a href="board.html" style="font-size:12px;padding-left:20px;color:var(--teal);font-style:italic">↳ Our Board</a>
+    <a href="../stories.html">Stories</a>
+    <a href="../programs.html">Programs</a>
+    <a href="../trips.html">Mission trips</a>
+    <a href="../trips/jul-2026-culpeper.html" style="font-size:12px;padding-left:20px;color:var(--text-muted);font-style:italic">↗ Demo: Culpeper portal</a>
+    <a href="../impact.html">Impact</a>
+    <a href="../roadmap.html">Roadmap</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../give.html" style="color:var(--amber);font-weight:600">Give now</a>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Hero -->
+  <section class="page-hero" id="main">
+    <div class="eyebrow">Governance &amp; leadership</div>
+    <h1>Our Leadership</h1>
+    <p>CAMINO is governed by a volunteer board of directors committed to our mission of transforming lives through service in Honduras.</p>
+  </section>
+
+  <!-- Board of Directors -->
+  <section class="section">
+    <div class="section-eyebrow">Nonprofit governance</div>
+    <h2>Board of Directors</h2>
+    <p class="section-sub">Our board members serve as volunteer stewards of CAMINO's mission, finances, and long-term strategy. All board service is unpaid.</p>
+    <div class="board-grid">
+
+      <div class="board-card" tabindex="0">
+        <div class="board-avatar" role="img" aria-label="Margaret Sullivan, Board Chair — photo placeholder, initials MS">MS</div>
+        <div class="board-name">Margaret Sullivan</div>
+        <div class="board-role">Board Chair</div>
+        <p class="board-bio">Margaret brings 20 years of nonprofit executive leadership and a deep commitment to faith-based community development in Central America.</p>
+        <a href="#" class="board-li" aria-label="Margaret Sullivan on LinkedIn (link placeholder)">LinkedIn ↗</a>
+      </div>
+
+      <div class="board-card" tabindex="0">
+        <div class="board-avatar" role="img" aria-label="James Okonkwo, Vice Chair — photo placeholder, initials JO">JO</div>
+        <div class="board-name">James Okonkwo</div>
+        <div class="board-role">Vice Chair</div>
+        <p class="board-bio">James is a CPA with extensive experience in nonprofit financial oversight and governance of international development organizations.</p>
+        <a href="#" class="board-li" aria-label="James Okonkwo on LinkedIn (link placeholder)">LinkedIn ↗</a>
+      </div>
+
+      <div class="board-card" tabindex="0">
+        <div class="board-avatar" role="img" aria-label="Rachel Hawthorne, Treasurer — photo placeholder, initials RH">RH</div>
+        <div class="board-name">Rachel Hawthorne</div>
+        <div class="board-role">Treasurer</div>
+        <p class="board-bio">Rachel serves as CFO of a regional healthcare nonprofit and has guided CAMINO's financial stewardship and reporting since 2019.</p>
+        <a href="#" class="board-li" aria-label="Rachel Hawthorne on LinkedIn (link placeholder)">LinkedIn ↗</a>
+      </div>
+
+      <div class="board-card" tabindex="0">
+        <div class="board-avatar" role="img" aria-label="Daniel Park, Secretary — photo placeholder, initials DP">DP</div>
+        <div class="board-name">Daniel Park</div>
+        <div class="board-role">Secretary</div>
+        <p class="board-bio">Daniel is an attorney specializing in nonprofit law who ensures CAMINO's governance meets the highest standards of legal compliance.</p>
+        <a href="#" class="board-li" aria-label="Daniel Park on LinkedIn (link placeholder)">LinkedIn ↗</a>
+      </div>
+
+      <div class="board-card" tabindex="0">
+        <div class="board-avatar" role="img" aria-label="Linda Castillo, Board Member at Large — photo placeholder, initials LC">LC</div>
+        <div class="board-name">Linda Castillo</div>
+        <div class="board-role">Board Member at Large</div>
+        <p class="board-bio">Linda lived in Honduras as a missionary for six years and brings firsthand understanding of the communities and culture CAMINO serves.</p>
+        <a href="#" class="board-li" aria-label="Linda Castillo on LinkedIn (link placeholder)">LinkedIn ↗</a>
+      </div>
+
+      <div class="board-card" tabindex="0">
+        <div class="board-avatar" role="img" aria-label="Thomas Briggs, Board Member at Large — photo placeholder, initials TB">TB</div>
+        <div class="board-name">Thomas Briggs</div>
+        <div class="board-role">Board Member at Large</div>
+        <p class="board-bio">Thomas is a retired contractor who has led four CAMINO build teams and champions volunteer engagement and trip fundraising at the board level.</p>
+        <a href="#" class="board-li" aria-label="Thomas Briggs on LinkedIn (link placeholder)">LinkedIn ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Staff / Leadership Team -->
+  <section class="section" style="background:var(--gray-100)">
+    <div class="section-eyebrow">Our people</div>
+    <h2>Staff &amp; Leadership Team</h2>
+    <p class="section-sub">Our small, dedicated staff team works on the ground in Honduras and stateside to make every build, trip, and donation count.</p>
+    <div class="staff-grid">
+
+      <div class="staff-card">
+        <div class="staff-avatar" role="img" aria-label="Walker Somerville, Executive Director — photo placeholder, initials WS">WS</div>
+        <div class="staff-info">
+          <div class="staff-name">Walker Somerville</div>
+          <div class="staff-role">Executive Director</div>
+          <p class="staff-bio">Co-founder of CAMINO, Walker has led the organization's growth from one home to over 115 across northern Honduras since 2014.</p>
+        </div>
+      </div>
+
+      <div class="staff-card">
+        <div class="staff-avatar" role="img" aria-label="Seiny Somerville, Program Director Honduras — photo placeholder, initials SS">SS</div>
+        <div class="staff-info">
+          <div class="staff-name">Seiny Somerville</div>
+          <div class="staff-role">Program Director, Honduras</div>
+          <p class="staff-bio">Co-founder Seiny oversees day-to-day operations on the ground in Honduras, managing community partnerships and build schedules.</p>
+        </div>
+      </div>
+
+      <div class="staff-card">
+        <div class="staff-avatar" role="img" aria-label="Maria Elena Santos, Volunteer Coordinator — photo placeholder, initials ME">ME</div>
+        <div class="staff-info">
+          <div class="staff-name">Maria Elena Santos</div>
+          <div class="staff-role">Volunteer Coordinator</div>
+          <p class="staff-bio">Maria connects hundreds of volunteers each year with meaningful service opportunities in Honduras and through stateside fundraising events.</p>
+        </div>
+      </div>
+
+      <div class="staff-card">
+        <div class="staff-avatar" role="img" aria-label="Joshua Hensley, Communications and Development — photo placeholder, initials JH">JH</div>
+        <div class="staff-info">
+          <div class="staff-name">Joshua Hensley</div>
+          <div class="staff-role">Communications &amp; Development</div>
+          <p class="staff-bio">Joshua leads CAMINO's fundraising campaigns, donor relations, and digital storytelling to grow the organization's reach and impact.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Join the Board CTA -->
+  <section class="section">
+    <div style="max-width:760px;margin:0 auto">
+      <div class="section-eyebrow">Get involved</div>
+      <h2>Join the Board</h2>
+      <div class="join-card">
+        <p style="font-size:16px;color:var(--text);line-height:1.8;margin-bottom:16px">Interested in serving on the CAMINO board? We welcome applicants who share our passion for Honduras and nonprofit governance. Board members serve two-year terms and meet quarterly — with optional on-site visits to Honduras.</p>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:24px">We particularly welcome candidates with backgrounds in law, accounting, fundraising, communications, healthcare, or international development — and those with a personal connection to Honduras or faith-based mission work.</p>
+        <a href="../contact.html" class="btn-primary">Express your interest</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transparency / 990 -->
+  <section class="section" style="background:var(--gray-100)">
+    <div class="section-eyebrow">Financial transparency</div>
+    <h2>990 &amp; Financial Documents</h2>
+    <p class="section-sub">As a 501(c)(3) nonprofit, CAMINO publishes its annual Form 990 and financial statements so donors and partners can verify how every dollar is used.</p>
+    <div class="transp-card">
+      <div class="transp-icon" aria-hidden="true">📄</div>
+      <div class="transp-body">
+        <h3>Annual filings &amp; financials</h3>
+        <p>CAMINO's IRS Form 990, annual financial statements, and program expense ratios are available below. We hold ourselves to the highest standards of nonprofit accountability.</p>
+        <div class="transp-links">
+          <a href="#" class="btn-secondary" aria-label="Download 2025 Form 990 PDF (link placeholder)">Download 2025 Form 990 (PDF)</a>
+          <a href="#" class="btn-secondary" aria-label="View CAMINO Honduras on GuideStar (link placeholder)">View GuideStar Profile ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="give-section">
+    <h2>Be part of the story</h2>
+    <p>Whether you give, go, or spread the word — there's a place for you in CAMINO's work.</p>
+    <div class="give-options">
+      <a href="../give.html" class="give-btn give-btn--primary">Give toward a home</a>
+      <a href="../trips.html" class="give-btn give-btn--outline">Join a mission trip</a>
+      <a href="../contact.html" class="give-btn give-btn--outline">Get in touch</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <div class="logo-mark">C</div>
+          <div>
+            <div class="logo-text">CAMINO</div>
+            <div class="logo-sub">Honduras</div>
+          </div>
+        </a>
+        <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2014.</p>
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <a href="https://www.facebook.com/Caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Facebook</a>
+          <a href="https://www.instagram.com/caminohonduras" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:13px">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="../about.html">Our story</a>
+        <a href="board.html">Our Board</a>
+        <a href="../contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <a href="../programs.html">Housing</a>
+        <a href="../programs.html">Infrastructure</a>
+        <a href="../programs.html">Church planting</a>
+        <a href="../trips.html">Mission trips</a>
+      </div>
+      <div class="footer-col">
+        <h4>Give</h4>
+        <a href="../give.html">One-time gift</a>
+        <a href="../give.html">Monthly giving</a>
+        <a href="../give.html">Sponsor a home</a>
+        <a href="../give.html">Legacy giving</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CAMINO Honduras · 501(c)(3) Non-Profit</span>
+      <span><a href="#">Privacy policy</a> · <a href="#">Terms</a></span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
