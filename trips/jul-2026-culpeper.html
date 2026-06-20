@@ -6,6 +6,12 @@
   <title>Culpeper Methodist Mission Trip — July 2026 — CAMINO Honduras</title>
   <meta name="description" content="Private trip portal for Culpeper United Methodist Church — July 1–7, 2026, Rio Lindo, Cortes, Honduras. Schedule, packing, logistics, swag store, and sharing tools for registered participants.">
   <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#BA7517" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="CAMINO Trip" />
   <style>
     /* ── Trip portal badges ── */
     .portal-badges{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
@@ -68,6 +74,57 @@
     @media(max-width:480px){
       .info-grid{grid-template-columns:1fr}
     }
+
+    /* ── Flip cards (Mission Spanish) ── */
+    .phrase-section{margin-bottom:32px}
+    .phrase-section h3{font-size:15px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--gray-200)}
+    .phrase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+    .flip-card{perspective:700px;cursor:pointer;height:108px;user-select:none}
+    .flip-card__inner{position:relative;width:100%;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+    .flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+    .flip-card__front,.flip-card__back{position:absolute;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center;box-sizing:border-box}
+    .flip-card__front{background:white;border:1.5px solid var(--gray-200)}
+    .flip-card__front:hover{border-color:var(--amber);background:var(--amber-light)}
+    .flip-card__back{background:var(--teal);color:white;transform:rotateY(180deg)}
+    .flip-card__back--danger{background:#c0392b}
+    .flip-card__english{font-size:14px;font-weight:600;color:var(--text)}
+    .flip-card__hint{font-size:10px;color:var(--text-muted);margin-top:3px}
+    .flip-card__spanish{font-size:15px;font-weight:700}
+    .flip-card__phonetic{font-size:11px;opacity:.8;margin-top:4px;font-style:italic}
+    .flip-card-tap-hint{font-size:12px;color:var(--text-muted);margin-bottom:20px;font-style:italic}
+
+    /* ── Photo gallery ── */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .gallery-item{position:relative;overflow:hidden;border-radius:var(--radius);cursor:pointer;aspect-ratio:3/2}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s;display:block}
+    .gallery-item:hover img{transform:scale(1.06)}
+    .gallery-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.72));color:white;padding:30px 12px 10px;font-size:12px;font-weight:500;opacity:0;transition:opacity .2s;pointer-events:none}
+    .gallery-item:hover .gallery-caption{opacity:1}
+    .gallery-staff-note{background:var(--teal-light);border:2px solid var(--teal);border-radius:var(--radius-lg);padding:18px 22px;margin-bottom:22px;display:flex;gap:14px;align-items:flex-start}
+    .gallery-staff-note__icon{font-size:26px;flex-shrink:0;margin-top:2px}
+    .gallery-staff-note p{font-size:13px;color:var(--teal);line-height:1.7;margin:0}
+    .gallery-staff-note code{background:rgba(15,110,86,.15);padding:1px 5px;border-radius:3px;font-size:12px;font-family:monospace}
+
+    /* ── Lightbox ── */
+    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:1000;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:20px}
+    .lightbox.lb-open{display:flex}
+    .lightbox img{max-width:90vw;max-height:78vh;border-radius:var(--radius);object-fit:contain}
+    .lightbox-close{position:absolute;top:16px;right:22px;color:white;font-size:38px;cursor:pointer;line-height:1;background:none;border:none;padding:0;font-family:inherit;opacity:.8}
+    .lightbox-close:hover{opacity:1}
+    .lightbox-caption{color:rgba(255,255,255,.75);font-size:13px;text-align:center;max-width:600px}
+
+    /* ── PWA install banner ── */
+    .pwa-banner{display:none;background:var(--teal);color:white;padding:10px 18px;align-items:center;gap:12px;font-size:13px;flex-wrap:wrap}
+    .pwa-banner.pwa-visible{display:flex}
+    .pwa-banner__msg{flex:1;min-width:200px;line-height:1.5}
+    .pwa-banner__install{background:white;color:var(--teal);font-weight:700;font-size:12px;padding:6px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0}
+    .pwa-banner__dismiss{background:none;border:none;color:rgba(255,255,255,.7);font-size:22px;cursor:pointer;padding:0;line-height:1;flex-shrink:0}
+
+    @media(max-width:768px){
+      .gallery-grid{grid-template-columns:repeat(2,1fr)}
+      .phrase-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+      .flip-card{height:100px}
+    }
   </style>
 </head>
 <body>
@@ -101,6 +158,13 @@
     <a href="../give.html" style="color:var(--amber);font-weight:600">Give now</a>
   </nav>
   <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- ── PWA Install Banner ── -->
+  <div class="pwa-banner" id="pwaBanner" role="banner">
+    <span class="pwa-banner__msg">📲 <strong>Install for offline access</strong> — schedule, packing list &amp; emergency info available without signal in Honduras.</span>
+    <button class="pwa-banner__install" id="pwaInstall">Install</button>
+    <button class="pwa-banner__dismiss" id="pwaDismiss" aria-label="Dismiss">×</button>
+  </div>
 
   <!-- ── Trip Hero ── -->
   <section class="trip-hero">
@@ -136,6 +200,7 @@
     <button class="tab-btn" data-tab="prep">Prep &amp; Packing</button>
     <button class="tab-btn" data-tab="logistics">Logistics</button>
     <button class="tab-btn" data-tab="emergency">Emergency</button>
+    <button class="tab-btn" data-tab="spanish">Mission Spanish</button>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -497,6 +562,66 @@
   </div>
 
   <!-- ══════════════════════════════════════════
+       Tab: Mission Spanish
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="spanish">
+    <div class="section">
+      <div class="section-eyebrow">Language tools</div>
+      <h2>Mission Spanish</h2>
+      <p class="section-sub">A few words mean everything to the families you'll work alongside. Tap any card to flip it and see the Spanish + pronunciation.</p>
+      <p class="flip-card-tap-hint">👆 Tap a card to flip — tap again to reset</p>
+
+      <div class="phrase-section">
+        <h3>👋 Greetings</h3>
+        <div class="phrase-grid">
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Hello</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Hola</span><span class="flip-card__phonetic">OH-lah</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Good morning</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Buenos días</span><span class="flip-card__phonetic">BWAY-nos DEE-as</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Thank you</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Gracias</span><span class="flip-card__phonetic">GRAH-see-as</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">You're welcome</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">De nada</span><span class="flip-card__phonetic">day NAH-dah</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">How are you?</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¿Cómo estás?</span><span class="flip-card__phonetic">KOH-mo es-TAS</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Nice to meet you</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Mucho gusto</span><span class="flip-card__phonetic">MOO-cho GOOS-to</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">See you tomorrow</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Nos vemos mañana</span><span class="flip-card__phonetic">nos VAY-mos man-YAH-nah</span></div></div></div>
+        </div>
+      </div>
+
+      <div class="phrase-section">
+        <h3>🏗️ On the build site</h3>
+        <div class="phrase-grid">
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Block</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Bloque</span><span class="flip-card__phonetic">BLOH-kay</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Cement</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Cemento</span><span class="flip-card__phonetic">say-MEN-to</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Water</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Agua</span><span class="flip-card__phonetic">AH-gwah</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Pass me that</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Pásame eso</span><span class="flip-card__phonetic">PAH-sah-may AY-so</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Be careful</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Ten cuidado</span><span class="flip-card__phonetic">ten kwee-DAH-do</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Good work!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¡Buen trabajo!</span><span class="flip-card__phonetic">bwen trah-BAH-ho</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Where does this go?</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¿Dónde va esto?</span><span class="flip-card__phonetic">DON-day vah ES-to</span></div></div></div>
+        </div>
+      </div>
+
+      <div class="phrase-section">
+        <h3>🍽️ At meals</h3>
+        <div class="phrase-grid">
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm hungry</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Tengo hambre</span><span class="flip-card__phonetic">TEN-go AHM-bray</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">It's delicious!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¡Está delicioso!</span><span class="flip-card__phonetic">es-TAH del-ee-see-OH-so</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">More, please</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Más por favor</span><span class="flip-card__phonetic">mas por fah-VOR</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm full</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Estoy lleno</span><span class="flip-card__phonetic">es-TOY YEH-no</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">No meat, please</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Sin carne, por favor</span><span class="flip-card__phonetic">seen KAR-nay por fah-VOR</span></div></div></div>
+        </div>
+      </div>
+
+      <div class="phrase-section">
+        <h3>🚨 Emergency</h3>
+        <div class="phrase-grid">
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Help!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">¡Ayuda!</span><span class="flip-card__phonetic">ah-YOO-dah</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I need a doctor</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Necesito un médico</span><span class="flip-card__phonetic">neh-seh-SEE-to oon MEH-dee-ko</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Call 911</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Llame al 911</span><span class="flip-card__phonetic">YAH-may al 911</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm hurt</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Estoy herido</span><span class="flip-card__phonetic">es-TOY ay-REE-do</span></div></div></div>
+          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Water</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Agua</span><span class="flip-card__phonetic">AH-gwah</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
        Section: Trip Swag Store
   ══════════════════════════════════════════ -->
   <section class="section" style="background:var(--amber-light)">
@@ -552,6 +677,68 @@
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════════
+       Section: Photo Gallery
+  ══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-eyebrow">Memories from the field</div>
+    <h2>Trip photos</h2>
+    <p class="section-sub">Click any photo to view full-size. Photos are cached offline once loaded — available without signal after your first visit.</p>
+
+    <div class="gallery-staff-note">
+      <div class="gallery-staff-note__icon">📸</div>
+      <div>
+        <p><strong>CAMINO staff:</strong> Replace these placeholder images with actual trip photos. Put images in <code>assets/images/trips/culpeper-jul-2026/</code>. Update the <code>src</code> attributes and captions in <code>trips/jul-2026-culpeper.html</code>. Recommended: 1200×800px JPG, under 300 KB each.</p>
+      </div>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item" data-caption="Rio Lindo build site · July 2026">
+        <img src="https://picsum.photos/seed/camino1/1200/800" alt="Build site, Rio Lindo" loading="lazy" />
+        <div class="gallery-caption">Rio Lindo build site · July 2026</div>
+      </div>
+      <div class="gallery-item" data-caption="Foundation day · CAMINO crew">
+        <img src="https://picsum.photos/seed/camino2/1200/800" alt="Foundation work" loading="lazy" />
+        <div class="gallery-caption">Foundation day · CAMINO crew</div>
+      </div>
+      <div class="gallery-item" data-caption="Walls going up · Day 3">
+        <img src="https://picsum.photos/seed/camino3/1200/800" alt="Block walls rising" loading="lazy" />
+        <div class="gallery-caption">Walls going up · Day 3</div>
+      </div>
+      <div class="gallery-item" data-caption="Community lunch · local families">
+        <img src="https://picsum.photos/seed/camino4/1200/800" alt="Lunch on site" loading="lazy" />
+        <div class="gallery-caption">Community lunch · local families</div>
+      </div>
+      <div class="gallery-item" data-caption="Home dedication ceremony">
+        <img src="https://picsum.photos/seed/camino5/1200/800" alt="Key ceremony" loading="lazy" />
+        <div class="gallery-caption">Home dedication ceremony</div>
+      </div>
+      <div class="gallery-item" data-caption="Team debrief · end of day">
+        <img src="https://picsum.photos/seed/camino6/1200/800" alt="Evening debrief" loading="lazy" />
+        <div class="gallery-caption">Team debrief · end of day</div>
+      </div>
+      <div class="gallery-item" data-caption="School visit · Rio Lindo">
+        <img src="https://picsum.photos/seed/camino7/1200/800" alt="School visit" loading="lazy" />
+        <div class="gallery-caption">School visit · Rio Lindo</div>
+      </div>
+      <div class="gallery-item" data-caption="Local church service · Friday night">
+        <img src="https://picsum.photos/seed/camino8/1200/800" alt="Church service" loading="lazy" />
+        <div class="gallery-caption">Local church service · Friday night</div>
+      </div>
+      <div class="gallery-item" data-caption="The finished home · Culpeper UMC built this">
+        <img src="https://picsum.photos/seed/camino9/1200/800" alt="Completed home" loading="lazy" />
+        <div class="gallery-caption">The finished home · Culpeper UMC built this</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close photo viewer">×</button>
+    <img id="lightboxImg" src="" alt="" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
 
   <!-- ══════════════════════════════════════════
        Section: Documents
@@ -706,5 +893,91 @@
   }
   </script>
   <script src="../assets/js/main.js"></script>
+  <script>
+  // ── Service worker registration ──
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('../sw.js', { scope: '/' })
+        .catch(function(err) { console.warn('SW registration failed:', err); });
+    });
+  }
+
+  // ── PWA install prompt ──
+  var _deferredPrompt = null;
+  var _banner   = document.getElementById('pwaBanner');
+  var _installBtn = document.getElementById('pwaInstall');
+  var _dismissBtn = document.getElementById('pwaDismiss');
+
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    _deferredPrompt = e;
+    if (_banner && !sessionStorage.getItem('pwa-dismissed')) {
+      _banner.classList.add('pwa-visible');
+    }
+  });
+
+  if (_installBtn) {
+    _installBtn.addEventListener('click', function() {
+      if (!_deferredPrompt) return;
+      _deferredPrompt.prompt();
+      _deferredPrompt.userChoice.then(function() {
+        _deferredPrompt = null;
+        if (_banner) _banner.classList.remove('pwa-visible');
+      });
+    });
+  }
+
+  if (_dismissBtn) {
+    _dismissBtn.addEventListener('click', function() {
+      if (_banner) _banner.classList.remove('pwa-visible');
+      sessionStorage.setItem('pwa-dismissed', '1');
+    });
+  }
+
+  window.addEventListener('appinstalled', function() {
+    if (_banner) _banner.classList.remove('pwa-visible');
+    _deferredPrompt = null;
+  });
+
+  // ── Gallery lightbox ──
+  var _lightbox = document.getElementById('lightbox');
+  var _lbImg    = document.getElementById('lightboxImg');
+  var _lbCap    = document.getElementById('lightboxCaption');
+
+  document.querySelectorAll('.gallery-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var img = this.querySelector('img');
+      _lbImg.src = img.src;
+      _lbImg.alt = img.alt;
+      _lbCap.textContent = this.getAttribute('data-caption') || '';
+      _lightbox.classList.add('lb-open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function _closeLightbox() {
+    if (_lightbox) _lightbox.classList.remove('lb-open');
+    document.body.style.overflow = '';
+    if (_lbImg) _lbImg.src = '';
+  }
+
+  if (_lightbox) {
+    _lightbox.addEventListener('click', function(e) {
+      if (e.target === _lightbox) _closeLightbox();
+    });
+  }
+  var _lbClose = document.getElementById('lightboxClose');
+  if (_lbClose) _lbClose.addEventListener('click', _closeLightbox);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') _closeLightbox();
+  });
+
+  // ── Flip cards ──
+  document.querySelectorAll('.flip-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      this.classList.toggle('is-flipped');
+    });
+  });
+  </script>
 </body>
 </html>

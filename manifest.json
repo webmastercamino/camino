@@ -1,0 +1,25 @@
+{
+  "name": "CAMINO Mission Trip",
+  "short_name": "CAMINO Trip",
+  "description": "Culpeper United Methodist Church — Honduras Mission Trip, July 1–7, 2026. Schedule, packing, logistics, and emergency info — accessible offline.",
+  "start_url": "/trips/jul-2026-culpeper.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAEEDA",
+  "theme_color": "#BA7517",
+  "icons": [
+    {
+      "src": "/assets/images/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
