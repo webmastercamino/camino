@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Trips — CAMINO Honduras</title>
+  <meta name="description" content="Join a CAMINO Honduras mission trip in 2026. Teams of 4–25 people build homes, serve families, and experience Honduras firsthand. No construction experience required.">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">CAMINO</div>
+        <div class="logo-sub">Honduras</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="trips.html" style="color:var(--text);font-weight:600">Mission trips</a>
+      <a href="store/index.html">Swag store</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="give.html" class="nav-cta">Give now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-mobile-menu" id="mobileMenu">
+    <a href="about.html">About</a>
+    <a href="programs.html">Programs</a>
+    <a href="trips.html">Mission trips</a>
+    <a href="store/index.html">Swag store</a>
+    <a href="contact.html">Contact</a>
+    <a href="give.html" style="color:var(--amber);font-weight:600">Give now</a>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="eyebrow">2026 Mission trips</div>
+    <h1>Come build with us.<br>Come be changed.</h1>
+    <p>Teams of 4–25 people. Week-long trips that combine real construction work, community immersion, and experiences that stay with you for life. No experience needed — just a willing heart.</p>
+  </section>
+
+  <!-- Trips listing + aside -->
+  <section class="trips-full">
+    <div class="trips-two-col">
+      <div>
+        <div class="section-eyebrow">2026 schedule</div>
+        <h2>Available trips</h2>
+        <p class="section-sub">All trips depart from and return to the United States. Local transportation, accommodations, and meals are included in trip costs. Airfare is arranged separately.</p>
+
+        <!-- Desktop table -->
+        <table class="trips-table">
+          <thead>
+            <tr>
+              <th>Dates</th>
+              <th>Location</th>
+              <th>Duration</th>
+              <th>Group size</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Jan 18–25</strong></td>
+              <td>Rio Lindo, Cortes</td>
+              <td>7 days</td>
+              <td>4–15 people</td>
+              <td><span class="trip-badge">Spots available</span></td>
+              <td><a href="trips/jan-2026.html" style="color:var(--amber);font-size:13px">Details →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Mar 8–15</strong></td>
+              <td>Rio Lindo, Cortes</td>
+              <td>7 days</td>
+              <td>8–25 people</td>
+              <td><span class="trip-badge">Spots available</span></td>
+              <td><a href="trips/mar-2026.html" style="color:var(--amber);font-size:13px">Details →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Jun 14–24</strong></td>
+              <td>Northern Honduras</td>
+              <td>10 days</td>
+              <td>10–25 people</td>
+              <td><span class="trip-badge trip-badge--urgent">Filling fast</span></td>
+              <td><a href="trips/jun-2026.html" style="color:var(--amber);font-size:13px">Details →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Oct 4–11</strong></td>
+              <td>Northern Honduras</td>
+              <td>7 days</td>
+              <td>4–20 people</td>
+              <td><span class="trip-badge">Spots available</span></td>
+              <td><a href="trips/oct-2026.html" style="color:var(--amber);font-size:13px">Details →</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Mobile trip cards -->
+        <div class="trips-grid" style="display:none" id="mobileTrips">
+          <a href="trips/jan-2026.html" class="trip-card">
+            <div class="trip-date"><div class="trip-month">Jan</div><div class="trip-day">18</div></div>
+            <div class="trip-info">
+              <h4>Winter build — Rio Lindo, Cortes</h4>
+              <p>7 days · 4–15 people · All skill levels</p>
+              <span class="trip-badge">Spots available</span>
+            </div>
+          </a>
+          <a href="trips/mar-2026.html" class="trip-card">
+            <div class="trip-date"><div class="trip-month">Mar</div><div class="trip-day">08</div></div>
+            <div class="trip-info">
+              <h4>Spring build — Rio Lindo, Cortes</h4>
+              <p>7 days · 8–25 people · All skill levels</p>
+              <span class="trip-badge">Spots available</span>
+            </div>
+          </a>
+          <a href="trips/jun-2026.html" class="trip-card">
+            <div class="trip-date"><div class="trip-month">Jun</div><div class="trip-day">14</div></div>
+            <div class="trip-info">
+              <h4>Summer build — Northern Honduras</h4>
+              <p>10 days · 10–25 people · All skill levels</p>
+              <span class="trip-badge trip-badge--urgent">Filling fast</span>
+            </div>
+          </a>
+          <a href="trips/oct-2026.html" class="trip-card">
+            <div class="trip-date"><div class="trip-month">Oct</div><div class="trip-day">04</div></div>
+            <div class="trip-info">
+              <h4>Fall mission — Northern Honduras</h4>
+              <p>7 days · 4–20 people · All skill levels</p>
+              <span class="trip-badge">Spots available</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="section" style="padding:40px 0 0;">
+          <div class="section-eyebrow">What to expect</div>
+          <h2 style="font-size:24px;margin-bottom:16px">A week that changes two worlds</h2>
+          <p style="font-size:15px;color:var(--text-muted);line-height:1.75;margin-bottom:12px">Every morning, your team heads to an active construction site. You'll mix cement, lay block, carry materials, and work side by side with Honduran families and local CAMINO staff. No construction experience needed — just a willingness to show up and work hard.</p>
+          <p style="font-size:15px;color:var(--text-muted);line-height:1.75;margin-bottom:12px">Afternoons and evenings are for community. Meals with local families. Church services. Visits to schools CAMINO supports. Time to sit, listen, and understand the stories behind the work.</p>
+          <p style="font-size:15px;color:var(--text-muted);line-height:1.75">By the time you leave, you will have built something permanent — a home, a relationship, and a different way of seeing the world.</p>
+        </div>
+      </div>
+
+      <!-- Aside -->
+      <div class="trips-aside">
+        <h3>Ready to go?</h3>
+        <p>Contact us to reserve spots for your team. We'll walk you through everything — costs, preparation, travel, and what to bring.</p>
+        <a href="contact.html" class="btn-primary" style="display:block;text-align:center;margin-bottom:12px">Reserve your trip</a>
+        <a href="contact.html" class="btn-secondary" style="display:block;text-align:center;margin-bottom:24px">Ask a question</a>
+
+        <h3 style="font-size:15px;margin-bottom:12px">Trip details</h3>
+        <ul>
+          <li>Groups of 4–25 people</li>
+          <li>All ages and skill levels welcome</li>
+          <li>Local transportation included</li>
+          <li>Accommodations included</li>
+          <li>Meals provided</li>
+          <li>CAMINO staff with you throughout</li>
+          <li>Safe, supervised work sites</li>
+        </ul>
+
+        <div style="background:white;border-radius:var(--radius);padding:16px;margin-top:4px;">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin:0">✈️ <strong>Airfare not included.</strong> Most teams fly into San Pedro Sula (SAP). We can recommend travel agents familiar with Honduras routes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="cards-section">
+    <div class="section-eyebrow">Common questions</div>
+    <h2>What people ask before they go</h2>
+    <p class="section-sub">Never been on a mission trip? That's fine — most of our volunteers haven't either.</p>
+    <div class="cards-grid">
+      <div class="feature-card">
+        <div class="feature-card__icon">🔨</div>
+        <h3>Do I need construction experience?</h3>
+        <p>Not at all. CAMINO staff leads every work site. You'll be taught exactly what to do. Willingness matters more than skill.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🌡️</div>
+        <h3>Is Honduras safe?</h3>
+        <p>CAMINO operates in established community partnerships with deep local trust. We take security seriously and have a strong safety record over years of hosting teams.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🗣️</div>
+        <h3>Do I need to speak Spanish?</h3>
+        <p>No. CAMINO provides translation throughout the trip. That said, learning even a few words goes a long way in building relationships.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">👨‍👩‍👧</div>
+        <h3>Can families with kids come?</h3>
+        <p>Yes — we've had families with children as young as 10 on trips. We'll help you assess whether a specific trip is right for your family's ages and needs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">💰</div>
+        <h3>How much does it cost?</h3>
+        <p>Trip costs vary by duration and group size. Contact us for current pricing. Many participants fundraise to cover their trip costs — we can help with that too.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">✈️</div>
+        <h3>How do I get there?</h3>
+        <p>Most teams fly into San Pedro Sula (SAP). CAMINO staff meets you at the airport and handles all in-country transportation from there.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">C</div>
+          <div>
+            <div class="logo-text">CAMINO</div>
+            <div class="logo-sub">Honduras</div>
+          </div>
+        </a>
+        <p>Central American Ministry Outreach — bringing hope and a future to families living in extreme poverty across Honduras since 2014.</p>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="about.html">Our story</a>
+        <a href="about.html">Mission &amp; vision</a>
+        <a href="contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <a href="programs.html">Housing</a>
+        <a href="programs.html">Infrastructure</a>
+        <a href="programs.html">Church planting</a>
+        <a href="trips.html">Mission trips</a>
+      </div>
+      <div class="footer-col">
+        <h4>Give</h4>
+        <a href="give.html">One-time gift</a>
+        <a href="give.html">Monthly giving</a>
+        <a href="give.html">Sponsor a home</a>
+        <a href="give.html">Legacy giving</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CAMINO Honduras. All rights reserved.</span>
+      <span><a href="https://www.caminohonduras.com" target="_blank" rel="noopener">caminohonduras.com</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    if (window.innerWidth <= 768) {
+      document.getElementById('mobileTrips').style.display = 'grid';
+    }
+  </script>
+</body>
+</html>
