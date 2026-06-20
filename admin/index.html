@@ -307,6 +307,27 @@
     }
     .skip-link-admin:focus { top: 0; outline: 2px solid var(--amber); outline-offset: 2px; }
     :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 2px; }
+
+    /* ── Travel Documents ── */
+    .traveldoc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 700px) { .traveldoc-grid { grid-template-columns: 1fr; } }
+    .traveldoc-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .traveldoc-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 8px; }
+    .traveldoc-name { font-size: 15px; font-weight: 700; }
+    .traveldoc-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .doc-badge { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+    .badge-expired { background: #FEE2E2; color: #DC2626; }
+    .badge-soon    { background: #FED7AA; color: #C2410C; }
+    .badge-watch   { background: #FEF9C3; color: #854D0E; }
+    .badge-valid   { background: #DCFCE7; color: #166534; }
+    .doc-field { margin-bottom: 10px; }
+    .doc-field-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: 3px; }
+    .doc-field-value { font-size: 13px; color: var(--text); line-height: 1.5; }
+    .doc-ref-note { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 2px; }
+    .traveldoc-alert { background: var(--amber-light); border: 1.5px solid var(--amber); border-radius: var(--radius-lg); padding: 14px 18px; font-size: 13px; font-weight: 600; color: var(--amber-dark); margin-bottom: 16px; }
+    .traveldoc-warning { background: var(--amber-light); border-left: 4px solid var(--amber); border-radius: var(--radius); padding: 12px 16px; font-size: 12px; color: var(--amber-dark); line-height: 1.6; margin-bottom: 16px; }
+    .doc-edit-form { border-top: 1.5px solid var(--border); margin-top: 14px; padding-top: 14px; display: none; }
+    .doc-edit-form.open { display: block; }
   </style>
 </head>
 <body>
@@ -339,6 +360,11 @@
     </button>
     <button class="nav-item" data-panel="donations" onclick="switchPanel('donations', this)">
       <span class="nav-item__icon">💛</span> Donations
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">Operations</div>
+    <button class="nav-item" data-panel="traveldocs" onclick="switchPanel('traveldocs', this)">
+      <span class="nav-item__icon">🛂</span> Travel Docs
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Links</div>
@@ -496,6 +522,30 @@
       </div>
     </div>
   </div>
+
+  <!-- ══ PANEL: Travel Documents ══ -->
+  <div id="panel-traveldocs" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Travel Documents</div>
+        <div class="panel-sub">Passport and visa expiration tracking for the Somerville family.</div>
+      </div>
+    </div>
+
+    <div class="traveldoc-warning">
+      ⚠️ Travel document details are stored locally in your browser. For full security, enable Cloudflare Access authentication before storing sensitive data.
+    </div>
+
+    <div id="travelDocAlert" class="traveldoc-alert" style="display:none"></div>
+
+    <div class="traveldoc-grid" id="travelDocGrid"></div>
+
+    <div class="card" style="margin-top:20px;background:#f9f9f9;border-style:dashed">
+      <div style="font-size:12px;color:var(--muted);line-height:1.7">
+        <strong>Remind Me</strong> sets a local flag only. Real email/push alerts require a Cloudflare Worker + notification endpoint. Edits override the seed data and persist in localStorage.
+      </div>
+    </div>
+  </div>
 </main>
 
 <!-- ══════════════════ MODAL: Post ══════════════════ -->
@@ -606,7 +656,8 @@ const PANEL_TITLES = {
   calendar: 'Social Calendar',
   trips: 'Mission Trips',
   content: 'Site Pages',
-  donations: 'Donations'
+  donations: 'Donations',
+  traveldocs: 'Travel Documents'
 };
 
 function switchPanel(id, el) {
@@ -618,6 +669,7 @@ function switchPanel(id, el) {
   if (id === 'trips') renderTrips();
   if (id === 'content') renderPages();
   if (id === 'donations') renderUTMLinks();
+  if (id === 'traveldocs') renderTravelDocs();
 }
 
 // ── Toast ──
@@ -1038,6 +1090,145 @@ function renderUTMLinks() {
       <button class="btn btn-ghost btn-sm" onclick="navigator.clipboard.writeText('${escHtml(url)}').then(()=>toast('Copied!'))">Copy</button>`;
     container.appendChild(block);
   });
+}
+
+// ═══════════════════════ TRAVEL DOCUMENTS ═══════════════════════
+const TRAVEL_DOCS_SEED = [
+  { id: 'walker',   name: 'Walker Somerville',   role: 'Co-Founder / Executive Director', passportExpiry: '2027-08-14', passportCountry: 'USA', passportLast4: '4821', visaEntry: '90-day tourist entry, last entered Jan 2026', residencyStatus: 'None', residencyExpiry: '', notes: '' },
+  { id: 'seiny',    name: 'Seiny Somerville',    role: 'Co-Founder / Program Director',   passportExpiry: '2028-03-22', passportCountry: 'USA', passportLast4: '3094', visaEntry: '90-day tourist entry, last entered Jan 2026', residencyStatus: 'None', residencyExpiry: '', notes: '' },
+  { id: 'alena',    name: 'Alena Somerville',    role: 'Family — Child',                  passportExpiry: '2026-11-05', passportCountry: 'USA', passportLast4: '7156', visaEntry: 'Travels with parents',                         residencyStatus: 'None', residencyExpiry: '', notes: 'Renewal needed before next Honduras trip' },
+  { id: 'williams', name: 'Williams Somerville', role: 'Family — Child',                  passportExpiry: '2029-01-18', passportCountry: 'USA', passportLast4: '2483', visaEntry: 'Travels with parents',                         residencyStatus: 'None', residencyExpiry: '', notes: '' }
+];
+
+function getTravelDocs() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_traveldocs') || 'null');
+    return TRAVEL_DOCS_SEED.map(seed => {
+      const ov = stored && stored.find(s => s.id === seed.id);
+      return ov ? { ...seed, ...ov } : { ...seed };
+    });
+  } catch { return TRAVEL_DOCS_SEED.map(d => ({ ...d })); }
+}
+function saveTravelDocs(docs) { localStorage.setItem('camino_traveldocs', JSON.stringify(docs)); }
+
+function docStatus(expiryStr) {
+  const diff = (new Date(expiryStr) - new Date()) / (1000 * 60 * 60 * 24);
+  if (diff < 0)   return { label: 'EXPIRED',        cls: 'badge-expired' };
+  if (diff <= 183) return { label: 'EXPIRING SOON', cls: 'badge-soon' };
+  if (diff <= 365) return { label: 'WATCH',          cls: 'badge-watch' };
+  return { label: 'VALID', cls: 'badge-valid' };
+}
+
+function fmtDate(str) {
+  if (!str) return '—';
+  const d = new Date(str + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function renderTravelDocs() {
+  const docs = getTravelDocs();
+  const grid = document.getElementById('travelDocGrid');
+  const alertEl = document.getElementById('travelDocAlert');
+  grid.innerHTML = '';
+
+  const urgent = docs.filter(d => { const s = docStatus(d.passportExpiry); return s.cls === 'badge-expired' || s.cls === 'badge-soon'; });
+  if (urgent.length) {
+    alertEl.style.display = '';
+    alertEl.innerHTML = '⚠️ ' + urgent.length + ' document' + (urgent.length > 1 ? 's' : '') + ' expiring within 6 months: ' +
+      urgent.map(d => '<strong>' + escHtml(d.name) + '</strong> passport (' + fmtDate(d.passportExpiry) + ')').join(', ');
+  } else {
+    alertEl.style.display = 'none';
+  }
+
+  docs.forEach(doc => {
+    const st = docStatus(doc.passportExpiry);
+    const reminded = localStorage.getItem('camino_tdremind_' + doc.id) === '1';
+    const card = document.createElement('div');
+    card.className = 'traveldoc-card';
+    card.innerHTML = `
+      <div class="traveldoc-card-header">
+        <div>
+          <div class="traveldoc-name">${escHtml(doc.name)}</div>
+          <div class="traveldoc-role">${escHtml(doc.role)}</div>
+        </div>
+        <span class="doc-badge ${st.cls}">${st.label}</span>
+      </div>
+      <div class="doc-field">
+        <div class="doc-field-label">Passport expiry</div>
+        <div class="doc-field-value">${fmtDate(doc.passportExpiry)} <span style="font-size:11px;color:var(--muted)">(${escHtml(doc.passportCountry)})</span></div>
+      </div>
+      <div class="doc-field">
+        <div class="doc-field-label">Last 4 digits <em style="font-weight:400">(reference only)</em></div>
+        <div class="doc-field-value" style="font-family:monospace;letter-spacing:.1em">···· ${escHtml(doc.passportLast4)}</div>
+        <div class="doc-ref-note">Do not store full passport number here.</div>
+      </div>
+      <div class="doc-field">
+        <div class="doc-field-label">Honduras entry / tourist visa</div>
+        <div class="doc-field-value">${escHtml(doc.visaEntry) || '—'}</div>
+      </div>
+      <div class="doc-field">
+        <div class="doc-field-label">Honduran residency</div>
+        <div class="doc-field-value">${escHtml(doc.residencyStatus)}${doc.residencyExpiry ? ' — expires ' + fmtDate(doc.residencyExpiry) : ''}</div>
+      </div>
+      ${doc.notes ? `<div class="doc-field"><div class="doc-field-label">Notes</div><div class="doc-field-value">${escHtml(doc.notes)}</div></div>` : ''}
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="toggleDocEdit('${doc.id}')">✏️ Edit</button>
+        <button class="btn btn-ghost btn-sm" id="remind-${doc.id}" onclick="toggleReminder('${doc.id}')">${reminded ? '🔔 Reminder set' : '🔕 Remind me'}</button>
+      </div>
+      <div class="doc-edit-form" id="docEdit-${doc.id}">
+        <div class="form-row">
+          <div class="form-group"><label for="de_exp_${doc.id}">Passport expiry</label><input type="date" id="de_exp_${doc.id}" value="${escHtml(doc.passportExpiry)}" /></div>
+          <div class="form-group"><label for="de_l4_${doc.id}">Last 4 digits</label><input type="text" id="de_l4_${doc.id}" value="${escHtml(doc.passportLast4)}" maxlength="4" /></div>
+        </div>
+        <div class="form-group"><label for="de_visa_${doc.id}">Honduras entry notes</label><input type="text" id="de_visa_${doc.id}" value="${escHtml(doc.visaEntry)}" /></div>
+        <div class="form-row">
+          <div class="form-group"><label for="de_res_${doc.id}">Residency status</label>
+            <select id="de_res_${doc.id}">
+              <option ${doc.residencyStatus==='None'?'selected':''}>None</option>
+              <option ${doc.residencyStatus==='In Progress'?'selected':''}>In Progress</option>
+              <option ${doc.residencyStatus==='Active'?'selected':''}>Active</option>
+            </select>
+          </div>
+          <div class="form-group"><label for="de_resexp_${doc.id}">Residency expiry</label><input type="date" id="de_resexp_${doc.id}" value="${escHtml(doc.residencyExpiry)}" /></div>
+        </div>
+        <div class="form-group"><label for="de_notes_${doc.id}">Notes</label><textarea id="de_notes_${doc.id}" rows="2">${escHtml(doc.notes)}</textarea></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm" onclick="saveDocEdit('${doc.id}')">Save</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleDocEdit('${doc.id}')">Cancel</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function toggleDocEdit(id) {
+  const f = document.getElementById('docEdit-' + id);
+  if (f) f.classList.toggle('open');
+}
+
+function saveDocEdit(id) {
+  const docs = getTravelDocs();
+  const idx = docs.findIndex(d => d.id === id);
+  if (idx < 0) return;
+  docs[idx].passportExpiry  = document.getElementById('de_exp_' + id).value;
+  docs[idx].passportLast4   = document.getElementById('de_l4_' + id).value.trim();
+  docs[idx].visaEntry       = document.getElementById('de_visa_' + id).value.trim();
+  docs[idx].residencyStatus = document.getElementById('de_res_' + id).value;
+  docs[idx].residencyExpiry = document.getElementById('de_resexp_' + id).value;
+  docs[idx].notes           = document.getElementById('de_notes_' + id).value.trim();
+  saveTravelDocs(docs);
+  toggleDocEdit(id);
+  renderTravelDocs();
+  toast('Document updated.');
+}
+
+function toggleReminder(id) {
+  const key = 'camino_tdremind_' + id;
+  const on = localStorage.getItem(key) === '1';
+  if (on) { localStorage.removeItem(key); toast('Reminder cleared.'); }
+  else    { localStorage.setItem(key, '1'); toast('Reminder flag set — real alerts need Cloudflare integration.'); }
+  const btn = document.getElementById('remind-' + id);
+  if (btn) btn.textContent = on ? '🔕 Remind me' : '🔔 Reminder set';
 }
 
 // ═══════════════════════ UTILITIES ═══════════════════════
