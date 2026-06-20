@@ -293,9 +293,21 @@
       z-index: 1000;
     }
     #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── Accessibility ── */
+    .skip-link-admin {
+      position: fixed; top: -80px; left: 14px; z-index: 9999;
+      background: var(--teal); color: #fff;
+      padding: 8px 16px; border-radius: 0 0 6px 6px;
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      transition: top .1s;
+    }
+    .skip-link-admin:focus { top: 0; outline: 2px solid var(--amber); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 2px; }
   </style>
 </head>
 <body>
+<a href="#admin-main" class="skip-link-admin">Skip to main content</a>
 
 <!-- ══════════════════ SIDEBAR ══════════════════ -->
 <aside class="sidebar">
@@ -340,7 +352,7 @@
 </aside>
 
 <!-- ══════════════════ MAIN ══════════════════ -->
-<main class="main">
+<main class="main" id="admin-main" tabindex="-1">
   <header class="main-header">
     <h1 id="mainTitle">Social Calendar</h1>
     <div class="main-header__right">
@@ -529,16 +541,16 @@
     <div class="modal-title" id="tripModalTitle">Add trip</div>
     <input type="hidden" id="tripEditId" />
     <div class="form-group">
-      <label>Trip name</label>
+      <label for="tripName">Trip name</label>
       <input type="text" id="tripName" placeholder="e.g. Spring Build — Rio Lindo" />
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label>Dates</label>
+        <label for="tripDates">Dates</label>
         <input type="text" id="tripDates" placeholder="e.g. March 8–15, 2026" />
       </div>
       <div class="form-group">
-        <label>Status</label>
+        <label for="tripStatus">Status</label>
         <select id="tripStatus">
           <option>Planning</option>
           <option>Confirmed</option>
@@ -548,23 +560,27 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label>Location</label>
+        <label for="tripLocation">Location</label>
         <input type="text" id="tripLocation" placeholder="e.g. Rio Lindo, Cortes, Honduras" />
       </div>
       <div class="form-group">
-        <label>Group</label>
+        <label for="tripGroup">Group</label>
         <input type="text" id="tripGroup" placeholder="e.g. Open enrollment" />
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label>Coordinator</label>
+        <label for="tripCoordinator">Coordinator</label>
         <input type="text" id="tripCoordinator" placeholder="e.g. Walker Somerville" />
       </div>
       <div class="form-group">
-        <label>Page slug (URL)</label>
+        <label for="tripSlug">Page slug (URL)</label>
         <input type="text" id="tripSlug" placeholder="trips/jan-2026.html" />
       </div>
+    </div>
+    <div class="form-group">
+      <label for="tripWhatsapp">WhatsApp Group Link (optional)</label>
+      <input type="url" id="tripWhatsapp" placeholder="https://chat.whatsapp.com/…" />
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeTripModal()">Cancel</button>
@@ -851,7 +867,7 @@ function copyTripURL(url, btn) {
 function openTripModal(editId) {
   document.getElementById('tripEditId').value = editId || '';
   document.getElementById('tripModalTitle').textContent = editId ? 'Edit trip' : 'Add trip';
-  ['Name','Dates','Status','Location','Group','Coordinator','Slug'].forEach(f => {
+  ['Name','Dates','Status','Location','Group','Coordinator','Slug','Whatsapp'].forEach(f => {
     const el = document.getElementById('trip' + f);
     if (el) el.value = '';
   });
@@ -866,6 +882,7 @@ function openTripModal(editId) {
       document.getElementById('tripGroup').value       = t.group || '';
       document.getElementById('tripCoordinator').value = t.coordinator || '';
       document.getElementById('tripSlug').value        = t.slug || '';
+      document.getElementById('tripWhatsapp').value    = t.whatsappLink || '';
     }
   }
   document.getElementById('tripModal').classList.add('open');
@@ -885,6 +902,7 @@ function saveTrip() {
     group:         document.getElementById('tripGroup').value.trim(),
     coordinator:   document.getElementById('tripCoordinator').value.trim(),
     slug:          document.getElementById('tripSlug').value.trim(),
+    whatsappLink:  document.getElementById('tripWhatsapp').value.trim(),
     participantCount: 0,
   };
   if (editId) {

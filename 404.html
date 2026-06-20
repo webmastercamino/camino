@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <nav class="nav">
     <a href="index.html" class="logo">
@@ -25,7 +26,7 @@
       <a href="contact.html">Contact</a>
     </div>
     <a href="give.html" class="nav-cta">Give now</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </nav>
@@ -40,7 +41,7 @@
   </nav>
   <div class="nav-overlay" id="navOverlay"></div>
 
-  <section class="page-hero" style="min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center">
+  <section class="page-hero" id="main" style="min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center">
     <div style="font-size:80px;margin-bottom:16px">🏠</div>
     <div class="eyebrow">404 — page not found</div>
     <h1 style="font-size:32px">This road doesn't lead anywhere.</h1>

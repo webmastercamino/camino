@@ -132,7 +132,7 @@
     #pageTabBar::-webkit-scrollbar{display:none}
     #pageTabBar .tab-btn{
       flex:0 0 auto;
-      color:rgba(255,255,255,.72);   /* clearly visible on dark green */
+      color:rgba(255,255,255,.90);   /* ≥4.5:1 contrast on #0F6E56 */
       background:transparent;
       border:none;
       border-bottom:3px solid transparent;
@@ -179,6 +179,7 @@
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <nav class="nav">
     <a href="../index.html" class="logo">
@@ -196,7 +197,7 @@
       <a href="../contact.html">Contact</a>
     </div>
     <a href="../give.html" class="nav-cta">Give now</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </nav>
@@ -218,21 +219,22 @@
   </div>
 
   <!-- ── Full-page sticky tab bar ── -->
-  <div class="page-tab-bar" id="pageTabBar">
-    <button class="tab-btn active" data-tab="overview">Overview</button>
-    <button class="tab-btn" data-tab="schedule">Schedule</button>
-    <button class="tab-btn" data-tab="prep">Prep &amp; Packing</button>
-    <button class="tab-btn" data-tab="logistics">Logistics</button>
-    <button class="tab-btn" data-tab="spanish">Mission Spanish</button>
-    <button class="tab-btn" data-tab="photos">Photos</button>
-    <button class="tab-btn" data-tab="swag">Swag Store</button>
-    <button class="tab-btn" data-tab="share">Share &amp; Fundraise</button>
+  <span id="main" tabindex="-1" style="position:absolute"></span>
+  <div class="page-tab-bar" id="pageTabBar" role="tablist" aria-label="Trip sections">
+    <button class="tab-btn active" data-tab="overview" role="tab" id="tab-overview" aria-selected="true"  aria-controls="overview"  tabindex="0">Overview</button>
+    <button class="tab-btn" data-tab="schedule"  role="tab" id="tab-schedule"  aria-selected="false" aria-controls="schedule"  tabindex="-1">Schedule</button>
+    <button class="tab-btn" data-tab="prep"      role="tab" id="tab-prep"      aria-selected="false" aria-controls="prep"      tabindex="-1">Prep &amp; Packing</button>
+    <button class="tab-btn" data-tab="logistics" role="tab" id="tab-logistics" aria-selected="false" aria-controls="logistics" tabindex="-1">Logistics</button>
+    <button class="tab-btn" data-tab="spanish"   role="tab" id="tab-spanish"   aria-selected="false" aria-controls="spanish"   tabindex="-1">Mission Spanish</button>
+    <button class="tab-btn" data-tab="photos"    role="tab" id="tab-photos"    aria-selected="false" aria-controls="photos"    tabindex="-1">Photos</button>
+    <button class="tab-btn" data-tab="swag"      role="tab" id="tab-swag"      aria-selected="false" aria-controls="swag"      tabindex="-1">Swag Store</button>
+    <button class="tab-btn" data-tab="share"     role="tab" id="tab-share"     aria-selected="false" aria-controls="share"     tabindex="-1">Share &amp; Fundraise</button>
   </div>
 
   <!-- ══════════════════════════════════════════
        Tab: Overview
   ══════════════════════════════════════════ -->
-  <div class="tab-panel active" id="overview" style="padding:0">
+  <div class="tab-panel active" id="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0" style="padding:0">
 
     <!-- Trip Hero -->
     <section class="trip-hero">
@@ -305,7 +307,7 @@
   <!-- ══════════════════════════════════════════
        Tab: Schedule
   ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="schedule">
+  <div class="tab-panel" id="schedule" role="tabpanel" aria-labelledby="tab-schedule" tabindex="-1">
     <div class="section">
       <div class="section-eyebrow">Day-by-day</div>
       <h2>Trip schedule</h2>
@@ -370,7 +372,7 @@
   <!-- ══════════════════════════════════════════
        Tab: Prep & Packing
   ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="prep">
+  <div class="tab-panel" id="prep" role="tabpanel" aria-labelledby="tab-prep" tabindex="-1">
     <div class="section">
       <div class="section-eyebrow">Preparation</div>
       <h2>Prep &amp; packing</h2>
@@ -382,27 +384,27 @@
         <div>
           <h3 style="font-size:15px;font-weight:700;margin-bottom:14px">✅ Bring this</h3>
           <div id="checklist">
-            <div class="checklist-item"><input type="checkbox" id="pack-passport" /><span>Passport — valid at least 6 months past July 7</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-insurance" /><span>Travel insurance documents (print + digital copy)</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-workclothes" /><span>Work clothes — 4–5 sets, lightweight, can get destroyed</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-boots" /><span>Closed-toe boots or sturdy work shoes (steel-toed recommended)</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-gloves" /><span>Work gloves — cement and rebar are rough on hands</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-hat" /><span>Wide-brim hat or cap — shade is essential in July</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-sunglasses" /><span>Sunglasses</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-sunscreen" /><span>Sunscreen SPF 50+ — reapply every 2 hrs on site</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-deet" /><span>Insect repellent — DEET-based (rainy season = more mosquitoes)</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-poncho" /><span>Light rain poncho or packable rain jacket</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-waterbottle" /><span>Insulated reusable water bottle (32 oz minimum)</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-eveningclothes" /><span>Casual evening clothes — 3–4 sets</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-churchclothes" /><span>Modest church clothes — knees and shoulders covered for services</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-sandals" /><span>Flip flops or sandals for the team house</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-meds" /><span>Prescription medications (bring extra days' supply)</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-imodium" /><span>Imodium / antidiarrheal — take if stomach gets unhappy</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-firstaid" /><span>Basic personal first aid kit (band-aids, ibuprofen, antacids)</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-backpack" /><span>Small day backpack or belt bag for site days</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-cash" /><span>$50–$100 USD cash in small bills</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-charger" /><span>Phone charger + power bank (Honduras uses Type A — same as US)</span></div>
-            <div class="checklist-item"><input type="checkbox" id="pack-journal" /><span>Journal — you'll want to write things down</span></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-passport" /><label for="pack-passport">Passport — valid at least 6 months past July 7</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-insurance" /><label for="pack-insurance">Travel insurance documents (print + digital copy)</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-workclothes" /><label for="pack-workclothes">Work clothes — 4–5 sets, lightweight, can get destroyed</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-boots" /><label for="pack-boots">Closed-toe boots or sturdy work shoes (steel-toed recommended)</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-gloves" /><label for="pack-gloves">Work gloves — cement and rebar are rough on hands</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-hat" /><label for="pack-hat">Wide-brim hat or cap — shade is essential in July</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-sunglasses" /><label for="pack-sunglasses">Sunglasses</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-sunscreen" /><label for="pack-sunscreen">Sunscreen SPF 50+ — reapply every 2 hrs on site</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-deet" /><label for="pack-deet">Insect repellent — DEET-based (rainy season = more mosquitoes)</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-poncho" /><label for="pack-poncho">Light rain poncho or packable rain jacket</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-waterbottle" /><label for="pack-waterbottle">Insulated reusable water bottle (32 oz minimum)</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-eveningclothes" /><label for="pack-eveningclothes">Casual evening clothes — 3–4 sets</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-churchclothes" /><label for="pack-churchclothes">Modest church clothes — knees and shoulders covered for services</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-sandals" /><label for="pack-sandals">Flip flops or sandals for the team house</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-meds" /><label for="pack-meds">Prescription medications (bring extra days' supply)</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-imodium" /><label for="pack-imodium">Imodium / antidiarrheal — take if stomach gets unhappy</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-firstaid" /><label for="pack-firstaid">Basic personal first aid kit (band-aids, ibuprofen, antacids)</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-backpack" /><label for="pack-backpack">Small day backpack or belt bag for site days</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-cash" /><label for="pack-cash">$50–$100 USD cash in small bills</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-charger" /><label for="pack-charger">Phone charger + power bank (Honduras uses Type A — same as US)</label></div>
+            <div class="checklist-item"><input type="checkbox" id="pack-journal" /><label for="pack-journal">Journal — you'll want to write things down</label></div>
           </div>
         </div>
 
@@ -468,7 +470,7 @@
   <!-- ══════════════════════════════════════════
        Tab: Logistics
   ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="logistics">
+  <div class="tab-panel" id="logistics" role="tabpanel" aria-labelledby="tab-logistics" tabindex="-1">
     <div class="section">
       <div class="section-eyebrow">Travel, meals &amp; safety</div>
       <h2>Logistics</h2>
@@ -501,6 +503,35 @@
               <a href="https://play.google.com/store/apps/details?id=gov.dhs.cbp.cbpone" target="_blank" rel="noopener">▶ Get it on Google Play →</a>
             </p>
           </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp group chat -->
+      <div class="whatsapp-card" id="whatsappCard" data-whatsapp="https://chat.whatsapp.com/REPLACE_WITH_GROUP_LINK"
+           style="background:white;border:2px solid #25D366;border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:36px">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+          <div style="width:48px;height:48px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0" aria-hidden="true">💬</div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#128C7E;margin-bottom:3px">Trip communication</div>
+            <h3 style="font-size:18px;font-weight:700;margin:0;color:var(--text)">Join the Trip Group Chat</h3>
+          </div>
+        </div>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:20px">Scan the QR code to join our WhatsApp group — get real-time updates, coordinate travel, and stay connected with your fellow travelers.</p>
+
+        <!-- QR code rendered by qrcodejs (loaded conditionally below) -->
+        <div id="whatsappQR" style="width:188px;height:188px;border:2px solid #25D366;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;background:#fff" aria-label="WhatsApp group join QR code"></div>
+
+        <!-- Tap-to-join link -->
+        <div id="whatsappJoinRow" style="text-align:center;margin-bottom:12px">
+          <a id="whatsappJoinLink" href="https://chat.whatsapp.com/REPLACE_WITH_GROUP_LINK" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:white;padding:10px 24px;border-radius:var(--radius);font-size:14px;font-weight:700;text-decoration:none">
+            💬 Tap to join on WhatsApp
+          </a>
+        </div>
+
+        <!-- Staff note (shown when URL is still a placeholder) -->
+        <div id="whatsappStaffNote" style="display:none;background:var(--teal-light);border:1.5px solid var(--teal);border-radius:var(--radius);padding:12px 16px;font-size:13px;color:var(--teal);line-height:1.6;text-align:center">
+          <strong>Group link not yet set</strong> — contact your trip coordinator to get the WhatsApp group invite link.
         </div>
       </div>
 
@@ -709,7 +740,7 @@
   <!-- ══════════════════════════════════════════
        Tab: Mission Spanish
   ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="spanish">
+  <div class="tab-panel" id="spanish" role="tabpanel" aria-labelledby="tab-spanish" tabindex="-1">
     <div class="section">
       <div class="section-eyebrow">Language tools</div>
       <h2>Mission Spanish</h2>
@@ -719,48 +750,48 @@
       <div class="phrase-section">
         <h3>👋 Greetings</h3>
         <div class="phrase-grid">
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Hello</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Hola</span><span class="flip-card__phonetic">OH-lah</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Good morning</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Buenos días</span><span class="flip-card__phonetic">BWAY-nos DEE-as</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Thank you</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Gracias</span><span class="flip-card__phonetic">GRAH-see-as</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">You're welcome</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">De nada</span><span class="flip-card__phonetic">day NAH-dah</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">How are you?</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¿Cómo estás?</span><span class="flip-card__phonetic">KOH-mo es-TAS</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Nice to meet you</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Mucho gusto</span><span class="flip-card__phonetic">MOO-cho GOOS-to</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">See you tomorrow</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Nos vemos mañana</span><span class="flip-card__phonetic">nos VAY-mos man-YAH-nah</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Hello</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Hola</span><span class="flip-card__phonetic">OH-lah</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Good morning</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Buenos días</span><span class="flip-card__phonetic">BWAY-nos DEE-as</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Thank you</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Gracias</span><span class="flip-card__phonetic">GRAH-see-as</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">You're welcome</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">De nada</span><span class="flip-card__phonetic">day NAH-dah</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">How are you?</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¿Cómo estás?</span><span class="flip-card__phonetic">KOH-mo es-TAS</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Nice to meet you</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Mucho gusto</span><span class="flip-card__phonetic">MOO-cho GOOS-to</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">See you tomorrow</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Nos vemos mañana</span><span class="flip-card__phonetic">nos VAY-mos man-YAH-nah</span></div></div></div>
         </div>
       </div>
 
       <div class="phrase-section">
         <h3>🏗️ On the build site</h3>
         <div class="phrase-grid">
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Block</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Bloque</span><span class="flip-card__phonetic">BLOH-kay</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Cement</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Cemento</span><span class="flip-card__phonetic">say-MEN-to</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Water</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Agua</span><span class="flip-card__phonetic">AH-gwah</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Pass me that</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Pásame eso</span><span class="flip-card__phonetic">PAH-sah-may AY-so</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Be careful</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Ten cuidado</span><span class="flip-card__phonetic">ten kwee-DAH-do</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Good work!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¡Buen trabajo!</span><span class="flip-card__phonetic">bwen trah-BAH-ho</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Where does this go?</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¿Dónde va esto?</span><span class="flip-card__phonetic">DON-day vah ES-to</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Block</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Bloque</span><span class="flip-card__phonetic">BLOH-kay</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Cement</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Cemento</span><span class="flip-card__phonetic">say-MEN-to</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Water</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Agua</span><span class="flip-card__phonetic">AH-gwah</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Pass me that</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Pásame eso</span><span class="flip-card__phonetic">PAH-sah-may AY-so</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Be careful</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Ten cuidado</span><span class="flip-card__phonetic">ten kwee-DAH-do</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Good work!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¡Buen trabajo!</span><span class="flip-card__phonetic">bwen trah-BAH-ho</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Where does this go?</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¿Dónde va esto?</span><span class="flip-card__phonetic">DON-day vah ES-to</span></div></div></div>
         </div>
       </div>
 
       <div class="phrase-section">
         <h3>🍽️ At meals</h3>
         <div class="phrase-grid">
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm hungry</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Tengo hambre</span><span class="flip-card__phonetic">TEN-go AHM-bray</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">It's delicious!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¡Está delicioso!</span><span class="flip-card__phonetic">es-TAH del-ee-see-OH-so</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">More, please</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Más por favor</span><span class="flip-card__phonetic">mas por fah-VOR</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm full</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Estoy lleno</span><span class="flip-card__phonetic">es-TOY YEH-no</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">No meat, please</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Sin carne, por favor</span><span class="flip-card__phonetic">seen KAR-nay por fah-VOR</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm hungry</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Tengo hambre</span><span class="flip-card__phonetic">TEN-go AHM-bray</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">It's delicious!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">¡Está delicioso!</span><span class="flip-card__phonetic">es-TAH del-ee-see-OH-so</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">More, please</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Más por favor</span><span class="flip-card__phonetic">mas por fah-VOR</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm full</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Estoy lleno</span><span class="flip-card__phonetic">es-TOY YEH-no</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">No meat, please</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back"><span class="flip-card__spanish">Sin carne, por favor</span><span class="flip-card__phonetic">seen KAR-nay por fah-VOR</span></div></div></div>
         </div>
       </div>
 
       <div class="phrase-section">
         <h3>🚨 Emergency</h3>
         <div class="phrase-grid">
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Help!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">¡Ayuda!</span><span class="flip-card__phonetic">ah-YOO-dah</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I need a doctor</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Necesito un médico</span><span class="flip-card__phonetic">neh-seh-SEE-to oon MEH-dee-ko</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Call 911</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Llame al 911</span><span class="flip-card__phonetic">YAH-may al 911</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm hurt</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Estoy herido</span><span class="flip-card__phonetic">es-TOY ay-REE-do</span></div></div></div>
-          <div class="flip-card"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Water</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Agua</span><span class="flip-card__phonetic">AH-gwah</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Help!</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">¡Ayuda!</span><span class="flip-card__phonetic">ah-YOO-dah</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I need a doctor</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Necesito un médico</span><span class="flip-card__phonetic">neh-seh-SEE-to oon MEH-dee-ko</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Call 911</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Llame al 911</span><span class="flip-card__phonetic">YAH-may al 911</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">I'm hurt</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Estoy herido</span><span class="flip-card__phonetic">es-TOY ay-REE-do</span></div></div></div>
+          <div class="flip-card" tabindex="0" role="button"><div class="flip-card__inner"><div class="flip-card__front"><span class="flip-card__english">Water</span><span class="flip-card__hint">tap to flip</span></div><div class="flip-card__back flip-card__back--danger"><span class="flip-card__spanish">Agua</span><span class="flip-card__phonetic">AH-gwah</span></div></div></div>
         </div>
       </div>
     </div>
@@ -769,7 +800,7 @@
   <!-- ══════════════════════════════════════════
        Tab: Photos
   ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="photos">
+  <div class="tab-panel" id="photos" role="tabpanel" aria-labelledby="tab-photos" tabindex="-1">
     <div class="section">
       <div class="section-eyebrow">Memories from the field</div>
       <h2>Trip photos</h2>
@@ -826,7 +857,7 @@
   <!-- ══════════════════════════════════════════
        Tab: Swag Store
   ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="swag">
+  <div class="tab-panel" id="swag" role="tabpanel" aria-labelledby="tab-swag" tabindex="-1">
     <section class="section" style="background:var(--amber-light);min-height:60vh;display:flex;align-items:center">
       <div style="max-width:700px;margin:0 auto;text-align:center;width:100%">
         <div class="section-eyebrow">Exclusive for Culpeper UMC · July 2026</div>
@@ -841,7 +872,7 @@
   <!-- ══════════════════════════════════════════
        Tab: Share & Fundraise
   ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="share">
+  <div class="tab-panel" id="share" role="tabpanel" aria-labelledby="tab-share" tabindex="-1">
     <div class="section">
       <div class="section-eyebrow">Help spread the word</div>
       <h2>Share your trip</h2>
@@ -1033,18 +1064,31 @@
   });
 
   // ── Gallery lightbox ──
-  var _lightbox = document.getElementById('lightbox');
-  var _lbImg    = document.getElementById('lightboxImg');
-  var _lbCap    = document.getElementById('lightboxCaption');
+  var _lightbox  = document.getElementById('lightbox');
+  var _lbImg     = document.getElementById('lightboxImg');
+  var _lbCap     = document.getElementById('lightboxCaption');
+  var _lbTrigger = null;
 
   document.querySelectorAll('.gallery-item').forEach(function(item) {
-    item.addEventListener('click', function() {
-      var img = this.querySelector('img');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('role', 'button');
+    var cap = item.getAttribute('data-caption') || 'View photo';
+    item.setAttribute('aria-label', 'Open photo: ' + cap);
+
+    function openLightbox() {
+      var img = item.querySelector('img');
       _lbImg.src = img.src;
       _lbImg.alt = img.alt;
-      _lbCap.textContent = this.getAttribute('data-caption') || '';
+      _lbCap.textContent = item.getAttribute('data-caption') || '';
       _lightbox.classList.add('lb-open');
       document.body.style.overflow = 'hidden';
+      _lbTrigger = item;
+      var lbClose = document.getElementById('lightboxClose');
+      if (lbClose) setTimeout(function(){ lbClose.focus(); }, 50);
+    }
+    item.addEventListener('click', openLightbox);
+    item.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(); }
     });
   });
 
@@ -1052,17 +1096,28 @@
     if (_lightbox) _lightbox.classList.remove('lb-open');
     document.body.style.overflow = '';
     if (_lbImg) _lbImg.src = '';
+    if (_lbTrigger) { _lbTrigger.focus(); _lbTrigger = null; }
   }
 
   if (_lightbox) {
     _lightbox.addEventListener('click', function(e) {
       if (e.target === _lightbox) _closeLightbox();
     });
+    // Focus trap inside lightbox
+    _lightbox.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+        var focusable = _lightbox.querySelectorAll('button, [tabindex="0"]');
+        if (!focusable.length) return;
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+        else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+      }
+    });
   }
   var _lbClose = document.getElementById('lightboxClose');
   if (_lbClose) _lbClose.addEventListener('click', _closeLightbox);
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') _closeLightbox();
+    if (e.key === 'Escape' && _lightbox && _lightbox.classList.contains('lb-open')) _closeLightbox();
   });
 
   // ── Flip cards ──
@@ -1070,7 +1125,54 @@
     card.addEventListener('click', function() {
       this.classList.toggle('is-flipped');
     });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.classList.toggle('is-flipped');
+      }
+    });
   });
+
+  // ── WhatsApp QR code ──
+  (function() {
+    var card = document.getElementById('whatsappCard');
+    if (!card) return;
+    var url = card.getAttribute('data-whatsapp') || '';
+    var isPlaceholder = !url || url.indexOf('REPLACE_WITH_GROUP_LINK') !== -1;
+    var qrDiv    = document.getElementById('whatsappQR');
+    var joinRow  = document.getElementById('whatsappJoinRow');
+    var joinLink = document.getElementById('whatsappJoinLink');
+    var staffNote = document.getElementById('whatsappStaffNote');
+
+    if (isPlaceholder) {
+      if (qrDiv)    qrDiv.style.display    = 'none';
+      if (joinRow)  joinRow.style.display  = 'none';
+      if (staffNote) staffNote.style.display = '';
+    } else {
+      if (joinLink) joinLink.href = url;
+      if (staffNote) staffNote.style.display = 'none';
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      s.onload = function() {
+        if (qrDiv && window.QRCode) {
+          qrDiv.style.display = 'block';
+          qrDiv.style.padding = '4px';
+          new QRCode(qrDiv, {
+            text: url,
+            width: 176,
+            height: 176,
+            colorDark: '#128C7E',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+          });
+        }
+      };
+      s.onerror = function() {
+        if (qrDiv) qrDiv.innerHTML = '<p style="font-size:12px;color:var(--text-muted);text-align:center;padding:16px">QR unavailable — use the link below.</p>';
+      };
+      document.head.appendChild(s);
+    }
+  })();
 
   // ── Scroll to top when switching tabs (reveals new content from top) ──
   (function() {

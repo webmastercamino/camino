@@ -7,32 +7,75 @@ function closeMenu() {
   if (!menu) return;
   menu.classList.remove('is-open');
   overlay && overlay.classList.remove('is-open');
-  toggle && toggle.classList.remove('is-open');
+  if (toggle) {
+    toggle.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
   document.body.style.overflow = '';
 }
 
 if (toggle && menu) {
+  toggle.setAttribute('aria-expanded', 'false');
   toggle.addEventListener('click', () => {
     const open = menu.classList.toggle('is-open');
     overlay && overlay.classList.toggle('is-open', open);
     toggle.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.style.overflow = open ? 'hidden' : '';
   });
 }
 overlay && overlay.addEventListener('click', closeMenu);
 menu && menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
-// Tab switching (trip tracker pages)
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
+// Tab switching — supports ARIA tablist pattern (role="tab") and plain .tab-btn
+const ariaTabBtns = document.querySelectorAll('.tab-btn[role="tab"]');
+if (ariaTabBtns.length) {
+  function activateTab(btn) {
     const target = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn[role="tab"]').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+      b.setAttribute('tabindex', '-1');
+    });
+    document.querySelectorAll('.tab-panel[role="tabpanel"]').forEach(p => {
+      p.classList.remove('active');
+      p.setAttribute('tabindex', '-1');
+    });
     btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    btn.setAttribute('tabindex', '0');
     const panel = document.getElementById(target);
-    if (panel) panel.classList.add('active');
+    if (panel) {
+      panel.classList.add('active');
+      panel.setAttribute('tabindex', '0');
+    }
+  }
+
+  ariaTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn));
+    btn.addEventListener('keydown', e => {
+      const btns = [...document.querySelectorAll('.tab-btn[role="tab"]')];
+      const idx  = btns.indexOf(btn);
+      let next   = null;
+      if (e.key === 'ArrowRight') next = btns[(idx + 1) % btns.length];
+      if (e.key === 'ArrowLeft')  next = btns[(idx - 1 + btns.length) % btns.length];
+      if (e.key === 'Home')       next = btns[0];
+      if (e.key === 'End')        next = btns[btns.length - 1];
+      if (next) { next.focus(); activateTab(next); e.preventDefault(); }
+    });
   });
-});
+} else {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = document.getElementById(target);
+      if (panel) panel.classList.add('active');
+    });
+  });
+}
 
 // Countdown (trip pages — set data-departure="YYYY-MM-DD" on .countdown element)
 const countdownEl = document.querySelector('.countdown[data-departure]');

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <nav class="nav">
     <a href="index.html" class="logo">
@@ -31,7 +32,7 @@
       <a href="contact.html" style="color:var(--text);font-weight:600">Contact</a>
     </div>
     <a href="give.html" class="nav-cta">Give now</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </nav>
@@ -47,7 +48,7 @@
   <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- Page Hero -->
-  <section class="page-hero">
+  <section class="page-hero" id="main">
     <div class="eyebrow">Get in touch</div>
     <h1>We'd love to hear from you.</h1>
     <p>Whether you're ready to join a trip, give toward a home, or just want to learn more — reach out and we'll get back to you quickly.</p>
@@ -65,24 +66,24 @@
         <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:24px;display:flex;flex-direction:column;gap:16px">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div>
-              <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Your name</label>
-              <input type="text" name="name" required placeholder="First Last"
+              <label for="contact-name" style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Your name</label>
+              <input type="text" id="contact-name" name="name" required placeholder="First Last"
                 style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit" />
             </div>
             <div>
-              <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Email address</label>
-              <input type="email" name="email" required placeholder="you@example.com"
+              <label for="contact-email" style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Email address</label>
+              <input type="email" id="contact-email" name="email" required placeholder="you@example.com"
                 style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit" />
             </div>
           </div>
           <div>
-            <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Organization / church (optional)</label>
-            <input type="text" name="org" placeholder="Your church or group name"
+            <label for="contact-org" style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Organization / church (optional)</label>
+            <input type="text" id="contact-org" name="org" placeholder="Your church or group name"
               style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit" />
           </div>
           <div>
-            <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">I'm interested in…</label>
-            <select name="topic" style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit;background:white">
+            <label for="contact-topic" style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">I'm interested in…</label>
+            <select id="contact-topic" name="topic" style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit;background:white">
               <option value="">Select a topic</option>
               <option>Joining a mission trip</option>
               <option>Sponsoring a home</option>
@@ -93,8 +94,8 @@
             </select>
           </div>
           <div>
-            <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Message</label>
-            <textarea name="message" rows="5" required placeholder="Tell us a bit about yourself and what you're looking for…"
+            <label for="contact-message" style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Message</label>
+            <textarea id="contact-message" name="message" rows="5" required placeholder="Tell us a bit about yourself and what you're looking for…"
               style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit;resize:vertical"></textarea>
           </div>
           <button type="submit" id="contactSubmit" class="btn-primary" style="align-self:flex-start;cursor:pointer;border:none;font-size:15px">

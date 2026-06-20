@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <nav class="nav">
     <a href="index.html" class="logo">
@@ -31,7 +32,7 @@
       <a href="contact.html">Contact</a>
     </div>
     <a href="give.html" class="nav-cta">Give now</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </nav>
@@ -47,7 +48,7 @@
   <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- Page Hero -->
-  <section class="page-hero">
+  <section class="page-hero" id="main">
     <div class="eyebrow">Our story</div>
     <h1>Born from a calling.<br>Built on faith.</h1>
     <p>CAMINO started with one family, one trip, and a conviction that safe housing changes everything. Twelve years later, we've built over 115 homes and watched entire communities transform.</p>
