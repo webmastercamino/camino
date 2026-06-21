@@ -84,6 +84,7 @@ a  { text-decoration: none; color: inherit; }
 }
 .logo-text { font-size: 15px; font-weight: 600; line-height: 1.1; }
 .logo-sub  { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+.logo-img  { height: 48px; width: auto; display: block; }
 
 .nav-links { display: flex; gap: 28px; }
 .nav-links a { font-size: 14px; color: var(--text-muted); transition: color 0.15s; }
