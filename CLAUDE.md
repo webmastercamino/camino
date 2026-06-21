@@ -38,6 +38,21 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Grant tracker wide-net expansion + AI-assisted application generator
+- What changed:
+  - **admin/index.html**: 21 new grant prospects (g_12–g_32) across 6 program areas — Technology & Digital Literacy (Microsoft, HP, Best Buy, Samsung, Comcast), Language & Literacy (Barbara Bush Foundation, Dollar General, NEH, ProLiteracy), Health & Wellness (RWJF, CDC Foundation, Merck), Arts & Culture (NEA, Inter-American Foundation, Mellon), Women & Children (Kellogg, Caterpillar, Gates), Environment & Sustainability (Patagonia, REI, EPA). All notes pre-filled with "AI-Assisted Application — Low Burden (~30 min review)."
+  - **admin/index.html**: `NARRATIVE_FRAMES` constant — 9 category-specific frames each with tailored problem statement, approach, theory of change, and framing notes citing World Bank/UNESCO/ITU data
+  - **admin/index.html**: Document generator "Program frame" selector — auto-matches grant focus area or manual override; banner: "Apply broadly — marginal cost is ~30 minutes of review time"
+  - **admin/index.html**: `buildApplicationDoc()` updated to accept `programFrame` param; narrative section now fully dynamic per category
+  - **admin/index.html**: 6 new focus area options added to grant modal select
+- Status: Complete. Committed 790355b and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Inter-American Foundation (g_25) is the highest-priority new prospect — strong Honduras focus, US government funder
+  3. W.K. Kellogg Foundation (g_27) — specific Latin America program, worth researching current RFP
+  4. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  5. Replace placeholder board member names/bios/photos in about/board.html
+
 ### 2026-06-20 — Board page grants section + admin quarterly grant review
 - What changed:
   - **about/board.html**: New "Grant Funding & Transparency" section inserted between Board Governance table and 990 section — current grants table (Horizon Family Foundation $15K awarded, Cornerstone Foundation $15K active, Greater Richmond $5K closed), teal "Grant Opportunities" callout for foundations (programs list + contact CTA), "View Grant Pipeline →" link to admin with board/staff note. Old minimal Grant Transparency section removed (superseded). `.grant-opp-card` CSS added.
