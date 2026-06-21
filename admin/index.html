@@ -907,6 +907,61 @@
     .proj-update-row:last-child { border-bottom: none; }
     .proj-update-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 4px; }
     .proj-update-info { flex: 1; line-height: 1.5; color: var(--text); }
+
+    /* ══ OPERATIONS CALENDAR ══ */
+    .ops-sub-tabs { display:flex; gap:0; border-bottom:2px solid var(--border); margin-bottom:20px; }
+    .ops-sub-tab { padding:10px 20px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:none; font-family:inherit; color:var(--muted); border-bottom:2px solid transparent; margin-bottom:-2px; transition:color .15s,border-color .15s; }
+    .ops-sub-tab:hover { color:var(--text); }
+    .ops-sub-tab.active { color:var(--teal); border-bottom-color:var(--teal); }
+    .ops-pane { display:none; }
+    .ops-pane.active { display:block; }
+    /* Ops calendar dot colors */
+    .dot-trip  { background:#1d4ed8; }
+    .dot-order { background:#c2410c; }
+    .dot-task  { background:#15803d; }
+    /* Order status pills */
+    .ord-Pending    { background:#f3f4f6; color:#6b7280; }
+    .ord-Ordered    { background:#dbeafe; color:#1d4ed8; }
+    .ord-InTransit  { background:#fef9c3; color:#854d0e; }
+    .ord-Delivered  { background:#dcfce7; color:#166534; }
+    .ord-Cancelled  { background:#fee2e2; color:#dc2626; }
+    /* Task status pills */
+    .tst-ToDo       { background:#f3f4f6; color:#6b7280; }
+    .tst-InProgress { background:#dbeafe; color:#1d4ed8; }
+    .tst-Done       { background:#dcfce7; color:#166534; }
+    /* Ops table */
+    .ops-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .ops-table th { text-align:left; padding:8px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); border-bottom:1.5px solid var(--border); background:#f8f8f8; white-space:nowrap; }
+    .ops-table td { padding:10px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .ops-table tr:last-child td { border-bottom:none; }
+    .ops-table tr:hover td { background:var(--teal-light); }
+    /* Legend */
+    .ops-legend { display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
+    .ops-legend-item { display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted); font-weight:600; }
+    /* Gantt */
+    .gantt-wrap { overflow-x:auto; margin-top:4px; }
+    .gantt-table { border-collapse:collapse; font-size:12px; min-width:740px; width:100%; }
+    .gantt-table th { background:#1a1a2e; color:#fff; padding:6px 10px; font-size:10px; font-weight:700; letter-spacing:.5px; white-space:nowrap; text-align:left; }
+    .gantt-table td { padding:6px 8px; border:1px solid var(--border); vertical-align:middle; }
+    .gantt-bar { border-radius:4px; height:22px; display:flex; align-items:center; padding:0 8px; font-size:10px; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; min-width:44px; }
+    .gb-prep     { background:#6366f1; }
+    .gb-ordered  { background:#c2410c; }
+    .gb-delivery { background:#f59e0b; }
+    .gb-team     { background:#1d4ed8; }
+    .gb-build    { background:#0f6e56; }
+    .gb-followup { background:#6b7280; }
+    /* Day detail events */
+    .ops-day-event { display:flex; align-items:flex-start; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); font-size:13px; }
+    .ops-day-event:last-child { border-bottom:none; }
+    .ops-event-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:3px; }
+    .ops-event-type { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; padding:2px 7px; border-radius:4px; flex-shrink:0; white-space:nowrap; }
+    .oe-trip  { background:#dbeafe; color:#1d4ed8; }
+    .oe-order { background:#ffedd5; color:#c2410c; }
+    .oe-task  { background:#dcfce7; color:#166534; }
+    /* Quick-add forms */
+    .ops-quick-add-bar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+    .ops-form-collapsible { display:none; background:#f8fbff; border:1.5px solid var(--teal); border-radius:var(--radius-lg); padding:20px 22px; margin-bottom:16px; animation:slideDown .2s ease; }
+    .ops-form-collapsible.open { display:block; }
   </style>
 </head>
 <body>
@@ -995,6 +1050,9 @@ function adminLogout(){
     <div class="sidebar-tag" style="margin-top:8px">Operations</div>
     <button class="nav-item" data-panel="traveldocs" onclick="switchPanel('traveldocs', this)">
       <span class="nav-item__icon">🛂</span> Travel Docs
+    </button>
+    <button class="nav-item" data-panel="operations" onclick="switchPanel('operations', this)">
+      <span class="nav-item__icon">📦</span> Operations
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Development</div>
@@ -1143,6 +1201,162 @@ function adminLogout(){
         </div>
       </div>
       <div id="notifQueueList" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: Operations Calendar ══ -->
+  <div id="panel-operations" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">📦 Operations</div>
+        <div class="panel-sub">Logistics calendar, material orders, and action items for trips &amp; projects.</div>
+      </div>
+    </div>
+
+    <!-- Sub-tabs -->
+    <div class="ops-sub-tabs">
+      <button class="ops-sub-tab active" onclick="switchOpsTab('calendar',this)">📅 Calendar</button>
+      <button class="ops-sub-tab" onclick="switchOpsTab('tasksorders',this)">📋 Tasks &amp; Orders</button>
+    </div>
+
+    <!-- ── Calendar pane ── -->
+    <div id="ops-pane-calendar" class="ops-pane active">
+      <div class="ops-legend">
+        <div class="ops-legend-item"><span class="cal-dot dot-trip"></span> Trip dates</div>
+        <div class="ops-legend-item"><span class="cal-dot dot-order"></span> Material orders</div>
+        <div class="ops-legend-item"><span class="cal-dot dot-task"></span> Tasks due</div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="cal-header">
+          <button class="btn btn-ghost btn-sm" onclick="opsChangeMonth(-1)">&#8592;</button>
+          <div class="cal-title" id="opsCalTitle"></div>
+          <button class="btn btn-ghost btn-sm" onclick="opsChangeMonth(1)">&#8594;</button>
+          <button class="btn btn-ghost btn-sm" onclick="opsGoToday()">Today</button>
+        </div>
+        <div class="cal-grid" id="opsCalGrid"></div>
+        <div class="day-detail" id="opsDayDetail" style="display:none">
+          <h4 id="opsDayDetailTitle">Events for this day</h4>
+          <div id="opsDayDetailBody"></div>
+        </div>
+      </div>
+
+      <!-- Gantt Timeline -->
+      <div class="card">
+        <div class="card-title"><span class="ct-icon">📊</span> Trip Timelines (Gantt)</div>
+        <div class="gantt-wrap" id="opsGanttWrap"></div>
+      </div>
+    </div>
+
+    <!-- ── Tasks & Orders pane ── -->
+    <div id="ops-pane-tasksorders" class="ops-pane">
+
+      <!-- Quick-add bar -->
+      <div class="ops-quick-add-bar">
+        <button class="btn btn-primary btn-sm" onclick="toggleOpsForm('order-form')">+ Material Order</button>
+        <button class="btn btn-amber btn-sm" onclick="toggleOpsForm('task-form')">+ Task / Action</button>
+        <select id="opsFilterType" onchange="renderOpsTable()" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit;background:#fff">
+          <option value="all">All items</option>
+          <option value="orders">Orders only</option>
+          <option value="tasks">Tasks only</option>
+        </select>
+        <select id="opsFilterStatus" onchange="renderOpsTable()" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit;background:#fff">
+          <option value="all">All statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Ordered">Ordered</option>
+          <option value="In Transit">In Transit</option>
+          <option value="Delivered">Delivered</option>
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <!-- Order quick-add form -->
+      <div id="ops-order-form" class="ops-form-collapsible">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px" id="opsOrderFormTitle">New Material Order</div>
+        <input type="hidden" id="opsOrderEditId">
+        <div class="form-row">
+          <div class="form-group"><label>Item Description</label><input id="opsOrdItem" placeholder="e.g. Portland Cement (50 bags)"></div>
+          <div class="form-group"><label>Vendor</label><input id="opsOrdVendor" placeholder="e.g. Ferretería López"></div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Quantity</label><input id="opsOrdQty" type="number" min="1" placeholder="50"></div>
+          <div class="form-group"><label>Unit</label><input id="opsOrdUnit" placeholder="bags / pcs / rolls"></div>
+          <div class="form-group"><label>Est. Cost (USD)</label><input id="opsOrdCost" type="number" min="0" step="0.01" placeholder="625.00"></div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Order Date</label><input id="opsOrdOrderDate" type="date"></div>
+          <div class="form-group"><label>Expected Delivery</label><input id="opsOrdExpDel" type="date"></div>
+          <div class="form-group"><label>Actual Delivery</label><input id="opsOrdActDel" type="date"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Status</label>
+            <select id="opsOrdStatus">
+              <option>Pending</option><option>Ordered</option><option>In Transit</option><option>Delivered</option><option>Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Linked Trip</label>
+            <select id="opsOrdTrip"><option value="">— None —</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Linked Project</label>
+            <select id="opsOrdProject"><option value="">— None —</option></select>
+          </div>
+          <div class="form-group"><label>Customs Status (if applicable)</label><input id="opsOrdCustoms" placeholder="e.g. Cleared / Held at Toncontín"></div>
+        </div>
+        <div class="form-group"><label>Notes</label><textarea id="opsOrdNotes" rows="2" placeholder="Any additional notes…"></textarea></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="saveOpsOrder()">Save Order</button>
+          <button class="btn btn-ghost" onclick="toggleOpsForm('order-form',true)">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Task quick-add form -->
+      <div id="ops-task-form" class="ops-form-collapsible">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px" id="opsTaskFormTitle">New Task / Action Item</div>
+        <input type="hidden" id="opsTaskEditId">
+        <div class="form-group"><label>Task / Action Title</label><input id="opsTskTitle" placeholder="e.g. Arrange truck from Tegucigalpa airport"></div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Due Date</label><input id="opsTskDue" type="date"></div>
+          <div class="form-group"><label>Assigned To</label>
+            <select id="opsTskAssigned">
+              <option>Walker</option><option>Seiny</option><option>Board Member</option><option>Volunteer</option><option>TBD</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Priority</label>
+            <select id="opsTskPriority">
+              <option>High</option><option selected>Medium</option><option>Low</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Status</label>
+            <select id="opsTskStatus">
+              <option>To Do</option><option>In Progress</option><option>Done</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Linked Trip</label>
+            <select id="opsTskTrip"><option value="">— None —</option></select>
+          </div>
+        </div>
+        <div class="form-group"><label>Linked Project</label>
+          <select id="opsTskProject"><option value="">— None —</option></select>
+        </div>
+        <div class="form-group"><label>Notes</label><textarea id="opsTskNotes" rows="2" placeholder="Any context or follow-up details…"></textarea></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-amber" onclick="saveOpsTask()">Save Task</button>
+          <button class="btn btn-ghost" onclick="toggleOpsForm('task-form',true)">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Combined table -->
+      <div class="card">
+        <div class="card-title">All Operations Items</div>
+        <div style="overflow-x:auto"><table class="ops-table"><thead id="opsTableHead"></thead><tbody id="opsTableBody"></tbody></table></div>
+      </div>
     </div>
   </div>
 
@@ -2849,6 +3063,7 @@ const PANEL_TITLES = {
   comms:      'Communication Plan',
   crisis:     'Crisis Communications',
   policywatch: 'Policy & Risk Watch',
+  operations:  '📦 Operations',
 };
 
 function switchPanel(id, el) {
@@ -2869,6 +3084,7 @@ function switchPanel(id, el) {
   if (id === 'comms')      renderCommsPanel();
   if (id === 'crisis')     renderCrisisPanel();
   if (id === 'policywatch') renderPolicyWatch();
+  if (id === 'operations')  renderOperationsPanel();
 }
 
 // ── Toast ──
@@ -8122,228 +8338,49 @@ function renderMilestoneSection(tripId, trip) {
       </div>
     </div>
     <h4>🎯 Record a Build Milestone</h4>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Tap a milestone to auto-generate a warm donor notification draft. You can edit before marking as sent.</div>
-    <div class="milestone-btns">
-      ${MILESTONES.map(m => `<button class="milestone-btn" onclick="triggerMilestone('${escHtml(tripId)}','${m.key}','${escHtml(m.label)}','${escHtml(project.id)}')">${m.label}</button>`).join('')}
-    </div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">
-      Donors on file: ${project.donors.length ? project.donors.map(d=>`<strong>${escHtml(d.donorName)}</strong>`).join(', ') : '<em>None linked yet</em>'}
-      ${project.lastMilestone ? ` &nbsp;·&nbsp; Last: <strong>${escHtml(project.lastMilestone)}</strong> (${escHtml(project.lastMilestoneDate)})` : ''}
-    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Tap a milestone to auto-generate a warm donor notification draft. You can edit before marking 
   </div>`;
 }
 
-function triggerMilestone(tripId, milestoneKey, milestoneLabel, projectId) {
-  const project = getProjects().find(p => p.id === projectId);
-  const trip    = tripsData.find(t => t.id === tripId);
-  if (!project) { toast('Project not found.'); return; }
-  const today = new Date().toISOString().slice(0,10);
-  // Record milestone on project
-  const projects = getProjects();
-  const pidx = projects.findIndex(p => p.id === projectId);
-  if (pidx > -1) { projects[pidx].lastMilestone = milestoneLabel; projects[pidx].lastMilestoneDate = today; saveProjects(projects); }
-  // Queue a notification draft per donor
-  if (!project.donors.length) { toast('No donors linked to this project yet. Add donors in the Projects panel.'); return; }
-  project.donors.forEach(donor => {
-    const msg = buildMilestoneMessage(donor.donorName, project, milestoneLabel, trip);
-    queueDonorNotification({ donorId: donor.donorId, donorName: donor.donorName,
-      projectId: project.id, projectName: project.name,
-      triggerType: 'milestone', triggerTitle: milestoneLabel + ' — ' + project.community,
-      scheduledDate: today, message: msg });
-    console.log('[CAMINO] Queued milestone notification:', { donor: donor.donorName, milestone: milestoneLabel });
-  });
-  toast(project.donors.length + ' donor notification draft' + (project.donors.length!==1?'s':'') + ' created. Review in the Projects panel.');
-  renderTripExpandContent(tripId, 'all');
-}
-
-function buildMilestoneMessage(donorName, project, milestoneLabel, trip) {
-  // Strip emoji prefix for clean prose
-  const clean = milestoneLabel.replace(/^[\u{1F000}-\u{1FFFF}\u{2700}-\u{27BF}️⃣][️⃣]?\s*/gu,'').trim();
-  const tripLine = trip ? trip.name : 'our team in Honduras';
-  return `Dear ${donorName},
-
-We have an exciting update on the ${project.name} — the "${clean}" milestone was reached today by ${tripLine} in ${project.community}.
-
-Your generosity made this moment possible. The family who will call this place home took one step closer to moving in today, and it's because of people like you who chose to invest in something real and lasting.
-
-${project.lastMilestone && project.lastMilestone !== milestoneLabel ? `The last update we shared with you was "${project.lastMilestone.replace(/^[\u{1F000}-\u{1FFFF}\u{2700}-\u{27BF}️⃣][️⃣]?\s*/gu,'').trim()}" — and now we're here.
-
-` : ''}We'll have photos for you soon from ${project.community}, ${project.region}.
-
-Thank you for making this possible. Your gift is not just building walls — it's building a future for a family in Honduras.
-
-With deep gratitude,
-Walker & the CAMINO Team`;
-}
-
 // ═══════════════════════════════════════════════════════════════════
-// DONOR NOTIFICATION QUEUE
+// NOTIFICATION HELPERS (donor notifications for project milestones)
 // ═══════════════════════════════════════════════════════════════════
-
 function getDonorNotifications() {
-  try {
-    const raw = localStorage.getItem('camino_donor_notifications');
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return seedDonorNotifications();
+  try { return JSON.parse(localStorage.getItem('camino_donor_notifs') || '[]'); } catch { return []; }
 }
-function saveDonorNotifications(list) { localStorage.setItem('camino_donor_notifications', JSON.stringify(list)); }
-
-function seedDonorNotifications() {
-  const seed = [
-    {
-      id: 'dn_seed_001',
-      donorId: 'donor_grace_cc', donorName: 'Grace Community Church',
-      projectId: 'proj_001', projectName: 'Colonia Suyapa House Build',
-      triggerType: 'milestone', triggerTitle: '🪨 Foundation Poured — Colonia Suyapa',
-      scheduledDate: '2026-07-03',
-      message: `Dear Grace Community Church,
-
-We have an exciting update on the Colonia Suyapa House Build — the foundation was poured today by our July Culpeper team on the ground.
-
-Your $4,000 gift helped break ground on this project, and today that investment became concrete — literally. The family of five who will soon call this home watched our team work with grateful eyes.
-
-We'll have photos coming your way from Colonia Suyapa, Tegucigalpa very soon.
-
-Thank you for making this possible. Your gift is not just building walls — it's building a future for a family in Honduras.
-
-With deep gratitude,
-Walker & the CAMINO Team`,
-      status: 'Pending', createdAt: '2026-07-03T18:00:00Z',
-    },
-    {
-      id: 'dn_seed_002',
-      donorId: 'donor_rodriguez_ff', donorName: 'Rodriguez Family Fund',
-      projectId: 'proj_001', projectName: 'Colonia Suyapa House Build',
-      triggerType: 'post', triggerTitle: 'July 3 — Build Day 3 Update (Social Post)',
-      scheduledDate: '2026-07-03',
-      message: `Dear Rodriguez Family Fund,
-
-Day 3 of the build in Colonia Suyapa and the energy on-site is unlike anything we've seen. Your $1,500 contribution is visible in every block being laid, every beam being set.
-
-We posted new photos from the field today and we wanted you to see them with context — because this is your project as much as it is ours. The family checks in each afternoon. The kids run up to the team. It is a privilege to be there.
-
-More updates soon from Tegucigalpa.
-
-With love from Honduras,
-Walker & the CAMINO Team`,
-      status: 'Pending', createdAt: '2026-07-03T19:00:00Z',
-    },
-  ];
-  localStorage.setItem('camino_donor_notifications', JSON.stringify(seed));
-  return seed;
-}
-
-function queueDonorNotification(opts) {
-  const list = getDonorNotifications();
-  list.unshift({
-    id:            'dn_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
-    donorId:       opts.donorId,
-    donorName:     opts.donorName,
-    projectId:     opts.projectId,
-    projectName:   opts.projectName,
-    triggerType:   opts.triggerType,
-    triggerTitle:  opts.triggerTitle,
-    scheduledDate: opts.scheduledDate,
-    message:       opts.message,
-    status:        'Pending',
-    createdAt:     new Date().toISOString(),
-  });
-  saveDonorNotifications(list);
-}
-
-function queuePostNotifications(tripId, caption, scheduledDate) {
-  const trip = (tripsData||[]).find(t => t.id === tripId);
-  if (!trip?.linkedProjectId) return;
-  const project = getProjects().find(p => p.id === trip.linkedProjectId);
-  if (!project) return;
-  const preview = caption.length > 140 ? caption.slice(0,140) + '…' : caption;
-  project.donors.forEach(donor => {
-    const msg = `Dear ${donor.donorName},
-
-We wanted to share a field update directly with you from ${project.community}.
-
-The ${trip.name} team has posted new photos and a progress note from the ${project.name} site — and we thought you should see it first. Because this is your project as much as ours.
-
-"${preview}"
-
-Your investment is writing this story. We're grateful every single day for your partnership.
-
-With love from Honduras,
-Walker & the CAMINO Team`;
-    queueDonorNotification({ donorId: donor.donorId, donorName: donor.donorName,
-      projectId: project.id, projectName: project.name,
-      triggerType: 'post', triggerTitle: 'Social post — ' + scheduledDate,
-      scheduledDate, message: msg });
-  });
-  toast('Donor notifications queued for ' + project.donors.length + ' linked donor' + (project.donors.length!==1?'s':'') + '.');
-}
-
-let _notifFilter = 'all';
+function saveDonorNotifications(list) { localStorage.setItem('camino_donor_notifs', JSON.stringify(list)); }
 
 function renderNotificationQueue(filter) {
-  _notifFilter = filter || _notifFilter;
+  const list = getDonorNotifications();
   const el = document.getElementById('notifQueueList');
   if (!el) return;
-  let list = getDonorNotifications();
-  if (_notifFilter !== 'all') list = list.filter(n => n.status === _notifFilter);
-  if (!list.length) {
-    el.innerHTML = `<p style="color:var(--muted);font-size:13px;padding:8px 0">No notifications${_notifFilter !== 'all' ? ' with status "' + _notifFilter + '"' : ''} yet.</p>`;
+  const filtered = filter && filter !== 'all' ? list.filter(n => n.status === filter) : list;
+  if (!filtered.length) {
+    el.innerHTML = `<p style="color:var(--muted);font-size:13px">No notifications${filter && filter!=='all' ? ' with status "'+filter+'"' : ''}.</p>`;
     return;
   }
-  const typeIcon = { milestone: '🎯', post: '📸', manual: '✉️' };
-  el.innerHTML = list.map(n => {
-    const cls = { Pending:'', Sent:' nq-sent', Skipped:' nq-skipped' }[n.status] || '';
-    return `
-    <div class="notif-queue-card${cls}" id="nqc-${escHtml(n.id)}">
+  el.innerHTML = filtered.map(n => `
+    <div class="notif-queue-card nq-${n.status.toLowerCase()}">
       <div class="nq-header">
-        <div>
-          <div class="nq-donor">${escHtml(n.donorName)}</div>
-          <div class="nq-project">🏗️ ${escHtml(n.projectName)}</div>
-        </div>
-        <span class="nq-status-badge nqs-${escHtml(n.status)}">${escHtml(n.status)}</span>
+        <div><div class="nq-donor">${escHtml(n.donorName)}</div>
+          <div class="nq-project">${escHtml(n.projectName)}</div>
+          <div class="nq-trigger">${escHtml(n.trigger || '')}</div></div>
+        <span class="nq-status-badge nqs-${n.status}">${escHtml(n.status)}</span>
       </div>
-      <div class="nq-trigger">${typeIcon[n.triggerType]||'📩'} ${escHtml(n.triggerTitle)} &nbsp;·&nbsp; Send date: <strong>${escHtml(n.scheduledDate)}</strong></div>
-      <div class="nq-message-preview" id="nqprev-${escHtml(n.id)}">${escHtml(n.message)}</div>
-      <textarea class="nq-message-edit" id="nqedit-${escHtml(n.id)}" style="display:none">${escHtml(n.message)}</textarea>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center">
-        ${n.status === 'Pending' ? `
-          <button class="btn btn-primary btn-sm" onclick="markNotifSent('${escHtml(n.id)}')">✅ Mark Sent</button>
-          <button class="btn btn-ghost btn-sm" onclick="toggleNotifEdit('${escHtml(n.id)}')">✏️ Edit Message</button>
-          <button class="btn btn-ghost btn-sm" onclick="markNotifSkipped('${escHtml(n.id)}')">⏭ Skip</button>
-        ` : ''}
-        ${n.status === 'Sent'    ? `<span style="font-size:11px;color:#166534;font-weight:600">✔ Sent ${escHtml(n.scheduledDate)}</span>` : ''}
-        ${n.status === 'Skipped' ? `<button class="btn btn-ghost btn-sm" onclick="restoreNotif('${escHtml(n.id)}')">↩ Restore</button>` : ''}
-        <button class="btn btn-ghost btn-sm btn-icon" style="margin-left:auto" onclick="deleteNotif('${escHtml(n.id)}')" title="Delete">🗑</button>
+      <div class="nq-message-preview">${escHtml(n.message)}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${n.status==='Pending'?`<button class="btn btn-primary btn-sm" onclick="markNotifSent('${n.id}')">✓ Mark Sent</button>`:''}
+        ${n.status==='Pending'?`<button class="btn btn-ghost btn-sm" onclick="markNotifSkipped('${n.id}')">Skip</button>`:''}
+        ${n.status!=='Pending'?`<button class="btn btn-ghost btn-sm" onclick="restoreNotif('${n.id}')">Restore</button>`:''}
+        <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteNotif('${n.id}')">Delete</button>
       </div>
-    </div>`;
-  }).join('');
-}
-
-function toggleNotifEdit(id) {
-  const prev = document.getElementById('nqprev-' + id);
-  const edit = document.getElementById('nqedit-' + id);
-  if (!prev || !edit) return;
-  const isEditing = edit.style.display !== 'none';
-  if (isEditing) {
-    const list = getDonorNotifications();
-    const idx  = list.findIndex(n => n.id === id);
-    if (idx > -1) { list[idx].message = edit.value; saveDonorNotifications(list); }
-    prev.textContent   = edit.value;
-    edit.style.display = 'none';
-    prev.style.display = '';
-  } else {
-    edit.style.display = '';
-    prev.style.display = 'none';
-    edit.focus();
-  }
+    </div>`).join('');
 }
 
 function markNotifSent(id) {
   const list = getDonorNotifications(), idx = list.findIndex(n => n.id === id);
   if (idx > -1) { list[idx].status = 'Sent'; saveDonorNotifications(list); }
-  console.log('[CAMINO] Notification marked Sent:', id);
-  renderNotificationQueue(); toast('Notification marked as sent.');
+  renderNotificationQueue(); toast('Notification marked Sent.');
 }
 function markNotifSkipped(id) {
   const list = getDonorNotifications(), idx = list.findIndex(n => n.id === id);
@@ -8366,92 +8403,333 @@ function openNotifyDonorsModal(tripId) {
   const project = trip?.linkedProjectId ? getProjects().find(p => p.id === trip.linkedProjectId) : null;
   if (!project) { toast('No project linked to this trip. Edit the trip to link one.'); return; }
   if (!project.donors.length) { toast('No donors are linked to "' + project.name + '" yet. Add them in the Projects panel.'); return; }
-  if (confirm(`Queue update notifications for all ${project.donors.length} donor(s) linked to "${project.name}"?\n\nThis creates editable drafts in the Projects panel — nothing sends until you click "Mark Sent".`)) {
-    const today = new Date().toISOString().slice(0,10);
-    project.donors.forEach(donor => {
-      queueDonorNotification({ donorId: donor.donorId, donorName: donor.donorName,
+  if (confirm('Queue update notifications for all ' + project.donors.length + ' donor(s) linked to "' + project.name + '"?\n\nThis creates drafts in the Pending Notifications queue.')) {
+    const notifs = getDonorNotifications();
+    project.donors.forEach(d => {
+      notifs.push({
+        id: 'notif_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+        donorId: d.donorId, donorName: d.donorName,
         projectId: project.id, projectName: project.name,
-        triggerType: 'manual', triggerTitle: 'Manual update — ' + trip.name,
-        scheduledDate: today,
-        message: buildMilestoneMessage(donor.donorName, project, '📸 Latest Update', trip) });
+        tripId, status: 'Pending',
+        trigger: 'Manual queue from Operations',
+        message: 'Dear ' + d.donorName + ',\n\nWe wanted to share an update on the ' + project.name + ' in ' + project.community + ', ' + project.region + '. Work is progressing thanks to your generous support.\n\nWith gratitude,\nWalker & the CAMINO Team',
+      });
     });
-    toast(project.donors.length + ' notification draft' + (project.donors.length!==1?'s':'') + ' created. Review in the Projects panel.');
+    saveDonorNotifications(notifs);
+    renderNotificationQueue();
+    toast('Notifications queued for ' + project.donors.length + ' donor(s).');
   }
 }
 
-function updatePostNotifyPreview() {
-  const tripId  = document.getElementById('postTripId')?.value;
-  const checked = document.getElementById('postNotifyDonors')?.checked;
-  const preview = document.getElementById('postNotifyPreview');
-  if (!preview) return;
-  if (checked && tripId) {
-    const trip    = (tripsData||[]).find(t => t.id === tripId);
-    const project = trip?.linkedProjectId ? getProjects().find(p => p.id === trip.linkedProjectId) : null;
-    preview.style.display = '';
-    if (project && project.donors.length) {
-      preview.textContent = '📬 Will notify: ' + project.donors.map(d => d.donorName).join(', ') + ' — "' + project.name + '"';
-    } else {
-      preview.style.background = '#fff7ed';
-      preview.style.borderColor = 'var(--amber)';
-      preview.style.color = 'var(--amber-dark)';
-      preview.textContent = '⚠️ This trip has no linked project with donors. Link a project via Mission Trips first.';
+// ═══════════════════════════════════════════════════════════════════
+// OPERATIONS CALENDAR — logistics, material orders, tasks
+// ═══════════════════════════════════════════════════════════════════
+
+const OPS_ORDERS_SEED = [
+  { id:'ord_001', item:'Portland Cement (50 bags)', vendor:'Ferretería López', quantity:50, unit:'bags',
+    estimatedCostCents:62500, orderDate:'2026-06-15', expectedDelivery:'2026-06-28', actualDelivery:'',
+    status:'Ordered', linkedTripId:'culpeper-jul-2026', linkedProjectId:'proj_001',
+    customsStatus:'', notes:'Standard-grade Type I. López confirmed availability.' },
+  { id:'ord_002', item:'Lumber 2×4×8 (30 pcs)', vendor:'Maderas del Norte', quantity:30, unit:'pcs',
+    estimatedCostCents:24000, orderDate:'2026-06-18', expectedDelivery:'2026-07-02', actualDelivery:'',
+    status:'In Transit', linkedTripId:'culpeper-jul-2026', linkedProjectId:'proj_001',
+    customsStatus:'', notes:'Dry pine. In transit from San Pedro Sula warehouse.' },
+  { id:'ord_003', item:'Roofing sheets (20 pcs)', vendor:'Distribuidora Sula', quantity:20, unit:'pcs',
+    estimatedCostCents:38000, orderDate:'2026-06-10', expectedDelivery:'2026-06-25', actualDelivery:'2026-06-24',
+    status:'Delivered', linkedTripId:'culpeper-jul-2026', linkedProjectId:'proj_001',
+    customsStatus:'', notes:'Zinc corrugated sheets. Delivered early, stored on-site.' },
+];
+
+const OPS_TASKS_SEED = [
+  { id:'tsk_001', title:'Confirm team housing in Colonia Suyapa', dueDate:'2026-06-25',
+    assignedTo:'Walker', linkedTripId:'culpeper-jul-2026', linkedProjectId:'proj_001',
+    priority:'High', status:'In Progress', notes:'Contact Pastor Reyes to confirm beds for 12 volunteers.' },
+  { id:'tsk_002', title:'Arrange airport pickup from Tegucigalpa (Toncontín)', dueDate:'2026-06-28',
+    assignedTo:'Seiny', linkedTripId:'culpeper-jul-2026', linkedProjectId:'',
+    priority:'High', status:'To Do', notes:'Need 2 vans. Check with local contact Marcos.' },
+  { id:'tsk_003', title:'Contact community leader Señor Mejía', dueDate:'2026-06-30',
+    assignedTo:'Walker', linkedTripId:'culpeper-jul-2026', linkedProjectId:'proj_001',
+    priority:'Medium', status:'To Do', notes:'Introduce team, confirm build site access and schedule.' },
+  { id:'tsk_004', title:'Purchase hand tools at Home Center Honduras', dueDate:'2026-07-01',
+    assignedTo:'Seiny', linkedTripId:'culpeper-jul-2026', linkedProjectId:'proj_001',
+    priority:'Medium', status:'Done', notes:'Hammers, levels, measuring tape (×4). Receipt filed.' },
+];
+
+function getOpsOrders() {
+  try { const r=localStorage.getItem('camino_ops_orders'); if(r) return JSON.parse(r); } catch {}
+  const s=OPS_ORDERS_SEED.map(o=>({...o})); localStorage.setItem('camino_ops_orders',JSON.stringify(s)); return s;
+}
+function saveOpsOrders(list) { localStorage.setItem('camino_ops_orders',JSON.stringify(list)); }
+function getOpsTasks() {
+  try { const r=localStorage.getItem('camino_ops_tasks'); if(r) return JSON.parse(r); } catch {}
+  const s=OPS_TASKS_SEED.map(t=>({...t})); localStorage.setItem('camino_ops_tasks',JSON.stringify(s)); return s;
+}
+function saveOpsTasks(list) { localStorage.setItem('camino_ops_tasks',JSON.stringify(list)); }
+
+let opsCalYear=null, opsCalMonth=null, opsSelectedDay=null;
+
+function renderOperationsPanel() {
+  const now=new Date();
+  if(opsCalYear===null){opsCalYear=now.getFullYear();opsCalMonth=now.getMonth();}
+  renderOpsCalendar(); renderOpsGantt(); renderOpsTable(); populateOpsFormSelects();
+}
+
+function switchOpsTab(id,el) {
+  document.querySelectorAll('.ops-sub-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.ops-pane').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ops-pane-'+id).classList.add('active');
+  if(id==='tasksorders'){renderOpsTable();populateOpsFormSelects();}
+}
+
+function opsChangeMonth(dir) {
+  opsCalMonth+=dir;
+  if(opsCalMonth>11){opsCalMonth=0;opsCalYear++;}
+  if(opsCalMonth<0){opsCalMonth=11;opsCalYear--;}
+  renderOpsCalendar();
+}
+function opsGoToday(){const n=new Date();opsCalYear=n.getFullYear();opsCalMonth=n.getMonth();renderOpsCalendar();}
+
+function buildOpsEventMap() {
+  const orders=getOpsOrders(), tasks=getOpsTasks(), map={};
+  const addEv=(ds,ev)=>{if(!ds)return;(map[ds]=map[ds]||[]).push(ev);};
+  const MNAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  (tripsData||[]).forEach(tr=>{
+    const m=(tr.dates||'').match(/(\w+)\s+(\d+)[–\-](\d+),\s*(\d{4})/);
+    if(!m)return;
+    const mo=MNAMES.indexOf(m[1]); if(mo<0)return;
+    const yr=parseInt(m[4]),s=parseInt(m[2]),e=parseInt(m[3]);
+    for(let d=s;d<=e;d++){
+      const ds=yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+      addEv(ds,{type:'trip',label:tr.name,color:'#1d4ed8'});
     }
-  } else {
-    preview.style.display = 'none';
+  });
+  orders.forEach(o=>{
+    if(o.orderDate)        addEv(o.orderDate,       {type:'order',label:o.item+' — ordered',color:'#c2410c'});
+    if(o.expectedDelivery) addEv(o.expectedDelivery,{type:'order',label:o.item+' (exp. delivery)',color:'#c2410c'});
+    if(o.actualDelivery)   addEv(o.actualDelivery,  {type:'order',label:o.item+' ✓ delivered',color:'#059669'});
+  });
+  tasks.forEach(t=>{
+    if(!t.dueDate)return;
+    addEv(t.dueDate,{type:'task',label:(t.status==='Done'?'✓ ':'')+t.title,color:t.status==='Done'?'#9ca3af':'#15803d'});
+  });
+  return map;
+}
+
+function renderOpsCalendar() {
+  const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('opsCalTitle').textContent=MONTHS[opsCalMonth]+' '+opsCalYear;
+  const today=new Date(), evMap=buildOpsEventMap();
+  const grid=document.getElementById('opsCalGrid');
+  const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=DAYS.map(d=>`<div class="cal-day-header">${d}</div>`).join('');
+  const first=new Date(opsCalYear,opsCalMonth,1).getDay();
+  const dim=new Date(opsCalYear,opsCalMonth+1,0).getDate();
+  for(let i=0;i<first;i++) html+=`<div class="cal-day cal-empty"></div>`;
+  for(let d=1;d<=dim;d++){
+    const ds=opsCalYear+'-'+String(opsCalMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const isToday=d===today.getDate()&&opsCalMonth===today.getMonth()&&opsCalYear===today.getFullYear();
+    const isSel=ds===opsSelectedDay;
+    const evs=evMap[ds]||[];
+    const colors=[...new Set(evs.map(e=>e.color))].slice(0,4);
+    const dots=colors.map(c=>`<span class="cal-dot" style="background:${c}"></span>`).join('');
+    const cls=['cal-day',isToday?'cal-today':'',isSel?'cal-selected':''].filter(Boolean).join(' ');
+    html+=`<div class="${cls}" onclick="opsSelectDay('${ds}')"><div class="cal-day__num">${d}</div><div>${dots}${evs.length>4?`<span style="font-size:9px;color:var(--muted)">+${evs.length-4}</span>`:''}</div></div>`;
   }
+  const rem=(first+dim)%7===0?0:7-(first+dim)%7;
+  for(let i=0;i<rem;i++) html+=`<div class="cal-day cal-empty"></div>`;
+  grid.innerHTML=html;
+  const det=document.getElementById('opsDayDetail');
+  if(opsSelectedDay){det.style.display='block';opsShowDayDetail(opsSelectedDay,evMap[opsSelectedDay]||[]);}
+  else det.style.display='none';
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// CRM — PROJECT STEWARDSHIP SUMMARY
-// ═══════════════════════════════════════════════════════════════════
+function opsSelectDay(ds){opsSelectedDay=(opsSelectedDay===ds)?null:ds;renderOpsCalendar();}
 
-function buildProjectUpdatesSummary() {
-  const active = getProjects().filter(p => p.status !== 'Complete');
-  if (!active.length) return '';
-  const notifs = getDonorNotifications();
-  const rows = active.map(p => {
-    const sent    = notifs.filter(n => n.projectId === p.id && n.status === 'Sent').sort((a,b) => b.createdAt.localeCompare(a.createdAt))[0];
-    const next    = notifs.filter(n => n.projectId === p.id && n.status === 'Pending').sort((a,b) => a.scheduledDate.localeCompare(b.scheduledDate))[0];
-    return `
-    <div class="proj-update-row">
-      <div class="proj-update-dot"></div>
-      <div class="proj-update-info">
-        <strong>${escHtml(p.name)}</strong> <span class="proj-status-pill ps-${escHtml(p.status)}" style="font-size:9px">${escHtml(p.status)}</span><br>
-        <span style="color:var(--muted)">Last update sent: ${sent ? escHtml(sent.scheduledDate) : 'None yet'}</span>
-        &nbsp;·&nbsp;
-        <span style="color:${next?'var(--amber-dark)':'var(--teal)'};font-weight:600">${next ? '📬 Next: ' + escHtml(next.scheduledDate) : '✓ Queue clear'}</span>
-      </div>
-    </div>`;
+function opsShowDayDetail(ds,evs) {
+  const title=document.getElementById('opsDayDetailTitle');
+  const body=document.getElementById('opsDayDetailBody');
+  title.textContent=new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  if(!evs.length){body.innerHTML='<p style="color:var(--muted);font-size:13px;margin-top:6px">No events on this day.</p>';return;}
+  const lbl={trip:'Trip',order:'Order',task:'Task'};
+  const cls={trip:'oe-trip',order:'oe-order',task:'oe-task'};
+  body.innerHTML=evs.map(e=>`<div class="ops-day-event"><span class="ops-event-dot" style="background:${e.color}"></span><span class="ops-event-type ${cls[e.type]||'oe-task'}">${lbl[e.type]||e.type}</span><span style="flex:1;line-height:1.4">${escHtml(e.label)}</span></div>`).join('');
+}
+
+function renderOpsGantt() {
+  const wrap=document.getElementById('opsGanttWrap'); if(!wrap)return;
+  const orders=getOpsOrders(), trips=tripsData||[];
+  if(!trips.length){wrap.innerHTML='<p style="color:var(--muted);font-size:13px">No trip data loaded. Visit Mission Trips first.</p>';return;}
+  const MNAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function parseDates(tr){
+    const m=(tr.dates||'').match(/(\w+)\s+(\d+)[–\-](\d+),\s*(\d{4})/);
+    if(!m)return null;
+    const mo=MNAMES.indexOf(m[1]); if(mo<0)return null;
+    return{start:new Date(parseInt(m[4]),mo,parseInt(m[2])),end:new Date(parseInt(m[4]),mo,parseInt(m[3]))};
+  }
+  const bar=(cls,txt)=>`<div class="gantt-bar ${cls}">${txt}</div>`;
+  const dash=()=>`<span style="color:#9ca3af;font-size:11px">—</span>`;
+  let html=`<table class="gantt-table"><thead><tr><th style="min-width:170px">Trip</th><th>Prep</th><th>Materials Ordered</th><th>Delivered</th><th>Team Arrives</th><th>Active Build</th><th>Departs</th><th>Follow-up</th></tr></thead><tbody>`;
+  trips.slice(0,7).forEach(tr=>{
+    const d=parseDates(tr);
+    const to=orders.filter(o=>o.linkedTripId===tr.id);
+    const oc=to.filter(o=>['Ordered','In Transit','Delivered'].includes(o.status)).length;
+    const dc=to.filter(o=>o.status==='Delivered').length;
+    const fmt=dt=>dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    html+=`<tr><td style="font-weight:600;font-size:12px;line-height:1.4">${escHtml(tr.name)}<br><span style="font-size:10px;color:var(--muted);font-weight:400">${escHtml(tr.dates||'')}</span></td><td>${d?bar('gb-prep','Prep'):dash()}</td><td>${to.length?bar('gb-ordered',oc+'/'+to.length+' items'):dash()}</td><td>${dc?bar('gb-delivery',dc+' delivered'):dash()}</td><td>${d?bar('gb-team',fmt(d.start)):dash()}</td><td>${d?bar('gb-build',fmt(d.start)+'–'+fmt(d.end)):dash()}</td><td>${d?bar('gb-team',fmt(d.end)):dash()}</td><td>${bar('gb-followup','+2 wk')}</td></tr>`;
+  });
+  wrap.innerHTML=html+'</tbody></table>';
+}
+
+function renderOpsTable() {
+  const ft=(document.getElementById('opsFilterType')||{}).value||'all';
+  const fs=(document.getElementById('opsFilterStatus')||{}).value||'all';
+  const orders=getOpsOrders(), tasks=getOpsTasks();
+  let rows=[];
+  if(ft!=='tasks') orders.forEach(o=>{
+    if(fs!=='all'&&o.status!==fs)return;
+    rows.push({_t:'order',_id:o.id,_d:o.expectedDelivery||o.orderDate||'',item:o.item,sec:o.vendor||'—',date:o.expectedDelivery||o.orderDate||'—',status:o.status,priority:''});
+  });
+  if(ft!=='orders') tasks.forEach(t=>{
+    if(fs!=='all'&&t.status!==fs)return;
+    rows.push({_t:'task',_id:t.id,_d:t.dueDate||'',item:t.title,sec:t.assignedTo||'—',date:t.dueDate||'—',status:t.status,priority:t.priority});
+  });
+  rows.sort((a,b)=>a._d.localeCompare(b._d));
+  const thead=document.getElementById('opsTableHead');
+  const tbody=document.getElementById('opsTableBody');
+  if(!thead||!tbody)return;
+  thead.innerHTML=`<tr><th>Type</th><th>Item / Task</th><th>Vendor / Assigned</th><th>Date</th><th>Status</th><th>Priority</th><th>Actions</th></tr>`;
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">No items match the selected filters.</td></tr>`;return;}
+  const sCls=(t,s)=>t==='order'?'ord-'+s.replace(/\s/g,''):'tst-'+s.replace(/\s/g,'');
+  tbody.innerHTML=rows.map(r=>{
+    const ef=r._t==='order'?`editOpsOrder('${r._id}')`:`editOpsTask('${r._id}')`;
+    const df=r._t==='order'?`deleteOpsOrder('${r._id}')`:`deleteOpsTask('${r._id}')`;
+    const ph=r.priority?`<span class="priority-badge tpri-${r.priority}">${escHtml(r.priority)}</span>`:'—';
+    return `<tr><td><span class="ops-event-type ${r._t==='order'?'oe-order':'oe-task'}">${r._t==='order'?'Order':'Task'}</span></td><td style="font-weight:600;max-width:220px;word-break:break-word">${escHtml(r.item)}</td><td style="color:var(--muted);font-size:12px">${escHtml(r.sec)}</td><td style="white-space:nowrap;color:var(--muted);font-size:12px">${escHtml(r.date)}</td><td><span class="status-pill ${sCls(r._t,r.status)}">${escHtml(r.status)}</span></td><td>${ph}</td><td style="white-space:nowrap"><button class="btn btn-ghost btn-sm" onclick="${ef}">Edit</button> <button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:var(--red)" onclick="${df}">✕</button></td></tr>`;
   }).join('');
-  return `
-  <div style="border-top:1px solid #fde68a;padding-top:12px;margin-top:12px">
-    <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">🏗️ Active Project Stewardship</div>
-    <div class="proj-update-section">
-      <h5>Project Updates</h5>
-      ${rows}
-    </div>
-  </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// SEED: Wire July 2026 Culpeper trip → proj_001 on first load
-// ═══════════════════════════════════════════════════════════════════
-(function seedCulpeperLink() {
-  try {
-    const raw = localStorage.getItem('camino_trips');
-    if (!raw) return;
-    const trips = JSON.parse(raw);
-    let changed = false;
-    trips.forEach(t => {
-      if ((t.id === 'culpeper-jul-2026' || (t.name||'').toLowerCase().includes('culpeper')) && !t.linkedProjectId) {
-        t.linkedProjectId = 'proj_001';
-        changed = true;
-      }
-    });
-    if (changed) localStorage.setItem('camino_trips', JSON.stringify(trips));
-  } catch {}
-})();
+function toggleOpsForm(id,forceClose) {
+  const el=document.getElementById('ops-'+id); if(!el)return;
+  if(forceClose){el.classList.remove('open');return;}
+  const open=el.classList.contains('open');
+  document.querySelectorAll('.ops-form-collapsible').forEach(f=>f.classList.remove('open'));
+  if(!open){el.classList.add('open');populateOpsFormSelects();}
+}
 
-</script>
-</body>
-</html>
+function populateOpsFormSelects() {
+  const trips=tripsData||[], projects=(typeof getProjects==='function')?getProjects():[];
+  const tOpts=`<option value="">— None —</option>`+trips.map(t=>`<option value="${escHtml(t.id)}">${escHtml(t.name)}</option>`).join('');
+  const pOpts=`<option value="">— None —</option>`+projects.map(p=>`<option value="${escHtml(p.id)}">${escHtml(p.name)}</option>`).join('');
+  ['opsOrdTrip','opsTskTrip'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=tOpts;});
+  ['opsOrdProject','opsTskProject'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=pOpts;});
+}
+
+function saveOpsOrder() {
+  const editId=document.getElementById('opsOrderEditId').value;
+  const item=document.getElementById('opsOrdItem').value.trim();
+  if(!item){toast('Item description is required.');return;}
+  const o={id:editId||'ord_'+Date.now(),item,
+    vendor:document.getElementById('opsOrdVendor').value.trim(),
+    quantity:parseFloat(document.getElementById('opsOrdQty').value)||0,
+    unit:document.getElementById('opsOrdUnit').value.trim(),
+    estimatedCostCents:Math.round((parseFloat(document.getElementById('opsOrdCost').value)||0)*100),
+    orderDate:document.getElementById('opsOrdOrderDate').value,
+    expectedDelivery:document.getElementById('opsOrdExpDel').value,
+    actualDelivery:document.getElementById('opsOrdActDel').value,
+    status:document.getElementById('opsOrdStatus').value,
+    linkedTripId:document.getElementById('opsOrdTrip').value,
+    linkedProjectId:document.getElementById('opsOrdProject').value,
+    customsStatus:document.getElementById('opsOrdCustoms').value.trim(),
+    notes:document.getElementById('opsOrdNotes').value.trim(),
+  };
+  const list=getOpsOrders(), idx=list.findIndex(x=>x.id===o.id);
+  if(idx>-1)list[idx]=o; else list.push(o);
+  saveOpsOrders(list); toggleOpsForm('order-form',true); clearOpsOrderForm();
+  renderOpsCalendar();renderOpsGantt();renderOpsTable();
+  toast(editId?'Order updated.':'Order added.');
+}
+function clearOpsOrderForm() {
+  ['opsOrderEditId','opsOrdItem','opsOrdVendor','opsOrdQty','opsOrdUnit','opsOrdCost','opsOrdOrderDate','opsOrdExpDel','opsOrdActDel','opsOrdCustoms','opsOrdNotes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const st=document.getElementById('opsOrdStatus');if(st)st.value='Pending';
+  const ft=document.getElementById('opsOrderFormTitle');if(ft)ft.textContent='New Material Order';
+}
+function editOpsOrder(id) {
+  const o=getOpsOrders().find(x=>x.id===id); if(!o)return;
+  populateOpsFormSelects();
+  document.getElementById('opsOrderEditId').value=o.id;
+  document.getElementById('opsOrdItem').value=o.item||'';
+  document.getElementById('opsOrdVendor').value=o.vendor||'';
+  document.getElementById('opsOrdQty').value=o.quantity||'';
+  document.getElementById('opsOrdUnit').value=o.unit||'';
+  document.getElementById('opsOrdCost').value=o.estimatedCostCents?(o.estimatedCostCents/100).toFixed(2):'';
+  document.getElementById('opsOrdOrderDate').value=o.orderDate||'';
+  document.getElementById('opsOrdExpDel').value=o.expectedDelivery||'';
+  document.getElementById('opsOrdActDel').value=o.actualDelivery||'';
+  document.getElementById('opsOrdStatus').value=o.status||'Pending';
+  document.getElementById('opsOrdTrip').value=o.linkedTripId||'';
+  document.getElementById('opsOrdProject').value=o.linkedProjectId||'';
+  document.getElementById('opsOrdCustoms').value=o.customsStatus||'';
+  document.getElementById('opsOrdNotes').value=o.notes||'';
+  document.getElementById('opsOrderFormTitle').textContent='Edit Material Order';
+  document.querySelectorAll('.ops-form-collapsible').forEach(f=>f.classList.remove('open'));
+  document.getElementById('ops-order-form').classList.add('open');
+  const tab=document.querySelector('[onclick*="switchOpsTab(\'tasksorders"]');
+  if(tab&&!document.getElementById('ops-pane-tasksorders').classList.contains('active'))switchOpsTab('tasksorders',tab);
+  document.getElementById('ops-order-form').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function deleteOpsOrder(id) {
+  if(!confirm('Delete this material order?'))return;
+  saveOpsOrders(getOpsOrders().filter(o=>o.id!==id));
+  renderOpsCalendar();renderOpsGantt();renderOpsTable(); toast('Order deleted.');
+}
+
+function saveOpsTask() {
+  const editId=document.getElementById('opsTaskEditId').value;
+  const title=document.getElementById('opsTskTitle').value.trim();
+  if(!title){toast('Task title is required.');return;}
+  const t={id:editId||'tsk_'+Date.now(),title,
+    dueDate:document.getElementById('opsTskDue').value,
+    assignedTo:document.getElementById('opsTskAssigned').value,
+    linkedTripId:document.getElementById('opsTskTrip').value,
+    linkedProjectId:document.getElementById('opsTskProject').value,
+    priority:document.getElementById('opsTskPriority').value,
+    status:document.getElementById('opsTskStatus').value,
+    notes:document.getElementById('opsTskNotes').value.trim(),
+  };
+  const list=getOpsTasks(), idx=list.findIndex(x=>x.id===t.id);
+  if(idx>-1)list[idx]=t; else list.push(t);
+  saveOpsTasks(list); toggleOpsForm('task-form',true); clearOpsTaskForm();
+  renderOpsCalendar();renderOpsTable();
+  toast(editId?'Task updated.':'Task added.');
+}
+function clearOpsTaskForm() {
+  ['opsTaskEditId','opsTskTitle','opsTskDue','opsTskNotes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const pr=document.getElementById('opsTskPriority');if(pr)pr.value='Medium';
+  const st=document.getElementById('opsTskStatus');if(st)st.value='To Do';
+  const ft=document.getElementById('opsTaskFormTitle');if(ft)ft.textContent='New Task / Action Item';
+}
+function editOpsTask(id) {
+  const t=getOpsTasks().find(x=>x.id===id); if(!t)return;
+  populateOpsFormSelects();
+  document.getElementById('opsTaskEditId').value=t.id;
+  document.getElementById('opsTskTitle').value=t.title||'';
+  document.getElementById('opsTskDue').value=t.dueDate||'';
+  document.getElementById('opsTskAssigned').value=t.assignedTo||'Walker';
+  document.getElementById('opsTskTrip').value=t.linkedTripId||'';
+  document.getElementById('opsTskProject').value=t.linkedProjectId||'';
+  document.getElementById('opsTskPriority').value=t.priority||'Medium';
+  document.getElementById('opsTskStatus').value=t.status||'To Do';
+  document.getElementById('opsTskNotes').value=t.notes||'';
+  document.getElementById('opsTaskFormTitle').textContent='Edit Task';
+  document.querySelectorAll('.ops-form-collapsible').forEach(f=>f.classList.remove('open'));
+  document.getElementById('ops-task-form').classList.add('open');
+  const tab=document.querySelector('[onclick*="switchOpsTab(\'tasksorders"]');
+  if(tab&&!document.getElementById('ops-pane-tasksorders').classList.contains('active'))switchOpsTab('tasksorders',tab);
+  document.getElementById('ops-task-form').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function deleteOpsTask(id) {
+  if(!confirm('Delete this task?'))return;
+  saveOpsTasks(getOpsTasks().filter(t=>t.id!==id));
+  renderOpsCalendar();renderOpsTable(); toast('Task deleted.');
+}
