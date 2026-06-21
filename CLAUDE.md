@@ -38,6 +38,24 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Donor CRM priority flagging (complete)
+- What changed:
+  - **admin/index.html**: Full priority donor flagging system in Donor CRM panel
+    - 5 tiers: 🔴 Major (lifetime $10k+ OR single gift $2.5k+), 🟠 Key (lifetime $2.5k–$9.9k OR monthly recurring), 🟡 Active (gave last 12mo, lifetime $500+), ⚪ Lapsed (last gift >18mo), ⭐ VIP (manually flagged)
+    - Priority Donors widget at top of CRM with tier counts (clickable → filter), overdue follow-up alert bar
+    - "Priority donors only" toggle + tier filter dropdown in search row (including "overdue" pseudo-tier)
+    - Priority column in donor table with color-coded badges; VIP star (☆/⭐) toggle per row
+    - Follow-up column with per-donor reminder buttons (OVERDUE highlighted in red)
+    - Follow-up modal (schedule date + notes, clear button, saves to localStorage)
+    - Donor detail: priority badge header, Next Step / follow-up box, Moves Management section for Major/VIP (touchpoint timeline with call/email/meeting/visit, log form)
+    - Updated seed data: Kincaid → Major ($5k single gift), Beaumont → Major ($11.5k lifetime), Hartley → VIP (seeded), Whitfield/Chen → Key (monthly recurring), Holloway → Key ($3k lifetime), Reyes/Osei → Active, Templeton/Fontaine → Lapsed
+- Status: Complete. All code committed and pushed.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos with real data in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+
 ### 2026-06-20 — Grant tracker + application/report generator + org profile
 - What changed:
   - **admin/index.html**: Full Grant Management panel — KPI dashboard (awarded YTD, pending, reports due, pipeline, success rate), pipeline view with 7-status filter tabs, 6 seeded grants (Horizon Family Foundation $15k awarded, UMGM $8.5k submitted, Community First Bank $5k in-progress, VA Conference UMC researching, Google.org researching, LocalCorp declined), grant cards with all metadata and action buttons, Add/Edit/Delete modal (15+ fields), 90-day deadline calendar with red/yellow/green urgency, Org Profile sub-tab (editable legal identity, mission/vision, impact stats, 4 programs, boilerplate), Document Generator modal (Application: full/cover/narrative/budget or Progress/Final Report), Copy + Download .txt
