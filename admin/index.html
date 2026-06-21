@@ -1031,17 +1031,26 @@ function adminLogout(){
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">CRM</div>
-    <button class="nav-item" data-panel="crm" onclick="switchPanel('crm', this)">
-      <span class="nav-item__icon">👥</span> Donors - Individuals
+    <button class="nav-item" data-panel="crm" onclick="switchPanel('crm',this);setCrmFilter('')">
+      <span class="nav-item__icon">👥</span> Donors
+    </button>
+    <button class="nav-item" data-panel="crm" data-crm-filter="Individual" onclick="switchPanel('crm',this);setCrmFilter('Individual')" style="padding-left:28px">
+      <span class="nav-item__icon">🧑</span> Individuals
+    </button>
+    <button class="nav-item" data-panel="crm" data-crm-filter="Church" onclick="switchPanel('crm',this);setCrmFilter('Church')" style="padding-left:28px">
+      <span class="nav-item__icon">⛪</span> Churches
+    </button>
+    <button class="nav-item" data-panel="crm" data-crm-filter="Corporate" onclick="switchPanel('crm',this);setCrmFilter('Corporate')" style="padding-left:28px">
+      <span class="nav-item__icon">🏢</span> Corporations
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Operations</div>
     <button class="nav-item" data-panel="traveldocs" onclick="switchPanel('traveldocs', this)">
       <span class="nav-item__icon">🛂</span> Travel Docs
     </button>
-    <button class="nav-item" data-panel="operations" onclick="switchPanel('operations', this)">
-      <span class="nav-item__icon">📦</span> Operations
-    </button>
+    <a href="../ops/" target="_blank" class="nav-item" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit">
+      <span class="nav-item__icon">📦</span> Operations ↗
+    </a>
 
     <div class="sidebar-tag" style="margin-top:8px">Development</div>
     <button class="nav-item" data-panel="grants" onclick="switchPanel('grants', this)">
@@ -1436,7 +1445,8 @@ function adminLogout(){
         <input type="search" class="crm-search" id="donorSearch" placeholder="Search by name or email…" oninput="renderDonorTable()" />
         <select class="crm-filter" id="donorTypeFilter" onchange="renderDonorTable()">
           <option value="">All types</option>
-          <option value="donor">Donor</option>
+          <option value="donor">Individual</option>
+          <option value="corporate">Corporate</option>
           <option value="volunteer">Volunteer</option>
           <option value="both">Donor + Volunteer</option>
           <option value="church">Church contact</option>
@@ -5095,6 +5105,20 @@ function renderCRM() {
   renderCRMMetrics();
   renderDonorTable();
   renderChurchTable();
+}
+
+function setCrmFilter(type) {
+  const el = document.getElementById('donorTypeFilter');
+  if (!el) return;
+  // Map sidebar labels to dropdown values
+  const map = { 'Individual': 'donor', 'Corporate': 'corporate', 'Church': 'church', '': '' };
+  el.value = (type in map) ? map[type] : type;
+  renderDonorTable();
+  // If Church, switch to the churches sub-panel
+  if (type === 'Church') {
+    const churchBtn = document.querySelector('[data-crm="churches"], [onclick*="churches"]');
+    if (churchBtn) churchBtn.click();
+  }
 }
 
 function renderCRMMetrics() {
