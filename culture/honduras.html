@@ -275,6 +275,32 @@
       text-align: center;
     }
 
+    /* ── Fun facts ── */
+    .funfact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .funfact-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .funfact-card--amber { background: var(--amber-light); border-color: var(--amber-mid); }
+    .funfact-card--teal  { background: var(--teal-light);  border-color: var(--teal-mid); }
+    .funfact-card__icon  { font-size: 32px; line-height: 1; }
+    .funfact-card__label { font-size: 10px; font-weight: 700; letter-spacing: .55px; text-transform: uppercase; color: var(--text-muted); }
+    .funfact-card--amber .funfact-card__label { color: var(--amber-dark); }
+    .funfact-card--teal  .funfact-card__label { color: var(--teal); }
+    .funfact-card p { font-size: 14px; color: var(--text); line-height: 1.7; margin: 0; }
+    .funfact-card--amber p { color: var(--amber-dark); }
+    .funfact-card--teal  p { color: var(--teal); }
+
     /* ── Responsive ── */
     @media(max-width: 1024px) {
       .people-grid { grid-template-columns: repeat(2, 1fr); }
@@ -285,6 +311,7 @@
       .life-grid { grid-template-columns: repeat(2, 1fr); }
       .dos-donts { grid-template-columns: 1fr; }
       .region-grid { grid-template-columns: 1fr; }
+      .funfact-grid { grid-template-columns: repeat(2, 1fr); }
       .humility-section { padding: 52px 24px; }
     }
     @media(max-width: 600px) {
@@ -294,6 +321,7 @@
       .culture-section { padding: 48px 20px; }
       .facts-row { grid-template-columns: 1fr 1fr; padding: 24px 20px; gap: 12px; }
       .life-grid { grid-template-columns: 1fr; }
+      .funfact-grid { grid-template-columns: 1fr; }
       .culture-cta { padding: 52px 20px; }
       .site-footer { padding: 32px 20px; }
       .humility-section { padding: 48px 20px; }
@@ -706,7 +734,91 @@
     </div>
   </section>
 
-  <!-- 9. A Note on Poverty & Dignity -->
+  <!-- 9. Fun Facts -->
+  <section class="culture-section" style="background:var(--gray-100)" aria-labelledby="funfacts-heading">
+    <div class="culture-section__inner">
+      <div class="section-eyebrow">Did you know?</div>
+      <h2 id="funfacts-heading">Honduras Is Full of Surprises</h2>
+      <p class="section-sub">A few things that might make you look up from the packing list and say "wait, really?"</p>
+      <div class="funfact-grid">
+
+        <div class="funfact-card funfact-card--teal">
+          <div class="funfact-card__icon" aria-hidden="true">🌊</div>
+          <div class="funfact-card__label">The name itself</div>
+          <p>"Honduras" means <strong>depths</strong> in Spanish. Columbus named it in 1502 after the unexpectedly deep waters off the northern coast. The name stuck — and the country has lived up to it ever since.</p>
+        </div>
+
+        <div class="funfact-card">
+          <div class="funfact-card__icon" aria-hidden="true">🪸</div>
+          <div class="funfact-card__label">World's second-largest reef</div>
+          <p>The <strong>Mesoamerican Barrier Reef</strong> — the largest in the Western Hemisphere — runs along Honduras's Caribbean coast. The Bay Islands (Roatán, Utila, Guanaja) are a bucket-list dive destination, rivaling anywhere on earth.</p>
+        </div>
+
+        <div class="funfact-card funfact-card--amber">
+          <div class="funfact-card__icon" aria-hidden="true">☕</div>
+          <div class="funfact-card__label">Largest coffee producer in Central America</div>
+          <p>Honduras ships specialty coffee to <strong>60+ countries</strong> and consistently wins international competitions. High-altitude regions like Copán, Marcala, and Montecillos produce beans that coffee professionals seek out specifically.</p>
+        </div>
+
+        <div class="funfact-card">
+          <div class="funfact-card__icon" aria-hidden="true">🦜</div>
+          <div class="funfact-card__label">National bird: the scarlet macaw</div>
+          <p>The <strong>scarlet macaw</strong> still flies wild in La Mosquitia — one of the largest remaining wilderness areas in Central America. Their brilliant red, blue, and yellow feathers have made them a living symbol of Honduras's natural richness.</p>
+        </div>
+
+        <div class="funfact-card funfact-card--teal">
+          <div class="funfact-card__icon" aria-hidden="true">🏛️</div>
+          <div class="funfact-card__label">Older than Chichen Itza</div>
+          <p>The ancient Maya city of <strong>Copán</strong> reached its peak centuries before Chichen Itza rose to prominence in Mexico. Its Hieroglyphic Stairway is the longest Maya text ever discovered — a UNESCO World Heritage Site hiding in the Honduran mountains.</p>
+        </div>
+
+        <div class="funfact-card funfact-card--amber">
+          <div class="funfact-card__icon" aria-hidden="true">⚽</div>
+          <div class="funfact-card__label">The Soccer War</div>
+          <p>In 1969, Honduras and El Salvador fought a <strong>four-day armed conflict</strong> — the "Soccer War" — sparked by riots over a World Cup qualifier. It tells you everything you need to know about how seriously Central Americans take fútbol.</p>
+        </div>
+
+        <div class="funfact-card">
+          <div class="funfact-card__icon" aria-hidden="true">🐸</div>
+          <div class="funfact-card__label">Inventing the sapo game</div>
+          <p><strong>Sapo</strong> ("toad") is a beloved Honduran backyard game where players toss metal discs at a board mounted with a bronze toad. Getting the disc in the toad's mouth is the ultimate shot. You will see it everywhere — and you will be challenged.</p>
+        </div>
+
+        <div class="funfact-card funfact-card--teal">
+          <div class="funfact-card__icon" aria-hidden="true">🎵</div>
+          <div class="funfact-card__label">UNESCO: Garifuna culture</div>
+          <p>In 2001, the UN declared the Garifuna language, dance, and music an <strong>Intangible Cultural Heritage of Humanity</strong> — among the first such designations ever made. This living culture, preserved across centuries, continues to thrive on the Caribbean coast today.</p>
+        </div>
+
+        <div class="funfact-card">
+          <div class="funfact-card__icon" aria-hidden="true">🌿</div>
+          <div class="funfact-card__label">Protected, on purpose</div>
+          <p>Honduras has designated <strong>107 protected areas</strong> covering nearly 22% of its territory — including the Río Plátano Biosphere Reserve, one of the largest remaining tropical rainforests in Central America and a UNESCO World Heritage Site.</p>
+        </div>
+
+        <div class="funfact-card funfact-card--amber">
+          <div class="funfact-card__icon" aria-hidden="true">🚂</div>
+          <div class="funfact-card__label">No railway to the capital</div>
+          <p><strong>Tegucigalpa</strong> is one of the few capital cities in the world with no railway connection whatsoever. The rugged mountain terrain made construction impractical — the city grew up in the hills instead. You get there by plane or mountain road.</p>
+        </div>
+
+        <div class="funfact-card">
+          <div class="funfact-card__icon" aria-hidden="true">🍌</div>
+          <div class="funfact-card__label">More than coffee</div>
+          <p>Honduras is also a major exporter of <strong>bananas, pineapples, shrimp, tilapia, and African palm oil</strong>. The fertile lowlands around San Pedro Sula and Cortés produce agriculture that reaches tables across North America and Europe — including yours.</p>
+        </div>
+
+        <div class="funfact-card funfact-card--teal">
+          <div class="funfact-card__icon" aria-hidden="true">🦌</div>
+          <div class="funfact-card__label">National animal: the white-tailed deer</div>
+          <p>The <strong>white-tailed deer</strong> is Honduras's national animal — revered in Lenca tradition and throughout rural communities where it represents grace, freedom, and the deep relationship between people and the land they live on.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. A Note on Housing Insecurity & Dignity -->
   <section class="culture-section" style="background:var(--teal)" aria-labelledby="dignity-heading">
     <div style="max-width:820px;margin:0 auto;text-align:center">
       <div class="section-eyebrow" style="color:rgba(255,255,255,.7)">A word before you go</div>
