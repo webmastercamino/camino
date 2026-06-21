@@ -195,10 +195,45 @@
   <!-- Availability Calendar -->
   <section class="section" style="background:var(--gray-100)">
     <div class="section-eyebrow">Plan your trip</div>
-    <h2>2026 availability calendar</h2>
-    <p class="section-sub">Green weeks are scheduled CAMINO trips. Gray weeks are already committed or closed. Contact us to plan a custom trip around your group's schedule.</p>
+    <h2><span id="calHeading">2026</span> availability calendar</h2>
+    <p class="section-sub">Green weeks are scheduled CAMINO trips. Amber weeks are open for a custom group trip. Contact us to plan around your schedule.</p>
 
-    <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:28px"></div>
+    <!-- Year + month controls -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:20px">
+      <div>
+        <label for="calYear" style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">Year</label>
+        <select id="calYear" style="padding:9px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit;background:white;cursor:pointer">
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+        </select>
+      </div>
+      <div>
+        <label for="calMonth" style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">Month</label>
+        <select id="calMonth" style="padding:9px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit;background:white;cursor:pointer">
+          <option value="all">All months</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px"></div>
+    <div id="calNoTrips" style="display:none;text-align:center;padding:40px 20px;color:var(--text-muted)">
+      <div style="font-size:32px;margin-bottom:12px">📅</div>
+      <p style="font-size:15px;font-weight:600;margin-bottom:8px">No scheduled trips for this period yet</p>
+      <p style="font-size:14px">All weeks are available for custom group trips. Contact us to plan your dates.</p>
+    </div>
 
     <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;font-size:13px;align-items:center">
       <span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:var(--teal);display:inline-block"></span> Scheduled trip</span>
@@ -207,7 +242,7 @@
     </div>
 
     <div style="text-align:center;margin-top:28px">
-      <p style="font-size:15px;color:var(--text-muted);margin-bottom:16px">Want to bring a group outside of a scheduled trip? We can often accommodate custom dates.</p>
+      <p style="font-size:15px;color:var(--text-muted);margin-bottom:16px">Want to bring a group? We can often accommodate custom dates for groups of 4–25.</p>
       <a href="contact.html" class="btn-primary">Contact us about your dates</a>
     </div>
   </section>
@@ -301,51 +336,89 @@
       document.getElementById('mobileTrips').style.display = 'grid';
     }
 
-    // Trip availability calendar
+    // Trip availability calendar — year/month filter
     (function() {
-      // Ranges: [month0, day, month0, day] — 0-indexed months
-      var trips = [
-        { label: 'Winter Build', start: new Date(2026,0,18), end: new Date(2026,0,25), href: 'trips/jan-2026.html', color: 'var(--teal)' },
-        { label: 'Spring Build', start: new Date(2026,2,8),  end: new Date(2026,2,15), href: 'trips/mar-2026.html', color: 'var(--teal)' },
-        { label: 'Summer Build', start: new Date(2026,5,14), end: new Date(2026,5,24), href: 'trips/jun-2026.html', color: 'var(--teal)' },
-        { label: 'Fall Mission',  start: new Date(2026,9,4),  end: new Date(2026,9,11), href: 'trips/oct-2026.html', color: 'var(--teal)' }
+      // Add new trips here as Walker schedules them
+      // Format: { label, year, month (0-indexed), startDay, endDay, href }
+      var TRIP_BLOCKS = [
+        { label: 'Winter Build',  year: 2026, month: 0,  startDay: 18, endDay: 25, href: 'trips/jan-2026.html' },
+        { label: 'Spring Build',  year: 2026, month: 2,  startDay: 8,  endDay: 15, href: 'trips/mar-2026.html' },
+        { label: 'Summer Build',  year: 2026, month: 5,  startDay: 14, endDay: 24, href: 'trips/jun-2026.html' },
+        { label: 'Fall Mission',  year: 2026, month: 9,  startDay: 4,  endDay: 11, href: 'trips/oct-2026.html' },
+        { label: 'Culpeper Team', year: 2026, month: 6,  startDay: 12, endDay: 19, href: 'trips/jul-2026-culpeper.html' }
       ];
+
       var DAYS = ['S','M','T','W','T','F','S'];
       var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       var grid = document.getElementById('calendarGrid');
+      var noTrips = document.getElementById('calNoTrips');
+      var yearSel = document.getElementById('calYear');
+      var monthSel = document.getElementById('calMonth');
+      var heading = document.getElementById('calHeading');
       if (!grid) return;
 
-      function tripForDate(d) {
-        for (var i = 0; i < trips.length; i++) {
-          if (d >= trips[i].start && d <= trips[i].end) return trips[i];
-        }
-        return null;
+      function tripsForDate(year, m, day) {
+        return TRIP_BLOCKS.filter(function(t) {
+          return t.year === year && t.month === m && day >= t.startDay && day <= t.endDay;
+        });
       }
 
-      for (var m = 0; m < 12; m++) {
-        var firstDay = new Date(2026, m, 1).getDay();
-        var daysInMonth = new Date(2026, m+1, 0).getDate();
+      function renderMonth(year, m) {
+        var firstDay = new Date(year, m, 1).getDay();
+        var daysInMonth = new Date(year, m + 1, 0).getDate();
+        var hasTrip = TRIP_BLOCKS.some(function(t) { return t.year === year && t.month === m; });
 
         var html = '<div style="background:white;border-radius:var(--radius-lg);border:1.5px solid var(--gray-200);padding:16px">';
-        html += '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">' + MONTHS[m] + ' 2026</div>';
+        html += '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">' + MONTHS[m] + ' ' + year + '</div>';
         html += '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11px">';
         DAYS.forEach(function(d) {
           html += '<div style="text-align:center;font-weight:600;color:var(--text-muted);padding:2px 0">' + d + '</div>';
         });
-        for (var blank = 0; blank < firstDay; blank++) {
-          html += '<div></div>';
-        }
+        for (var blank = 0; blank < firstDay; blank++) html += '<div></div>';
         for (var day = 1; day <= daysInMonth; day++) {
-          var date = new Date(2026, m, day);
-          var trip = tripForDate(date);
-          var bg = trip ? 'background:var(--teal);color:white;border-radius:3px;font-weight:600' : 'color:var(--text-muted)';
-          var title = trip ? ' title="' + trip.label + '"' : '';
-          html += '<div style="text-align:center;padding:3px 1px;font-size:11px;' + bg + '"' + title + '>' + day + '</div>';
+          var matches = tripsForDate(year, m, day);
+          var style, title = '';
+          if (matches.length) {
+            style = 'background:var(--teal);color:white;border-radius:3px;font-weight:600;cursor:pointer';
+            title = ' title="' + matches.map(function(t) { return t.label; }).join(', ') + '"';
+          } else if (!hasTrip && year > 2026) {
+            style = 'background:var(--amber-light);color:var(--amber-dark);border-radius:3px';
+          } else {
+            style = 'color:var(--text-muted)';
+          }
+          html += '<div style="text-align:center;padding:3px 1px;font-size:11px;' + style + '"' + title + '>' + day + '</div>';
         }
         html += '</div>';
+        // Trip link chips below month
+        if (matches) {
+          var monthTrips = TRIP_BLOCKS.filter(function(t) { return t.year === year && t.month === m; });
+          if (monthTrips.length) {
+            monthTrips.forEach(function(t) {
+              html += '<a href="' + t.href + '" style="display:inline-block;margin-top:8px;font-size:11px;font-weight:700;color:white;background:var(--teal);padding:3px 10px;border-radius:20px;text-decoration:none">' + t.label + ' →</a> ';
+            });
+          }
+        }
         html += '</div>';
-        grid.innerHTML += html;
+        return html;
       }
+
+      function redraw() {
+        var year = parseInt(yearSel.value);
+        var monthVal = monthSel.value;
+        if (heading) heading.textContent = year;
+        grid.innerHTML = '';
+        var months = monthVal === 'all' ? Array.from({length:12}, function(_, i) { return i; }) : [parseInt(monthVal)];
+        months.forEach(function(m) { grid.innerHTML += renderMonth(year, m); });
+
+        // Show "no trips" message if none scheduled for this year
+        var yearHasTrips = TRIP_BLOCKS.some(function(t) { return t.year === year; });
+        if (noTrips) noTrips.style.display = (yearHasTrips || monthVal !== 'all') ? 'none' : 'block';
+        if (noTrips && !yearHasTrips) noTrips.style.display = 'block';
+      }
+
+      yearSel.addEventListener('change', redraw);
+      monthSel.addEventListener('change', redraw);
+      redraw();
     })();
   </script>
 </body>

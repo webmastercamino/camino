@@ -187,11 +187,11 @@
       <!-- By the numbers -->
       <div class="m-section">
         <div class="section-eyebrow">12 years of work</div>
-        <h2>What 247 homes looks like</h2>
+        <h2>What <span data-camino="built">247</span> homes looks like</h2>
         <p class="section-sub" style="max-width:620px">Every number below represents a real family — a name, a community, a future that looks different because someone gave $2,000.</p>
         <div class="counter-row">
           <div class="counter-cell">
-            <div class="counter-num" style="color:var(--teal)">247+</div>
+            <div class="counter-num" style="color:var(--teal)"><span data-camino="built">247</span>+</div>
             <div class="counter-label">Homes built</div>
           </div>
           <div class="counter-cell">
@@ -424,13 +424,6 @@
   </footer>
 
   <script src="../assets/js/main.js"></script>
-  <script>
-    // Animate progress bar on load
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        document.getElementById('progressFill').style.width = '98.8%';
-      }, 300);
-    });
-  </script>
+  <script src="../assets/js/site-data.js"></script>
 </body>
 </html>
