@@ -38,6 +38,38 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Full platform build: public site, admin ops suite, Cloudflare backend, docs
+- What changed:
+  - **Full site ADA/WCAG 2.1 AA audit** (style.css, main.js, all pages): skip-link, focus-visible, aria-expanded/controls on nav, ARIA tablist + roving tabindex, flip-card + gallery keyboard support, lightbox focus trap, label/for associations on all forms, newsletter aria-labels
+  - **admin/index.html** — complete ops suite built across multiple sessions:
+    - Social Calendar: monthly view, add/edit/delete, 78 pre-seeded posts (religious, giving, Honduran cultural, mission), list view
+    - Mission Trips Manager: trip records, participant counts, WhatsApp link, hidden URL management
+    - Donor CRM: contact records, giving history, priority tiers (Major/Key/Active/VIP/Lapsed), moves management, comms preferences
+    - Communication Plan: tier-based cadence map, physical mail vs email vs SMS matrix, donor preference center
+    - Grant Tracker: full pipeline (Researching → Awarded → Reporting), 6 seeded grants, deadline calendar
+    - Grant Application Generator: cover letter, org narrative, program narrative, budget narrative from org profile
+    - Board Governance panel: Health Dashboard (6-tile scorecard), Meetings log + form, Action Items tracker with overdue summary, Governance Docs checklist (12 items), Financial Snapshot
+    - 501(c)(3) Compliance panel: 990 & Filings tracker, State Registrations (VA/MD/DC), IRS Checklist (11 items), Key Dates Dashboard
+    - Travel Documents: per-person arrays for Walker (US expat), Seiny (HN citizen), Alena (dual citizen, EXPIRING SOON), Williams (infant, CRBA pending) — passports, visas, residencia, US↔HN clearance indicators
+    - Children's Investment Accounts: Alena UTMA + 529, Williams UTMA; last-4 reference only
+    - Crisis Communications Playbook: 6 crisis types (data breach, cyber, leadership, financial, in-field emergency, natural disaster), drill mode
+    - Org Profile: mission, programs, impact stats, dual-jurisdiction US 501(c)(3) + Honduras ONG
+  - **about/board.html**: Board of Directors public page (6-member grid, staff section, Join the Board CTA, 990/GuideStar section); CSS org chart; Board Seats & Terms governance table with term/election badges; citizenship-aware staff bios
+  - **give.html**: Stripe donation form stub — frequency toggle, amount presets, Stripe Elements placeholder, thank-you card
+  - **cloudflare/**: Full D1 schema (9 tables), wrangler.toml, donate.js Worker (Stripe PaymentIntent/SetupIntent), send-receipt.js Worker (branded HTML tax receipt via Resend), cloudflare/README.md architecture doc
+  - **trips/jul-2026-culpeper.html**: 8-tab sticky restructure; STEP + CBP One pre-trip cards; WhatsApp group QR code (qrcodejs); full ARIA tablist; gallery keyboard + focus trap
+  - **roadmap.html**: Site scorecard, Top 15 priority gaps, 3-phase plan, revenue table, tool stack, print/PDF bar
+  - **about/board.html + admin**: private board portal, ROI brief, impact.html with map + annual report
+  - **docs/PLATFORM_OVERVIEW.md**: Executive brief on platform capabilities, architecture, cost comparison, integration roadmap — written for board/donors/tech partners
+  - **docs/QUICK_START.md**: Admin panel how-to guide for Walker and Seiny
+- Status: Complete. All committed and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Fill in Mailchimp u= and id= in index.html + stories.html newsletter forms
+  3. Enable Cloudflare Access on /admin/ before entering real data (15 min, free)
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Replace placeholder board member names/bios/photos in about/board.html
+
 ### 2026-06-20 — Citizenship-aware travel docs, investment accounts, board governance + compliance panels
 - What changed:
   - **admin/index.html**: Complete overhaul of Travel Documents panel
