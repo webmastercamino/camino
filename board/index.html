@@ -36,6 +36,60 @@
       --sb-tag:#9ca3af; --sb-divider:#e2e8f0;
       --sb-footer:#6b7280;
     }
+    /* ── Dark mode — sidebar stays same, content area goes dark ── */
+    [data-theme="dark"]{
+      --sb-bg:#1a1a2e; --sb-logo-bg:#fff; --sb-logo-border:var(--amber);
+      --sb-text:rgba(255,255,255,.6); --sb-text-hi:rgba(255,255,255,.92);
+      --sb-active:var(--teal); --sb-hover:rgba(255,255,255,.07);
+      --sb-tag:rgba(255,255,255,.3); --sb-divider:rgba(255,255,255,.08);
+      --sb-footer:rgba(255,255,255,.3);
+    }
+    [data-theme="dark"] .b-main { background:#111318; color:#e5e7eb; }
+    [data-theme="dark"] .section-h { color:#e5e7eb; }
+    [data-theme="dark"] .section-sub { color:#9ca3af; }
+    [data-theme="dark"] .divider { border-color:#2d2f3a; }
+    [data-theme="dark"] .kpi { background:#1e2028; border-color:#2d2f3a; }
+    [data-theme="dark"] .kpi__label,
+    [data-theme="dark"] .kpi__sub { color:#9ca3af; }
+    /* Financial tables */
+    [data-theme="dark"] .fin-table th { color:#9ca3af; border-color:#2d2f3a; }
+    [data-theme="dark"] .fin-table td { border-color:#2d2f3a; }
+    [data-theme="dark"] .fin-table tr.section-head td,
+    [data-theme="dark"] .fin-table tr.total-row td { background:#1e2028; }
+    [data-theme="dark"] .fin-table tr.surplus td { background:#0a2620; color:#34d399; }
+    [data-theme="dark"] .fin-table tr.deficit td { background:#2a100a; }
+    [data-theme="dark"] .pct-bar-track { background:#2d2f3a; }
+    [data-theme="dark"] .myr-table td { border-color:#2d2f3a; }
+    [data-theme="dark"] .myr-table tr.current-yr { background:#3a2a0a; }
+    /* Minutes */
+    [data-theme="dark"] .min-row { background:#1e2028; border-color:#2d2f3a; }
+    [data-theme="dark"] .min-row-header:hover { background:#2d2f3a; }
+    [data-theme="dark"] .min-row-body { border-color:#2d2f3a; }
+    [data-theme="dark"] .min-text-view { background:#111318; border-color:#2d2f3a; color:#d1d5db; }
+    [data-theme="dark"] .ack-form { background:#0a2620; }
+    [data-theme="dark"] .ack-done-box { background:#0a2a1a; border-color:#2d6a4f; color:#4ade80; }
+    [data-theme="dark"] .msbp-draft { background:#2d2f3a; color:#9ca3af; }
+    [data-theme="dark"] .aib-open { background:#2d2f3a; color:#9ca3af; }
+    [data-theme="dark"] .aifbtn { background:#1e2028; border-color:#2d2f3a; color:#9ca3af; }
+    /* Documents */
+    [data-theme="dark"] .doc-folder-header { background:#1e2028; border-color:#2d2f3a; }
+    [data-theme="dark"] .doc-folder-header:hover { background:#2d2f3a; }
+    [data-theme="dark"] .doc-file { background:#1e2028; border-color:#2d2f3a; }
+    [data-theme="dark"] .coi-card { background:#1e2028; border-color:#2d2f3a; }
+    /* Risk */
+    [data-theme="dark"] .rfbtn { background:#1e2028; border-color:#2d2f3a; color:#9ca3af; }
+    [data-theme="dark"] .risk-table th { color:#9ca3af; border-color:#2d2f3a; }
+    [data-theme="dark"] .risk-table td { border-color:#2d2f3a; }
+    [data-theme="dark"] .risk-table tr:hover td { background:#1e2028; }
+    [data-theme="dark"] .whatif-card { background:#1e2028; border-color:#2d2f3a; }
+    [data-theme="dark"] .whatif-card__response { background:#2d2f3a; }
+    /* Meeting */
+    [data-theme="dark"] .meeting-upcoming { background:#0a2620; }
+    [data-theme="dark"] .agenda-list li { border-color:rgba(255,255,255,.1); }
+    /* Inputs */
+    [data-theme="dark"] .b-main input,
+    [data-theme="dark"] .b-main textarea,
+    [data-theme="dark"] .b-main select { background:#1e2028; border-color:#2d2f3a; color:#e5e7eb; }
 
     /* ── Layout ── */
     body{display:flex;min-height:100vh}

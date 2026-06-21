@@ -30,6 +30,7 @@
 
     /* ── Dark mode (full page) ── */
     [data-theme="dark"] { --bg:#111318; --surface:#1e2028; --border:#2d2f3a; --text:#e5e7eb; --muted:#9ca3af; }
+    [data-theme="dark"] body { background: var(--bg); color: var(--text); }
     [data-theme="dark"] .panel { background: var(--bg); }
     [data-theme="dark"] .card,
     [data-theme="dark"] .kpi,
@@ -41,8 +42,43 @@
     [data-theme="dark"] input,
     [data-theme="dark"] textarea,
     [data-theme="dark"] select { background: #2d2f3a; border-color: #3d4050; color: #e5e7eb; }
+    /* Fix specificity: .form-group input (0,1,1) matches the generic rule; add explicit override */
+    [data-theme="dark"] .form-group input,
+    [data-theme="dark"] .form-group select,
+    [data-theme="dark"] .form-group textarea { background: #2d2f3a; border-color: #3d4050; color: #e5e7eb; }
     [data-theme="dark"] .sidebar { background: #1a1a2e; }
     [data-theme="light"] .sidebar { background: #1a1a2e; }
+    /* Calendar */
+    [data-theme="dark"] .cal-day-header { background: #1e2028; color: #9ca3af; border-color: #2d2f3a; }
+    [data-theme="dark"] .cal-day { border-color: #2d2f3a; }
+    [data-theme="dark"] .cal-grid { border-color: #2d2f3a; }
+    [data-theme="dark"] .cal-day.cal-empty { background: #0e1016; }
+    [data-theme="dark"] .view-tab { background: #1e2028; color: #9ca3af; border-color: #2d2f3a; }
+    /* Spanish flashcards */
+    [data-theme="dark"] .sf-front { background: #1e2028; border-color: #2d2f3a; }
+    [data-theme="dark"] .sf-back  { background: #0a2620; border-color: var(--teal); }
+    [data-theme="dark"] .sf-tab   { background: #1e2028; color: #9ca3af; border-color: #2d2f3a; }
+    /* White-bg elements */
+    [data-theme="dark"] .count-btn { background: #1e2028; border-color: #2d2f3a; color: #e5e7eb; }
+    [data-theme="dark"] .utm-code  { background: #1e2028; border-color: #2d2f3a; color: #9ca3af; }
+    [data-theme="dark"] .rfbtn,
+    [data-theme="dark"] .aifbtn    { background: #1e2028; border-color: #2d2f3a; color: #9ca3af; }
+    [data-theme="dark"] .whatif-card { background: #1e2028; border-color: #2d2f3a; }
+    [data-theme="dark"] .whatif-card__response { background: #2d2f3a; }
+    [data-theme="dark"] .doc-file  { background: #1e2028; border-color: #2d2f3a; }
+    [data-theme="dark"] .modal     { background: #1e2028; }
+    [data-theme="dark"] .modal-footer { border-color: #2d2f3a; }
+    /* Status badges with hardcoded light backgrounds */
+    [data-theme="dark"] .plat-X        { background: #2d2f3a; color: #e5e7eb; }
+    [data-theme="dark"] .status-Draft  { background: #2d2f3a; color: #9ca3af; }
+    [data-theme="dark"] .pill-Planning { background: #2d2f3a; color: #9ca3af; }
+    [data-theme="dark"] .msbp-draft,
+    [data-theme="dark"] .aib-open,
+    [data-theme="dark"] .ack-draft { background: #2d2f3a; color: #9ca3af; }
+    /* Table rows */
+    [data-theme="dark"] th { background: #1e2028 !important; color: #9ca3af; border-color: #2d2f3a !important; }
+    [data-theme="dark"] td { border-color: #2d2f3a !important; }
+    [data-theme="dark"] tr:hover td { background: #2d2f3a !important; }
 
     /* ── Sidebar ── */
     .sidebar {

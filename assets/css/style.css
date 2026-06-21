@@ -1151,23 +1151,38 @@ a  { text-decoration: none; color: inherit; }
   --coral-light:#2a100a;
 }
 [data-theme="dark"] body,
-[data-theme="dark"] { background: #111318; }
-[data-theme="dark"] .site-header { background: #111318; border-bottom-color: #2d2f3a; }
+[data-theme="dark"] { background: #111318; color: #e5e7eb; }
+[data-theme="dark"] .site-header { background: #1e2028; border-bottom-color: #2d2f3a; }
 [data-theme="dark"] .site-header a,
 [data-theme="dark"] .site-header button { color: #e5e7eb; }
 [data-theme="dark"] .hero { background: linear-gradient(135deg, #071a10 0%, #0d3d30 60%, #0a2a20 100%); }
+[data-theme="dark"] section,
+[data-theme="dark"] .section { background: #111318; }
+/* Cards get elevated surface (#1e2028) so they stand out from the page bg (#111318) */
 [data-theme="dark"] .card,
 [data-theme="dark"] .program-card,
 [data-theme="dark"] .story-card,
 [data-theme="dark"] .stat-card,
-[data-theme="dark"] section { background: #111318; }
-[data-theme="dark"] .site-footer { background: #070a0e; }
+[data-theme="dark"] .prog-card,
+[data-theme="dark"] .trip-card,
+[data-theme="dark"] .give-card { background: #1e2028; border-color: #2d2f3a; }
+[data-theme="dark"] .prog-amber { background: #3a2a0a; }
+[data-theme="dark"] .prog-teal  { background: #0a2620; }
+[data-theme="dark"] .prog-coral { background: #2a100a; }
+[data-theme="dark"] .site-footer,
+[data-theme="dark"] .footer { background: #0d0f14; border-color: #2d2f3a; }
+[data-theme="dark"] .footer-col a,
+[data-theme="dark"] .footer-bottom,
+[data-theme="dark"] .footer-bottom a { color: #6b7280; }
 [data-theme="dark"] input,
 [data-theme="dark"] textarea,
 [data-theme="dark"] select { background: #1e2028; border-color: #2d2f3a; color: #e5e7eb; }
 [data-theme="dark"] .nav-drop { background: #1e2028; border-color: #2d2f3a; }
 [data-theme="dark"] .nav-drop a { color: #e5e7eb; }
-[data-theme="dark"] .nav-drop a:hover { background: #0a2620; color: var(--teal-mid); }
+[data-theme="dark"] .nav-drop a:hover { background: #0a2620; color: var(--teal); }
+[data-theme="dark"] .nav-drop-label { opacity: 1; color: #6b7280; }
+[data-theme="dark"] .theme-toggle-btn { border-color: #2d2f3a; color: #9ca3af; }
+[data-theme="dark"] .give-btn--primary { background: #1e2028; color: var(--amber); border: 1.5px solid var(--amber); }
 
 /* ── Theme toggle button (public nav) ── */
 .theme-toggle-btn {
