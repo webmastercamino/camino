@@ -38,6 +38,19 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Grant tracker + application/report generator + org profile
+- What changed:
+  - **admin/index.html**: Full Grant Management panel — KPI dashboard (awarded YTD, pending, reports due, pipeline, success rate), pipeline view with 7-status filter tabs, 6 seeded grants (Horizon Family Foundation $15k awarded, UMGM $8.5k submitted, Community First Bank $5k in-progress, VA Conference UMC researching, Google.org researching, LocalCorp declined), grant cards with all metadata and action buttons, Add/Edit/Delete modal (15+ fields), 90-day deadline calendar with red/yellow/green urgency, Org Profile sub-tab (editable legal identity, mission/vision, impact stats, 4 programs, boilerplate), Document Generator modal (Application: full/cover/narrative/budget or Progress/Final Report), Copy + Download .txt
+  - **about/board.html**: Grant Transparency section above CTA — table showing funders, amounts, purposes, status; seeded with 2 real-ish grants + 1 placeholder row; links to 990 and GuideStar
+- Status: Complete. Committed a764548 and pushed to main.
+- Next steps:
+  1. Replace `[Member]` placeholder names in board governance table with real board member names
+  2. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  3. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  4. Replace placeholder board photos/LinkedIn links in about/board.html
+  5. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  6. Replace placeholder grant transparency row on board.html with real grant history
+
 ### 2026-06-20 — Full platform build: public site, admin ops suite, Cloudflare backend, docs
 - What changed:
   - **Full site ADA/WCAG 2.1 AA audit** (style.css, main.js, all pages): skip-link, focus-visible, aria-expanded/controls on nav, ARIA tablist + roving tabindex, flip-card + gallery keyboard support, lightbox focus trap, label/for associations on all forms, newsletter aria-labels
