@@ -1138,3 +1138,42 @@ a  { text-decoration: none; color: inherit; }
 .nav-drop a { display: block; padding: 8px 16px; font-size: 13px; color: var(--text); text-decoration: none; white-space: nowrap; }
 .nav-drop a:hover { background: var(--amber-light); color: var(--amber-dark); }
 .nav-drop-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--text-muted); padding: 6px 16px 2px; opacity: .6; }
+
+/* ── Dark mode ── */
+[data-theme="dark"] {
+  --text:       #e5e7eb;
+  --text-muted: #9ca3af;
+  --gray-100:   #1e2028;
+  --gray-200:   #2d2f3a;
+  --gray-600:   #9ca3af;
+  --amber-light:#3a2a0a;
+  --teal-light: #0a2620;
+  --coral-light:#2a100a;
+}
+[data-theme="dark"] body,
+[data-theme="dark"] { background: #111318; }
+[data-theme="dark"] .site-header { background: #111318; border-bottom-color: #2d2f3a; }
+[data-theme="dark"] .site-header a,
+[data-theme="dark"] .site-header button { color: #e5e7eb; }
+[data-theme="dark"] .hero { background: linear-gradient(135deg, #071a10 0%, #0d3d30 60%, #0a2a20 100%); }
+[data-theme="dark"] .card,
+[data-theme="dark"] .program-card,
+[data-theme="dark"] .story-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] section { background: #111318; }
+[data-theme="dark"] .site-footer { background: #070a0e; }
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select { background: #1e2028; border-color: #2d2f3a; color: #e5e7eb; }
+[data-theme="dark"] .nav-drop { background: #1e2028; border-color: #2d2f3a; }
+[data-theme="dark"] .nav-drop a { color: #e5e7eb; }
+[data-theme="dark"] .nav-drop a:hover { background: #0a2620; color: var(--teal-mid); }
+
+/* ── Theme toggle button (public nav) ── */
+.theme-toggle-btn {
+  background: none; border: 1.5px solid var(--gray-200); border-radius: 20px;
+  padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: inherit;
+  color: var(--text-muted); display: flex; align-items: center; gap: 5px;
+  transition: border-color .15s;
+}
+.theme-toggle-btn:hover { border-color: var(--teal); color: var(--teal); }

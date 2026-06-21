@@ -1,3 +1,43 @@
+// ── Site-wide dark / light mode ──────────────────────────────────
+(function () {
+  const THEME_KEY = 'camino_theme';
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.body.dataset.theme = theme;
+    localStorage.setItem(THEME_KEY, theme);
+    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+      btn.textContent = theme === 'dark' ? '☀ Light mode' : '🌙 Dark mode';
+      btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    });
+  }
+  function toggleTheme() {
+    applyTheme(document.body.dataset.theme === 'dark' ? 'light' : 'dark');
+  }
+  // Apply on load (default light)
+  applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+
+  // Inject toggle button into desktop nav and mobile menu once DOM ready
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.createElement('button');
+    btn.className = 'theme-toggle-btn';
+    btn.onclick = toggleTheme;
+    const navRight = document.querySelector('.nav-right, .site-nav, nav');
+    if (navRight) navRight.appendChild(btn);
+    // Also add to mobile menu footer if present
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+      const mb = btn.cloneNode(true);
+      mb.className = 'theme-toggle-btn';
+      mb.style.cssText = 'margin:12px 16px 4px;width:calc(100% - 32px)';
+      mb.onclick = toggleTheme;
+      mobileMenu.appendChild(mb);
+    }
+    // Re-apply so button labels update correctly after inject
+    applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+  });
+})();
+// ──────────────────────────────────────────────────────────────────
+
 // Mobile nav
 const toggle  = document.getElementById('navToggle');
 const menu    = document.getElementById('mobileMenu');

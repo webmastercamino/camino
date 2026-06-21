@@ -1217,7 +1217,7 @@ function showPortal(){
   renderCOIStatus();
   renderBcal();
   // Apply saved theme
-  var t = localStorage.getItem('camino_theme') || 'dark';
+  var t = localStorage.getItem('camino_theme') || 'light';
   applyTheme(t);
 }
 if(sessionStorage.getItem('board-auth')==='1') showPortal();
@@ -1239,7 +1239,7 @@ function applyTheme(theme){
   var toggle = document.getElementById('themeToggle');
   if(toggle) toggle.checked = (theme === 'dark');
 }
-(function(){ applyTheme(localStorage.getItem('camino_theme') || 'dark'); })();
+(function(){ applyTheme(localStorage.getItem('camino_theme') || 'light'); })();
 
 // ── Financial sub-tabs ────────────────────────────────────────────────────────
 function showFinTab(id, btn){
