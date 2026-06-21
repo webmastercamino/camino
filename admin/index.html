@@ -573,6 +573,7 @@
     .gs-Reporting   { background: #FEF9C3; color: #854D0E; }
     .gs-Closed      { background: #DCFCE7; color: #166534; }
     .gs-Declined    { background: #FEE2E2; color: #DC2626; }
+    .gs-Future      { background: #F9F0FF; color: #6D28D9; border: 1.5px dashed #C4B5FD; }
     .ft-Foundation  { background: #EFF6FF; color: #1D4ED8; }
     .ft-Government  { background: #F0FDF4; color: #166534; }
     .ft-Corporate   { background: #F3E8FF; color: #7C3AED; }
@@ -1009,7 +1010,7 @@
     <div class="panel-header">
       <div>
         <div class="panel-title">501(c)(3) Compliance</div>
-        <div class="panel-sub">Federal filings, state registrations, IRS compliance checklist, key dates, and grant tracking.</div>
+        <div class="panel-sub">Federal filings, state registrations, IRS compliance checklist, international obligations (Schedule F, Honduras ONG, FBAR), and key dates.</div>
       </div>
     </div>
 
@@ -1041,7 +1042,10 @@
     <!-- IRS Compliance Checklist -->
     <div class="cp-tab-pane" id="cp-irs">
       <div style="font-weight:700;font-size:14px;margin-bottom:6px">IRS Compliance Checklist</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">11 key items for maintaining 501(c)(3) status. Update as policies are adopted and procedures are verified.</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Key items for maintaining 501(c)(3) status, including international obligations. Update as policies are adopted.</div>
+      <div style="font-size:12px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 12px;margin-bottom:14px;color:#1D4ED8;line-height:1.6">
+        🌎 <strong>Dual-jurisdiction reminder:</strong> CAMINO is a US 501(c)(3) implementing programs in Honduras. Items ic12–ic14 are international compliance obligations specific to cross-border operations. Consult a CPA and/or Honduran legal counsel annually.
+      </div>
       <div id="irsCheckList"></div>
     </div>
 
@@ -1104,7 +1108,7 @@
         <div class="card-title">🏢 CAMINO Org Profile — Grant Boilerplate</div>
         <p style="font-size:13px;color:var(--muted);margin-bottom:20px">This profile feeds all document generators. Keep it current. Changes save automatically to localStorage.</p>
         <div class="orgp-section">
-          <h4>Legal &amp; Identity</h4>
+          <h4>Legal &amp; Identity <span style="font-size:11px;font-weight:600;background:#e0f2fe;color:#0369a1;border-radius:12px;padding:2px 10px;margin-left:8px;letter-spacing:.3px">🌐 US-incorporated nonprofit operating internationally</span></h4>
           <div class="form-row">
             <div class="form-group"><label for="orgLegalName">Legal name</label><input type="text" id="orgLegalName" oninput="saveOrgProfile()" /></div>
             <div class="form-group"><label for="orgDbaName">DBA / operating name</label><input type="text" id="orgDbaName" oninput="saveOrgProfile()" /></div>
@@ -1113,6 +1117,13 @@
             <div class="form-group"><label for="orgEIN">EIN</label><input type="text" id="orgEIN" placeholder="XX-XXXXXXX" oninput="saveOrgProfile()" /></div>
             <div class="form-group"><label for="orgState">Incorporation state</label><input type="text" id="orgState" oninput="saveOrgProfile()" /></div>
             <div class="form-group"><label for="org501cDate">501(c)(3) recognized</label><input type="text" id="org501cDate" placeholder="January 1, 2016" oninput="saveOrgProfile()" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="orgUSAddress">US legal address (registered agent / incorporation)</label><input type="text" id="orgUSAddress" placeholder="[Street], [City], VA [ZIP]" oninput="saveOrgProfile()" /></div>
+            <div class="form-group"><label for="orgHNAddress">Honduras operational address</label><input type="text" id="orgHNAddress" placeholder="[Colonia/Barrio], [City], [Department], Honduras" oninput="saveOrgProfile()" /></div>
+          </div>
+          <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#92400e;margin-top:4px">
+            <strong>Dual-jurisdiction note:</strong> Grants are applied through and awarded to the US 501(c)(3). Funds are deployed to Honduras operations. Use language: <em>"CAMINO Honduras, Inc. is a [State]-incorporated 501(c)(3) public charity (EIN: XX-XXXXXXX) that implements community development programs in Honduras through a locally-based operations team."</em>
           </div>
         </div>
         <div class="orgp-section">
@@ -1133,8 +1144,13 @@
           </div>
         </div>
         <div class="orgp-section">
-          <h4>Programs</h4>
+          <h4>Active Programs</h4>
           <div id="orgPrograms"></div>
+        </div>
+        <div class="orgp-section">
+          <h4>Emerging Opportunities <span style="font-size:11px;font-weight:600;background:#F9F0FF;color:#6D28D9;border-radius:12px;padding:2px 10px;margin-left:8px">Not Yet Active Programs</span></h4>
+          <p style="font-size:12px;color:var(--muted);margin:0 0 12px">These are areas CAMINO is exploring but has not yet launched as formal programs. Do <strong>not</strong> list these as active programs in grant applications — doing so misrepresents organizational capacity to funders. Document them honestly as "emerging" or "in planning stage."</p>
+          <div id="orgEmergingPrograms"></div>
         </div>
         <div class="orgp-section" style="margin-bottom:8px">
           <h4>Grant boilerplate intro</h4>
@@ -1365,7 +1381,7 @@
     <div class="form-row">
       <div class="form-group"><label for="gProgram">Grant program name</label><input type="text" id="gProgram" /></div>
       <div class="form-group"><label for="gFocusArea">Focus area</label>
-        <select id="gFocusArea"><option>Mission Trips</option><option>Community Development</option><option>Education</option><option>Emergency Relief</option><option>General Operating</option></select>
+        <select id="gFocusArea"><option>Mission Trips</option><option>Community Development</option><option>Education</option><option>Emergency Relief</option><option>General Operating</option><option>Vocational Development</option></select>
       </div>
     </div>
     <div class="form-row">
@@ -1374,7 +1390,7 @@
     </div>
     <div class="form-row">
       <div class="form-group"><label for="gStatus">Status</label>
-        <select id="gStatus"><option>Researching</option><option>In Progress</option><option>Submitted</option><option>Awarded</option><option>Reporting</option><option>Closed</option><option>Declined</option></select>
+        <select id="gStatus"><option>Researching</option><option>In Progress</option><option>Submitted</option><option>Awarded</option><option>Reporting</option><option>Closed</option><option>Declined</option><option>Future</option></select>
       </div>
       <div class="form-group"><label for="gRestricted">Fund type</label>
         <select id="gRestricted"><option value="false">Unrestricted</option><option value="true">Restricted</option></select>
@@ -2425,7 +2441,10 @@ const IRS_CHECKLIST_SEED = [
   { id: 'ic8',  label: 'Meeting minutes kept and accessible',                      status: 'partial' },
   { id: 'ic9',  label: 'Conflict of interest policy — annual board sign-off',      status: 'no'      },
   { id: 'ic10', label: 'Whistleblower policy adopted',                             status: 'no'      },
-  { id: 'ic11', label: 'Document retention policy adopted',                        status: 'no'      }
+  { id: 'ic11', label: 'Document retention policy adopted',                        status: 'no'      },
+  { id: 'ic12', label: 'Schedule F (990) — Foreign activities >$10K reported',    status: 'partial', note: 'Required: CAMINO spends the majority of its budget in Honduras. Attach to 990.' },
+  { id: 'ic13', label: 'Honduras ONG registration (in-country NGO registration)',  status: 'no',      note: 'Honduras may require foreign NGOs to register with SENAEH or the relevant ministry. Consult local Honduran counsel.' },
+  { id: 'ic14', label: 'FBAR (FinCEN 114) — Foreign bank accounts reported',       status: 'no',      note: 'Required if CAMINO holds financial accounts in Honduras with aggregate balance >$10K USD at any point in the calendar year.' },
 ];
 
 const GRANTS_SEED = [
@@ -2439,8 +2458,8 @@ function getStateRegs()      { try { return JSON.parse(localStorage.getItem('cam
 function saveStateRegs(d)    { localStorage.setItem('camino_stateregs',    JSON.stringify(d)); }
 function getIrsChecklist()   { try { return JSON.parse(localStorage.getItem('camino_irschecklist')) || IRS_CHECKLIST_SEED.map(i=>({...i}));   } catch { return IRS_CHECKLIST_SEED.map(i=>({...i})); } }
 function saveIrsChecklist(d) { localStorage.setItem('camino_irschecklist', JSON.stringify(d)); }
-function getGrants()         { try { return JSON.parse(localStorage.getItem('camino_grants'))        || GRANTS_SEED.map(g=>({...g}));          } catch { return GRANTS_SEED.map(g=>({...g})); } }
-function saveGrants(d)       { localStorage.setItem('camino_grants',       JSON.stringify(d)); }
+function getGrants()         { try { return JSON.parse(localStorage.getItem('camino_compliance_grants')) || GRANTS_SEED.map(g=>({...g}));  } catch { return GRANTS_SEED.map(g=>({...g})); } }
+function saveGrants(d)       { localStorage.setItem('camino_compliance_grants', JSON.stringify(d)); }
 
 function setComplianceTab(tabId) {
   document.querySelectorAll('#panel-compliance .panel-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
@@ -2502,7 +2521,10 @@ function renderIrsChecklist() {
   const statusCls   = { 'yes': 'badge-valid', 'no': 'badge-expired', 'partial': 'badge-watch' };
   const statusLabel = { 'yes': 'YES', 'no': 'NO', 'partial': 'PARTIAL' };
   el.innerHTML = items.map((c, i) => `<div class="check-item">
-    <div style="flex:1;font-size:13px">${escHtml(c.label)}</div>
+    <div style="flex:1;font-size:13px">
+      ${escHtml(c.label)}
+      ${c.note ? `<div style="font-size:11px;color:var(--muted);margin-top:3px;font-style:italic">${escHtml(c.note)}</div>` : ''}
+    </div>
     <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
       <span class="doc-badge ${statusCls[c.status] || 'badge-watch'}">${statusLabel[c.status] || c.status.toUpperCase()}</span>
       <select style="font-size:11px;padding:2px 4px;border:1px solid var(--border);border-radius:4px" onchange="updateIrsItem(${i}, this.value)">
@@ -2539,8 +2561,11 @@ function renderComplianceDates() {
   const el = document.getElementById('complianceDates');
   if (!el) return;
   const dates = [
-    { label: 'FY2025 990 due',                   date: '2026-11-15', note: 'Extension to Aug 15 available' },
+    { label: 'FY2025 990 due',                   date: '2026-11-15', note: 'Extension to Aug 15 available. Must attach Schedule F (foreign activities).' },
+    { label: 'FY2025 990 Schedule F',             date: '2026-11-15', note: 'Required: CAMINO spends majority of budget in Honduras (foreign activities >$10K). File with 990.' },
+    { label: 'FBAR (FinCEN 114) due',             date: '2026-04-15', note: 'Auto-extended to Oct 15. Required if CAMINO holds HN bank accounts with aggregate >$10K USD.' },
     { label: 'VA charitable registration renewal', date: '2026-12-31', note: 'Annual renewal' },
+    { label: 'Honduras ONG registration review',  date: '2026-12-31', note: 'Verify in-country NGO registration status with Honduran counsel. Renew as required.' },
     { label: 'COI annual board sign-off',          date: '2026-12-31', note: 'All board members' },
     { label: 'Next board meeting',                 date: '2026-07-17', note: '' },
     { label: 'FY2025 audit / financial review',    date: '2026-09-30', note: 'If required' }
@@ -3305,8 +3330,9 @@ const GRANT_STATUS_META = {
   'Reporting':   {icon:'📊', cls:'gs-Reporting'},
   'Closed':      {icon:'✅', cls:'gs-Closed'},
   'Declined':    {icon:'❌', cls:'gs-Declined'},
+  'Future':      {icon:'🔮', cls:'gs-Future'},
 };
-const GRANT_STATUS_ORDER = ['Researching','In Progress','Submitted','Awarded','Reporting','Closed','Declined'];
+const GRANT_STATUS_ORDER = ['Researching','In Progress','Submitted','Awarded','Reporting','Closed','Declined','Future'];
 
 const SEED_GRANTS = [
   {id:'g_1',funderName:'Horizon Family Foundation',funderType:'Foundation',programName:'Community Development Initiative',focusArea:'Community Development',amountRequested:15000,amountAwarded:15000,status:'Awarded',applicationDeadline:'',decisionDate:'2026-03-15',reportDueDate:'2026-08-31',restricted:true,contactName:'Sarah Whitfield',contactEmail:'grants@horizonfamilyfoundation.org',contactPhone:'(540) 555-0187',funderWebsite:'https://horizonfamilyfoundation.org',notes:'Strong relationship — they visited a build site in 2024. Report due Aug 2026.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-01-01'},
@@ -3315,6 +3341,11 @@ const SEED_GRANTS = [
   {id:'g_4',funderName:'Virginia Conference UMC',funderType:'Church',programName:'Missional Giving Program',focusArea:'Mission Trips',amountRequested:3000,amountAwarded:0,status:'Researching',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:true,contactName:'District Office',contactEmail:'missions@vaumc.org',contactPhone:'',funderWebsite:'https://vaumc.org',notes:'Identified as prospect. Need to confirm eligibility and deadline.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:''},
   {id:'g_5',funderName:'Google.org Impact Challenge',funderType:'Corporate',programName:'Impact Challenge: Latin America',focusArea:'General Operating',amountRequested:50000,amountAwarded:0,status:'Researching',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:false,contactName:'Impact Challenge Team',contactEmail:'impactchallenge@google.org',contactPhone:'',funderWebsite:'https://google.org',notes:'Highly competitive. Next eligible: Jan 2027. Start building impact data now.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-01-15'},
   {id:'g_6',funderName:'LocalCorp Community Fund',funderType:'Corporate',programName:'Annual Community Grants',focusArea:'Education',amountRequested:2500,amountAwarded:0,status:'Declined',applicationDeadline:'2026-01-15',decisionDate:'2026-03-01',reportDueDate:'',restricted:false,contactName:'CSR Team',contactEmail:'csr@localcorp.com',contactPhone:'',funderWebsite:'',notes:'Declined. Feedback: "Reapply next cycle with stronger impact metrics." Revisit Q4 2026.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-01-15'},
+  {id:'g_7',funderName:'USAID Workforce Development (Honduras)',funderType:'Government',programName:'Honduras Workforce Development Initiative',focusArea:'Vocational Development',amountRequested:75000,amountAwarded:0,status:'Future',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:true,contactName:'USAID Honduras Mission',contactEmail:'',contactPhone:'',funderWebsite:'https://www.usaid.gov/honduras',notes:'FUTURE — Program development required. CAMINO must have 1-2 years of documented vocational programming before applying. Pilot 2-3 structured workshops in 2026-2027 first.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2028-01-01'},
+  {id:'g_8',funderName:'Inter-American Development Bank',funderType:'Government',programName:'IDB Vocational Training & Skills Development',focusArea:'Vocational Development',amountRequested:50000,amountAwarded:0,status:'Future',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:true,contactName:'IDB Honduras Country Office',contactEmail:'',contactPhone:'',funderWebsite:'https://www.iadb.org',notes:'FUTURE — Requires documented program track record. IDB values co-investment from local government. Explore Honduran municipal partnership first.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2028-01-01'},
+  {id:'g_9',funderName:'Rotary Foundation',funderType:'Foundation',programName:'Vocational Training Team (VTT) Grant',focusArea:'Vocational Development',amountRequested:25000,amountAwarded:0,status:'Future',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:true,contactName:'District Governor / Club Sponsor',contactEmail:'',contactPhone:'',funderWebsite:'https://rotary.org/en/our-programs/grants',notes:'FUTURE — Must be sponsored by a Rotary club. Identify a club partner first (Culpeper, Charlottesville, or local Honduras Rotary club). VTT grants fund skill-transfer projects. Strong fit once program is formalized.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-07-01'},
+  {id:'g_10',funderName:'Conrad N. Hilton Foundation',funderType:'Foundation',programName:'International Programs — Honduras',focusArea:'Community Development',amountRequested:100000,amountAwarded:0,status:'Future',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:true,contactName:'Program Officer, International',contactEmail:'',contactPhone:'',funderWebsite:'https://hiltonfoundation.org',notes:'FUTURE — Hilton focuses on scale. Review their current Honduras priorities before approaching. Strong community development angle. Requires significant org capacity and track record. Long-term prospect (2028+).',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2028-01-01'},
+  {id:'g_11',funderName:'William & Flora Hewlett Foundation',funderType:'Foundation',programName:'Latin America Programs',focusArea:'Community Development',amountRequested:50000,amountAwarded:0,status:'Future',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:true,contactName:'Latin America Program Team',contactEmail:'',contactPhone:'',funderWebsite:'https://hewlett.org',notes:'FUTURE — Hewlett funds systems-change work in Latin America. Requires strong MEL (monitoring/evaluation/learning) framework and evidence base. Research current Honduras priorities. Long-term strategic prospect.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2028-06-01'},
 ];
 
 let grantData = [];
@@ -3330,6 +3361,8 @@ function saveGrantData() { localStorage.setItem('camino_grants', JSON.stringify(
 // ── Org Profile ──
 const DEFAULT_ORG_PROFILE = {
   legalName:'Central American Ministry Outreach, Inc.',dbaName:'CAMINO Honduras',ein:'XX-XXXXXXX',incorporationState:'Virginia',nonprofit501c3Date:'January 1, 2016',
+  usLegalAddress:'[Street Address], [City], VA [ZIP]',
+  hondurasAddress:'[Colonia/Barrio], [City], [Department], Honduras',
   missionStatement:'CAMINO empowers families in Honduras by providing safe, permanent housing and connecting them with the resources, community, and faith needed to break the cycle of poverty.',
   visionStatement:'A Honduras where every family has a safe place to call home.',
   homesBuilt:'115+',volunteersServed:'400+',communitiesReached:'22',yearsOperating:'12',annualBudget:'$450,000',fullTimeStaff:'4',boardSize:'6',
@@ -3340,7 +3373,10 @@ const DEFAULT_ORG_PROFILE = {
     {name:'Mission Trips',desc:'CAMINO organizes week-long mission trips for volunteers (4–25 people) to serve alongside Honduran families on build sites and in community development projects.'},
     {name:'Church Planting',desc:'CAMINO partners with local congregations to plant churches in underserved communities, providing spiritual care and ongoing support for families we serve.'},
   ],
-  boilerplate:'CAMINO Honduras (Central American Ministry Outreach, Inc.) is a 501(c)(3) nonprofit headquartered in Virginia, serving families in extreme poverty across northern Honduras since 2014. In over a decade of operation, CAMINO has built more than 115 permanent homes, engaged 400+ volunteers from across the United States, and reached 22 communities with housing, infrastructure, and faith-based development.',
+  emergingPrograms:[
+    {name:'Vocational Training',stage:'Pilot — not yet a formal program',desc:'Informally piloted in 2025 when a US volunteer brought welding equipment and hosted a one-time workshop for community members. CAMINO is exploring structured program development for 2026–2027. Vocational grant applications require 1–2 years of documented program history — recommend piloting 2–3 structured workshops before applying.'},
+  ],
+  boilerplate:'CAMINO Honduras (Central American Ministry Outreach, Inc.) is a Virginia-incorporated 501(c)(3) public charity (EIN: XX-XXXXXXX) that implements community development and mission programs in Honduras through a locally-based operations team. Founded in 2014, CAMINO has built more than 115 permanent concrete-block homes, engaged 400+ volunteers from across the United States, and reached 22 communities in northern Honduras with housing, infrastructure, and faith-based development. All funds are raised and stewarded through the US 501(c)(3) entity; program implementation is carried out by a full-time team living and working in-country.',
 };
 let orgProfile = Object.assign({}, DEFAULT_ORG_PROFILE);
 
@@ -3354,6 +3390,8 @@ function saveOrgProfile() {
   orgProfile.ein       = document.getElementById('orgEIN').value;
   orgProfile.incorporationState = document.getElementById('orgState').value;
   orgProfile.nonprofit501c3Date = document.getElementById('org501cDate').value;
+  orgProfile.usLegalAddress     = document.getElementById('orgUSAddress').value;
+  orgProfile.hondurasAddress    = document.getElementById('orgHNAddress').value;
   orgProfile.missionStatement   = document.getElementById('orgMission').value;
   orgProfile.visionStatement    = document.getElementById('orgVision').value;
   orgProfile.homesBuilt         = document.getElementById('orgHomesBuilt').value;
@@ -3378,6 +3416,8 @@ function populateOrgProfileForm() {
   document.getElementById('orgEIN').value        = p.ein||'';
   document.getElementById('orgState').value      = p.incorporationState||'';
   document.getElementById('org501cDate').value   = p.nonprofit501c3Date||'';
+  document.getElementById('orgUSAddress').value  = p.usLegalAddress||'';
+  document.getElementById('orgHNAddress').value  = p.hondurasAddress||'';
   document.getElementById('orgMission').value    = p.missionStatement||'';
   document.getElementById('orgVision').value     = p.visionStatement||'';
   document.getElementById('orgHomesBuilt').value = p.homesBuilt||'';
@@ -3387,18 +3427,36 @@ function populateOrgProfileForm() {
   document.getElementById('orgBudget').value     = p.annualBudget||'';
   document.getElementById('orgBoilerplate').value= p.boilerplate||'';
   const pc = document.getElementById('orgPrograms');
-  if (!pc) return;
-  pc.innerHTML = (p.programs||[]).map((prog,i)=>`
-    <div style="background:#f8f8f8;border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px">
-      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Program ${i+1}</div>
-      <div class="form-group" style="margin-bottom:6px"><label>Name</label>
-        <input type="text" value="${escHtml(prog.name)}" oninput="orgProfile.programs[${i}].name=this.value;saveOrgProfile()" />
+  if (pc) {
+    pc.innerHTML = (p.programs||[]).map((prog,i)=>`
+      <div style="background:#f8f8f8;border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Program ${i+1}</div>
+        <div class="form-group" style="margin-bottom:6px"><label>Name</label>
+          <input type="text" value="${escHtml(prog.name)}" oninput="orgProfile.programs[${i}].name=this.value;saveOrgProfile()" />
+        </div>
+        <div class="form-group" style="margin-bottom:0"><label>Description</label>
+          <textarea rows="2" oninput="orgProfile.programs[${i}].desc=this.value;saveOrgProfile()">${escHtml(prog.desc)}</textarea>
+        </div>
       </div>
-      <div class="form-group" style="margin-bottom:0"><label>Description</label>
-        <textarea rows="2" oninput="orgProfile.programs[${i}].desc=this.value;saveOrgProfile()">${escHtml(prog.desc)}</textarea>
+    `).join('');
+  }
+  const ep2 = document.getElementById('orgEmergingPrograms');
+  if (ep2) {
+    ep2.innerHTML = (p.emergingPrograms||[]).map((prog,i)=>`
+      <div style="background:#fdf8ff;border:1.5px dashed #C4B5FD;border-radius:var(--radius);padding:14px 16px;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:#7C3AED;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Emerging Opportunity ${i+1}</div>
+        <div class="form-group" style="margin-bottom:6px"><label>Name</label>
+          <input type="text" value="${escHtml(prog.name)}" oninput="orgProfile.emergingPrograms[${i}].name=this.value;saveOrgProfile()" />
+        </div>
+        <div class="form-group" style="margin-bottom:6px"><label>Stage</label>
+          <input type="text" value="${escHtml(prog.stage||'')}" placeholder="e.g. Pilot — not yet a formal program" oninput="orgProfile.emergingPrograms[${i}].stage=this.value;saveOrgProfile()" />
+        </div>
+        <div class="form-group" style="margin-bottom:0"><label>Notes / Context</label>
+          <textarea rows="3" oninput="orgProfile.emergingPrograms[${i}].desc=this.value;saveOrgProfile()">${escHtml(prog.desc)}</textarea>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('') || '<p style="color:var(--muted);font-size:13px">No emerging programs defined.</p>';
+  }
 }
 
 // ── KPIs ──
@@ -3631,9 +3689,9 @@ ${g.funderWebsite ? ep(g.funderWebsite) : '[Funder address — add before submit
 
 Dear ${g.contactName ? ep(g.contactName) : 'Grants Committee'}:
 
-My name is ${ep(p.execDirector)||'Walker Somerville'}, and I serve as the Executive Director of ${ep(p.legalName)||'Central American Ministry Outreach, Inc.'} — also known as CAMINO Honduras — a 501(c)(3) nonprofit organization building safe, permanent homes and transforming communities in northern Honduras. We write to respectfully request ${amt} from ${ep(g.funderName)}${g.programName?' through the '+ep(g.programName):''} to support our [${ep(g.focusArea)} program — add specific project name before submitting].
+My name is ${ep(p.execDirector)||'Walker Somerville'}, and I serve as the Executive Director of ${ep(p.legalName)||'Central American Ministry Outreach, Inc.'} (EIN: ${ein}) — also known as CAMINO Honduras — a ${ep(p.incorporationState)||'Virginia'}-incorporated 501(c)(3) public charity that implements community development and mission programs in Honduras through a locally-based operations team. We write to respectfully request ${amt} from ${ep(g.funderName)}${g.programName?' through the '+ep(g.programName):''} to support our [${ep(g.focusArea)} program — add specific project name before submitting].
 
-Since 2014, CAMINO has built more than ${ep(p.homesBuilt)||'115'} permanent homes, engaged ${ep(p.volunteersServed)||'400+'} volunteers from across the United States, and reached ${ep(p.communitiesReached)||'22'} communities across ${ep(p.serviceRegions)||'northern Honduras'}. Our model pairs North American volunteer teams with Honduran families and local partners to deliver housing at approximately $5,500 per home.
+Since 2014, CAMINO has built more than ${ep(p.homesBuilt)||'115'} permanent homes, engaged ${ep(p.volunteersServed)||'400+'} volunteers from across the United States, and reached ${ep(p.communitiesReached)||'22'} communities across ${ep(p.serviceRegions)||'northern Honduras'}. All grants are received and stewarded by the US 501(c)(3) entity; program implementation is carried out by CAMINO's full-time in-country team. Our model pairs North American volunteer teams with Honduran families and local partners to deliver permanent housing at approximately $5,500 per home.
 
 [EDIT: Add 2–3 sentences explaining why THIS funder is a strong match. Reference the funder's stated priorities and how CAMINO's programs align.]
 
@@ -3655,9 +3713,13 @@ ORGANIZATION OVERVIEW
 Legal Name:         ${ep(p.legalName)||'[Legal name]'}
 Operating Name:     ${ep(p.dbaName)||'CAMINO Honduras'}
 EIN:                ${ein}
-State:              ${ep(p.incorporationState)||'Virginia'}
+Jurisdiction:       ${ep(p.incorporationState)||'Virginia'}-incorporated 501(c)(3) public charity operating internationally
+US Legal Address:   ${ep(p.usLegalAddress)||'[US legal address — add in Org Profile]'}
+Honduras Address:   ${ep(p.hondurasAddress)||'[Honduras operational address — add in Org Profile]'}
 501(c)(3) since:    ${ep(p.nonprofit501c3Date)||'[Date]'}
 Annual Budget:      ${ep(p.annualBudget)||'[Budget]'}
+
+NOTE FOR GRANTMAKER: CAMINO Honduras, Inc. is the US 501(c)(3) fiscal entity. All grant funds are received and managed in the United States. CAMINO's Executive Director and operations team live and work in Honduras full-time, directing program implementation in-country.
 
 MISSION
 ${ep(p.missionStatement)||'[Mission statement]'}
@@ -3666,7 +3728,7 @@ VISION
 ${ep(p.visionStatement)||'[Vision statement]'}
 
 HISTORY & TRACK RECORD
-CAMINO Honduras was founded in 2014 by Walker and Seiny Somerville. Today we operate with a full-time staff of ${ep(p.fullTimeStaff)||'4'} and a volunteer board of ${ep(p.boardSize)||'6'} directors.
+CAMINO Honduras was founded in 2014 by Walker and Seiny Somerville, who relocated permanently to Honduras to lead operations on the ground. Today we operate with a full-time in-country staff of ${ep(p.fullTimeStaff)||'4'} and a volunteer board of ${ep(p.boardSize)||'6'} directors based in the United States.
 
 - ${ep(p.homesBuilt)||'115+'} permanent homes built
 - ${ep(p.volunteersServed)||'400+'} volunteers served
