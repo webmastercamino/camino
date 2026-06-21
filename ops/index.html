@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operations — CAMINO Honduras</title>
+  <style>
+    :root {
+      --teal:      #1a7a72;
+      --teal-dark: #115a54;
+      --teal-light:#e6f5f4;
+      --amber:     #BA7517;
+      --amber-bg:  #fff7ed;
+      --red:       #dc2626;
+      --red-bg:    #fef2f2;
+      --green:     #15803d;
+      --green-bg:  #f0fdf4;
+      --yellow:    #ca8a04;
+      --yellow-bg: #fefce8;
+      --gray-50:   #f9fafb;
+      --gray-100:  #f3f4f6;
+      --gray-200:  #e5e7eb;
+      --gray-400:  #9ca3af;
+      --gray-600:  #4b5563;
+      --gray-800:  #1f2937;
+      --text:      #111827;
+      --muted:     #6b7280;
+      --radius:    8px;
+      --radius-lg: 12px;
+      --shadow:    0 1px 3px rgba(0,0,0,.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-50); color: var(--text); font-size: 14px; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; font-size: 13px; }
+
+    /* ── Password Gate ── */
+    #opsGate {
+      position: fixed; inset: 0;
+      background: linear-gradient(135deg, #0d3d38 0%, #1a7a72 60%, #115a54 100%);
+      z-index: 99999; display: flex; align-items: center; justify-content: center;
+    }
+    .gate-card {
+      background: white; border-radius: 16px; padding: 40px 36px;
+      width: 100%; max-width: 360px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .gate-logo { font-size: 32px; font-weight: 800; color: var(--teal); letter-spacing: -1px; margin-bottom: 4px; }
+    .gate-sub  { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+    .gate-card input {
+      width: 100%; padding: 11px 14px; border: 2px solid var(--gray-200); border-radius: var(--radius);
+      font-size: 15px; text-align: center; letter-spacing: 2px; margin-bottom: 12px;
+      transition: border-color .15s;
+    }
+    .gate-card input:focus { outline: none; border-color: var(--teal); }
+    .gate-btn {
+      width: 100%; padding: 12px; background: var(--teal); color: white; border: none;
+      border-radius: var(--radius); font-size: 15px; font-weight: 600; transition: background .15s;
+    }
+    .gate-btn:hover { background: var(--teal-dark); }
+    .gate-err { font-size: 13px; color: var(--red); margin-top: 10px; display: none; }
+    .gate-links { margin-top: 20px; display: flex; gap: 16px; justify-content: center; }
+    .gate-links a { font-size: 12px; color: var(--muted); }
+    .gate-links a:hover { color: var(--teal); }
+
+    /* ── App shell ── */
+    #opsApp { display: none; min-height: 100vh; }
+
+    /* ── Top bar ── */
+    .ops-topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--teal-dark); color: white; height: 52px;
+      display: flex; align-items: center; padding: 0 16px; gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .ops-topbar-brand { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+    .ops-topbar-brand .tb-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
+    .ops-topbar-brand .tb-sub  { font-size: 11px; opacity: .7; white-space: nowrap; }
+    .ops-topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .topbar-btn {
+      padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: none;
+      cursor: pointer; transition: background .15s;
+    }
+    .topbar-btn-outline { background: rgba(255,255,255,.15); color: white; }
+    .topbar-btn-outline:hover { background: rgba(255,255,255,.25); }
+    .topbar-btn-red { background: rgba(220,38,38,.85); color: white; }
+    .topbar-btn-red:hover { background: #dc2626; }
+
+    /* ── Layout ── */
+    .ops-layout { display: flex; min-height: calc(100vh - 52px); }
+
+    /* ── Sidebar ── */
+    .ops-sidebar {
+      width: 200px; flex-shrink: 0; background: white; border-right: 1px solid var(--gray-200);
+      display: flex; flex-direction: column; padding: 16px 0;
+      position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto;
+    }
+    .sidebar-section-label {
+      font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase;
+      letter-spacing: .8px; padding: 12px 16px 4px;
+    }
+    .sidebar-btn {
+      display: flex; align-items: center; gap: 9px; padding: 9px 16px;
+      background: none; border: none; border-left: 3px solid transparent;
+      color: var(--gray-600); font-size: 13px; font-weight: 500; text-align: left; width: 100%;
+      transition: all .12s; cursor: pointer;
+    }
+    .sidebar-btn:hover { background: var(--teal-light); color: var(--teal-dark); }
+    .sidebar-btn.active { background: var(--teal-light); color: var(--teal-dark); border-left-color: var(--teal); font-weight: 600; }
+    .sidebar-btn .sb-badge {
+      margin-left: auto; background: var(--red); color: white; font-size: 10px;
+      font-weight: 700; padding: 1px 5px; border-radius: 10px;
+    }
+    .sidebar-sep { height: 1px; background: var(--gray-200); margin: 8px 0; }
+    .sidebar-ext-link {
+      display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+      color: var(--muted); font-size: 12px; transition: color .12s;
+    }
+    .sidebar-ext-link:hover { color: var(--teal); }
+
+    /* ── Main content ── */
+    .ops-main { flex: 1; padding: 24px; overflow-y: auto; min-width: 0; }
+    .ops-panel { display: none; }
+    .ops-panel.active { display: block; }
+
+    /* ── Section header ── */
+    .section-hd { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .section-hd h2 { font-size: 20px; font-weight: 700; }
+    .section-hd .section-hd-sub { color: var(--muted); font-size: 13px; }
+
+    /* ── Stat tiles ── */
+    .tiles-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .tile {
+      background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+      padding: 16px 18px; position: relative; overflow: hidden;
+    }
+    .tile::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--teal); }
+    .tile.amber::before { background: var(--amber); }
+    .tile.red::before   { background: var(--red); }
+    .tile.green::before { background: var(--green); }
+    .tile .tile-val { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+    .tile .tile-lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+    .tile .tile-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    /* ── Alert bar ── */
+    .alert-bar {
+      border-radius: var(--radius); padding: 10px 14px; margin-bottom: 12px;
+      font-size: 13px; font-weight: 500; display: flex; align-items: flex-start; gap: 8px;
+    }
+    .alert-red    { background: var(--red-bg);    border: 1px solid #fca5a5; color: #991b1b; }
+    .alert-amber  { background: var(--amber-bg);  border: 1px solid #fbbf24; color: #92400e; }
+    .alert-green  { background: var(--green-bg);  border: 1px solid #86efac; color: #166534; }
+    .alert-blue   { background: #eff6ff;           border: 1px solid #93c5fd; color: #1e40af; }
+
+    /* ── Cards ── */
+    .card {
+      background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+      padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow);
+    }
+    .card-hd { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .card-hd-main { flex: 1; min-width: 0; }
+    .card-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .card-sub   { font-size: 12px; color: var(--muted); }
+    .card-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    /* ── Badges / pills ── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    }
+    .pill-teal   { background: #ccfbf1; color: #0f766e; }
+    .pill-amber  { background: #fef3c7; color: #92400e; }
+    .pill-red    { background: #fee2e2; color: #991b1b; }
+    .pill-green  { background: #dcfce7; color: #166534; }
+    .pill-gray   { background: var(--gray-100); color: var(--gray-600); }
+    .pill-blue   { background: #dbeafe; color: #1e40af; }
+
+    /* ── Progress bar ── */
+    .prog-wrap { background: var(--gray-200); border-radius: 99px; height: 7px; overflow: hidden; margin: 6px 0; }
+    .prog-fill { height: 100%; border-radius: 99px; background: var(--teal); transition: width .4s; }
+    .prog-fill.amber { background: var(--amber); }
+    .prog-fill.red   { background: var(--red); }
+
+    /* ── Table ── */
+    .tbl-wrap { overflow-x: auto; }
+    .data-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .data-tbl th { background: var(--gray-50); color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--gray-200); white-space: nowrap; }
+    .data-tbl td { padding: 9px 12px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+    .data-tbl tr:last-child td { border-bottom: none; }
+    .data-tbl tr:hover td { background: var(--gray-50); }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: var(--radius); font-size: 13px; font-weight: 600; border: 1.5px solid transparent; transition: all .15s; cursor: pointer; }
+    .btn-primary { background: var(--teal); color: white; border-color: var(--teal); }
+    .btn-primary:hover { background: var(--teal-dark); border-color: var(--teal-dark); }
+    .btn-secondary { background: white; color: var(--teal); border-color: var(--teal); }
+    .btn-secondary:hover { background: var(--teal-light); }
+    .btn-ghost { background: transparent; color: var(--gray-600); border-color: var(--gray-200); }
+    .btn-ghost:hover { background: var(--gray-100); }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+    /* ── Pax list ── */
+    .pax-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-top: 12px; }
+    .pax-card { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 10px 12px; }
+    .pax-name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+    .pax-detail { font-size: 11px; color: var(--muted); }
+    .pax-card.heat-hi { border-left: 3px solid var(--red); }
+    .pax-card.heat-med { border-left: 3px solid var(--amber); }
+
+    /* ── Donors list ── */
+    .donor-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); font-size: 13px; }
+    .donor-row:last-child { border-bottom: none; }
+
+    /* ── Info grid ── */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 13px; }
+    .info-grid dt { color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .info-grid dd { font-weight: 500; }
+
+    /* ── Contact cards ── */
+    .contact-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 12px; }
+    .contact-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+    .contact-role { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .contact-row  { font-size: 13px; margin-bottom: 4px; }
+    .contact-row a { color: var(--teal); }
+
+    /* ── Milestone timeline ── */
+    .milestone-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--gray-100); }
+    .milestone-item:last-child { border-bottom: none; }
+    .milestone-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 5px; }
+    .milestone-content { flex: 1; }
+    .milestone-text { font-size: 13px; font-weight: 500; }
+    .milestone-date { font-size: 11px; color: var(--muted); }
+
+    /* ── Collapsible ── */
+    .collapse-toggle { cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--teal); font-weight: 600; background: none; border: none; padding: 0; }
+    .collapse-toggle .arrow { transition: transform .2s; display: inline-block; }
+    .collapse-toggle.open .arrow { transform: rotate(90deg); }
+    .collapse-body { display: none; margin-top: 10px; }
+    .collapse-body.open { display: block; }
+
+    /* ── Inline form ── */
+    .inline-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; margin-top: 10px; }
+    .inline-form input, .inline-form textarea, .inline-form select {
+      padding: 6px 10px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); font-size: 13px; font-family: inherit;
+    }
+    .inline-form input:focus, .inline-form textarea:focus, .inline-form select:focus { outline: none; border-color: var(--teal); }
+
+    /* ── Empty state ── */
+    .empty-state { text-align: center; padding: 40px 24px; color: var(--muted); }
+    .empty-state .es-icon { font-size: 36px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+
+    /* ── Policy tiles ── */
+    .policy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .policy-tile { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 14px 16px; }
+    .policy-tile .pt-label { font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: .5px; margin-bottom: 6px; }
+    .policy-tile .pt-val   { font-size: 16px; font-weight: 700; }
+    .policy-tile .pt-sub   { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    /* ── Field guide ── */
+    .fg-section { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+    .fg-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+
+    /* ── Toast ── */
+    #opsToast {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: var(--gray-800); color: white; padding: 10px 20px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none;
+      transition: opacity .25s; z-index: 9999;
+    }
+    #opsToast.show { opacity: 1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .ops-sidebar { width: 52px; padding: 8px 0; }
+      .sidebar-section-label, .sidebar-btn span, .sidebar-ext-link span { display: none; }
+      .sidebar-btn { padding: 10px; justify-content: center; }
+      .sidebar-ext-link { justify-content: center; }
+      .ops-main { padding: 16px; }
+      .tiles-row { grid-template-columns: repeat(2, 1fr); }
+      .info-grid { grid-template-columns: 1fr; }
+      .pax-grid  { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .tiles-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ PASSWORD GATE ══ -->
+<div id="opsGate">
+  <div class="gate-card">
+    <div class="gate-logo">CAMINO</div>
+    <div class="gate-sub">Operations Portal</div>
+    <input type="password" id="opsPwInput" placeholder="Password" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')checkOpsPw()" />
+    <button class="gate-btn" onclick="checkOpsPw()">Enter</button>
+    <div class="gate-err" id="opsPwErr">Incorrect password.</div>
+    <div class="gate-links">
+      <a href="../admin/">Admin panel ↗</a>
+      <a href="../board/">Board portal ↗</a>
+      <a href="../index.html">Public site ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="opsApp">
+
+  <!-- Top bar -->
+  <header class="ops-topbar">
+    <div class="ops-topbar-brand">
+      <div>
+        <div class="tb-logo">CAMINO Ops</div>
+        <div class="tb-sub">Operations &amp; Project Management</div>
+      </div>
+    </div>
+    <div class="ops-topbar-right">
+      <button class="topbar-btn topbar-btn-outline" onclick="window.open('../admin/','_blank')">Admin ↗</button>
+      <button class="topbar-btn topbar-btn-red" onclick="opsLogout()">Log out</button>
+    </div>
+  </header>
+
+  <div class="ops-layout">
+
+    <!-- Sidebar -->
+    <nav class="ops-sidebar" id="opsSidebar">
+      <div class="sidebar-section-label">Dashboard</div>
+      <button class="sidebar-btn active" data-panel="overview" onclick="showOpsPanel('overview',this)">
+        <span>🗂️</span><span>Overview</span>
+      </button>
+
+      <div class="sidebar-section-label">Field Ops</div>
+      <button class="sidebar-btn" data-panel="trips" onclick="showOpsPanel('trips',this)">
+        <span>✈️</span><span>Mission Trips</span><span id="sb-trips-badge" class="sb-badge" style="display:none"></span>
+      </button>
+      <button class="sidebar-btn" data-panel="projects" onclick="showOpsPanel('projects',this)">
+        <span>🏠</span><span>Build Projects</span>
+      </button>
+      <button class="sidebar-btn" data-panel="procurement" onclick="showOpsPanel('procurement',this)">
+        <span>📦</span><span>Procurement</span><span id="sb-proc-badge" class="sb-badge" style="display:none"></span>
+      </button>
+
+      <div class="sidebar-section-label">Intelligence</div>
+      <button class="sidebar-btn" data-panel="policy" onclick="showOpsPanel('policy',this)">
+        <span>🛡️</span><span>Policy &amp; Intel</span>
+      </button>
+      <button class="sidebar-btn" data-panel="fieldguide" onclick="showOpsPanel('fieldguide',this)">
+        <span>🏥</span><span>Field Guide</span>
+      </button>
+
+      <div class="sidebar-sep"></div>
+      <a class="sidebar-ext-link" href="../admin/" target="_blank">🔧 <span>Admin Panel</span></a>
+      <a class="sidebar-ext-link" href="../board/" target="_blank">🏛️ <span>Board Portal</span></a>
+      <a class="sidebar-ext-link" href="../" target="_blank">🌐 <span>Public Site</span></a>
+    </nav>
+
+    <!-- Main panels -->
+    <main class="ops-main">
+
+      <!-- ── OVERVIEW ── -->
+      <section id="panel-overview" class="ops-panel active">
+        <div class="section-hd">
+          <h2>Operations Overview</h2>
+          <div id="ov-last-updated" class="section-hd-sub"></div>
+        </div>
+        <div id="ov-alerts"></div>
+        <div class="tiles-row" id="ov-tiles"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px" id="ov-columns">
+          <div>
+            <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">Upcoming trips</h3>
+            <div id="ov-trips-list"></div>
+          </div>
+          <div>
+            <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">Active projects</h3>
+            <div id="ov-projects-list"></div>
+          </div>
+        </div>
+        <div style="margin-top:20px">
+          <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">Pending procurement (due ≤14 days)</h3>
+          <div id="ov-proc-list"></div>
+        </div>
+      </section>
+
+      <!-- ── MISSION TRIPS ── -->
+      <section id="panel-trips" class="ops-panel">
+        <div class="section-hd">
+          <h2>Mission Trips</h2>
+          <div class="section-hd-sub">Participant management · Logistics · Notifications</div>
+        </div>
+        <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm trip-filter active" data-filter="all" onclick="filterTrips('all',this)">All</button>
+          <button class="btn btn-ghost btn-sm trip-filter" data-filter="upcoming" onclick="filterTrips('upcoming',this)">Upcoming</button>
+          <button class="btn btn-ghost btn-sm trip-filter" data-filter="active" onclick="filterTrips('active',this)">In Progress</button>
+          <button class="btn btn-ghost btn-sm trip-filter" data-filter="past" onclick="filterTrips('past',this)">Past</button>
+        </div>
+        <div id="trips-cards"></div>
+      </section>
+
+      <!-- ── BUILD PROJECTS ── -->
+      <section id="panel-projects" class="ops-panel">
+        <div class="section-hd">
+          <h2>Build Projects</h2>
+          <div class="section-hd-sub">Home builds · Infrastructure · Donor stewardship</div>
+        </div>
+        <div id="projects-cards"></div>
+      </section>
+
+      <!-- ── PROCUREMENT ── -->
+      <section id="panel-procurement" class="ops-panel">
+        <div class="section-hd">
+          <h2>Procurement &amp; Tasks</h2>
+          <div class="section-hd-sub">Materials orders · Action items · Logistics tracking</div>
+        </div>
+        <div class="tiles-row" id="proc-tiles" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+          <select id="proc-filter-type" onchange="renderProcTable()" style="padding:6px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px">
+            <option value="all">All items</option>
+            <option value="orders">Orders only</option>
+            <option value="tasks">Tasks only</option>
+          </select>
+          <select id="proc-filter-status" onchange="renderProcTable()" style="padding:6px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px">
+            <option value="all">All statuses</option>
+            <option value="Ordered">Ordered</option>
+            <option value="Pending">Pending</option>
+            <option value="To Do">To Do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Done">Done</option>
+          </select>
+          <input type="text" id="proc-search" placeholder="Search…" oninput="renderProcTable()"
+                 style="padding:6px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px;flex:1;min-width:120px" />
+          <a href="../admin/" target="_blank" class="btn btn-secondary btn-sm">+ Add in Admin ↗</a>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <div class="tbl-wrap">
+            <table class="data-tbl">
+              <thead id="proc-thead"></thead>
+              <tbody id="proc-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── POLICY & INTEL ── -->
+      <section id="panel-policy" class="ops-panel">
+        <div class="section-hd">
+          <h2>Policy &amp; Intelligence</h2>
+          <div class="section-hd-sub">Travel advisories · NGO law · Security · Health</div>
+        </div>
+        <div id="policy-alert-banner"></div>
+        <div class="policy-grid" id="policy-tiles"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">Security notes by department</h3>
+            <div id="policy-security-grid"></div>
+          </div>
+          <div>
+            <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">Key monitoring dates</h3>
+            <div id="policy-dates"></div>
+          </div>
+        </div>
+        <div style="margin-top:16px">
+          <a href="../admin/#pw-tab" target="_blank" class="btn btn-secondary">Open full Policy Watch in Admin ↗</a>
+        </div>
+      </section>
+
+      <!-- ── FIELD GUIDE ── -->
+      <section id="panel-fieldguide" class="ops-panel">
+        <div class="section-hd">
+          <h2>Field Guide</h2>
+          <div class="section-hd-sub">Emergency contacts · Health alerts · Pre-trip essentials</div>
+        </div>
+
+        <div id="fg-health-alert"></div>
+
+        <!-- Emergency contacts -->
+        <div class="fg-section">
+          <h3>🚨 Emergency Contacts</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
+            <div class="contact-card">
+              <div class="contact-name">Walker Somerville</div>
+              <div class="contact-role">Executive Director · Honduras Field Lead</div>
+              <div class="contact-row">📱 WhatsApp: <a href="https://wa.me/15402776621" target="_blank">+1 (540) 277-6621</a></div>
+              <div class="contact-row" style="color:var(--muted);font-size:12px">Primary contact for all field emergencies</div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-name">Seiny Somerville</div>
+              <div class="contact-role">Honduras Operations · Co-Founder</div>
+              <div class="contact-row" style="color:var(--muted);font-size:12px">Local logistics · community relations · translation</div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-name">US Embassy — Tegucigalpa</div>
+              <div class="contact-role">American Citizens Services (ACS)</div>
+              <div class="contact-row">📞 <a href="tel:+15042201440">+504 2236-9320</a></div>
+              <div class="contact-row">🌐 <a href="https://hn.usembassy.gov/u-s-citizen-services/" target="_blank" rel="noopener">hn.usembassy.gov</a></div>
+              <div class="contact-row" style="color:var(--muted);font-size:12px">After hours emergencies: +504 2238-5114</div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-name">Honduras Emergency Numbers</div>
+              <div class="contact-role">National emergency services</div>
+              <div class="contact-row">🚒 Fire / Police / Ambulance: <strong>911</strong></div>
+              <div class="contact-row">🏥 Cruz Roja (Red Cross): <strong>195</strong></div>
+              <div class="contact-row">👮 Tourist Police (POLITUR): <strong>2222-8476</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pre-trip checklist -->
+        <div class="fg-section">
+          <h3>✅ Pre-Trip Essentials</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+            <div>
+              <div style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--teal)">Required for all participants</div>
+              <div id="fg-checklist-required"></div>
+            </div>
+            <div>
+              <div style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--amber)">Health &amp; wellness prep</div>
+              <div id="fg-checklist-health"></div>
+            </div>
+            <div>
+              <div style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--gray-600)">Recommended reading</div>
+              <div id="fg-checklist-reading"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Health reminders -->
+        <div class="fg-section">
+          <h3>💊 Health Reminders for Honduras</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;font-size:13px">
+            <div style="background:var(--red-bg);border:1px solid #fca5a5;border-radius:var(--radius);padding:12px">
+              <strong>Dengue fever</strong> — Endemic. Wear DEET repellent at dusk and dawn. Long sleeves when possible.
+            </div>
+            <div style="background:var(--amber-bg);border:1px solid #fcd34d;border-radius:var(--radius);padding:12px">
+              <strong>Water safety</strong> — Drink bottled water only. Avoid ice unless confirmed purified. No raw produce washed in tap water.
+            </div>
+            <div style="background:var(--green-bg);border:1px solid #86efac;border-radius:var(--radius);padding:12px">
+              <strong>Sun &amp; heat</strong> — Cortés / Tegucigalpa can exceed 35°C. Drink 3L water daily on build days. Rest in shade midday.
+            </div>
+            <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:var(--radius);padding:12px">
+              <strong>Recommended vaccines</strong> — Hep A, Typhoid, Tdap, Influenza. Rabies for animal-contact risk. Malaria prophylaxis if traveling to Mosquitia.
+            </div>
+            <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:var(--radius);padding:12px">
+              <strong>Altitude (Tegucigalpa)</strong> — ~1000 m. Most people adapt in 24h. If dizzy or headache, rest and hydrate before physical work.
+            </div>
+            <div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:var(--radius);padding:12px">
+              <strong>Travel insurance</strong> — Confirm each participant has coverage including medical evacuation. Keep policy numbers on hand.
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP + CBP One reminder -->
+        <div class="fg-section">
+          <h3>📋 US Government Registrations</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+            <div style="border:1px solid var(--teal);border-radius:var(--radius);padding:14px">
+              <div style="font-weight:700;color:var(--teal);margin-bottom:6px">STEP (Smart Traveler)</div>
+              <p style="color:var(--muted);margin-bottom:8px">Register every US participant at step.state.gov before departure. Free — gets emergency alerts from the Embassy.</p>
+              <a href="https://step.state.gov" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Register at step.state.gov ↗</a>
+            </div>
+            <div style="border:1px solid var(--amber);border-radius:var(--radius);padding:14px">
+              <div style="font-weight:700;color:var(--amber);margin-bottom:6px">CBP One (Entry to US)</div>
+              <p style="color:var(--muted);margin-bottom:8px">For participants returning via land border or with ESTA concerns. Not required for air travel with valid US passport.</p>
+              <a href="https://www.cbp.gov/travel/us-citizens/cbp-one-mobile-application" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">CBP One info ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add milestone quick form -->
+        <div class="fg-section">
+          <h3>📝 Log a Field Note</h3>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Quick notes are saved locally. For full project milestones use the Build Projects panel.</p>
+          <div>
+            <textarea id="fg-note-text" rows="3" style="width:100%;padding:8px 12px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px;font-family:inherit;resize:vertical" placeholder="Note, observation, or update from the field…"></textarea>
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+              <select id="fg-note-tag" style="padding:6px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px">
+                <option value="general">General</option>
+                <option value="health">Health</option>
+                <option value="build">Build</option>
+                <option value="logistics">Logistics</option>
+                <option value="safety">Safety</option>
+              </select>
+              <button class="btn btn-primary btn-sm" onclick="saveFgNote()">Save note</button>
+            </div>
+          </div>
+          <div id="fg-notes-list" style="margin-top:14px"></div>
+        </div>
+      </section>
+
+    </main><!-- /ops-main -->
+  </div><!-- /ops-layout -->
+</div><!-- /opsApp -->
+
+<div id="opsToast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════════════════
+(function() {
+  if (sessionStorage.getItem('camino_ops_auth') === 'true') {
+    document.getElementById('opsGate').style.display = 'none';
+    document.getElementById('opsApp').style.display  = '';
+    initOps();
+  }
+})();
+
+function checkOpsPw() {
+  const pw = document.getElementById('opsPwInput').value;
+  if (pw === 'camino-ops') {
+    sessionStorage.setItem('camino_ops_auth', 'true');
+    document.getElementById('opsGate').style.display = 'none';
+    document.getElementById('opsApp').style.display  = '';
+    initOps();
+  } else {
+    document.getElementById('opsPwErr').style.display = '';
+    document.getElementById('opsPwInput').value = '';
+    document.getElementById('opsPwInput').focus();
+  }
+}
+
+function opsLogout() {
+  sessionStorage.removeItem('camino_ops_auth');
+  location.reload();
+}
+
+// ══════════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════════
+function toast(msg) {
+  const t = document.getElementById('opsToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ══════════════════════════════════════════════════════
+// DATA HELPERS (read from same localStorage as admin)
+// ══════════════════════════════════════════════════════
+function getTrips() {
+  try { const r = localStorage.getItem('camino_trips'); if (r) return JSON.parse(r); } catch {}
+  return [];
+}
+function getParticipants(tripId) {
+  try { const r = localStorage.getItem('camino_pax_' + tripId); if (r) return JSON.parse(r); } catch {}
+  return [];
+}
+function getProjects() {
+  try { const r = localStorage.getItem('camino_projects'); if (r) return JSON.parse(r); } catch {}
+  return [];
+}
+function getOpsOrders() {
+  try { const r = localStorage.getItem('camino_ops_orders'); if (r) return JSON.parse(r); } catch {}
+  return [];
+}
+function getOpsTasks() {
+  try { const r = localStorage.getItem('camino_ops_tasks'); if (r) return JSON.parse(r); } catch {}
+  return [];
+}
+function getPolicyData() {
+  try { const r = localStorage.getItem('camino_policy_data'); if (r) return JSON.parse(r); } catch {}
+  return {};
+}
+function getHealthAlerts() {
+  try { const r = localStorage.getItem('camino_health_alerts'); if (r) return JSON.parse(r); } catch {}
+  return [];
+}
+function getFgNotes() {
+  try { const r = localStorage.getItem('camino_fg_notes'); if (r) return JSON.parse(r); } catch {}
+  return [];
+}
+function saveFgNotes(list) { localStorage.setItem('camino_fg_notes', JSON.stringify(list)); }
+function saveOpsOrders(list) { localStorage.setItem('camino_ops_orders', JSON.stringify(list)); }
+function saveOpsTasks2(list) { localStorage.setItem('camino_ops_tasks', JSON.stringify(list)); }
+function saveProjects(list) { localStorage.setItem('camino_projects', JSON.stringify(list)); }
+
+function escH(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  try { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }); } catch { return d; }
+}
+
+function daysDiff(dateStr) {
+  if (!dateStr) return null;
+  const t = new Date(dateStr + 'T12:00:00');
+  return Math.round((t - new Date()) / 86400000);
+}
+
+function tripStatus(trip) {
+  if (!trip.startDate || !trip.endDate) return 'upcoming';
+  const now  = new Date();
+  const s    = new Date(trip.startDate + 'T00:00:00');
+  const e    = new Date(trip.endDate   + 'T23:59:59');
+  if (now < s) return 'upcoming';
+  if (now > e) return 'past';
+  return 'active';
+}
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+function initOps() {
+  renderOverview();
+  renderTrips();
+  renderProjects();
+  renderProcTable();
+  renderProcTiles();
+  renderPolicy();
+  renderFieldGuide();
+  updateSidebarBadges();
+  document.getElementById('ov-last-updated').textContent =
+    'Updated ' + new Date().toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+}
+
+// ══════════════════════════════════════════════════════
+// PANEL SWITCHING
+// ══════════════════════════════════════════════════════
+function showOpsPanel(id, btn) {
+  document.querySelectorAll('.ops-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════
+// SIDEBAR BADGES
+// ══════════════════════════════════════════════════════
+function updateSidebarBadges() {
+  const trips   = getTrips().filter(t => tripStatus(t) !== 'past');
+  const today   = new Date().toISOString().slice(0,10);
+  const cutoff  = new Date(Date.now() + 7 * 86400000).toISOString().slice(0,10);
+  const ordDue  = getOpsOrders().filter(o => o.expectedDelivery && o.expectedDelivery <= cutoff && !['Delivered','Cancelled'].includes(o.status));
+  const tasksDue = getOpsTasks().filter(t => t.dueDate && t.dueDate <= cutoff && !['Done','Cancelled'].includes(t.status));
+  const urgentProc = ordDue.length + tasksDue.length;
+
+  const tripBadge = document.getElementById('sb-trips-badge');
+  const procBadge = document.getElementById('sb-proc-badge');
+  if (trips.length) { tripBadge.textContent = trips.length; tripBadge.style.display = ''; }
+  if (urgentProc)   { procBadge.textContent = urgentProc;   procBadge.style.display = ''; }
+}
+
+// ══════════════════════════════════════════════════════
+// OVERVIEW
+// ══════════════════════════════════════════════════════
+function renderOverview() {
+  const trips    = getTrips();
+  const projects = getProjects();
+  const orders   = getOpsOrders();
+  const tasks    = getOpsTasks();
+  const alerts   = getHealthAlerts();
+  const policy   = getPolicyData();
+
+  const upcomingTrips  = trips.filter(t => tripStatus(t) === 'upcoming');
+  const activeTrips    = trips.filter(t => tripStatus(t) === 'active');
+  const activeProjects = projects.filter(p => p.status === 'Active');
+  const today          = new Date().toISOString().slice(0,10);
+  const cutoff7        = new Date(Date.now() + 7 * 86400000).toISOString().slice(0,10);
+  const overdueOrds    = orders.filter(o => o.expectedDelivery && o.expectedDelivery < today && !['Delivered','Cancelled'].includes(o.status));
+  const urgentTasks    = tasks.filter(t  => t.dueDate && t.dueDate <= cutoff7 && !['Done','Cancelled'].includes(t.status));
+  const recentAlert    = alerts.find(a => a.type === 'honduras' || !a.type);
+
+  // Alert banners
+  let alertHtml = '';
+  if (activeTrips.length) {
+    alertHtml += `<div class="alert-bar alert-green">✈️ <strong>Trip in progress:</strong> ${activeTrips.map(t => escH(t.name)).join(', ')}</div>`;
+  }
+  if (recentAlert && recentAlert.level === 'warning') {
+    alertHtml += `<div class="alert-bar alert-red">🚨 <strong>Health alert:</strong> ${escH(recentAlert.title || 'Active health advisory for Honduras')}</div>`;
+  }
+  if (overdueOrds.length) {
+    alertHtml += `<div class="alert-bar alert-amber">📦 <strong>${overdueOrds.length} overdue order${overdueOrds.length > 1 ? 's' : ''}</strong> — delivery date passed. Review in Procurement.</div>`;
+  }
+  document.getElementById('ov-alerts').innerHTML = alertHtml;
+
+  // Stat tiles
+  const advLevel = policy.travelAdvisory || 'Level 2';
+  document.getElementById('ov-tiles').innerHTML = `
+    <div class="tile teal">
+      <div class="tile-val">${upcomingTrips.length + activeTrips.length}</div>
+      <div class="tile-lbl">Active Trips</div>
+      <div class="tile-sub">${activeTrips.length} in progress · ${upcomingTrips.length} upcoming</div>
+    </div>
+    <div class="tile amber">
+      <div class="tile-val">${activeProjects.length}</div>
+      <div class="tile-lbl">Build Projects</div>
+      <div class="tile-sub">${projects.filter(p=>p.status==='Planning').length} in planning</div>
+    </div>
+    <div class="tile ${overdueOrds.length ? 'red' : ''}">
+      <div class="tile-val">${orders.filter(o=>!['Delivered','Cancelled'].includes(o.status)).length}</div>
+      <div class="tile-lbl">Open Orders</div>
+      <div class="tile-sub">${overdueOrds.length ? overdueOrds.length + ' overdue' : urgentTasks.length + ' tasks due soon'}</div>
+    </div>
+    <div class="tile ${advLevel.includes('3') || advLevel.includes('4') ? 'red' : ''}">
+      <div class="tile-val">${advLevel}</div>
+      <div class="tile-lbl">Travel Advisory</div>
+      <div class="tile-sub">US State Dept · Honduras</div>
+    </div>`;
+
+  // Upcoming trips list
+  const upList = [...upcomingTrips, ...activeTrips].slice(0, 4);
+  document.getElementById('ov-trips-list').innerHTML = upList.length
+    ? upList.map(t => {
+        const d = daysDiff(t.startDate);
+        const pax = getParticipants(t.id);
+        return `<div class="card" style="padding:12px 14px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="font-weight:600;font-size:13px">${escH(t.name)}</div>
+              <div style="font-size:11px;color:var(--muted)">${fmtDate(t.startDate)} – ${fmtDate(t.endDate)}</div>
+            </div>
+            <span class="pill ${tripStatus(t) === 'active' ? 'pill-green' : 'pill-blue'}">${tripStatus(t) === 'active' ? 'Live' : d !== null ? d + 'd' : '—'}</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">${pax.length} participant${pax.length !== 1 ? 's' : ''} enrolled</div>
+        </div>`;
+      }).join('')
+    : '<div class="empty-state" style="padding:20px"><div class="es-icon">✈️</div><p>No upcoming trips yet</p></div>';
+
+  // Active projects list
+  document.getElementById('ov-projects-list').innerHTML = activeProjects.length
+    ? activeProjects.map(p => {
+        const pct = p.fundingGoalCents ? Math.min(100, (p.fundedCents / p.fundingGoalCents * 100)).toFixed(0) : 0;
+        return `<div class="card" style="padding:12px 14px;margin-bottom:8px">
+          <div style="font-weight:600;font-size:13px">${escH(p.name)}</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:6px">${escH(p.community)}, ${escH(p.region)}</div>
+          <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">${pct}% funded · ${p.donors ? p.donors.length : 0} donor${(p.donors||[]).length !== 1 ? 's' : ''}</div>
+        </div>`;
+      }).join('')
+    : '<div class="empty-state" style="padding:20px"><div class="es-icon">🏠</div><p>No active projects</p></div>';
+
+  // Procurement due soon
+  const procDue = [...orders, ...tasks]
+    .filter(x => {
+      const d = x.expectedDelivery || x.dueDate;
+      return d && d <= cutoff7 && !['Delivered','Done','Cancelled'].includes(x.status);
+    })
+    .sort((a, b) => (a.expectedDelivery || a.dueDate || '').localeCompare(b.expectedDelivery || b.dueDate || ''));
+
+  document.getElementById('ov-proc-list').innerHTML = procDue.length
+    ? `<div class="card" style="padding:0;overflow:hidden"><table class="data-tbl">
+        <thead><tr><th>Item / Task</th><th>Type</th><th>Due</th><th>Status</th></tr></thead>
+        <tbody>${procDue.map(x => {
+          const isOrder = !!x.vendor;
+          const date = x.expectedDelivery || x.dueDate;
+          const d = daysDiff(date);
+          return `<tr>
+            <td style="font-weight:500">${escH(isOrder ? x.item : x.title)}</td>
+            <td><span class="pill ${isOrder ? 'pill-blue' : 'pill-teal'}">${isOrder ? 'Order' : 'Task'}</span></td>
+            <td><span style="color:${d !== null && d < 0 ? 'var(--red)' : d !== null && d <= 3 ? 'var(--amber)' : 'inherit'};font-weight:${d !== null && d < 0 ? '700' : '400'}">${fmtDate(date)}</span></td>
+            <td><span class="pill pill-gray">${escH(x.status)}</span></td>
+          </tr>`;
+        }).join('')}</tbody></table></div>`
+    : '<div class="alert-bar alert-green">✅ No procurement items due in the next 14 days.</div>';
+}
+
+// ══════════════════════════════════════════════════════
+// MISSION TRIPS
+// ══════════════════════════════════════════════════════
+var currentTripFilter = 'all';
+
+function filterTrips(filter, btn) {
+  currentTripFilter = filter;
+  document.querySelectorAll('.trip-filter').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderTrips();
+}
+
+function renderTrips() {
+  const trips = getTrips().filter(t => {
+    if (currentTripFilter === 'all') return true;
+    return tripStatus(t) === currentTripFilter;
+  });
+
+  if (!trips.length) {
+    document.getElementById('trips-cards').innerHTML =
+      '<div class="empty-state"><div class="es-icon">✈️</div><p>No trips match this filter. Add trips in the Admin panel.</p></div>';
+    return;
+  }
+
+  document.getElementById('trips-cards').innerHTML = trips.map(t => {
+    const pax     = getParticipants(t.id);
+    const status  = tripStatus(t);
+    const heatHi  = pax.filter(p => p.heatSensitivity === 'High');
+    const epipen  = pax.filter(p => p.epiPen);
+    const dietary = pax.filter(p => p.dietary && p.dietary !== 'None');
+    const d       = daysDiff(t.startDate);
+
+    return `<div class="card" id="trip-card-${escH(t.id)}">
+      <div class="card-hd">
+        <div class="card-hd-main">
+          <div class="card-title">${escH(t.name)}</div>
+          <div class="card-sub">${fmtDate(t.startDate)} – ${fmtDate(t.endDate)} ${t.location ? '· ' + escH(t.location) : ''}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="pill ${status === 'active' ? 'pill-green' : status === 'past' ? 'pill-gray' : 'pill-blue'}">
+            ${status === 'active' ? 'In Progress' : status === 'past' ? 'Complete' : d !== null ? 'In ' + d + ' days' : 'Upcoming'}
+          </span>
+          <span class="pill pill-teal">${pax.length} / ${t.maxParticipants || '?'} pax</span>
+        </div>
+      </div>
+
+      <!-- Quick flags -->
+      ${(heatHi.length || epipen.length || dietary.length) ? `
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+        ${heatHi.length  ? `<span class="pill pill-red">🌡️ ${heatHi.length} heat sensitive</span>` : ''}
+        ${epipen.length  ? `<span class="pill pill-amber">💉 ${epipen.length} EpiPen</span>` : ''}
+        ${dietary.length ? `<span class="pill pill-blue">🥗 ${dietary.length} dietary</span>` : ''}
+      </div>` : ''}
+
+      <!-- Key info row -->
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:12px">
+        ${t.whatsappLink ? `<a href="${escH(t.whatsappLink)}" target="_blank" rel="noopener" style="color:var(--teal);font-weight:600">💬 WhatsApp group ↗</a>` : ''}
+        ${t.tripUrl ? `<a href="${escH(t.tripUrl)}" target="_blank" rel="noopener" style="color:var(--teal)">Trip portal ↗</a>` : ''}
+        ${t.linkedProjectId ? `<span>🏠 ${escH(t.linkedProjectId)}</span>` : ''}
+      </div>
+
+      <!-- Participants collapsible -->
+      <button class="collapse-toggle" onclick="toggleCollapse('pax-${escH(t.id)}',this)">
+        <span class="arrow">▶</span> Show ${pax.length} participant${pax.length !== 1 ? 's' : ''}
+      </button>
+      <div class="collapse-body" id="pax-${escH(t.id)}">
+        ${pax.length ? `<div class="pax-grid">${pax.map(p => `
+          <div class="pax-card ${p.heatSensitivity === 'High' ? 'heat-hi' : p.heatSensitivity === 'Medium' ? 'heat-med' : ''}">
+            <div class="pax-name">${escH(p.name)}</div>
+            <div class="pax-detail">${escH(p.church || '')} ${p.epiPen ? '· 💉 EpiPen' : ''} ${p.dietary && p.dietary !== 'None' ? '· 🥗 ' + escH(p.dietary) : ''}</div>
+            <div class="pax-detail">${p.flightArrival ? '✈️ ' + fmtDate(p.flightArrival) : ''} ${p.phone ? '· 📱 ' + escH(p.phone) : ''}</div>
+          </div>`).join('')}</div>`
+        : '<p style="color:var(--muted);font-size:13px;margin-top:8px">No participants yet. Add in the Admin panel.</p>'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+// BUILD PROJECTS
+// ══════════════════════════════════════════════════════
+function renderProjects() {
+  const projects = getProjects();
+
+  if (!projects.length) {
+    document.getElementById('projects-cards').innerHTML =
+      '<div class="empty-state"><div class="es-icon">🏠</div><p>No projects yet. Add in the Admin panel.</p></div>';
+    return;
+  }
+
+  document.getElementById('projects-cards').innerHTML = projects.map(p => {
+    const pct      = p.fundingGoalCents ? Math.min(100, (p.fundedCents / p.fundingGoalCents * 100)).toFixed(0) : 0;
+    const fundedK  = p.fundedCents  ? '$' + (p.fundedCents  / 100).toLocaleString() : '$0';
+    const goalK    = p.fundingGoalCents ? '$' + (p.fundingGoalCents / 100).toLocaleString() : '?';
+    const donors   = p.donors || [];
+    const orders   = getOpsOrders().filter(o => o.linkedProjectId === p.id && !['Delivered','Cancelled'].includes(o.status));
+    const tasks    = getOpsTasks().filter(t => t.linkedProjectId === p.id && !['Done','Cancelled'].includes(t.status));
+
+    const statusPill = { Active: 'pill-green', Planning: 'pill-amber', Complete: 'pill-teal', 'On Hold': 'pill-red' }[p.status] || 'pill-gray';
+
+    return `<div class="card">
+      <div class="card-hd">
+        <div class="card-hd-main">
+          <div class="card-title">${escH(p.name)}</div>
+          <div class="card-sub">${escH(p.type || 'Project')} · ${escH(p.community)}, ${escH(p.region)}</div>
+        </div>
+        <span class="pill ${statusPill}">${escH(p.status)}</span>
+      </div>
+
+      <!-- Funding progress -->
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span style="color:var(--muted)">Funding progress</span>
+          <span style="font-weight:700">${fundedK} / ${goalK} <span style="color:var(--muted);font-weight:400">(${pct}%)</span></span>
+        </div>
+        <div class="prog-wrap">
+          <div class="prog-fill ${pct >= 100 ? 'teal' : pct >= 50 ? '' : 'amber'}" style="width:${pct}%"></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <!-- Donors -->
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Linked donors</div>
+          ${donors.length ? donors.map(d => `
+            <div class="donor-row">
+              <span>${escH(d.donorName)}</span>
+              <span style="font-weight:600;color:var(--teal)">$${d.amountCents ? (d.amountCents/100).toLocaleString() : '—'}</span>
+            </div>`).join('') : '<p style="font-size:12px;color:var(--muted)">No linked donors</p>'}
+        </div>
+        <!-- Open orders/tasks -->
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Open procurement (${orders.length + tasks.length})</div>
+          ${(orders.length + tasks.length) ? [...orders.slice(0,3), ...tasks.slice(0,3)].map(x => `
+            <div style="font-size:12px;display:flex;justify-content:space-between;padding:3px 0">
+              <span>${escH(x.item || x.title)}</span>
+              <span class="pill pill-gray" style="font-size:10px">${escH(x.status)}</span>
+            </div>`).join('') : '<p style="font-size:12px;color:var(--muted)">None open</p>'}
+        </div>
+      </div>
+
+      ${p.notes ? `<div style="margin-top:12px;font-size:12px;color:var(--muted);background:var(--gray-50);border-radius:var(--radius);padding:8px 10px">${escH(p.notes)}</div>` : ''}
+
+      <!-- Milestone log -->
+      <div style="margin-top:14px">
+        <button class="collapse-toggle" onclick="toggleCollapse('proj-milestone-${escH(p.id)}',this)">
+          <span class="arrow">▶</span> Milestones &amp; updates
+        </button>
+        <div class="collapse-body" id="proj-milestone-${escH(p.id)}">
+          <div id="proj-milestones-${escH(p.id)}">
+            ${(p.milestones && p.milestones.length) ? p.milestones.map(m => `
+              <div class="milestone-item">
+                <div class="milestone-dot"></div>
+                <div class="milestone-content">
+                  <div class="milestone-text">${escH(m.text)}</div>
+                  <div class="milestone-date">${fmtDate(m.date)} ${m.by ? '· ' + escH(m.by) : ''}</div>
+                </div>
+              </div>`).join('') : '<p style="font-size:12px;color:var(--muted);padding:8px 0">No milestones logged yet.</p>'}
+          </div>
+          <div class="inline-form" style="margin-top:10px">
+            <input type="text" id="ms-text-${escH(p.id)}" placeholder="Milestone description" style="flex:1;min-width:160px" />
+            <input type="date" id="ms-date-${escH(p.id)}" value="${new Date().toISOString().slice(0,10)}" />
+            <button class="btn btn-primary btn-sm" onclick="addMilestone('${escH(p.id)}')">Log</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:6px">
+        ${p.estimatedCompletion ? `<span style="font-size:11px;color:var(--muted)">Est. completion: ${fmtDate(p.estimatedCompletion)}</span>` : ''}
+        <a href="../admin/" target="_blank" style="font-size:11px;color:var(--teal);margin-left:auto">Edit in Admin ↗</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addMilestone(projectId) {
+  const text = document.getElementById('ms-text-' + projectId)?.value?.trim();
+  const date = document.getElementById('ms-date-' + projectId)?.value;
+  if (!text) { toast('Enter a milestone description.'); return; }
+  const projects = getProjects();
+  const p = projects.find(x => x.id === projectId);
+  if (!p) return;
+  if (!p.milestones) p.milestones = [];
+  p.milestones.unshift({ text, date: date || new Date().toISOString().slice(0,10), by: 'Walker' });
+  saveProjects(projects);
+  document.getElementById('ms-text-' + projectId).value = '';
+  renderProjects();
+  toast('Milestone logged.');
+}
+
+// ══════════════════════════════════════════════════════
+// PROCUREMENT
+// ══════════════════════════════════════════════════════
+function renderProcTiles() {
+  const orders = getOpsOrders();
+  const tasks  = getOpsTasks();
+  const today  = new Date().toISOString().slice(0,10);
+  const over   = orders.filter(o => o.expectedDelivery && o.expectedDelivery < today && !['Delivered','Cancelled'].includes(o.status));
+
+  document.getElementById('proc-tiles').innerHTML = `
+    <div class="tile"><div class="tile-val">${orders.filter(o=>!['Delivered','Cancelled'].includes(o.status)).length}</div><div class="tile-lbl">Open Orders</div></div>
+    <div class="tile ${over.length ? 'red' : ''}"><div class="tile-val">${over.length}</div><div class="tile-lbl">Overdue</div></div>
+    <div class="tile amber"><div class="tile-val">${tasks.filter(t=>!['Done','Cancelled'].includes(t.status)).length}</div><div class="tile-lbl">Open Tasks</div></div>
+    <div class="tile green"><div class="tile-val">${orders.filter(o=>o.status==='Delivered').length}</div><div class="tile-lbl">Delivered</div></div>`;
+}
+
+function renderProcTable() {
+  const filterType   = document.getElementById('proc-filter-type')?.value   || 'all';
+  const filterStatus = document.getElementById('proc-filter-status')?.value || 'all';
+  const search       = (document.getElementById('proc-search')?.value || '').toLowerCase();
+
+  const orders = getOpsOrders();
+  const tasks  = getOpsTasks();
+  const today  = new Date().toISOString().slice(0,10);
+
+  let rows = [];
+  if (filterType !== 'tasks') {
+    orders.forEach(o => {
+      if (filterStatus !== 'all' && o.status !== filterStatus) return;
+      const text = (o.item + ' ' + (o.vendor || '')).toLowerCase();
+      if (search && !text.includes(search)) return;
+      rows.push({ _type:'order', _id: o.id, _date: o.expectedDelivery || o.orderDate || '',
+        label: o.item, secondary: o.vendor || '—', date: o.expectedDelivery || o.orderDate || '',
+        status: o.status, priority: '', data: o });
+    });
+  }
+  if (filterType !== 'orders') {
+    tasks.forEach(t => {
+      if (filterStatus !== 'all' && t.status !== filterStatus) return;
+      const text = (t.title + ' ' + (t.assignedTo || '')).toLowerCase();
+      if (search && !text.includes(search)) return;
+      rows.push({ _type:'task', _id: t.id, _date: t.dueDate || '',
+        label: t.title, secondary: t.assignedTo || '—', date: t.dueDate || '',
+        status: t.status, priority: t.priority, data: t });
+    });
+  }
+
+  rows.sort((a,b) => (a._date || 'z').localeCompare(b._date || 'z'));
+
+  const thead = document.getElementById('proc-thead');
+  const tbody = document.getElementById('proc-tbody');
+  if (!thead || !tbody) return;
+
+  thead.innerHTML = '<tr><th>Type</th><th>Item / Task</th><th>Vendor / Assigned</th><th>Date</th><th>Status</th><th>Priority</th><th>Actions</th></tr>';
+
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">No items match the filter.</td></tr>';
+    return;
+  }
+
+  const sPill = (type, s) => {
+    const m = { Ordered:'pill-blue', Pending:'pill-amber', Delivered:'pill-green', Done:'pill-green', 'In Progress':'pill-teal', 'To Do':'pill-gray', Cancelled:'pill-gray' };
+    return m[s] || 'pill-gray';
+  };
+
+  tbody.innerHTML = rows.map(r => {
+    const overdue = r._date && r._date < today && !['Delivered','Done','Cancelled'].includes(r.status);
+    const markDoneFn = r._type === 'order'
+      ? `markOrderDone('${r._id}')`
+      : `markTaskDone('${r._id}')`;
+    return `<tr>
+      <td><span class="pill ${r._type === 'order' ? 'pill-blue' : 'pill-teal'}" style="font-size:10px">${r._type}</span></td>
+      <td style="font-weight:600;max-width:220px;word-break:break-word">
+        ${overdue ? '<span style="color:var(--red)">⚠ </span>' : ''}${escH(r.label)}
+      </td>
+      <td style="color:var(--muted);font-size:12px">${escH(r.secondary)}</td>
+      <td style="white-space:nowrap;font-size:12px;color:${overdue ? 'var(--red)' : 'var(--muted)'};font-weight:${overdue ? '700' : '400'}">${fmtDate(r.date)}</td>
+      <td><span class="pill ${sPill(r._type, r.status)}">${escH(r.status)}</span></td>
+      <td>${r.priority ? '<span class="pill pill-amber" style="font-size:10px">' + escH(r.priority) + '</span>' : '—'}</td>
+      <td style="white-space:nowrap">
+        ${!['Delivered','Done','Cancelled'].includes(r.status)
+          ? `<button class="btn btn-ghost btn-sm" onclick="${markDoneFn}">✓ Done</button>`
+          : '<span style="color:var(--muted);font-size:12px">—</span>'}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function markOrderDone(id) {
+  const orders = getOpsOrders();
+  const o = orders.find(x => x.id === id);
+  if (o) { o.status = 'Delivered'; saveOpsOrders(orders); renderProcTable(); renderProcTiles(); renderOverview(); updateSidebarBadges(); toast('Order marked delivered.'); }
+}
+function markTaskDone(id) {
+  const tasks = getOpsTasks();
+  const t = tasks.find(x => x.id === id);
+  if (t) { t.status = 'Done'; saveOpsTasks2(tasks); renderProcTable(); renderProcTiles(); renderOverview(); updateSidebarBadges(); toast('Task marked done.'); }
+}
+
+// ══════════════════════════════════════════════════════
+// POLICY & INTEL
+// ══════════════════════════════════════════════════════
+function renderPolicy() {
+  const data    = getPolicyData();
+  const reviews = JSON.parse(localStorage.getItem('camino_policy_reviews') || '[]');
+  const last    = reviews.length ? reviews[reviews.length - 1] : null;
+
+  // Alert banner
+  const lvl = data.travelAdvisory || '';
+  let banner = '';
+  if (lvl.includes('3') || lvl.includes('4')) {
+    banner = `<div class="alert-bar alert-red">🚨 <strong>Travel Advisory ${escH(lvl)}</strong> — heightened risk. Review logistics with Walker before departure.</div>`;
+  } else if (lvl.includes('2')) {
+    banner = `<div class="alert-bar alert-amber">⚠️ <strong>Travel Advisory Level 2</strong> (Exercise Increased Caution) — standard operating level for Honduras.</div>`;
+  }
+  document.getElementById('policy-alert-banner').innerHTML = banner;
+
+  // Tiles
+  const tiles = [
+    { label: 'Travel Advisory', val: data.travelAdvisory || 'Level 2',   sub: 'US State Dept' },
+    { label: 'NGO Registration', val: data.ngoStatus     || 'Active',     sub: 'CAMINO ONG status' },
+    { label: 'IRS / 501(c)(3)',  val: data.irsStatus     || '✅ Current', sub: '990 filing' },
+    { label: 'Last Review',      val: last ? fmtDate(last.date) : 'Never', sub: last ? (last.reviewer || 'Staff') : 'Click Admin to review' },
+    { label: 'OFAC Sanctions',   val: data.ofacStatus    || '✅ Clear',   sub: 'SDN check' },
+  ];
+
+  document.getElementById('policy-tiles').innerHTML = tiles.map(t => `
+    <div class="policy-tile">
+      <div class="pt-label">${escH(t.label)}</div>
+      <div class="pt-val">${escH(t.val)}</div>
+      <div class="pt-sub">${escH(t.sub)}</div>
+    </div>`).join('');
+
+  // Security assessment grid
+  const depts = ['Cortés', 'Comayagua', 'Francisco Morazán', 'Atlántida', 'Colón', 'Copán'];
+  const secData = JSON.parse(localStorage.getItem('camino_policy_security') || '{}');
+  document.getElementById('policy-security-grid').innerHTML = depts.map(dept => {
+    const d = secData[dept] || {};
+    const lvlColor = { Low:'pill-green', Moderate:'pill-amber', High:'pill-red', Unknown:'pill-gray' }[d.level || 'Unknown'] || 'pill-gray';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--gray-100)">
+      <span style="font-size:13px;font-weight:500">${escH(dept)}</span>
+      <span class="pill ${lvlColor}">${d.level || 'Unknown'}</span>
+    </div>`;
+  }).join('');
+
+  // Key dates
+  const dates = [
+    { label: 'Honduras ONG renewal', date: '2026-03-01', color: 'var(--amber)' },
+    { label: 'IRS Form 990 due',     date: '2026-11-15', color: 'var(--teal)'  },
+    { label: 'State registration VA',date: '2026-12-31', color: 'var(--teal)'  },
+    { label: 'Quarterly policy review', date: last ? last.nextReview || '' : '', color: 'var(--gray-400)' },
+  ];
+  document.getElementById('policy-dates').innerHTML = dates.map(d => {
+    const diff = daysDiff(d.date);
+    const urgent = diff !== null && diff < 30;
+    return `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--gray-100);font-size:13px">
+      <span style="color:${urgent ? 'var(--red)' : 'inherit'};font-weight:${urgent ? '600' : '400'}">${escH(d.label)}</span>
+      <span style="color:${urgent ? 'var(--red)' : 'var(--muted)'}">${fmtDate(d.date)}</span>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+// FIELD GUIDE
+// ══════════════════════════════════════════════════════
+function renderFieldGuide() {
+  // Health alerts
+  const alerts = getHealthAlerts();
+  const active = alerts.filter(a => a.level === 'warning' || a.level === 'alert');
+  document.getElementById('fg-health-alert').innerHTML = active.length
+    ? active.map(a => `<div class="alert-bar alert-red">🚨 <strong>Health alert:</strong> ${escH(a.title || a.type)}</div>`).join('')
+    : '<div class="alert-bar alert-green">✅ No active health alerts for Honduras.</div>';
+
+  // Checklists
+  const required = ['Valid passport (6+ months past trip end date)', 'Travel insurance with medical evacuation', 'STEP registration (step.state.gov)', 'Signed CAMINO liability waiver', 'Emergency contact on file with Walker'];
+  const health   = ['Consult doctor 4–6 weeks before trip', 'Hep A + Typhoid vaccines', 'Pack DEET repellent (30%+)', 'Bring 2-week supply of all prescriptions', 'EpiPen if prescribed', 'Oral rehydration salts'];
+  const reading  = ['"When Helping Hurts" by Corbett & Fikkert', '"Toxic Charity" by Robert Lupton', 'CAMINO Mission Spanish guide', 'US Embassy Honduras security alerts'];
+
+  document.getElementById('fg-checklist-required').innerHTML = required.map(i => `
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:13px">
+      <span style="color:var(--teal);flex-shrink:0">☐</span><span>${escH(i)}</span>
+    </div>`).join('');
+
+  document.getElementById('fg-checklist-health').innerHTML = health.map(i => `
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:13px">
+      <span style="color:var(--amber);flex-shrink:0">☐</span><span>${escH(i)}</span>
+    </div>`).join('');
+
+  document.getElementById('fg-checklist-reading').innerHTML = reading.map(i => `
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:13px">
+      <span style="color:var(--gray-400);flex-shrink:0">📖</span><span>${escH(i)}</span>
+    </div>`).join('');
+
+  // Field notes
+  renderFgNotes();
+}
+
+function renderFgNotes() {
+  const notes = getFgNotes();
+  document.getElementById('fg-notes-list').innerHTML = notes.length
+    ? `<div style="max-height:240px;overflow-y:auto">${notes.slice(0,20).map(n => `
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:8px 10px;margin-bottom:6px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+            <div style="font-size:13px">${escH(n.text)}</div>
+            <span class="pill pill-gray" style="font-size:10px;flex-shrink:0">${escH(n.tag)}</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">${fmtDate(n.date)}</div>
+        </div>`).join('')}</div>`
+    : '<p style="font-size:12px;color:var(--muted)">No field notes yet.</p>';
+}
+
+function saveFgNote() {
+  const text = document.getElementById('fg-note-text')?.value?.trim();
+  const tag  = document.getElementById('fg-note-tag')?.value  || 'general';
+  if (!text) { toast('Enter a note first.'); return; }
+  const notes = getFgNotes();
+  notes.unshift({ id: 'fn_' + Date.now(), text, tag, date: new Date().toISOString().slice(0,10) });
+  saveFgNotes(notes);
+  document.getElementById('fg-note-text').value = '';
+  renderFgNotes();
+  toast('Note saved.');
+}
+
+// ══════════════════════════════════════════════════════
+// COLLAPSE TOGGLE
+// ══════════════════════════════════════════════════════
+function toggleCollapse(id, btn) {
+  const body = document.getElementById(id);
+  if (!body) return;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (btn) btn.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>
