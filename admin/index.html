@@ -736,6 +736,117 @@
     .pw-tab-pane.active { display:block; }
     .pw-source-name { font-weight:600; }
     .pw-source-url { font-size:11px; color:var(--muted); font-family:monospace; }
+
+    /* ── Participant Profiles ── */
+    .trip-expand-section { display:none; border-top:1.5px solid var(--border); padding:20px 0 4px; margin-top:16px; }
+    .trip-expand-section.open { display:block; }
+    .trip-row-wrap { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px 20px; margin-bottom:12px; }
+    .pax-dashboard { display:flex; gap:20px; align-items:center; flex-wrap:wrap; margin-bottom:16px; padding:14px 18px; background:var(--teal-light); border-radius:var(--radius); }
+    .pax-stat { text-align:center; }
+    .pax-stat__val { font-size:22px; font-weight:800; color:var(--teal); line-height:1; }
+    .pax-stat__lbl { font-size:11px; color:var(--muted); margin-top:2px; }
+    .pax-stat-div { width:1px; background:rgba(0,0,0,.1); align-self:stretch; }
+    .pax-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+    .pax-filter-btn { padding:5px 13px; border-radius:20px; border:1.5px solid var(--border); background:#fff; font-size:12px; font-weight:600; cursor:pointer; transition:all .15s; font-family:inherit; color:var(--text); }
+    .pax-filter-btn.active, .pax-filter-btn:hover { background:var(--teal); border-color:var(--teal); color:#fff; }
+    .pax-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:12px; margin-bottom:16px; }
+    .pax-card { background:#fff; border:1.5px solid var(--border); border-radius:var(--radius); padding:14px 14px 10px; position:relative; cursor:pointer; transition:border-color .15s; }
+    .pax-card:hover { border-color:var(--teal); }
+    .pax-card__header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+    .pax-avatar { width:40px; height:40px; border-radius:50%; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; flex-shrink:0; }
+    .pax-card__name { font-size:14px; font-weight:700; line-height:1.2; }
+    .pax-card__org { font-size:11px; color:var(--muted); }
+    .pax-card__flight { font-size:11px; color:var(--muted); margin-bottom:6px; }
+    .pax-badges { display:flex; gap:4px; flex-wrap:wrap; }
+    .pax-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; }
+    .pax-badge-heat-high { background:#fee2e2; color:#991b1b; }
+    .pax-badge-heat-mild { background:#fef9c3; color:#713f12; }
+    .pax-badge-diet { background:#e0f2fe; color:#0369a1; }
+    .pax-badge-epi { background:#fce7f3; color:#9d174d; }
+    .pax-badge-inhaler { background:#ede9fe; color:#5b21b6; }
+    .pax-badge-mobility { background:#f0fdf4; color:#166534; }
+    .pax-card__actions { display:flex; gap:6px; margin-top:10px; border-top:1px solid var(--border); padding-top:8px; }
+    .pax-actions-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+    .pax-section-title { font-size:14px; font-weight:700; margin-bottom:10px; color:var(--text); }
+    .wellness-disclaimer { background:#fef9c3; border:1.5px solid #fde68a; border-radius:var(--radius); padding:12px 16px; font-size:12px; line-height:1.6; color:#713f12; margin-bottom:16px; }
+    .wellness-disclaimer strong { display:block; margin-bottom:4px; }
+
+    /* ── Notification Templates ── */
+    .notif-stub-banner { background:var(--amber-light); border:1.5px solid #fde68a; border-radius:var(--radius); padding:12px 16px; font-size:12px; color:var(--amber-dark); margin-bottom:16px; line-height:1.6; }
+    .notif-stub-banner strong { display:block; margin-bottom:2px; }
+    .notif-template-list { display:flex; flex-direction:column; gap:10px; }
+    .notif-template { background:#fff; border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+    .notif-template__header { display:flex; align-items:center; gap:10px; padding:12px 14px; cursor:pointer; user-select:none; }
+    .notif-template__header:hover { background:#f9f9f9; }
+    .notif-template__icon { font-size:18px; }
+    .notif-template__title { font-size:13px; font-weight:700; flex:1; }
+    .notif-template__timing { font-size:11px; color:var(--muted); }
+    .notif-template__body { display:none; padding:0 14px 14px; }
+    .notif-template__body.open { display:block; }
+    .notif-template__text { background:#f5f5f5; border-radius:6px; padding:12px; font-size:12px; line-height:1.7; font-family:monospace; white-space:pre-wrap; margin-bottom:10px; color:var(--text); }
+    .notif-send-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .notif-arrival-card { background:#dcfce7; border:1.5px solid #86efac; border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; }
+    .notif-arrival-card__title { font-size:13px; font-weight:700; color:#166534; margin-bottom:4px; }
+    .notif-arrival-card__sub { font-size:12px; color:#15803d; }
+    .notif-status-grid { display:grid; grid-template-columns:1fr; gap:2px; margin-top:10px; }
+    .notif-pax-row { display:flex; align-items:center; gap:10px; font-size:12px; padding:6px 0; border-bottom:1px solid var(--border); }
+    .notif-pax-row:last-child { border-bottom:none; }
+    .notif-pax-name { flex:1; font-weight:600; }
+    .notif-check { width:14px; height:14px; border-radius:3px; border:1.5px solid var(--border); display:inline-block; cursor:pointer; flex-shrink:0; background:#fff; }
+    .notif-check.sent { background:var(--teal); border-color:var(--teal); }
+    /* Live Feed Cards */
+    .feed-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px}
+    .feed-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+    .feed-card-title{font-size:13px;font-weight:700;flex:1;min-width:120px}
+    .feed-card-meta{font-size:11px;color:var(--muted);white-space:nowrap}
+    .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .live-dot.live{background:#22c55e;animation:livePulse 2s infinite}
+    .live-dot.loading{background:var(--amber);animation:livePulse .6s infinite}
+    .live-dot.error{background:var(--red)}
+    .live-dot.stale{background:#9ca3af}
+    @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .feed-items{display:flex;flex-direction:column;gap:0}
+    .feed-item{padding:8px 0;border-bottom:1px solid var(--border)}
+    .feed-item:last-child{border-bottom:none}
+    .feed-item-title{font-size:13px;font-weight:600;line-height:1.35}
+    .feed-item-title a{color:var(--text);text-decoration:none}
+    .feed-item-title a:hover{color:var(--teal);text-decoration:underline}
+    .feed-item-meta{font-size:11px;color:var(--muted);margin-top:2px}
+    .feed-item-new{background:#dcfce7;color:#166534;font-size:9px;font-weight:700;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
+    .feed-item-alert{background:#fee2e2;color:#991b1b;font-size:9px;font-weight:700;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
+    .feed-empty{font-size:12px;color:var(--muted);padding:8px 0;font-style:italic;text-align:center}
+    .pw-advisory-change{background:#fee2e2;border:2px solid #dc2626;border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;display:none;align-items:center;gap:12px;flex-wrap:wrap}
+    .pw-advisory-change.on{display:flex}
+    .pw-changes-card{background:#fffbeb;border:1.5px solid #fcd34d;border-left:4px solid var(--amber);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px}
+    .pw-changes-title{font-size:13px;font-weight:700;color:#92400e;margin-bottom:8px}
+    .pw-change-row{font-size:12px;padding:5px 0;border-bottom:1px solid #fde68a;display:flex;gap:8px}
+    .pw-change-row:last-child{border-bottom:none}
+    /* Political watch */
+    .pol-scorecard{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:16px}
+    .pol-score-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+    .pol-score-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:4px}
+    .pol-score-val{font-size:13px;font-weight:700;line-height:1.3}
+    .pol-indicator-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px}
+    .pol-indicator-title{font-size:14px;font-weight:700;margin-bottom:8px}
+    .pol-indicator-body{font-size:13px;line-height:1.6}
+    .pol-note{background:#f0f9ff;border-left:3px solid #0ea5e9;padding:8px 12px;border-radius:0 4px 4px 0;font-size:12px;color:#0369a1;margin-top:8px;line-height:1.5}
+    .pol-warn{background:#fffbeb;border-left:3px solid var(--amber);padding:8px 12px;border-radius:0 4px 4px 0;font-size:12px;color:#92400e;margin-top:8px;line-height:1.5}
+    /* Health watch */
+    .health-alert-banner{background:#fee2e2;border:2px solid #dc2626;border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;display:none;align-items:center;gap:12px;flex-wrap:wrap}
+    .health-alert-banner.on{display:flex}
+    .health-ok-bar{background:#f0fdf4;border:1.5px solid #86efac;border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#166534}
+    .disease-table{width:100%;border-collapse:collapse;font-size:12px}
+    .disease-table th{text-align:left;padding:8px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border-bottom:1.5px solid var(--border);background:#f8f8f8;white-space:nowrap}
+    .disease-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+    .disease-table tr:last-child td{border-bottom:none}
+    .drisk-hi{background:#fee2e2;color:#991b1b;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+    .drisk-mod{background:#fef9c3;color:#713f12;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+    .drisk-low{background:#dcfce7;color:#166534;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+    .medfac-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px}
+    .medfac-name{font-size:13px;font-weight:700;margin-bottom:2px}
+    .medfac-meta{font-size:12px;color:var(--muted);line-height:1.5}
+    .trip-health-card{background:#fffbeb;border:2px solid var(--amber);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:20px}
+    .trip-health-title{font-size:14px;font-weight:700;color:var(--amber-dark);margin-bottom:8px;display:flex;align-items:center;gap:8px}
   </style>
 </head>
 <body>
@@ -1793,6 +1904,141 @@
   </div>
 </div>
 
+<!-- ══ MODAL: Participant Add/Edit ══ -->
+<div class="modal-overlay" id="paxModal">
+  <div class="modal" style="max-width:680px;max-height:90vh;overflow-y:auto;">
+    <button class="modal-close" onclick="closePaxModal()">×</button>
+    <div class="modal-title" id="paxModalTitle">Add Participant</div>
+    <input type="hidden" id="paxEditId" />
+    <input type="hidden" id="paxTripId" />
+
+    <div style="font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Contact Info</div>
+    <div class="form-row">
+      <div class="form-group"><label for="paxFirst">First name</label><input type="text" id="paxFirst" /></div>
+      <div class="form-group"><label for="paxLast">Last name</label><input type="text" id="paxLast" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="paxPhone">Mobile phone</label>
+        <div style="display:flex;gap:6px">
+          <select id="paxPhoneCC" style="width:90px;flex-shrink:0">
+            <option value="+1">+1 US</option>
+            <option value="+504">+504 HN</option>
+            <option value="+44">+44 UK</option>
+            <option value="+52">+52 MX</option>
+          </select>
+          <input type="tel" id="paxPhone" placeholder="(540) 555-0100" style="flex:1" />
+        </div>
+      </div>
+      <div class="form-group"><label for="paxEmail">Email</label><input type="email" id="paxEmail" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="paxEcName">Emergency contact name</label><input type="text" id="paxEcName" /></div>
+      <div class="form-group"><label for="paxEcPhone">Emergency contact phone</label><input type="tel" id="paxEcPhone" /></div>
+    </div>
+    <div class="form-group"><label for="paxChurch">Church / home organization</label><input type="text" id="paxChurch" /></div>
+
+    <div style="font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px;">Travel Details</div>
+    <div class="form-row">
+      <div class="form-group"><label for="paxAirline">Airline</label><input type="text" id="paxAirline" placeholder="e.g. United" /></div>
+      <div class="form-group"><label for="paxFlightNum">Flight number</label><input type="text" id="paxFlightNum" placeholder="e.g. UA 2340" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="paxArrivalAirport">Arrival airport</label>
+        <select id="paxArrivalAirport">
+          <option value="SAP">SAP — San Pedro Sula</option>
+          <option value="TGU">TGU — Tegucigalpa</option>
+          <option value="RTB">RTB — Roatán</option>
+        </select>
+      </div>
+      <div class="form-group"><label for="paxPassportCountry">Passport country</label>
+        <select id="paxPassportCountry">
+          <option value="US">United States</option>
+          <option value="HN">Honduras</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="paxArrivalDT">Arrival date &amp; time</label><input type="datetime-local" id="paxArrivalDT" /></div>
+      <div class="form-group"><label for="paxDepartureDT">Departure date &amp; time</label><input type="datetime-local" id="paxDepartureDT" /></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" id="paxInsurance" onchange="document.getElementById('paxInsuranceDetails').style.display=this.checked?'flex':'none'" />
+        Travel insurance
+      </label>
+    </div>
+    <div id="paxInsuranceDetails" style="display:none;gap:10px;" class="form-row">
+      <div class="form-group"><label for="paxInsProvider">Provider</label><input type="text" id="paxInsProvider" /></div>
+      <div class="form-group"><label for="paxInsPolicyLast4">Policy # (last 4)</label><input type="text" id="paxInsPolicyLast4" maxlength="4" placeholder="XXXX" /></div>
+    </div>
+
+    <div style="font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 6px;">Activity &amp; Wellness Considerations</div>
+    <div class="wellness-disclaimer" style="margin-bottom:12px;">
+      <strong>Privacy Note</strong>
+      CAMINO collects activity and wellness information solely to keep volunteers safe during trips. This is not a medical record. Information is shared only with trip leadership and is stored securely. CAMINO is not a HIPAA covered entity, but follows best practices for health data privacy.
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="paxHeatSensitivity">Heat sensitivity</label>
+        <select id="paxHeatSensitivity">
+          <option value="none">None</option>
+          <option value="mild">Mild — take extra breaks</option>
+          <option value="high">High — needs close monitoring</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="paxActivityLevel">Physical activity level</label>
+        <select id="paxActivityLevel">
+          <option value="full">Full activity</option>
+          <option value="moderate">Moderate — some limitations</option>
+          <option value="light">Light duty only</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="paxDietary">Dietary needs</label>
+      <select id="paxDietary">
+        <option value="none">None</option>
+        <option value="Vegetarian">Vegetarian</option>
+        <option value="Vegan">Vegan</option>
+        <option value="Gluten-free">Gluten-free</option>
+        <option value="Halal">Halal</option>
+        <option value="Kosher">Kosher</option>
+        <option value="Nut allergy">Nut allergy</option>
+        <option value="other">Other (specify below)</option>
+      </select>
+    </div>
+    <div class="form-group"><label for="paxDietaryNotes">Dietary notes (if Other)</label><input type="text" id="paxDietaryNotes" placeholder="Please specify" /></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="paxEpiPen" /> Carries EpiPen</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="paxInhaler" /> Carries rescue inhaler</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="paxMedSchedule" /> Requires daily medication</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="paxWaterRestriction" /> Water/swimming restriction</label>
+    </div>
+    <div class="form-group">
+      <label for="paxMobilityAid">Mobility aid</label>
+      <select id="paxMobilityAid">
+        <option value="none">None</option>
+        <option value="cane">Cane</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label for="paxLeaderNotes">Notes for trip leader</label><textarea id="paxLeaderNotes" rows="2" placeholder="e.g. Check in with this person at lunch each day" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:13px;resize:vertical;"></textarea></div>
+    <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;margin-bottom:16px;">
+      <input type="checkbox" id="paxWellnessConsent" style="margin-top:2px;" />
+      I consent to sharing these activity considerations with CAMINO trip leadership for safety purposes.
+    </label>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closePaxModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePaxModal()">Save participant</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL: Add Donor ══ -->
 <div class="modal-overlay" id="donorModal">
   <div class="modal">
@@ -2444,44 +2690,51 @@ async function renderTrips() {
   list.innerHTML = '';
   if (!tripsData.length) { list.innerHTML = '<p style="color:var(--muted);font-size:14px">No trips yet. Click "+ Add trip" to create one.</p>'; return; }
   tripsData.forEach(trip => {
-    const row = document.createElement('div');
-    row.className = 'trip-row';
+    const wrap = document.createElement('div');
+    wrap.className = 'trip-row-wrap';
+    const paxList = getParticipants(trip.id);
+    const paxCount = paxList.length;
+    const capacity = trip.capacity || 25;
     const baseURL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? window.location.origin + '/'
       : 'https://webmastercamino.github.io/camino/';
     const fullSlug = baseURL + trip.slug;
-    row.innerHTML = `
-      <div class="trip-row__info">
-        <div class="trip-row__name">${escHtml(trip.name)}</div>
-        <div class="trip-row__meta">
-          ${trip.dates} &nbsp;·&nbsp; ${trip.location}<br>
-          ${trip.group} &nbsp;·&nbsp; Coordinator: ${trip.coordinator}
+    const tid = escHtml(trip.id);
+    wrap.innerHTML = `
+      <div class="trip-row" style="border:none;padding:0;border-radius:0;margin:0;">
+        <div class="trip-row__info">
+          <div class="trip-row__name">${escHtml(trip.name)}</div>
+          <div class="trip-row__meta">
+            ${escHtml(trip.dates)} &nbsp;·&nbsp; ${escHtml(trip.location)}<br>
+            ${escHtml(trip.group)} &nbsp;·&nbsp; Coordinator: ${escHtml(trip.coordinator)}
+          </div>
+        </div>
+        <div class="trip-row__actions">
+          <span class="status-pill pill-${escHtml(trip.status)}">${escHtml(trip.status)}</span>
+          <div class="trip-count">
+            <span class="count-val">${paxCount}</span>
+            <span style="font-size:11px;color:var(--muted)">/ ${capacity} participants</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="copyTripURL('${fullSlug}', this)" title="Copy trip URL">📋 Copy URL</button>
+          <span class="copy-feedback" id="cf-${tid}">Copied!</span>
+          <button class="btn btn-ghost btn-sm" onclick="toggleTripExpand('${tid}')" id="expandBtn-${tid}">👥 Participants</button>
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="openTripModal('${tid}')" title="Edit">✏️</button>
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="deleteTrip('${tid}')" title="Delete">🗑</button>
         </div>
       </div>
-      <div class="trip-row__actions">
-        <span class="status-pill pill-${trip.status}">${trip.status}</span>
-        <div class="trip-count">
-          <button class="count-btn" onclick="adjustCount('${trip.id}', -1)">−</button>
-          <span class="count-val" id="count-${trip.id}">${trip.participantCount || 0}</span>
-          <button class="count-btn" onclick="adjustCount('${trip.id}', 1)">+</button>
-          <span style="font-size:11px;color:var(--muted)">participants</span>
-        </div>
-        <button class="btn btn-ghost btn-sm" onclick="copyTripURL('${fullSlug}', this)" title="Copy trip URL">📋 Copy URL</button>
-        <span class="copy-feedback" id="cf-${trip.id}">Copied!</span>
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="openTripModal('${trip.id}')" title="Edit">✏️</button>
-        <button class="btn btn-ghost btn-sm btn-icon" onclick="deleteTrip('${trip.id}')" title="Delete">🗑</button>
+      <div class="trip-expand-section" id="tripExpand-${tid}">
+        <div id="tripExpandContent-${tid}"></div>
       </div>`;
-    list.appendChild(row);
+    list.appendChild(wrap);
   });
 }
 
 function adjustCount(id, delta) {
+  // kept for backwards compat; participant count now derived from pax list
   const trip = tripsData.find(t => t.id === id);
   if (!trip) return;
   trip.participantCount = Math.max(0, (trip.participantCount || 0) + delta);
   saveTripsLocal();
-  const el = document.getElementById('count-' + id);
-  if (el) el.textContent = trip.participantCount;
 }
 
 function copyTripURL(url, btn) {
@@ -2552,6 +2805,440 @@ function deleteTrip(id) {
   saveTripsLocal();
   renderTrips();
   toast('Trip deleted.');
+}
+
+// ═══════════════════════ PARTICIPANTS ═══════════════════════
+
+const PAX_SEED = {
+  'culpeper-jul-2026': [
+    { id:'p1', first:'Margaret', last:'Wilson', phoneCC:'+1', phone:'(540) 555-0141', email:'mwilson@culpepermethodist.org', ecName:'Thomas Wilson', ecPhone:'(540) 555-0142', church:'Culpeper United Methodist Church',
+      airline:'United', flightNum:'UA 1842', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T14:30', departureDT:'2026-07-07T10:00',
+      insurance:true, insProvider:'World Nomads', insPolicyLast4:'7821',
+      heatSensitivity:'none', activityLevel:'full', dietary:'none', dietaryNotes:'', epiPen:false, inhaler:false, medSchedule:false, waterRestriction:false, mobilityAid:'none', leaderNotes:'Group leader — point of contact for church group.', wellnessConsent:true },
+    { id:'p2', first:'Robert', last:'Thompson', phoneCC:'+1', phone:'(540) 555-0193', email:'robert.thompson@gmail.com', ecName:'Nancy Thompson', ecPhone:'(540) 555-0194', church:'Culpeper United Methodist Church',
+      airline:'United', flightNum:'UA 1842', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T14:30', departureDT:'2026-07-07T10:00',
+      insurance:true, insProvider:'IMG Global', insPolicyLast4:'4413',
+      heatSensitivity:'mild', activityLevel:'full', dietary:'none', dietaryNotes:'', epiPen:false, inhaler:false, medSchedule:false, waterRestriction:false, mobilityAid:'none', leaderNotes:'Prefers to work morning shifts. Bring extra water breaks.', wellnessConsent:true },
+    { id:'p3', first:'Jennifer', last:'Baker', phoneCC:'+1', phone:'(540) 555-0207', email:'jen.baker@yahoo.com', ecName:'Mark Baker', ecPhone:'(540) 555-0208', church:'Culpeper United Methodist Church',
+      airline:'American', flightNum:'AA 3901', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T16:45', departureDT:'2026-07-07T11:30',
+      insurance:false, insProvider:'', insPolicyLast4:'',
+      heatSensitivity:'none', activityLevel:'full', dietary:'Vegetarian', dietaryNotes:'', epiPen:false, inhaler:false, medSchedule:false, waterRestriction:false, mobilityAid:'none', leaderNotes:'', wellnessConsent:true },
+    { id:'p4', first:'David', last:'Martinez', phoneCC:'+1', phone:'(540) 555-0315', email:'dmartinez@outlook.com', ecName:'Rosa Martinez', ecPhone:'(540) 555-0316', church:'Culpeper United Methodist Church',
+      airline:'United', flightNum:'UA 1842', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T14:30', departureDT:'2026-07-07T10:00',
+      insurance:true, insProvider:'GeoBlue', insPolicyLast4:'9902',
+      heatSensitivity:'high', activityLevel:'moderate', dietary:'none', dietaryNotes:'', epiPen:false, inhaler:false, medSchedule:false, waterRestriction:false, mobilityAid:'none', leaderNotes:'HIGH HEAT SENSITIVITY — check in every 30 min on site. Ensure shaded rest area available. Has struggled with heat in past outdoor work.', wellnessConsent:true },
+    { id:'p5', first:'Susan', last:'Anderson', phoneCC:'+1', phone:'(540) 555-0422', email:'sanderson@culpepermethodist.org', ecName:'Brian Anderson', ecPhone:'(540) 555-0423', church:'Culpeper United Methodist Church',
+      airline:'American', flightNum:'AA 3901', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T16:45', departureDT:'2026-07-07T11:30',
+      insurance:true, insProvider:'Allianz', insPolicyLast4:'5567',
+      heatSensitivity:'mild', activityLevel:'full', dietary:'Nut allergy', dietaryNotes:'Tree nut allergy — avoid walnuts, cashews, almonds in prepared foods.', epiPen:true, inhaler:false, medSchedule:false, waterRestriction:false, mobilityAid:'none', leaderNotes:'Carries EpiPen in small red pouch in her daypack. She knows how to use it. Alert leaders on departure.', wellnessConsent:true },
+    { id:'p6', first:'James', last:'Johnson', phoneCC:'+1', phone:'(540) 555-0531', email:'jjohnson@gmail.com', ecName:'Carol Johnson', ecPhone:'(540) 555-0532', church:'Grace Community Church',
+      airline:'United', flightNum:'UA 1842', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T14:30', departureDT:'2026-07-07T10:00',
+      insurance:true, insProvider:'World Nomads', insPolicyLast4:'1184',
+      heatSensitivity:'none', activityLevel:'light', dietary:'none', dietaryNotes:'', epiPen:false, inhaler:false, medSchedule:true, waterRestriction:false, mobilityAid:'cane', leaderNotes:'Light duties only — painting, sorting materials, prayer walks. Has a medication schedule — does not need assistance, just aware.', wellnessConsent:true },
+    { id:'p7', first:'Patricia', last:'Davis', phoneCC:'+1', phone:'(540) 555-0648', email:'patdavis@icloud.com', ecName:'Kevin Davis', ecPhone:'(540) 555-0649', church:'Culpeper United Methodist Church',
+      airline:'American', flightNum:'AA 3901', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T16:45', departureDT:'2026-07-07T11:30',
+      insurance:false, insProvider:'', insPolicyLast4:'',
+      heatSensitivity:'none', activityLevel:'full', dietary:'Gluten-free', dietaryNotes:'Celiac — strict gluten-free required, not preference.', epiPen:false, inhaler:false, medSchedule:false, waterRestriction:false, mobilityAid:'none', leaderNotes:'Please flag to Seiny re: meal prep — strict celiac, not just preference.', wellnessConsent:true },
+    { id:'p8', first:'Michael', last:'Brown', phoneCC:'+1', phone:'(540) 555-0754', email:'mbrown@culpepermethodist.org', ecName:'Sandra Brown', ecPhone:'(540) 555-0755', church:'Culpeper United Methodist Church',
+      airline:'United', flightNum:'UA 1842', arrivalAirport:'SAP', passportCountry:'US', arrivalDT:'2026-07-01T14:30', departureDT:'2026-07-07T10:00',
+      insurance:true, insProvider:'GeoBlue', insPolicyLast4:'3390',
+      heatSensitivity:'none', activityLevel:'full', dietary:'none', dietaryNotes:'', epiPen:false, inhaler:false, medSchedule:false, waterRestriction:false, mobilityAid:'none', leaderNotes:'Construction experience — can assist Walker with build site coordination.', wellnessConsent:true }
+  ]
+};
+
+const NOTIF_TEMPLATES = [
+  { key:'pretrip_1wk', icon:'📅', title:'Pre-Trip — 1 Week Out', timing:'Send 7 days before departure',
+    text:`Hi [FirstName]! 🌟 One week until Honduras! Quick reminders:\n✅ Passport valid? Check!\n📱 Download WhatsApp if not already\n💊 Pack medications in carry-on\n🌡️ Check packing list: [tripURL]\nQuestions? Reply here or email [coordinatorEmail]\n— CAMINO Team` },
+  { key:'pretrip_daybefore', icon:'✈️', title:'Pre-Trip — Day Before Departure', timing:'Send evening before departure day',
+    text:`Hi [FirstName]! Tomorrow's the day! ✈️\n🕐 Arrive airport 3hrs early\n🧴 Pack DEET in checked bag (not carry-on)\n💧 Buy bottled water after customs\n📞 Trip leader: [leaderName] [leaderPhone]\n🙏 We're praying for your journey!\n— Walker & Seiny, CAMINO` },
+  { key:'arrival_welcome', icon:'🇭🇳', title:'Arrival — Welcome to Honduras ⭐', timing:'Send when arrival flight time passes',
+    text:`Welcome to Honduras, [FirstName]! 🇭🇳🎉\n\nA few reminders now that you're here:\n💧 Drink BOTTLED WATER ONLY — no tap water, ice, or fresh juice\n🦟 Apply DEET every 4 hours — dengue mosquitoes are active day AND night\n☀️ High heat today — stay hydrated, take breaks in shade\n👥 Stay with your group at all times\n📱 Join WhatsApp group: [whatsappLink]\n🚨 Emergency: [leaderPhone] | US Embassy: +504 2236-9320\n\nSee you soon! 🙏\n— CAMINO Team` },
+  { key:'daily_morning', icon:'☀️', title:'Daily Morning Check-in (Days 1–7)', timing:'Send each morning at 6:30 AM',
+    text:`Good morning, [FirstName]! Day [X] in Honduras ☀️\nToday: [daySummary]\n🌡️ Weather: Hot and humid\n💧 Hydration reminder — drink water before you're thirsty\n[heatNote]\nMeet at: [meetingPoint] at [meetingTime]\n— CAMINO Team` },
+  { key:'health_alert', icon:'⚠️', title:'Health Alert (Outbreak / Advisory)', timing:'Send immediately if health alert detected',
+    text:`⚠️ CAMINO Health Alert — [FirstName]\nOur health monitoring has flagged [condition] activity in Honduras.\nPlease: [specificPrecaution]\nIf you feel unwell: tell your trip leader immediately.\nEmergency medical: [localClinic] — [clinicAddressPhone]\n— CAMINO Staff` },
+  { key:'return_day', icon:'🏠', title:'Return Day', timing:'Send on departure morning',
+    text:`Welcome home, [FirstName]! 🏠✈️\nYou did it — thank you for serving in Honduras.\n📋 Watch for: fever, stomach issues, or fatigue in the next 2–4 weeks. If you feel unwell, tell your doctor you traveled to Honduras.\n📸 Share your photos! Tag us: @caminohonduras\n💌 Your impact report coming soon.\n— Walker & Seiny 🙏` },
+  { key:'posttrip_1wk', icon:'❤️', title:'Post-Trip Follow-Up (1 Week After Return)', timing:'Send 7 days after return date',
+    text:`Hi [FirstName] — one week home! How are you feeling?\n🏥 Reminder: if you have any symptoms (fever, stomach issues, fatigue), see your doctor and mention Honduras travel.\n📖 We'd love your story! Reply with one sentence about your experience.\n❤️ Thinking of going again? [tripsURL]\n— CAMINO` }
+];
+
+function getParticipants(tripId) {
+  const key = 'camino_pax_' + tripId;
+  const stored = localStorage.getItem(key);
+  if (stored) { try { return JSON.parse(stored); } catch {} }
+  // seed once
+  if (PAX_SEED[tripId]) {
+    localStorage.setItem(key, JSON.stringify(PAX_SEED[tripId]));
+    return PAX_SEED[tripId];
+  }
+  return [];
+}
+
+function saveParticipants(tripId, list) {
+  localStorage.setItem('camino_pax_' + tripId, JSON.stringify(list));
+}
+
+function getNotifStatus(tripId) {
+  const key = 'camino_notif_' + tripId;
+  try { return JSON.parse(localStorage.getItem(key)) || {}; } catch { return {}; }
+}
+function saveNotifStatus(tripId, status) {
+  localStorage.setItem('camino_notif_' + tripId, JSON.stringify(status));
+}
+
+function toggleTripExpand(tripId) {
+  const section = document.getElementById('tripExpand-' + tripId);
+  const btn = document.getElementById('expandBtn-' + tripId);
+  if (!section) return;
+  const isOpen = section.classList.contains('open');
+  if (isOpen) {
+    section.classList.remove('open');
+    if (btn) btn.textContent = '👥 Participants';
+  } else {
+    section.classList.add('open');
+    if (btn) btn.textContent = '▲ Close';
+    renderTripExpandContent(tripId, 'all');
+  }
+}
+
+function renderTripExpandContent(tripId, activeFilter) {
+  const el = document.getElementById('tripExpandContent-' + tripId);
+  if (!el) return;
+  const paxList = getParticipants(tripId);
+  const trip = tripsData.find(t => t.id === tripId) || { name: tripId, capacity: 25, coordinator: 'CAMINO Staff', whatsappLink: '' };
+  const capacity = trip.capacity || 25;
+
+  // counts
+  const heatHigh = paxList.filter(p => p.heatSensitivity === 'high').length;
+  const heatAny  = paxList.filter(p => p.heatSensitivity !== 'none').length;
+  const dietary  = paxList.filter(p => p.dietary !== 'none').length;
+  const epiPen   = paxList.filter(p => p.epiPen).length;
+
+  // today arrivals/departures
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0,10);
+  const arrivingToday  = paxList.filter(p => p.arrivalDT && p.arrivalDT.startsWith(todayStr)).length;
+  const departingToday = paxList.filter(p => p.departureDT && p.departureDT.startsWith(todayStr)).length;
+
+  el.innerHTML = `
+    <div style="padding:4px 0 12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+        👥 Participants
+        <button class="btn btn-primary btn-sm" onclick="openPaxModal('${tripId}', null)" style="font-size:12px;padding:4px 12px;">+ Add Participant</button>
+        <button class="btn btn-ghost btn-sm" onclick="exportContacts('${tripId}')" style="font-size:11px;">📋 Export Contacts</button>
+        <button class="btn btn-ghost btn-sm" onclick="exportEmergencyContacts('${tripId}')" style="font-size:11px;">🚨 Export Emergency Contacts</button>
+      </div>
+
+      <div class="pax-dashboard">
+        <div class="pax-stat"><div class="pax-stat__val">${paxList.length}</div><div class="pax-stat__lbl">of ${capacity} enrolled</div></div>
+        <div class="pax-stat-div"></div>
+        <div class="pax-stat"><div class="pax-stat__val" style="color:#991b1b;">${heatHigh}</div><div class="pax-stat__lbl">high heat sensitivity</div></div>
+        <div class="pax-stat-div"></div>
+        <div class="pax-stat"><div class="pax-stat__val" style="color:#0369a1;">${dietary}</div><div class="pax-stat__lbl">dietary needs</div></div>
+        <div class="pax-stat-div"></div>
+        <div class="pax-stat"><div class="pax-stat__val" style="color:#9d174d;">${epiPen}</div><div class="pax-stat__lbl">carry EpiPen</div></div>
+        <div class="pax-stat-div"></div>
+        <div class="pax-stat"><div class="pax-stat__val" style="color:var(--teal);">${arrivingToday}</div><div class="pax-stat__lbl">arriving today</div></div>
+        <div class="pax-stat-div"></div>
+        <div class="pax-stat"><div class="pax-stat__val" style="color:var(--amber);">${departingToday}</div><div class="pax-stat__lbl">departing today</div></div>
+      </div>
+
+      <div class="pax-filters">
+        <button class="pax-filter-btn ${activeFilter==='all'?'active':''}" onclick="renderTripExpandContent('${tripId}','all')">Show All (${paxList.length})</button>
+        <button class="pax-filter-btn ${activeFilter==='heat'?'active':''}" onclick="renderTripExpandContent('${tripId}','heat')">🌡️ Heat Sensitive (${heatAny})</button>
+        <button class="pax-filter-btn ${activeFilter==='diet'?'active':''}" onclick="renderTripExpandContent('${tripId}','diet')">🥗 Dietary Needs (${dietary})</button>
+        <button class="pax-filter-btn ${activeFilter==='arriving'?'active':''}" onclick="renderTripExpandContent('${tripId}','arriving')">🛬 Arriving Today (${arrivingToday})</button>
+        <button class="pax-filter-btn ${activeFilter==='departing'?'active':''}" onclick="renderTripExpandContent('${tripId}','departing')">🛫 Departing Today (${departingToday})</button>
+      </div>
+
+      <div class="pax-grid" id="paxGrid-${tripId}">
+        ${renderPaxCards(paxList, activeFilter, tripId, todayStr)}
+      </div>
+
+      ${heatHigh > 0 ? `<div style="background:#fee2e2;border:1.5px solid #fca5a5;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;font-size:12px;color:#991b1b;line-height:1.7;">
+        <strong>🌡️ Daily Leader Check-in Required</strong><br>
+        ${paxList.filter(p=>p.heatSensitivity==='high').map(p=>`<strong>${escHtml(p.first)} ${escHtml(p.last)}</strong> — check in every 30 min on site`).join('<br>')}
+      </div>` : ''}
+
+      <div style="border-top:1.5px solid var(--border);margin:20px 0;"></div>
+      <div id="notifSection-${tripId}">${renderNotifSection(tripId, trip, paxList)}</div>
+    </div>`;
+}
+
+function renderPaxCards(paxList, filter, tripId, todayStr) {
+  let filtered = paxList;
+  if (filter === 'heat')      filtered = paxList.filter(p => p.heatSensitivity !== 'none');
+  if (filter === 'diet')      filtered = paxList.filter(p => p.dietary !== 'none');
+  if (filter === 'arriving')  filtered = paxList.filter(p => p.arrivalDT && p.arrivalDT.startsWith(todayStr));
+  if (filter === 'departing') filtered = paxList.filter(p => p.departureDT && p.departureDT.startsWith(todayStr));
+  if (!filtered.length) return '<p style="color:var(--muted);font-size:13px;grid-column:1/-1;">No participants match this filter.</p>';
+  return filtered.map(p => {
+    const initials = (p.first[0]||'') + (p.last[0]||'');
+    const avatarBg = p.heatSensitivity === 'high' ? '#991b1b' : p.heatSensitivity === 'mild' ? '#b45309' : 'var(--teal)';
+    const flightLine = p.airline ? `${escHtml(p.airline)} ${escHtml(p.flightNum||'')} → ${escHtml(p.arrivalAirport||'')}` : 'Flight TBD';
+    const badges = [
+      p.heatSensitivity==='high' ? '<span class="pax-badge pax-badge-heat-high">🌡️ HIGH HEAT</span>' : '',
+      p.heatSensitivity==='mild' ? '<span class="pax-badge pax-badge-heat-mild">🌡️ Heat mild</span>' : '',
+      p.dietary && p.dietary!=='none' ? `<span class="pax-badge pax-badge-diet">🥗 ${escHtml(p.dietary)}</span>` : '',
+      p.epiPen  ? '<span class="pax-badge pax-badge-epi">💉 EpiPen</span>' : '',
+      p.inhaler ? '<span class="pax-badge pax-badge-inhaler">🫁 Inhaler</span>' : '',
+      p.mobilityAid && p.mobilityAid!=='none' ? '<span class="pax-badge pax-badge-mobility">🦯 Mobility aid</span>' : '',
+    ].filter(Boolean).join('');
+    return `<div class="pax-card">
+      <div class="pax-card__header">
+        <div class="pax-avatar" style="background:${avatarBg};">${escHtml(initials)}</div>
+        <div><div class="pax-card__name">${escHtml(p.first)} ${escHtml(p.last)}</div><div class="pax-card__org">${escHtml(p.church||'')}</div></div>
+      </div>
+      <div class="pax-card__flight">✈️ ${flightLine}</div>
+      <div class="pax-badges">${badges}</div>
+      <div class="pax-card__actions">
+        <button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="openPaxModal('${tripId}','${p.id}')">✏️ Edit</button>
+        <button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="deletePax('${tripId}','${p.id}')">🗑 Remove</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderNotifSection(tripId, trip, paxList) {
+  const notifStatus = getNotifStatus(tripId);
+  const arrivingToday = paxList.filter(p => {
+    if (!p.arrivalDT) return false;
+    const today = new Date().toISOString().slice(0,10);
+    return p.arrivalDT.startsWith(today);
+  });
+
+  const arrivalCard = arrivingToday.length > 0
+    ? `<div class="notif-arrival-card">
+        <div class="notif-arrival-card__title">🛬 ${arrivingToday.length} participant${arrivingToday.length!==1?'s':''} arriving today</div>
+        <div class="notif-arrival-card__sub">${arrivingToday.map(p=>`${escHtml(p.first)} ${escHtml(p.last)} — ${escHtml(p.airline||'')} ${escHtml(p.flightNum||'')} → ${escHtml(p.arrivalAirport||'')} ${p.arrivalDT?p.arrivalDT.slice(11,16):''}`).join('<br>')}</div>
+        <button class="btn btn-primary btn-sm" style="margin-top:10px;font-size:12px;" onclick="copyTemplateAll('arrival_welcome','${tripId}',true)">📱 Copy Arrival Welcome for These ${arrivingToday.length}</button>
+      </div>` : '';
+
+  const templates = NOTIF_TEMPLATES.map(t => {
+    const sentCount = paxList.filter(p => notifStatus[p.id] && notifStatus[p.id][t.key]).length;
+    return `<div class="notif-template">
+      <div class="notif-template__header" onclick="toggleNotifTemplate('nt-${tripId}-${t.key}')">
+        <span class="notif-template__icon">${t.icon}</span>
+        <span class="notif-template__title">${escHtml(t.title)}</span>
+        <span class="notif-template__timing">${escHtml(t.timing)}</span>
+        <span style="font-size:11px;color:var(--muted);margin-left:8px;">${sentCount}/${paxList.length} sent</span>
+        <span style="font-size:12px;color:var(--muted);margin-left:6px;">▾</span>
+      </div>
+      <div class="notif-template__body" id="nt-${tripId}-${t.key}">
+        <div class="notif-template__text">${escHtml(buildTemplateText(t.key, paxList[0]||{first:'[FirstName]'}, trip))}</div>
+        <div class="notif-send-row" style="margin-bottom:12px;">
+          <button class="btn btn-primary btn-sm" style="font-size:12px;" onclick="copyTemplateAll('${t.key}','${tripId}',false)">📱 Copy for All ${paxList.length} Participants</button>
+        </div>
+        <div class="pax-section-title" style="font-size:12px;margin-bottom:6px;">Individual send / mark sent:</div>
+        <div class="notif-status-grid">
+          ${paxList.map(p => {
+            const sent = notifStatus[p.id] && notifStatus[p.id][t.key];
+            return `<div class="notif-pax-row">
+              <div class="notif-check ${sent?'sent':''}" id="ncheck-${tripId}-${p.id}-${t.key}" onclick="toggleNotifSent('${tripId}','${p.id}','${t.key}')" title="${sent?'Sent':'Mark as sent'}"></div>
+              <div class="notif-pax-name">${escHtml(p.first)} ${escHtml(p.last)}</div>
+              <button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="copyTemplateForPax('${t.key}','${p.id}','${tripId}')">Copy personalized ↗</button>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div>
+    <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;">📣 Notification Templates</div>
+    <div class="notif-stub-banner">
+      <strong>⚙️ Phase 2: Automated Delivery</strong>
+      These notifications are currently manual (copy + paste into WhatsApp or SMS). Phase 2 will connect Twilio API for automated SMS and WhatsApp Business API for automated WhatsApp delivery via Cloudflare Worker. See <code>cloudflare/workers/notifications.js</code> for the stub.
+    </div>
+    ${arrivalCard}
+    <div class="notif-template-list">${templates}</div>
+  </div>`;
+}
+
+function buildTemplateText(tKey, pax, trip) {
+  const t = NOTIF_TEMPLATES.find(x => x.key === tKey);
+  if (!t) return '';
+  const tripURL = trip.slug ? 'https://elcamino.github.io/' + trip.slug : '[tripURL]';
+  return t.text
+    .replace(/\[FirstName\]/g, pax.first || '[FirstName]')
+    .replace(/\[tripURL\]/g, tripURL)
+    .replace(/\[tripsURL\]/g, 'https://elcamino.github.io/trips.html')
+    .replace(/\[coordinatorEmail\]/g, 'walker@caminohonduras.com')
+    .replace(/\[leaderName\]/g, trip.coordinator || 'Walker Somerville')
+    .replace(/\[leaderPhone\]/g, '+1 (540) 555-0100')
+    .replace(/\[whatsappLink\]/g, trip.whatsappLink || '[WhatsApp group link]')
+    .replace(/\[heatNote\]/g, pax.heatSensitivity === 'high' ? `${pax.first} — extra reminder to take breaks and tell a leader if you feel unwell.` : '')
+    .replace(/\[daySummary\]/g, '[day summary from schedule]')
+    .replace(/\[meetingPoint\]/g, '[meeting point]')
+    .replace(/\[meetingTime\]/g, '[time]')
+    .replace(/\[X\]/g, '[day #]')
+    .replace(/\[condition\]/g, '[condition]')
+    .replace(/\[specificPrecaution\]/g, '[specific precaution]')
+    .replace(/\[localClinic\]/g, 'Hospital del Valle')
+    .replace(/\[clinicAddressPhone\]/g, 'San Pedro Sula — +504 2516-0000');
+}
+
+function toggleNotifTemplate(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+function toggleNotifSent(tripId, pId, tKey) {
+  const status = getNotifStatus(tripId);
+  if (!status[pId]) status[pId] = {};
+  status[pId][tKey] = !status[pId][tKey];
+  saveNotifStatus(tripId, status);
+  const el = document.getElementById(`ncheck-${tripId}-${pId}-${tKey}`);
+  if (el) el.classList.toggle('sent', status[pId][tKey]);
+}
+
+function copyTemplateForPax(tKey, pId, tripId) {
+  const pax = getParticipants(tripId).find(p => p.id === pId);
+  const trip = tripsData.find(t => t.id === tripId) || {};
+  if (!pax) return;
+  const text = buildTemplateText(tKey, pax, trip);
+  navigator.clipboard.writeText(text).then(() => toast(`Copied for ${pax.first} — paste into WhatsApp or SMS.`))
+    .catch(() => prompt('Copy this message:', text));
+}
+
+function copyTemplateAll(tKey, tripId, arrivingOnly) {
+  const paxAll = getParticipants(tripId);
+  const today = new Date().toISOString().slice(0,10);
+  const paxList = arrivingOnly ? paxAll.filter(p => p.arrivalDT && p.arrivalDT.startsWith(today)) : paxAll;
+  const trip = tripsData.find(t => t.id === tripId) || {};
+  if (!paxList.length) { toast('No participants match.'); return; }
+  const lines = paxList.map(p => {
+    const phone = (p.phoneCC||'+1') + ' ' + (p.phone||'');
+    const msg = buildTemplateText(tKey, p, trip);
+    return `── ${p.first} ${p.last} (${phone}) ──\n${msg}`;
+  }).join('\n\n' + '─'.repeat(40) + '\n\n');
+  navigator.clipboard.writeText(lines).then(() => toast(`Copied ${paxList.length} personalized messages — paste into notes then send individually.`))
+    .catch(() => prompt('Copy all messages:', lines));
+}
+
+function exportContacts(tripId) {
+  const paxList = getParticipants(tripId);
+  const trip = tripsData.find(t => t.id === tripId);
+  const lines = ['PARTICIPANT CONTACT LIST', `Trip: ${trip?.name || tripId}`, `Generated: ${new Date().toLocaleDateString()}`, '─'.repeat(50),
+    ...paxList.map(p => `${p.first} ${p.last}\n  Mobile: ${p.phoneCC||'+1'} ${p.phone||'—'}\n  Email:  ${p.email||'—'}\n  Church: ${p.church||'—'}`)
+  ].join('\n');
+  navigator.clipboard.writeText(lines).then(() => toast('Contact list copied to clipboard.'))
+    .catch(() => prompt('Copy contact list:', lines));
+}
+
+function exportEmergencyContacts(tripId) {
+  const paxList = getParticipants(tripId);
+  const trip = tripsData.find(t => t.id === tripId);
+  const lines = ['EMERGENCY CONTACT LIST — CONFIDENTIAL', `Trip: ${trip?.name || tripId}`, `Generated: ${new Date().toLocaleDateString()}`, '─'.repeat(50),
+    ...paxList.map(p => `${p.first} ${p.last}\n  EC Name:  ${p.ecName||'—'}\n  EC Phone: ${p.ecPhone||'—'}`)
+  ].join('\n');
+  navigator.clipboard.writeText(lines).then(() => toast('Emergency contact list copied — keep confidential.'))
+    .catch(() => prompt('Copy emergency contacts:', lines));
+}
+
+// ── Participant Modal ──
+function openPaxModal(tripId, pId) {
+  document.getElementById('paxTripId').value = tripId;
+  document.getElementById('paxEditId').value = pId || '';
+  document.getElementById('paxModalTitle').textContent = pId ? 'Edit Participant' : 'Add Participant';
+  // reset
+  ['paxFirst','paxLast','paxPhone','paxEmail','paxEcName','paxEcPhone','paxChurch',
+   'paxAirline','paxFlightNum','paxInsProvider','paxInsPolicyLast4','paxDietaryNotes','paxLeaderNotes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  ['paxInsurance','paxEpiPen','paxInhaler','paxMedSchedule','paxWaterRestriction','paxWellnessConsent'].forEach(id => { const el=document.getElementById(id); if(el) el.checked=false; });
+  document.getElementById('paxInsuranceDetails').style.display = 'none';
+  document.getElementById('paxPhoneCC').value = '+1';
+  document.getElementById('paxArrivalAirport').value = 'SAP';
+  document.getElementById('paxPassportCountry').value = 'US';
+  document.getElementById('paxHeatSensitivity').value = 'none';
+  document.getElementById('paxActivityLevel').value = 'full';
+  document.getElementById('paxDietary').value = 'none';
+  document.getElementById('paxMobilityAid').value = 'none';
+  document.getElementById('paxArrivalDT').value = '';
+  document.getElementById('paxDepartureDT').value = '';
+  if (pId) {
+    const p = getParticipants(tripId).find(x => x.id === pId);
+    if (p) {
+      const set = (id, val) => { const el=document.getElementById(id); if(el && val!==undefined) el.value=val; };
+      const chk = (id, val) => { const el=document.getElementById(id); if(el) el.checked=!!val; };
+      set('paxFirst', p.first); set('paxLast', p.last); set('paxPhoneCC', p.phoneCC||'+1');
+      set('paxPhone', p.phone); set('paxEmail', p.email); set('paxEcName', p.ecName);
+      set('paxEcPhone', p.ecPhone); set('paxChurch', p.church); set('paxAirline', p.airline);
+      set('paxFlightNum', p.flightNum); set('paxArrivalAirport', p.arrivalAirport||'SAP');
+      set('paxPassportCountry', p.passportCountry||'US');
+      set('paxArrivalDT', p.arrivalDT||''); set('paxDepartureDT', p.departureDT||'');
+      chk('paxInsurance', p.insurance);
+      if (p.insurance) document.getElementById('paxInsuranceDetails').style.display='flex';
+      set('paxInsProvider', p.insProvider); set('paxInsPolicyLast4', p.insPolicyLast4);
+      set('paxHeatSensitivity', p.heatSensitivity||'none'); set('paxActivityLevel', p.activityLevel||'full');
+      set('paxDietary', p.dietary||'none'); set('paxDietaryNotes', p.dietaryNotes||'');
+      chk('paxEpiPen', p.epiPen); chk('paxInhaler', p.inhaler);
+      chk('paxMedSchedule', p.medSchedule); chk('paxWaterRestriction', p.waterRestriction);
+      set('paxMobilityAid', p.mobilityAid||'none'); set('paxLeaderNotes', p.leaderNotes||'');
+      chk('paxWellnessConsent', p.wellnessConsent);
+    }
+  }
+  document.getElementById('paxModal').classList.add('open');
+}
+
+function closePaxModal() { document.getElementById('paxModal').classList.remove('open'); }
+
+function savePaxModal() {
+  const tripId = document.getElementById('paxTripId').value;
+  const pId    = document.getElementById('paxEditId').value;
+  const first  = document.getElementById('paxFirst').value.trim();
+  const last   = document.getElementById('paxLast').value.trim();
+  if (!first || !last) { alert('First and last name are required.'); return; }
+  const p = {
+    id:               pId || 'p_' + Date.now(),
+    first, last,
+    phoneCC:          document.getElementById('paxPhoneCC').value,
+    phone:            document.getElementById('paxPhone').value.trim(),
+    email:            document.getElementById('paxEmail').value.trim(),
+    ecName:           document.getElementById('paxEcName').value.trim(),
+    ecPhone:          document.getElementById('paxEcPhone').value.trim(),
+    church:           document.getElementById('paxChurch').value.trim(),
+    airline:          document.getElementById('paxAirline').value.trim(),
+    flightNum:        document.getElementById('paxFlightNum').value.trim(),
+    arrivalAirport:   document.getElementById('paxArrivalAirport').value,
+    passportCountry:  document.getElementById('paxPassportCountry').value,
+    arrivalDT:        document.getElementById('paxArrivalDT').value,
+    departureDT:      document.getElementById('paxDepartureDT').value,
+    insurance:        document.getElementById('paxInsurance').checked,
+    insProvider:      document.getElementById('paxInsProvider').value.trim(),
+    insPolicyLast4:   document.getElementById('paxInsPolicyLast4').value.trim(),
+    heatSensitivity:  document.getElementById('paxHeatSensitivity').value,
+    activityLevel:    document.getElementById('paxActivityLevel').value,
+    dietary:          document.getElementById('paxDietary').value,
+    dietaryNotes:     document.getElementById('paxDietaryNotes').value.trim(),
+    epiPen:           document.getElementById('paxEpiPen').checked,
+    inhaler:          document.getElementById('paxInhaler').checked,
+    medSchedule:      document.getElementById('paxMedSchedule').checked,
+    waterRestriction: document.getElementById('paxWaterRestriction').checked,
+    mobilityAid:      document.getElementById('paxMobilityAid').value,
+    leaderNotes:      document.getElementById('paxLeaderNotes').value.trim(),
+    wellnessConsent:  document.getElementById('paxWellnessConsent').checked,
+  };
+  const list = getParticipants(tripId);
+  if (pId) {
+    const idx = list.findIndex(x => x.id === pId);
+    if (idx > -1) list[idx] = p; else list.push(p);
+  } else {
+    list.push(p);
+  }
+  saveParticipants(tripId, list);
+  closePaxModal();
+  renderTripExpandContent(tripId, 'all');
+  toast(`${first} ${last} saved.`);
+}
+
+function deletePax(tripId, pId) {
+  const pax = getParticipants(tripId).find(p => p.id === pId);
+  if (!confirm(`Remove ${pax ? pax.first + ' ' + pax.last : 'this participant'} from the trip?`)) return;
+  const list = getParticipants(tripId).filter(p => p.id !== pId);
+  saveParticipants(tripId, list);
+  renderTripExpandContent(tripId, 'all');
+  toast('Participant removed.');
 }
 
 // ═══════════════════════ PAGES ═══════════════════════
@@ -4216,6 +4903,7 @@ function escHtml(str) {
 // Close modals on overlay click
 document.getElementById('postModal').addEventListener('click', e => { if (e.target === document.getElementById('postModal')) closePostModal(); });
 document.getElementById('tripModal').addEventListener('click', e => { if (e.target === document.getElementById('tripModal')) closeTripModal(); });
+document.getElementById('paxModal').addEventListener('click', e => { if (e.target === document.getElementById('paxModal')) closePaxModal(); });
 
 // ═══════════════════════════════════════════════
 // GRANT MANAGEMENT
