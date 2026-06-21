@@ -38,6 +38,22 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Grant Management: dual-jurisdiction, Future status, org profile extensions
+- What changed:
+  - **admin/index.html — Compliance dates**: Added Schedule F (Form 990 foreign activities), FBAR (FinCEN 114), Honduras ONG registration as dated entries in the compliance calendar
+  - **admin/index.html — Grant modal**: Added "Vocational Development" to focus area options; added "Future" to status options (enables g_7–g_11 vocational/long-term seed grants)
+  - **admin/index.html — DEFAULT_ORG_PROFILE**: Added `usLegalAddress`, `hondurasAddress`, `emergingPrograms` array (vocational training pilot with honest stage framing)
+  - **admin/index.html — Org Profile form**: Dual-jurisdiction badge ("US-incorporated nonprofit operating internationally"), US + Honduras address fields, yellow info banner with template language, new "Emerging Opportunities" section (dashed-purple cards, caution note: "Do not list as active programs in grant applications")
+  - **admin/index.html — saveOrgProfile / populateOrgProfileForm**: Wired new address fields + emerging-programs renderer
+  - **admin/index.html — buildApplicationDoc**: Cover letter and org overview updated with dual-jurisdiction framing; grant funds explicitly noted as "received and stewarded by US 501(c)(3) entity"
+- Status: Complete. Committed 1231804 and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Fill in real US legal address and Honduras operational address in org profile
+  3. Replace `[Member]` placeholders in board governance table (about/board.html)
+  4. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  5. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+
 ### 2026-06-20 — Donor CRM priority flagging (complete)
 - What changed:
   - **admin/index.html**: Full priority donor flagging system in Donor CRM panel
