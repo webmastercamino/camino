@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Communication Preferences — CAMINO Honduras</title>
+<style>
+  :root {
+    --amber: #BA7517;
+    --teal: #1A7A6E;
+    --text: #1a1a18;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --surface: #fafaf8;
+    --radius: 10px;
+    --red: #dc2626;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--surface); color: var(--text); }
+  header { background: #1a1a18; color: #fff; padding: 18px 24px; display: flex; align-items: center; gap: 14px; }
+  header img { height: 36px; }
+  header .brand { font-size: 17px; font-weight: 700; color: #fff; text-decoration: none; }
+  header .brand span { color: var(--amber); }
+  main { max-width: 620px; margin: 0 auto; padding: 40px 20px 80px; }
+  h1 { font-size: 24px; font-weight: 800; color: var(--teal); margin: 0 0 8px; }
+  .subtitle { font-size: 14px; color: var(--muted); margin: 0 0 32px; }
+  .step { display: none; }
+  .step.active { display: block; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
+  label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  input[type="email"] { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; }
+  input[type="email"]:focus { outline: none; border-color: var(--teal); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: none; border: 1.5px solid transparent; }
+  .btn-primary { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .btn-ghost { background: transparent; color: var(--teal); border-color: var(--teal); }
+  .btn:hover { opacity: .88; }
+  .error-msg { color: var(--red); font-size: 13px; margin-top: 6px; display: none; }
+  .check-group { display: flex; flex-direction: column; gap: 12px; }
+  .check-label { display: flex; align-items: center; gap: 12px; font-size: 14px; cursor: pointer; }
+  .check-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--teal); flex-shrink: 0; }
+  .radio-group { display: flex; flex-direction: column; gap: 10px; }
+  .radio-label { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; cursor: pointer; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; transition: .15s; }
+  .radio-label:hover { border-color: var(--teal); }
+  .radio-label input[type="radio"] { width: 18px; height: 18px; accent-color: var(--teal); flex-shrink: 0; margin-top: 2px; }
+  .radio-label .rl-body { flex: 1; }
+  .radio-label .rl-title { font-weight: 600; }
+  .radio-label .rl-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin: 24px 0 12px; }
+  .success-icon { font-size: 48px; text-align: center; margin-bottom: 16px; }
+  .unsub-link { font-size: 12px; color: var(--muted); margin-top: 32px; text-align: center; }
+  .unsub-link a { color: var(--muted); }
+  footer { background: #1a1a18; color: #888; font-size: 12px; text-align: center; padding: 18px 20px; margin-top: 60px; }
+  footer a { color: var(--amber); text-decoration: none; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span>CAMINO</span> Honduras</div>
+</header>
+
+<main>
+  <h1>Your Communication Preferences</h1>
+  <p class="subtitle">Control how and how often CAMINO Honduras contacts you. We respect your inbox.</p>
+
+  <!-- Step 1: Email lookup -->
+  <div class="step active" id="step-lookup">
+    <div class="card">
+      <label for="lookupEmail">Enter your email address to get started</label>
+      <input type="email" id="lookupEmail" placeholder="you@example.com" autocomplete="email" />
+      <div class="error-msg" id="lookupError">Please enter a valid email address.</div>
+      <div style="margin-top:16px">
+        <button class="btn btn-primary" onclick="lookupEmail()">Continue →</button>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:12px">We'll load your current preferences if you're in our system. New to our list? We'll set you up with defaults.</p>
+  </div>
+
+  <!-- Step 2: Preferences form -->
+  <div class="step" id="step-prefs">
+    <div style="margin-bottom:20px;padding:14px 18px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:var(--radius)">
+      <span style="font-size:13px">Preferences for: <strong id="prefsEmailDisplay"></strong></span>
+      <a href="#" onclick="resetToLookup();return false" style="font-size:12px;color:var(--teal);margin-left:12px">Change email</a>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Preferred Channels</div>
+      <div class="check-group">
+        <label class="check-label">
+          <input type="checkbox" id="ch-email" checked />
+          <div><div style="font-weight:600">✉️ Email</div><div style="font-size:12px;color:var(--muted)">Newsletters, updates, receipts</div></div>
+        </label>
+        <label class="check-label">
+          <input type="checkbox" id="ch-sms" />
+          <div><div style="font-weight:600">📱 SMS Text Messages</div><div style="font-size:12px;color:var(--muted)">Trip alerts, urgent prayer requests</div></div>
+        </label>
+        <label class="check-label">
+          <input type="checkbox" id="ch-whatsapp" />
+          <div><div style="font-weight:600">💬 WhatsApp</div><div style="font-size:12px;color:var(--muted)">Trip group chats, Honduras team updates</div></div>
+        </label>
+        <label class="check-label">
+          <input type="checkbox" id="ch-mail" />
+          <div><div style="font-weight:600">📬 Physical Mail</div><div style="font-size:12px;color:var(--muted)">Annual impact report, year-end gift acknowledgments</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Contact Frequency</div>
+      <div class="radio-group">
+        <label class="radio-label">
+          <input type="radio" name="frequency" value="essentials" />
+          <div class="rl-body">
+            <div class="rl-title">Essentials only</div>
+            <div class="rl-desc">Tax receipts, gift acknowledgments, and genuinely urgent news. That's it.</div>
+          </div>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="frequency" value="full" checked />
+          <div class="rl-body">
+            <div class="rl-title">Full cadence (recommended)</div>
+            <div class="rl-desc">Monthly newsletter, quarterly updates, impact report, trip news. A steady rhythm without overwhelm.</div>
+          </div>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="frequency" value="max" />
+          <div class="rl-body">
+            <div class="rl-title">Maximum engagement</div>
+            <div class="rl-desc">Everything above plus behind-the-scenes updates, cultural stories, volunteer opportunities, and prayer requests.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Topics You Care About</div>
+      <div class="check-group">
+        <label class="check-label"><input type="checkbox" id="topic-trips" checked /> ✈️ Mission trips — dates, sign-ups, stories from the field</label>
+        <label class="check-label"><input type="checkbox" id="topic-stories" checked /> 📖 Stories from Honduras — family spotlights, community updates</label>
+        <label class="check-label"><input type="checkbox" id="topic-transparency" /> 📊 Financials &amp; transparency — how funds are used, annual report</label>
+        <label class="check-label"><input type="checkbox" id="topic-volunteer" /> 🙌 Volunteer opportunities — beyond trips, local support options</label>
+        <label class="check-label"><input type="checkbox" id="topic-prayer" checked /> 🙏 Prayer updates — team prayer requests, praise reports</label>
+        <label class="check-label"><input type="checkbox" id="topic-culture" /> 🌎 Honduran culture — language, holidays, community life</label>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn btn-primary" onclick="savePreferences()">Save my preferences</button>
+      <button class="btn btn-ghost" onclick="resetToLookup()">Cancel</button>
+    </div>
+
+    <div class="unsub-link">
+      Want to stop all communications? <a href="#" onclick="unsubscribeAll();return false">Unsubscribe from everything</a>
+    </div>
+  </div>
+
+  <!-- Step 3: Success -->
+  <div class="step" id="step-success">
+    <div class="card" style="text-align:center;padding:40px 28px">
+      <div class="success-icon">✅</div>
+      <h2 style="margin:0 0 8px;font-size:20px">Preferences saved!</h2>
+      <p style="color:var(--muted);font-size:14px;margin:0 0 24px">We've updated how we'll be in touch. Thank you for being part of the CAMINO family.</p>
+      <a href="../index.html" class="btn btn-ghost">← Back to CAMINO Honduras</a>
+    </div>
+  </div>
+
+  <!-- Step 4: Unsubscribed -->
+  <div class="step" id="step-unsub">
+    <div class="card" style="text-align:center;padding:40px 28px">
+      <div class="success-icon">📭</div>
+      <h2 style="margin:0 0 8px;font-size:20px">You've been unsubscribed.</h2>
+      <p style="color:var(--muted);font-size:14px;margin:0 0 8px">We've removed <strong id="unsubEmailDisplay"></strong> from all communications.</p>
+      <p style="color:var(--muted);font-size:13px;margin:0 0 24px">You'll still receive required tax receipts for any gifts you make. To re-subscribe, visit this page and look up your email.</p>
+      <a href="../index.html" class="btn btn-ghost">← Back to CAMINO Honduras</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  CAMINO Honduras · EIN 92-1234567 · <a href="../contact.html">Contact us</a> · <a href="../give.html">Donate</a>
+  <br>You're receiving communications because you donated, signed up, or traveled with CAMINO Honduras.
+</footer>
+
+<script>
+const STORAGE_KEY = 'camino_pubprefs';
+
+function getPubPrefs() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
+}
+
+function getEmailFromURL() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('email') || '';
+  } catch { return ''; }
+}
+
+function showStep(id) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+}
+
+function lookupEmail() {
+  const email = document.getElementById('lookupEmail').value.trim().toLowerCase();
+  const err = document.getElementById('lookupError');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    err.style.display = 'block'; return;
+  }
+  err.style.display = 'none';
+  loadPrefsForEmail(email);
+}
+
+function loadPrefsForEmail(email) {
+  document.getElementById('prefsEmailDisplay').textContent = email;
+  const all = getPubPrefs();
+  const pref = all[email] || { channels: { email: true }, frequency: 'full', topics: ['trips','stories','prayer'] };
+
+  document.getElementById('ch-email').checked    = !!(pref.channels && pref.channels.email);
+  document.getElementById('ch-sms').checked      = !!(pref.channels && pref.channels.sms);
+  document.getElementById('ch-whatsapp').checked = !!(pref.channels && pref.channels.whatsapp);
+  document.getElementById('ch-mail').checked     = !!(pref.channels && pref.channels.mail);
+
+  document.querySelectorAll('[name="frequency"]').forEach(r => r.checked = (r.value === (pref.frequency || 'full')));
+
+  ['trips','stories','transparency','volunteer','prayer','culture'].forEach(t => {
+    const el = document.getElementById('topic-' + t);
+    if (el) el.checked = !!(pref.topics && pref.topics.includes(t));
+  });
+
+  showStep('step-prefs');
+}
+
+function savePreferences() {
+  const email = document.getElementById('prefsEmailDisplay').textContent.trim().toLowerCase();
+  if (!email) return;
+  const channels = {
+    email:    document.getElementById('ch-email').checked,
+    sms:      document.getElementById('ch-sms').checked,
+    whatsapp: document.getElementById('ch-whatsapp').checked,
+    mail:     document.getElementById('ch-mail').checked,
+    phone:    false,
+  };
+  const topics = ['trips','stories','transparency','volunteer','prayer','culture'].filter(t => document.getElementById('topic-' + t)?.checked);
+  const freqEl = document.querySelector('[name="frequency"]:checked');
+  const all = getPubPrefs();
+  all[email] = { channels, frequency: freqEl ? freqEl.value : 'full', topics, optedOut: false, updatedAt: new Date().toISOString().slice(0, 10) };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  showStep('step-success');
+}
+
+function unsubscribeAll() {
+  const email = document.getElementById('prefsEmailDisplay').textContent.trim().toLowerCase();
+  if (!email) return;
+  const all = getPubPrefs();
+  all[email] = { channels: {}, frequency: 'essentials', topics: [], optedOut: true, updatedAt: new Date().toISOString().slice(0, 10) };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  document.getElementById('unsubEmailDisplay').textContent = email;
+  showStep('step-unsub');
+}
+
+function resetToLookup() { showStep('step-lookup'); }
+
+// Pre-fill email from URL param if present
+const preEmail = getEmailFromURL();
+if (preEmail) {
+  document.getElementById('lookupEmail').value = preEmail;
+  loadPrefsForEmail(preEmail.toLowerCase());
+}
+</script>
+</body>
+</html>

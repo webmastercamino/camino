@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -394,6 +394,68 @@
     .mm-add-form { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin-top: 12px; display: none; }
     .mm-add-form.open { display: block; }
 
+    /* ── Communications Panel ── */
+    .comms-tab-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+    .comms-tab { padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 20px; background: var(--surface); font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); transition: .15s; }
+    .comms-tab.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .comms-subpanel { display: none; }
+    .comms-subpanel.active { display: block; }
+    .comms-dash-card { background: var(--surface); border: 1.5px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 13px 16px; margin-bottom: 9px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .comms-dash-card.done { border-left-color: #22c55e; opacity: .65; }
+    .comms-dash-card.overdue { border-left-color: var(--red); }
+    .comms-month-header { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .cadence-plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .cadence-plan-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+    .cadence-plan-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    .cadence-row { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+    .cadence-row:last-child { border-bottom: none; }
+    .cadence-months { display: flex; gap: 2px; flex-wrap: wrap; margin-top: 2px; }
+    .cadence-month { display: inline-block; width: 22px; height: 22px; border-radius: 4px; font-size: 9px; font-weight: 700; text-align: center; line-height: 22px; }
+    .cadence-month.on { background: var(--teal); color: #fff; }
+    .cadence-month.done { background: #dcfce7; color: #15803d; }
+    .cadence-month.off { background: var(--border); color: var(--muted); }
+    .channel-matrix-wrap { overflow-x: auto; margin-bottom: 16px; }
+    .channel-matrix { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 680px; }
+    .channel-matrix th { background: #1a1a18; color: #f5f5f0; padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .channel-matrix th:first-child { min-width: 185px; }
+    .channel-matrix td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; line-height: 1.6; font-size: 11px; }
+    .channel-matrix tr:nth-child(even) td { background: #fafaf8; }
+    .channel-tag { display: inline-block; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; margin: 1px 1px; font-size: 10px; white-space: nowrap; }
+    .prefs-overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .prefs-donor-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px; }
+    .prefs-channel-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; padding: 4px 0; }
+    .toggle-pill { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+    .toggle-pill input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #d1d5db; border-radius: 20px; cursor: pointer; transition: .2s; }
+    .toggle-track::after { content: ''; position: absolute; width: 14px; height: 14px; background: #fff; border-radius: 50%; top: 3px; left: 3px; transition: .2s; }
+    .toggle-pill input:checked + .toggle-track { background: var(--teal); }
+    .toggle-pill input:checked + .toggle-track::after { transform: translateX(16px); }
+    /* ── Crisis Panel ── */
+    .crisis-active-banner { background: #fee2e2; border: 2px solid #991b1b; border-radius: var(--radius); padding: 14px 18px; margin-bottom: 20px; display: none; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .crisis-active-banner.on { display: flex; }
+    .crisis-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+    .crisis-card.sev-red { border-left: 4px solid #dc2626; }
+    .crisis-card.sev-orange { border-left: 4px solid var(--amber); }
+    .crisis-card.sev-yellow { border-left: 4px solid #eab308; }
+    .crisis-template { background: #f8f9fa; border: 1px solid var(--border); border-radius: 6px; padding: 14px; margin-bottom: 10px; }
+    .crisis-template h5 { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin: 0 0 8px; }
+    .crisis-template textarea { width: 100%; min-height: 100px; resize: vertical; border: 1px solid var(--border); border-radius: 4px; padding: 8px; font-size: 12px; font-family: inherit; box-sizing: border-box; }
+    .crisis-log-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .crisis-log-table th { background: #f3f4f6; padding: 7px 10px; text-align: left; font-size: 11px; border-bottom: 2px solid var(--border); }
+    .crisis-log-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+    .drill-badge { background: #fdf4ff; color: #7e22ce; border: 1px solid #e9d5ff; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+    /* ── Gift Log ── */
+    .gift-log-row { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); align-items: flex-start; font-size: 12px; }
+    .gift-log-row:last-child { border-bottom: none; }
+    .gift-badge { padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+    .gift-inkind   { background: #e0f2fe; color: #0369a1; }
+    .gift-stock    { background: #f0fdf4; color: #15803d; }
+    .gift-planned  { background: #fdf4ff; color: #7e22ce; }
+    .gift-matching { background: #fff7ed; color: #9a3412; }
+    /* ── Address fields ── */
+    .addr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 640px) { .addr-grid { grid-template-columns: 1fr; } }
+
     /* ── Accessibility ── */
     .skip-link-admin {
       position: fixed; top: -80px; left: 14px; z-index: 9999;
@@ -655,6 +717,14 @@
     <div class="sidebar-tag" style="margin-top:8px">Development</div>
     <button class="nav-item" data-panel="grants" onclick="switchPanel('grants', this)">
       <span class="nav-item__icon">📋</span> Grants
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">Communications</div>
+    <button class="nav-item" data-panel="comms" onclick="switchPanel('comms', this)">
+      <span class="nav-item__icon">📡</span> Communication Plan
+    </button>
+    <button class="nav-item" data-panel="crisis" onclick="switchPanel('crisis', this)">
+      <span class="nav-item__icon">🚨</span> Crisis Comms
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Links</div>
@@ -1164,6 +1234,190 @@
     </div>
   </div>
 
+
+  <!-- ══ PANEL: Communication Plan ══ -->
+  <div id="panel-comms" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Communication Plan</div>
+        <div class="panel-sub">Tier-based outreach cadences, donor preferences, and monthly dashboard.</div>
+      </div>
+    </div>
+
+    <div class="comms-tab-row">
+      <button class="comms-tab active" onclick="setCommsTab('dashboard', this)">📅 This Month</button>
+      <button class="comms-tab" onclick="setCommsTab('cadence', this)">📆 Cadence Plans</button>
+      <button class="comms-tab" onclick="setCommsTab('channels', this)">📊 Channel Map</button>
+      <button class="comms-tab" onclick="setCommsTab('prefs', this)">⚙️ Preferences</button>
+    </div>
+
+    <!-- Tab: This Month -->
+    <div class="comms-subpanel active" id="commsSub-dashboard">
+      <div class="comms-month-header">June 2026 Outreach</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:18px">Priority donors with touchpoints due this month. Sorted by tier. Mark contacted to update the log.</p>
+      <div id="commsDashboard"></div>
+    </div>
+
+    <!-- Tab: Cadence Plans -->
+    <div class="comms-subpanel" id="commsSub-cadence">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:18px">Default outreach schedules by donor tier. Donors can opt up/down in their preferences.</p>
+      <div class="cadence-plans-grid" id="cadencePlansGrid"></div>
+    </div>
+
+    <!-- Tab: Channel Map -->
+    <div class="comms-subpanel" id="commsSub-channels">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">What gets sent via which channel, by tier. Use this as the team's operating reference.</p>
+      <div class="channel-matrix-wrap">
+        <table class="channel-matrix">
+          <thead>
+            <tr>
+              <th>Touchpoint</th>
+              <th>🔴 Major Donor</th>
+              <th>🟠 Key Donor</th>
+              <th>🟡 Active Supporter</th>
+              <th>⚪ Lapsed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tax receipt</strong></td>
+              <td><span class="channel-tag">📬 Physical</span> <span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">✉️ Email auto</span></td>
+              <td><span class="channel-tag">✉️ Email auto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Year-end thank you</strong></td>
+              <td><span class="channel-tag">📬 Handwritten card</span></td>
+              <td><span class="channel-tag">📬 Printed card</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Impact report</strong></td>
+              <td><span class="channel-tag">📬 Printed booklet</span></td>
+              <td><span class="channel-tag">✉️ Email PDF</span></td>
+              <td><span class="channel-tag">✉️ Email PDF</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Monthly newsletter</strong></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Trip update (active week)</strong></td>
+              <td><span class="channel-tag">📱 SMS</span> <span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">📱 SMS (opt-in)</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Emergency / prayer request</strong></td>
+              <td><span class="channel-tag">📱 SMS</span> <span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">📱 SMS</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Birthday / anniversary</strong></td>
+              <td><span class="channel-tag">📬 Card</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>New gift acknowledgment</strong></td>
+              <td><span class="channel-tag">📬 Letter &lt;72hr</span></td>
+              <td><span class="channel-tag">📞 Call</span> <span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">✉️ Email auto</span></td>
+              <td><span class="channel-tag">✉️ Email auto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Re-engagement sequence</strong></td>
+              <td>—</td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="channel-tag">✉️ 3-email sequence</span></td>
+            </tr>
+            <tr>
+              <td><strong>Major gift ($1K+)</strong></td>
+              <td><span class="channel-tag">📞 Personal call</span> <span class="channel-tag">📬 Letter</span></td>
+              <td><span class="channel-tag">📞 Call</span> <span class="channel-tag">✉️ Email</span></td>
+              <td><span class="channel-tag">✉️ Email</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Quarterly personal touch</strong></td>
+              <td><span class="channel-tag">📞 Call or note</span></td>
+              <td><span class="channel-tag">✉️ Personal email</span></td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="padding:14px 18px;background:#fef9c3;border-color:#fde68a">
+        <strong style="font-size:12px">📬 Physical Mail Runs</strong>
+        <p style="font-size:12px;color:var(--text);margin:6px 0 0">Batch physical mail (impact reports, handwritten cards) is done semi-annually in June and December. Use the donor list filter to pull Major Donor addresses and generate a mailing list.</p>
+        <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="printMailingLabels()">🖨️ Print Mailing Labels (Major Donors)</button>
+      </div>
+    </div>
+
+    <!-- Tab: Preferences -->
+    <div class="comms-subpanel" id="commsSub-prefs">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Donor-level communication preferences. Each donor can update these via the public preference center link. <a href="../communications/preferences.html" target="_blank" style="color:var(--teal)">View public preference center ↗</a></p>
+      <div class="prefs-overview-grid" id="prefsOverviewGrid"></div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: Crisis Communications ══ -->
+  <div id="panel-crisis" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Crisis Communications</div>
+        <div class="panel-sub">Pre-written playbooks for 6 crisis types. Activate to access templates, log the incident, and coordinate board response.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="runCrisisDrill()" style="border-color:#7c3aed;color:#7c3aed">🎭 Run Crisis Drill</button>
+        <button class="btn btn-ghost btn-sm" id="resolveAllBtn" onclick="resolveActiveCrisis()" style="display:none;border-color:#dc2626;color:#dc2626">✅ Mark Resolved</button>
+      </div>
+    </div>
+
+    <div class="crisis-active-banner" id="crisisActiveBanner">
+      <div>
+        <strong style="color:#991b1b" id="crisisBannerTitle">⚠️ CRISIS ACTIVE</strong>
+        <div id="crisisBannerDetail" style="font-size:12px;color:#991b1b;margin-top:2px"></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <span class="drill-badge" id="crisisDrillBadge" style="display:none">DRILL</span>
+        <button class="btn btn-sm" style="background:#991b1b;color:#fff;border:none" onclick="resolveActiveCrisis()">✅ Resolve</button>
+      </div>
+    </div>
+
+    <div id="crisisTypesList"></div>
+
+    <div class="card" style="margin-top:20px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px">Crisis Log</div>
+      <div id="crisisLogContainer">
+        <table class="crisis-log-table" id="crisisLogTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Crisis Type</th>
+              <th>Activated By</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="crisisLogBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <!-- ══════════════════ MODAL: Post ══════════════════ -->
@@ -1463,6 +1717,124 @@
   </div>
 </div>
 
+
+<!-- ══ MODAL: Comms Preferences ══ -->
+<div class="modal-overlay" id="prefsModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closePrefsModal()">×</button>
+    <div class="modal-title">Communication Preferences — <span id="prefsDonorName"></span></div>
+    <input type="hidden" id="prefsDonorId" />
+    <div class="form-group">
+      <label style="display:flex;align-items:center;gap:8px;font-weight:600">
+        <input type="checkbox" id="prefsOptedOut" />
+        Opted out of all communications (unsubscribed)
+      </label>
+    </div>
+    <div class="form-group">
+      <label style="font-weight:700">Preferred Channels</label>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsCh-email" /> ✉️ Email newsletter</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsCh-sms" /> 📱 SMS text alerts</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsCh-whatsapp" /> 💬 WhatsApp</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsCh-mail" /> 📬 Physical mail</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsCh-phone" /> 📞 Phone / personal calls</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="prefsFrequency" style="font-weight:700">Contact Frequency</label>
+      <select id="prefsFrequency">
+        <option value="essentials">Essentials only (receipts, urgent)</option>
+        <option value="full">Full cadence (default)</option>
+        <option value="max">Maximum engagement</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label style="font-weight:700">Topics of Interest</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsTopic-trips" /> ✈️ Mission trips</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsTopic-stories" /> 📖 Stories from Honduras</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsTopic-transparency" /> 📊 Financials & transparency</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsTopic-volunteer" /> 🙌 Volunteer opportunities</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsTopic-prayer" /> 🙏 Prayer updates</label>
+        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="prefsTopic-culture" /> 🌎 Honduran culture</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closePrefsModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePrefsModal()">Save preferences</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: Gift Log ══ -->
+<div class="modal-overlay" id="giftModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeGiftModal()">×</button>
+    <div class="modal-title">Log Non-Cash Gift</div>
+    <input type="hidden" id="giftDonorId" />
+    <div class="form-group">
+      <label for="giftType">Gift type</label>
+      <select id="giftType">
+        <option value="in-kind">In-Kind Donation</option>
+        <option value="stock">Stock / Securities</option>
+        <option value="planned">Planned Gift / Bequest</option>
+        <option value="matching">Matching Gift</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="giftDate">Date</label>
+      <input type="date" id="giftDate" />
+    </div>
+    <div class="form-group">
+      <label for="giftDesc">Description</label>
+      <input type="text" id="giftDesc" placeholder="e.g. Transfer of 15 shares AAPL via Fidelity Charitable" />
+    </div>
+    <div class="form-group">
+      <label for="giftValue">Estimated value ($ USD) <span style="color:var(--muted);font-weight:400">optional</span></label>
+      <input type="number" id="giftValue" min="0" step="0.01" placeholder="0.00" />
+    </div>
+    <div class="form-group">
+      <label for="giftNotes">Notes</label>
+      <textarea id="giftNotes" rows="2" placeholder="Processing details, donor instructions, acknowledgment sent, etc."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeGiftModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGiftEntry()">Save gift</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: Log Communication ══ -->
+<div class="modal-overlay" id="logCommsModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeLogCommsModal()">×</button>
+    <div class="modal-title">Log Communication</div>
+    <input type="hidden" id="logCommsDonorId" />
+    <div class="form-group">
+      <label for="logCommsDate">Date</label>
+      <input type="date" id="logCommsDate" />
+    </div>
+    <div class="form-group">
+      <label for="logCommsType">Type</label>
+      <select id="logCommsType">
+        <option value="email">✉️ Email</option>
+        <option value="call">📞 Phone call</option>
+        <option value="mail">📬 Physical mail</option>
+        <option value="sms">📱 SMS</option>
+        <option value="whatsapp">💬 WhatsApp</option>
+        <option value="meeting">🤝 In-person meeting</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="logCommsNotes">Notes</label>
+      <textarea id="logCommsNotes" rows="3" placeholder="Describe the communication — topic, outcome, follow-up needed."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeLogCommsModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLogComms()">Save</button>
+    </div>
+  </div>
+</div>
 <div id="toast"></div>
 
 <script>
@@ -1477,6 +1849,8 @@ const PANEL_TITLES = {
   boardgov:   'Board Governance',
   compliance: '501(c)(3) Compliance',
   grants:     'Grant Management',
+  comms:      'Communication Plan',
+  crisis:     'Crisis Communications',
 };
 
 function switchPanel(id, el) {
@@ -1493,6 +1867,8 @@ function switchPanel(id, el) {
   if (id === 'boardgov')   renderBoardGov();
   if (id === 'compliance') renderCompliance();
   if (id === 'grants')     renderGrantsPanel();
+  if (id === 'comms')      renderCommsPanel();
+  if (id === 'crisis')     renderCrisisPanel();
 }
 
 // ── Toast ──
@@ -3066,9 +3442,13 @@ function buildDonorDetail(d, vipSet, followUps) {
         <tbody>${giftRows || '<tr><td colspan="4" style="color:var(--muted)">No gifts on record.</td></tr>'}</tbody>
       </table>
     </div>
+    ${buildAddressSection(d.id)}
+    ${buildCommsPrefsSummary(d.id)}
+    ${buildGiftLogSection(d.id)}
+    ${buildCommsHistorySection(d.id)}
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();toast('Receipt stub — Cloudflare Worker will send via Resend.')">📧 Send receipt</button>
-      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toast('Communication logged (stub).')">📝 Log communication</button>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openLogCommsModal('${d.id}')">📝 Log communication</button>
       <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toast('Add to trip — Mission Trips panel.')">✈️ Add to trip</button>
       ${tier ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toggleVIP('${d.id}')">${tier === 'vip' ? '☆ Remove VIP' : '⭐ Mark VIP'}</button>` : ''}
     </div>
@@ -3955,6 +4335,882 @@ document.getElementById('grantDocModal').addEventListener('click', e => { if (e.
 // ═══════════════════════ INIT ═══════════════════════
 initCal();
 loadTrips(); // preload for donations panel
+
+// ═══════════════════════ COMMUNICATIONS ═══════════════════════
+
+const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const TOUCHPOINT_SCHEDULES = {
+  major: [
+    { id: 'quarterly-call',   label: 'Personal call / handwritten note', channel: '📞', months: [2,5,8,11] },
+    { id: 'impact-report',    label: 'Personalized impact report',        channel: '📬', months: [0,6] },
+    { id: 'trip-invitation',  label: 'Trip invitation / VIP update',      channel: '✉️', months: [4] },
+    { id: 'year-end-receipt', label: 'Year-end receipt + personal note',  channel: '📬', months: [11] },
+    { id: 'newsletter',       label: 'Email newsletter',                  channel: '✉️', months: [0,1,2,3,4,5,6,7,8,9,10,11] },
+  ],
+  key: [
+    { id: 'quarterly-email',  label: 'Personal email from leadership',    channel: '✉️', months: [2,5,8,11] },
+    { id: 'impact-report',    label: 'Impact report (email PDF)',          channel: '✉️', months: [11] },
+    { id: 'newsletter',       label: 'Email newsletter',                  channel: '✉️', months: [0,1,2,3,4,5,6,7,8,9,10,11] },
+    { id: 'year-end-receipt', label: 'Year-end receipt',                  channel: '✉️', months: [11] },
+  ],
+  active: [
+    { id: 'newsletter',       label: 'Email newsletter',                  channel: '✉️', months: [0,1,2,3,4,5,6,7,8,9,10,11] },
+    { id: 'trip-update',      label: 'Trip season update (pre / post)',    channel: '✉️', months: [4,9] },
+    { id: 'year-end-receipt', label: 'Year-end receipt + thank you',      channel: '✉️', months: [11] },
+  ],
+  vip: [
+    { id: 'quarterly-call',   label: 'Personal call / WhatsApp',          channel: '📞', months: [2,5,8,11] },
+    { id: 'impact-report',    label: 'Personalized impact report',        channel: '📬', months: [0,6] },
+    { id: 'board-invitation', label: 'Board dinner / site visit invite',  channel: '📬', months: [3] },
+    { id: 'year-end-receipt', label: 'Year-end receipt + personal note',  channel: '📬', months: [11] },
+    { id: 'newsletter',       label: 'Email newsletter',                  channel: '✉️', months: [0,1,2,3,4,5,6,7,8,9,10,11] },
+  ],
+  lapsed: [
+    { id: 'reengagement-1',   label: 'Re-engagement #1 — "We miss you"',  channel: '✉️', months: [] },
+    { id: 'reengagement-2',   label: 'Re-engagement #2 — Impact story',   channel: '✉️', months: [] },
+    { id: 'reengagement-3',   label: 'Re-engagement #3 — Soft ask',       channel: '✉️', months: [] },
+    { id: 'newsletter',       label: 'Quarterly newsletter (post-re-engagement)', channel: '✉️', months: [] },
+  ],
+};
+
+const COMMS_PREFS_SEED = {
+  'd001': { channels: { email: true, sms: false, whatsapp: false, mail: false, phone: false }, frequency: 'full',       topics: ['trips','stories','prayer'],                           optedOut: false },
+  'd002': { channels: { email: true, sms: false, whatsapp: false, mail: false, phone: false }, frequency: 'full',       topics: ['trips','stories'],                                    optedOut: false },
+  'd003': { channels: { email: true, sms: true,  whatsapp: true,  mail: false, phone: true  }, frequency: 'max',        topics: ['trips','stories','transparency','volunteer','prayer','culture'], optedOut: false },
+  'd004': { channels: { email: true, sms: false, whatsapp: false, mail: true,  phone: true  }, frequency: 'full',       topics: ['transparency','stories'],                             optedOut: false },
+  'd005': { channels: { email: true, sms: true,  whatsapp: true,  mail: false, phone: false }, frequency: 'max',        topics: ['trips','volunteer','prayer'],                         optedOut: false },
+  'd006': { channels: { email: true, sms: false, whatsapp: false, mail: false, phone: false }, frequency: 'full',       topics: ['trips','stories','culture'],                          optedOut: false },
+  'd007': { channels: { email: true, sms: false, whatsapp: false, mail: false, phone: false }, frequency: 'essentials', topics: ['stories'],                                            optedOut: false },
+  'd008': { channels: { email: true, sms: false, whatsapp: false, mail: false, phone: false }, frequency: 'full',       topics: ['transparency','stories'],                             optedOut: false },
+  'd009': { channels: { email: true, sms: false, whatsapp: false, mail: true,  phone: true  }, frequency: 'full',       topics: ['trips','stories','transparency'],                     optedOut: false },
+  'd010': { channels: { email: true, sms: false, whatsapp: false, mail: false, phone: false }, frequency: 'essentials', topics: [],                                                     optedOut: false },
+};
+
+const COMMS_HISTORY_SEED = {
+  'd004': [
+    { id: 'ch004a', date: '2026-03-15', type: 'call',    touchpoint: 'quarterly-call',   notes: 'Q1 personal call from Walker. Warm — pledged continued support. Discussed sponsoring a 2027 home.' },
+    { id: 'ch004b', date: '2025-12-10', type: 'mail',    touchpoint: 'year-end-receipt', notes: 'Handwritten year-end thank-you + tax receipt mailed.' },
+    { id: 'ch004c', date: '2026-01-20', type: 'email',   touchpoint: 'impact-report',    notes: 'Semi-annual impact report PDF sent.' },
+  ],
+  'd003': [
+    { id: 'ch003a', date: '2026-03-01', type: 'email',   touchpoint: 'quarterly-call',   notes: 'Quarterly personal email from Walker re: trip planning + prayer update.' },
+    { id: 'ch003b', date: '2025-12-05', type: 'phone',   touchpoint: 'year-end-receipt', notes: 'Personal call + mailed receipt. Very warm.' },
+    { id: 'ch003c', date: '2026-04-15', type: 'whatsapp',touchpoint: 'trip-invitation',  notes: 'Trip registration confirmed, welcome message sent on WhatsApp.' },
+  ],
+  'd002': [
+    { id: 'ch002a', date: '2026-04-15', type: 'email',   touchpoint: 'gift-ack',         notes: 'Gift acknowledgment email. Personalized thank-you for $5,000 gift.' },
+  ],
+  'd001': [
+    { id: 'ch001a', date: '2026-06-05', type: 'email',   touchpoint: 'trip-update',      notes: 'Pre-trip logistics email sent to Culpeper group. Margaret CC\'d.' },
+    { id: 'ch001b', date: '2026-05-15', type: 'email',   touchpoint: 'newsletter',       notes: 'May newsletter sent.' },
+    { id: 'ch001c', date: '2025-12-18', type: 'email',   touchpoint: 'year-end-receipt', notes: 'Year-end receipt + thank you email.' },
+  ],
+  'd008': [
+    { id: 'ch008a', date: '2026-03-01', type: 'email',   touchpoint: 'quarterly-email',  notes: 'Q1 personal email. Discussed home sponsorship opportunity.' },
+    { id: 'ch008b', date: '2025-12-28', type: 'email',   touchpoint: 'year-end-receipt', notes: 'Year-end receipt emailed.' },
+  ],
+  'd009': [
+    { id: 'ch009a', date: '2026-02-20', type: 'email',   touchpoint: 'gift-ack',         notes: 'Gift acknowledgment letter mailed + emailed on behalf of Calvary Oak.' },
+    { id: 'ch009b', date: '2025-12-10', type: 'mail',    touchpoint: 'year-end-receipt', notes: 'Printed receipt + thank-you mailed to Patricia Holloway.' },
+  ],
+};
+
+const DONOR_ADDRESSES_SEED = {
+  'd004': { street: '1700 K Street NW, Suite 900', city: 'Washington', state: 'DC', zip: '20006', country: 'USA' },
+  'd009': { street: '211 Lee Highway', city: 'Warrenton', state: 'VA', zip: '20186', country: 'USA' },
+  'd001': { street: '412 Main Street', city: 'Culpeper', state: 'VA', zip: '22701', country: 'USA' },
+};
+
+const GIFT_LOG_SEED = {
+  'd004': [
+    { id: 'gl001', date: '2026-02-10', type: 'stock',    description: 'Transfer of 15 shares AAPL',                       estimatedValue: 320000, notes: 'Processed via Fidelity Charitable. FMV $3,200 on transfer date.' },
+  ],
+  'd009': [
+    { id: 'gl002', date: '2025-10-15', type: 'in-kind',  description: '4 boxes construction tools shipped to Honduras',    estimatedValue: 85000,  notes: 'Coordinated by Calvary Oak missions committee.' },
+    { id: 'gl003', date: '2026-03-01', type: 'matching',  description: 'Corporate match from Calvary Community Foundation', estimatedValue: 50000,  notes: 'Confirmed via letter dated 2026-03-01. Matches $500 cash gift.' },
+  ],
+  'd002': [
+    { id: 'gl004', date: '2026-05-01', type: 'planned',   description: 'Bequest intention noted in estate plan',            estimatedValue: 0,      notes: 'Robert indicated CAMINO Honduras named in his will. No dollar amount given.' },
+  ],
+};
+
+function getCommsPrefs() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_crm_comms_prefs') || 'null');
+    if (stored) return stored;
+  } catch {}
+  return JSON.parse(JSON.stringify(COMMS_PREFS_SEED));
+}
+function saveCommsPrefs(obj) { localStorage.setItem('camino_crm_comms_prefs', JSON.stringify(obj)); }
+
+function getCommsHistory() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_crm_comms_history') || 'null');
+    if (stored) return stored;
+  } catch {}
+  return JSON.parse(JSON.stringify(COMMS_HISTORY_SEED));
+}
+function saveCommsHistory(obj) { localStorage.setItem('camino_crm_comms_history', JSON.stringify(obj)); }
+
+function getDonorAddresses() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_crm_addresses') || 'null');
+    if (stored) return stored;
+  } catch {}
+  return JSON.parse(JSON.stringify(DONOR_ADDRESSES_SEED));
+}
+function saveDonorAddresses(obj) { localStorage.setItem('camino_crm_addresses', JSON.stringify(obj)); }
+
+function getGiftLog() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_crm_gift_log') || 'null');
+    if (stored) return stored;
+  } catch {}
+  return JSON.parse(JSON.stringify(GIFT_LOG_SEED));
+}
+function saveGiftLog(obj) { localStorage.setItem('camino_crm_gift_log', JSON.stringify(obj)); }
+
+// ── Comms panel render ──
+
+function renderCommsPanel() {
+  renderCommsDashboard();
+  renderCadencePlans();
+  renderPrefsOverview();
+}
+
+function setCommsTab(tab, el) {
+  document.querySelectorAll('.comms-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.comms-subpanel').forEach(p => p.classList.remove('active'));
+  const sub = document.getElementById('commsSub-' + tab);
+  if (sub) sub.classList.add('active');
+  if (tab === 'prefs') renderPrefsOverview();
+}
+
+function renderCommsDashboard() {
+  const vipSet    = getVIPFlags();
+  const history   = getCommsHistory();
+  const thisMonth = 5; // June (0-indexed)
+  const items = [];
+
+  crmDonors.forEach(d => {
+    const tier = calcPriority(d, vipSet);
+    if (!tier || tier === 'lapsed') return;
+    const schedule = TOUCHPOINT_SCHEDULES[tier] || [];
+    schedule.forEach(tp => {
+      if (!tp.months.includes(thisMonth)) return;
+      const donorHist = history[d.id] || [];
+      const done = donorHist.some(h => h.touchpoint === tp.id && h.date >= '2026-06-01' && h.date <= '2026-06-30');
+      items.push({ donor: d, tier, tp, done });
+    });
+  });
+
+  // Lapsed donors: show re-engagement if no history
+  crmDonors.filter(d => calcPriority(d, vipSet) === 'lapsed').forEach(d => {
+    const donorHist = history[d.id] || [];
+    const hasReEng = donorHist.some(h => h.touchpoint.startsWith('reengagement'));
+    if (!hasReEng) {
+      items.push({ donor: d, tier: 'lapsed', tp: { id: 'reengagement-1', label: 'Re-engagement sequence — start now', channel: '✉️' }, done: false });
+    }
+  });
+
+  items.sort((a, b) => (TIER_SORT[a.tier] ?? 5) - (TIER_SORT[b.tier] ?? 5));
+
+  const dueCount = items.filter(i => !i.done).length;
+  const el = document.getElementById('commsDashboard');
+  if (!el) return;
+
+  if (!items.length) { el.innerHTML = '<p style="color:var(--muted);font-size:13px">No scheduled touchpoints for this month.</p>'; return; }
+
+  const alertHtml = dueCount ? `<div style="background:#fef9c3;border:1px solid #fde68a;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;color:#713f12">⚠️ ${dueCount} touchpoint${dueCount>1?'s':''} due this month</div>` : `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;color:#065f46">✅ All touchpoints completed for June 2026</div>`;
+
+  el.innerHTML = alertHtml + items.map(item => {
+    const tierMeta = PRIORITY_TIERS[item.tier];
+    return `<div class="comms-dash-card${item.done ? ' done' : ''}">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+          ${tierMeta ? `<span class="priority-badge ${tierMeta.cls}">${tierMeta.label}</span>` : ''}
+          <strong style="font-size:13px">${escHtml(item.donor.firstName + ' ' + item.donor.lastName)}</strong>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">${item.tp.channel} ${escHtml(item.tp.label)}</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        ${item.done
+          ? '<span style="font-size:12px;color:#15803d;font-weight:600">✅ Done</span>'
+          : `<button class="btn btn-ghost btn-sm" style="font-size:11px" onclick="logTouchpointDone('${item.donor.id}','${item.tp.id}','${item.tp.label}')">Mark contacted</button>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function logTouchpointDone(donorId, touchpointId, label) {
+  const history = getCommsHistory();
+  if (!history[donorId]) history[donorId] = [];
+  history[donorId].unshift({ id: 'h_' + Date.now(), date: TODAY, type: 'logged', touchpoint: touchpointId, notes: label + ' — marked contacted via dashboard.' });
+  saveCommsHistory(history);
+  renderCommsDashboard();
+  toast('Touchpoint logged.');
+}
+
+function renderCadencePlans() {
+  const tiers = [
+    { id: 'major', title: '🔴 Major Donor ($10K+)', cls: 'priority-major' },
+    { id: 'vip',   title: '⭐ VIP (manually flagged)', cls: 'priority-vip' },
+    { id: 'key',   title: '🟠 Key Donor ($2.5K–$9.9K / recurring)', cls: 'priority-key' },
+    { id: 'active',title: '🟡 Active Supporter ($500–$2.4K)', cls: 'priority-active' },
+    { id: 'lapsed',title: '⚪ Lapsed (18+ months no gift)', cls: 'priority-lapsed' },
+  ];
+  const el = document.getElementById('cadencePlansGrid');
+  if (!el) return;
+
+  el.innerHTML = tiers.map(t => {
+    const schedule = TOUCHPOINT_SCHEDULES[t.id] || [];
+    const rows = schedule.map(tp => {
+      const monthDots = MONTH_ABBR.map((m, i) => {
+        const isOn = tp.months.includes(i);
+        return `<span class="cadence-month ${isOn ? 'on' : 'off'}" title="${m}">${m.slice(0,1)}</span>`;
+      }).join('');
+      return `<div class="cadence-row">
+        <div style="flex-shrink:0;font-size:14px">${tp.channel}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600;font-size:12px">${escHtml(tp.label)}</div>
+          ${tp.months.length ? `<div class="cadence-months" style="margin-top:4px">${monthDots}</div>` : '<div style="font-size:11px;color:var(--muted);margin-top:2px">Triggered, not scheduled</div>'}
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="cadence-plan-card">
+      <div class="cadence-plan-title"><span class="priority-badge ${t.cls}">${t.title}</span></div>
+      ${rows || '<div style="font-size:12px;color:var(--muted)">No scheduled touchpoints.</div>'}
+    </div>`;
+  }).join('');
+}
+
+function renderPrefsOverview() {
+  const prefs = getCommsPrefs();
+  const vipSet = getVIPFlags();
+  const el = document.getElementById('prefsOverviewGrid');
+  if (!el) return;
+
+  const channelLabels = { email: '✉️ Email newsletter', sms: '📱 SMS alerts', whatsapp: '💬 WhatsApp', mail: '📬 Physical mail', phone: '📞 Phone / personal' };
+  const freqLabels = { essentials: 'Essentials only', full: 'Full cadence', max: 'Maximum engagement' };
+
+  el.innerHTML = crmDonors.map(d => {
+    const pref = prefs[d.id] || { channels: { email: true }, frequency: 'full', topics: [], optedOut: false };
+    const tier = calcPriority(d, vipSet);
+    const tierMeta = PRIORITY_TIERS[tier];
+    if (pref.optedOut) {
+      return `<div class="prefs-donor-card" style="opacity:.6">
+        <div style="font-weight:600;font-size:13px">${escHtml(d.firstName + ' ' + d.lastName)}</div>
+        ${tierMeta ? `<div style="margin:4px 0"><span class="priority-badge ${tierMeta.cls}">${tierMeta.label}</span></div>` : ''}
+        <div style="color:var(--red);font-size:12px;margin-top:8px">🚫 Unsubscribed from all</div>
+      </div>`;
+    }
+    const activeChannels = Object.entries(channelLabels).filter(([k]) => pref.channels && pref.channels[k]);
+    return `<div class="prefs-donor-card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:8px">
+        <div>
+          <div style="font-weight:600;font-size:13px">${escHtml(d.firstName + ' ' + d.lastName)}</div>
+          ${tierMeta ? `<div style="margin-top:3px"><span class="priority-badge ${tierMeta.cls}">${tierMeta.label}</span></div>` : ''}
+        </div>
+        <button class="btn btn-ghost btn-sm" style="font-size:11px;flex-shrink:0" onclick="openPrefsModal('${d.id}')">Edit</button>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:.4px">Channels</div>
+      ${activeChannels.map(([,label]) => `<div style="font-size:12px;margin-bottom:2px">${label}</div>`).join('') || '<div style="font-size:12px;color:var(--muted)">None selected</div>'}
+      <div style="font-size:11px;color:var(--muted);margin:8px 0 4px;font-weight:700;text-transform:uppercase;letter-spacing:.4px">Frequency</div>
+      <div style="font-size:12px">${freqLabels[pref.frequency] || pref.frequency}</div>
+    </div>`;
+  }).join('');
+}
+
+function openPrefsModal(donorId) {
+  const donor = crmDonors.find(d => d.id === donorId);
+  if (!donor) return;
+  const prefs = getCommsPrefs();
+  const pref = prefs[donorId] || { channels: { email: true }, frequency: 'full', topics: [], optedOut: false };
+
+  document.getElementById('prefsDonorId').value  = donorId;
+  document.getElementById('prefsDonorName').textContent = donor.firstName + ' ' + donor.lastName;
+  document.getElementById('prefsOptedOut').checked = !!pref.optedOut;
+
+  ['email','sms','whatsapp','mail','phone'].forEach(ch => {
+    const el = document.getElementById('prefsCh-' + ch);
+    if (el) el.checked = !!(pref.channels && pref.channels[ch]);
+  });
+
+  const freqEl = document.getElementById('prefsFrequency');
+  if (freqEl) freqEl.value = pref.frequency || 'full';
+
+  ['trips','stories','transparency','volunteer','prayer','culture'].forEach(topic => {
+    const el = document.getElementById('prefsTopic-' + topic);
+    if (el) el.checked = !!(pref.topics && pref.topics.includes(topic));
+  });
+
+  document.getElementById('prefsModal').classList.add('open');
+}
+
+function savePrefsModal() {
+  const donorId = document.getElementById('prefsDonorId').value;
+  if (!donorId) return;
+  const prefs = getCommsPrefs();
+  const channels = {};
+  ['email','sms','whatsapp','mail','phone'].forEach(ch => {
+    channels[ch] = !!(document.getElementById('prefsCh-' + ch)?.checked);
+  });
+  const topics = ['trips','stories','transparency','volunteer','prayer','culture'].filter(t => document.getElementById('prefsTopic-' + t)?.checked);
+  prefs[donorId] = {
+    channels,
+    frequency: document.getElementById('prefsFrequency')?.value || 'full',
+    topics,
+    optedOut: !!(document.getElementById('prefsOptedOut')?.checked),
+    lastUpdated: TODAY,
+  };
+  saveCommsPrefs(prefs);
+  closePrefsModal();
+  renderPrefsOverview();
+  toast('Preferences saved.');
+}
+
+function closePrefsModal() { document.getElementById('prefsModal').classList.remove('open'); }
+
+// ── Gift log ──
+
+function getGiftLogForDonor(donorId) {
+  const log = getGiftLog();
+  return (log[donorId] || []).slice();
+}
+
+function openGiftModal(donorId) {
+  document.getElementById('giftDonorId').value  = donorId;
+  document.getElementById('giftType').value     = 'in-kind';
+  document.getElementById('giftDate').value     = TODAY;
+  document.getElementById('giftDesc').value     = '';
+  document.getElementById('giftValue').value    = '';
+  document.getElementById('giftNotes').value    = '';
+  document.getElementById('giftModal').classList.add('open');
+}
+
+function saveGiftEntry() {
+  const donorId = document.getElementById('giftDonorId').value;
+  const desc    = document.getElementById('giftDesc').value.trim();
+  const date    = document.getElementById('giftDate').value;
+  if (!donorId || !desc || !date) { toast('Date and description are required.'); return; }
+  const log = getGiftLog();
+  if (!log[donorId]) log[donorId] = [];
+  const val = parseFloat(document.getElementById('giftValue').value) || 0;
+  log[donorId].unshift({ id: 'gl_' + Date.now(), date, type: document.getElementById('giftType').value, description: desc, estimatedValue: Math.round(val * 100), notes: document.getElementById('giftNotes').value.trim() });
+  saveGiftLog(log);
+  document.getElementById('giftModal').classList.remove('open');
+  renderDonorTable();
+  toast('Gift logged.');
+}
+
+function closeGiftModal() { document.getElementById('giftModal').classList.remove('open'); }
+
+// ── Mailing labels ──
+
+function printMailingLabels() {
+  const vipSet = getVIPFlags();
+  const addresses = getDonorAddresses();
+  const mailers = crmDonors.filter(d => {
+    const tier = calcPriority(d, vipSet);
+    return tier === 'major' || tier === 'vip';
+  });
+  if (!mailers.length) { toast('No Major or VIP donors with addresses found.'); return; }
+  const labelHtml = mailers.map(d => {
+    const addr = addresses[d.id];
+    const addrLine = addr ? `${addr.street}<br>${addr.city}, ${addr.state} ${addr.zip}` : '<em style="color:#aaa">No address on file</em>';
+    return `<div style="border:1px solid #ccc;border-radius:4px;padding:12px 16px;margin-bottom:10px;font-family:Arial,sans-serif;font-size:13px;page-break-inside:avoid">
+      <strong>${d.firstName} ${d.lastName}</strong><br>${addrLine}
+    </div>`;
+  }).join('');
+  const win = window.open('', '_blank');
+  win.document.write(`<html><head><title>Mailing Labels — CAMINO Honduras</title><style>@media print{button{display:none}}</style></head><body>
+    <div style="padding:20px;max-width:500px;margin:0 auto">
+      <div style="text-align:right;margin-bottom:16px"><button onclick="window.print()">🖨️ Print</button></div>
+      <h2 style="font-size:14px;color:#666;margin-bottom:16px">Major Donor Mailing Labels — June 2026</h2>
+      ${labelHtml}
+    </div>
+  </body></html>`);
+}
+
+// ── Donor address helpers ──
+
+function buildAddressSection(donorId) {
+  const addresses = getDonorAddresses();
+  const addr = addresses[donorId] || {};
+  return `<div class="detail-block" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <h4 style="margin:0">Mailing Address</h4>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toggleAddressEdit('${donorId}')" id="addrEditBtn-${donorId}">Edit</button>
+    </div>
+    <div id="addrDisplay-${donorId}">
+      ${addr.street ? `<div style="font-size:13px">${escHtml(addr.street)}<br>${escHtml(addr.city + (addr.state ? ', ' + addr.state : '') + (addr.zip ? ' ' + addr.zip : ''))}<br>${escHtml(addr.country || '')}</div>` : '<div style="font-size:12px;color:var(--muted)">No address on file. Click Edit to add.</div>'}
+    </div>
+    <div id="addrForm-${donorId}" style="display:none">
+      <div class="form-group" style="margin-bottom:6px"><input type="text" id="addrStreet-${donorId}" value="${escHtml(addr.street||'')}" placeholder="Street address" style="width:100%;box-sizing:border-box" /></div>
+      <div class="addr-grid" style="margin-bottom:6px">
+        <input type="text" id="addrCity-${donorId}"  value="${escHtml(addr.city||'')}"  placeholder="City" style="width:100%;box-sizing:border-box" />
+        <input type="text" id="addrState-${donorId}" value="${escHtml(addr.state||'')}" placeholder="State" maxlength="2" style="width:100%;box-sizing:border-box" />
+        <input type="text" id="addrZip-${donorId}"   value="${escHtml(addr.zip||'')}"   placeholder="ZIP" style="width:100%;box-sizing:border-box" />
+        <input type="text" id="addrCountry-${donorId}" value="${escHtml(addr.country||'USA')}" placeholder="Country" style="width:100%;box-sizing:border-box" />
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();saveAddress('${donorId}')">Save</button>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toggleAddressEdit('${donorId}')">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleAddressEdit(donorId) {
+  const form    = document.getElementById('addrForm-' + donorId);
+  const display = document.getElementById('addrDisplay-' + donorId);
+  if (!form) return;
+  const isOpen = form.style.display !== 'none';
+  form.style.display    = isOpen ? 'none' : 'block';
+  display.style.display = isOpen ? 'block' : 'none';
+}
+
+function saveAddress(donorId) {
+  const addresses = getDonorAddresses();
+  addresses[donorId] = {
+    street:  document.getElementById('addrStreet-'  + donorId)?.value.trim() || '',
+    city:    document.getElementById('addrCity-'    + donorId)?.value.trim() || '',
+    state:   document.getElementById('addrState-'   + donorId)?.value.trim() || '',
+    zip:     document.getElementById('addrZip-'     + donorId)?.value.trim() || '',
+    country: document.getElementById('addrCountry-' + donorId)?.value.trim() || 'USA',
+  };
+  saveDonorAddresses(addresses);
+  renderDonorTable();
+  toast('Address saved.');
+}
+
+// ── Comms history in donor detail ──
+
+function buildCommsHistorySection(donorId) {
+  const history = getCommsHistory();
+  const entries = (history[donorId] || []).slice(0, 8);
+  const typeIcons = { call: '📞', email: '✉️', mail: '📬', whatsapp: '💬', sms: '📱', phone: '📞', logged: '✅' };
+  const rows = entries.length
+    ? entries.map(h => `<tr>
+        <td>${h.date}</td>
+        <td>${typeIcons[h.type] || '📋'} ${escHtml(h.type)}</td>
+        <td style="color:var(--muted)">${escHtml(h.notes)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="3" style="color:var(--muted)">No communication history on file.</td></tr>';
+  return `<div class="detail-block" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <h4 style="margin:0">Communication History</h4>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openLogCommsModal('${donorId}')">+ Log</button>
+    </div>
+    <table class="mini-table">
+      <thead><tr><th>Date</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+function buildCommsPrefsSummary(donorId) {
+  const prefs = getCommsPrefs();
+  const pref  = prefs[donorId] || { channels: { email: true }, frequency: 'full', topics: [], optedOut: false };
+  const channelLabels = { email: '✉️ Email', sms: '📱 SMS', whatsapp: '💬 WhatsApp', mail: '📬 Physical mail', phone: '📞 Phone' };
+  const freqLabels = { essentials: 'Essentials only', full: 'Full cadence', max: 'Maximum engagement' };
+  const activeChans = Object.entries(channelLabels).filter(([k]) => pref.channels && pref.channels[k]).map(([,v]) => v);
+  if (pref.optedOut) return `<div class="detail-block" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <h4 style="margin:0">Communication Preferences</h4>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openPrefsModal('${donorId}')">Edit</button>
+    </div>
+    <div style="color:var(--red);font-size:13px;font-weight:600">🚫 Opted out of all communications</div>
+  </div>`;
+  return `<div class="detail-block" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <h4 style="margin:0">Communication Preferences</h4>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openPrefsModal('${donorId}')">Edit</button>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
+      <div><span style="color:var(--muted)">Frequency: </span><strong>${freqLabels[pref.frequency]||pref.frequency}</strong></div>
+      <div><span style="color:var(--muted)">Channels: </span><strong>${activeChans.join(', ') || 'None'}</strong></div>
+    </div>
+    ${pref.topics && pref.topics.length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">Interests: ${pref.topics.join(', ')}</div>` : ''}
+  </div>`;
+}
+
+function buildGiftLogSection(donorId) {
+  const entries = getGiftLogForDonor(donorId);
+  const typeLabels = { 'in-kind': 'In-Kind', stock: 'Stock Gift', planned: 'Planned Gift', matching: 'Matching' };
+  const typeCls = { 'in-kind': 'gift-inkind', stock: 'gift-stock', planned: 'gift-planned', matching: 'gift-matching' };
+  const rows = entries.length
+    ? entries.map(g => `<div class="gift-log-row">
+        <span class="gift-badge ${typeCls[g.type]||'gift-inkind'}">${typeLabels[g.type]||g.type}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600">${escHtml(g.description)}</div>
+          <div style="color:var(--muted);">${g.date}${g.estimatedValue ? ' · est. ' + centsToUSD(g.estimatedValue) : ''}</div>
+          ${g.notes ? `<div style="color:var(--muted);font-size:11px">${escHtml(g.notes)}</div>` : ''}
+        </div>
+      </div>`).join('')
+    : '<div style="font-size:12px;color:var(--muted)">No non-cash gifts on record.</div>';
+  return `<div class="detail-block" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <h4 style="margin:0">Non-Cash Gift Log</h4>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openGiftModal('${donorId}')">+ Add gift</button>
+    </div>
+    ${rows}
+  </div>`;
+}
+
+function openLogCommsModal(donorId) {
+  document.getElementById('logCommsDonorId').value = donorId;
+  document.getElementById('logCommsDate').value    = TODAY;
+  document.getElementById('logCommsType').value    = 'email';
+  document.getElementById('logCommsNotes').value   = '';
+  document.getElementById('logCommsModal').classList.add('open');
+}
+
+function saveLogComms() {
+  const donorId = document.getElementById('logCommsDonorId').value;
+  const date    = document.getElementById('logCommsDate').value;
+  const type    = document.getElementById('logCommsType').value;
+  const notes   = document.getElementById('logCommsNotes').value.trim();
+  if (!donorId || !date || !notes) { toast('Date and notes are required.'); return; }
+  const history = getCommsHistory();
+  if (!history[donorId]) history[donorId] = [];
+  history[donorId].unshift({ id: 'h_' + Date.now(), date, type, touchpoint: 'manual', notes });
+  saveCommsHistory(history);
+  document.getElementById('logCommsModal').classList.remove('open');
+  renderDonorTable();
+  toast('Communication logged.');
+}
+
+function closeLogCommsModal() { document.getElementById('logCommsModal').classList.remove('open'); }
+
+// ═══════════════════════ CRISIS COMMUNICATIONS ═══════════════════════
+
+const CRISIS_TYPES = [
+  {
+    id: 'data-breach',
+    severity: 'red',
+    emoji: '🔴',
+    title: 'Data Breach / Privacy Incident',
+    trigger: 'Donor data exposed, admin panel accessed without authorization, email list compromised.',
+    templates: [
+      {
+        audience: 'Board (Internal — within 1 hour)',
+        channel: '✉️ Email / 📱 SMS',
+        body: `URGENT — CAMINO Data Security Incident\n\nBoard Members,\n\nCAMINO has identified a potential data security incident affecting [describe: donor records / email list / admin panel access]. We do not yet have full information but are taking immediate steps.\n\nBoard chair has been notified. Emergency board call scheduled for [TIME] at [DIAL-IN].\n\nAction required before the call:\n- Do NOT log into the admin panel until further notice\n- Do NOT discuss with anyone outside the board\n- Reply to confirm you received this message\n\nWalker Somerville | CAMINO Honduras`,
+      },
+      {
+        audience: 'Donor Notification (within 72 hours)',
+        channel: '✉️ Email',
+        body: `Subject: Important Security Notice from CAMINO Honduras\n\nDear [First Name],\n\nCAMINO Honduras is writing to inform you of a data security incident that may have affected your personal information.\n\nWhat happened: On [DATE], we discovered [brief description].\nWhat information may have been involved: [name / email / giving history — specify]\nWhat we are doing: We have [steps taken: secured the system / reset credentials / notified authorities].\nWhat you should do: [specific steps if any — e.g., watch for phishing emails]\n\nWe take the protection of your information seriously and deeply regret this incident. If you have questions, please contact Walker at walker@caminohonduras.org or call [PHONE].\n\nWith sincere apologies,\nWalker & Seiny Somerville\nCAMINO Honduras`,
+      },
+      {
+        audience: 'Public Statement (website banner)',
+        channel: '🌐 Website',
+        body: `CAMINO Honduras is aware of a data security incident and is taking immediate steps to protect our community. We are investigating and will provide updates. Contact: walker@caminohonduras.org`,
+      },
+      {
+        audience: 'Compliance Checklist',
+        channel: '📋 Internal',
+        body: `DATA BREACH COMPLIANCE CHECKLIST\n\n□ Identify scope: what data, how many records, how accessed\n□ Contain: revoke compromised credentials, secure systems\n□ Notify board within 1 hour\n□ Document incident timeline\n□ Notify affected donors within 72 hours (best practice)\n□ State AG notification: VA (myoag.virginia.gov), MD, DC — check state thresholds\n□ If 500+ VA residents affected: notify VA AG\n□ Preserve logs and evidence\n□ Engage outside counsel if >50 records affected\n□ File IRS incident report if EIN/financial data exposed\n□ Post-incident review within 30 days`,
+      },
+    ],
+  },
+  {
+    id: 'cyber-incident',
+    severity: 'red',
+    emoji: '🔴',
+    title: 'Cyber Incident / Website Compromise',
+    trigger: 'Site defaced, GitHub repo compromised, admin panel accessed by unknown party.',
+    templates: [
+      {
+        audience: 'Internal Staff Alert (immediate)',
+        channel: '📱 SMS / 💬 WhatsApp',
+        body: `⚠️ CAMINO website/systems may be compromised. DO NOT log into the admin panel until further notice. Contact Walker immediately: [PHONE]. Do not share publicly.`,
+      },
+      {
+        audience: 'Donor-Facing (if site is down/defaced)',
+        channel: '📱 Social / ✉️ Email',
+        body: `Our website is temporarily experiencing a technical issue. Your data is safe and donations are not affected. We expect to be back online by [TIME]. Contact us directly at walker@caminohonduras.org.\n\n— Walker Somerville, CAMINO Honduras`,
+      },
+      {
+        audience: 'Board Action Checklist',
+        channel: '📋 Internal',
+        body: `CYBER INCIDENT RESPONSE CHECKLIST\n\n□ Take site offline if defaced (disable GitHub Pages deployment)\n□ Change GitHub account password + enable 2FA\n□ Rotate Cloudflare API keys and access tokens\n□ Review Cloudflare Access logs for unauthorized entries\n□ Check DNS records for unauthorized changes\n□ Review GitHub commit history for unauthorized commits\n□ Check admin localStorage — has any data been exported?\n□ Notify board within 2 hours\n□ Restore from last known-good git commit\n□ Document timeline of the incident\n□ Post-incident: enable Cloudflare Access on /admin/ immediately`,
+      },
+    ],
+  },
+  {
+    id: 'leadership-crisis',
+    severity: 'orange',
+    emoji: '🟠',
+    title: 'Leadership Crisis',
+    trigger: 'Key staff departure, founder health/safety issue in Honduras, PR incident involving staff.',
+    templates: [
+      {
+        audience: 'Board Alert (internal)',
+        channel: '✉️ Email',
+        body: `CONFIDENTIAL — CAMINO Leadership Situation\n\nBoard Members,\n\nI'm writing to inform you of a sensitive situation involving [name/role] at CAMINO. [Brief description — 2-3 sentences only.]\n\nThe board chair and I are in communication. I am requesting an emergency board call within 24 hours to discuss next steps.\n\nPlease do not discuss this externally until we have spoken as a board.\n\nWalker Somerville`,
+      },
+      {
+        audience: 'Donor Reassurance Email',
+        channel: '✉️ Email',
+        body: `Subject: A Note from the CAMINO Board\n\nDear Friends of CAMINO,\n\nWe want to share a brief update about CAMINO Honduras leadership. [1-2 sentence factual update.]\n\nCAMINO's mission continues uninterrupted. Our board of directors is providing full oversight and support during this period, and our work in Honduras — building homes and developing communities — remains on track.\n\nThank you for your continued partnership and prayers.\n\nWith gratitude,\n[Board Chair Name]\nBoard of Directors, CAMINO Honduras`,
+      },
+      {
+        audience: 'Staff / Volunteer Communication',
+        channel: '✉️ Email',
+        body: `Dear CAMINO Volunteers and Partners,\n\nWe want to keep you informed about [situation]. [1-2 sentences.]\n\nAll upcoming trips and programs are proceeding as planned. If you have questions, please reach out to [CONTACT] directly.\n\nThank you for your understanding and continued support.\n\nCAMINO Honduras`,
+      },
+    ],
+  },
+  {
+    id: 'financial-crisis',
+    severity: 'orange',
+    emoji: '🟠',
+    title: 'Financial Crisis',
+    trigger: 'Major grant denied, unexpected large expense, cash flow emergency threatening operations.',
+    templates: [
+      {
+        audience: 'Emergency Board Meeting Notice',
+        channel: '✉️ Email',
+        body: `URGENT — Emergency Board Meeting Required\n\nBoard Members,\n\nCAMINO is facing an unexpected financial situation that requires immediate board attention: [description — e.g., "our $15,000 Horizon Foundation grant was denied; current operating reserves cover approximately 6 weeks"].\n\nI am requesting an emergency board meeting within 48 hours.\n\nProposed time: [DATE/TIME]\nDial-in: [LINK]\n\nAgenda: (1) Assess current financial position, (2) Emergency response options, (3) Authorize bridge measures if needed.\n\nWalker Somerville`,
+      },
+      {
+        audience: 'Emergency Fundraising Email',
+        channel: '✉️ Email',
+        body: `Subject: CAMINO Needs Your Help — Unexpected Challenge\n\nDear [First Name],\n\nI'm writing to you personally because you've been a faithful partner in CAMINO's mission.\n\nWe've encountered an unexpected setback: [brief, honest description]. This has created a funding gap of approximately $[AMOUNT] that we need to close by [DATE] to [keep the lights on / complete the home build / support our Honduras team].\n\nWould you consider making a special gift today?\n\n▸ $[AMOUNT] would [specific impact]\n▸ $[AMOUNT] would [specific impact]\n▸ Any amount helps\n\nGive at: caminohonduras.org/give\n\nWith gratitude and hope,\nWalker Somerville\nCAMINO Honduras`,
+      },
+      {
+        audience: 'Bridge Funding Request (Major Donors)',
+        channel: '📞 Call + ✉️ Email',
+        body: `[FOR PERSONAL CALL — TALKING POINTS]\n\nContext: CAMINO needs a short-term bridge loan or emergency gift of $[X] due to [situation].\n\nOpening: "I'm calling because you've been one of CAMINO's most important partners, and I need to be honest with you about where we are right now."\n\nThe ask: "Would you be willing to consider [a bridge gift / a short-term interest-free loan repaid by X] of $[AMOUNT]? It would allow us to [specific outcome]."\n\nIf yes: Send formal gift agreement within 24 hours.\nIf no: "I completely understand. Thank you for hearing me out. Can I keep you posted on how this resolves?"\n\nFollow up in writing same day.`,
+      },
+    ],
+  },
+  {
+    id: 'in-field-emergency',
+    severity: 'yellow',
+    emoji: '🟡',
+    title: 'Mission Trip Emergency (In-Field)',
+    trigger: 'Participant medical emergency, natural disaster during trip, political instability, participant missing.',
+    templates: [
+      {
+        audience: 'Family Notification',
+        channel: '📞 Call first, then ✉️ Email',
+        body: `CALL FIRST — then follow up in writing:\n\n"This is [NAME] calling from CAMINO Honduras. I'm calling about [PARTICIPANT NAME] who is currently on our mission trip in Honduras. [He/She/They] is [safe and receiving medical attention / being evaluated / in contact with our team]. We are monitoring the situation closely and will update you every [2/4/6] hours. Is there anything specific I should know to help [him/her/them]?"\n\nEmail follow-up subject: Update Regarding [Participant Name] — CAMINO Honduras`,
+      },
+      {
+        audience: 'Group Emergency Contact Blast (SMS)',
+        channel: '📱 SMS',
+        body: `CAMINO Honduras update: [Participant first name] is safe and receiving care. Trip leadership is on site. Next update by [TIME]. Questions: [Walker's phone]. Do not post on social media.`,
+      },
+      {
+        audience: 'US Embassy Contact Protocol',
+        channel: '📋 Internal',
+        body: `US EMBASSY TEGUCIGALPA (Honduras)\nAddress: Avenida La Paz, Tegucigalpa\nEmergency line: +504 2236-9320\nAfter hours: +504 2238-5114\n\nSTEPS:\n1. Call embassy emergency line immediately for US citizen emergencies\n2. Have participant's passport number, date of birth, and last known location ready\n3. File STEP registration if not already done (step.state.gov)\n4. Walker's local contact in Honduras: [NAME] [PHONE]\n5. Seiny's family network for local support: [CONTACT]`,
+      },
+      {
+        audience: 'Media Inquiry Response',
+        channel: '📞 Phone / ✉️ Email',
+        body: `"CAMINO Honduras has no comment at this time. We are fully focused on the safety and well-being of our team members. We will provide information to the families of participants directly. Please direct further inquiries to walker@caminohonduras.org."\n\nDo not confirm or deny specific participant names to media.`,
+      },
+    ],
+  },
+  {
+    id: 'natural-disaster',
+    severity: 'yellow',
+    emoji: '🟡',
+    title: 'Natural Disaster in Honduras',
+    trigger: 'Hurricane, earthquake, flooding affecting our partner communities in Honduras.',
+    templates: [
+      {
+        audience: 'Social Media Post',
+        channel: '📱 Facebook / Instagram',
+        body: `Our hearts are with our Honduran family as [hurricane/earthquake/flooding] affects [region/community name].\n\nOur team is in contact with our local partners and monitoring the situation closely. The families we serve are in our prayers.\n\nIf you'd like to help: caminohonduras.org/give — gifts to the General Fund will be directed where they're needed most.\n\n#HondurasStrong #CAMINO #PrayForHonduras`,
+      },
+      {
+        audience: 'Emergency Donation Appeal',
+        channel: '✉️ Email',
+        body: `Subject: Emergency: Our Honduran Partners Need Help Now\n\nDear [First Name],\n\n[DISASTER] has struck [region] in Honduras, and our partner communities are affected.\n\nHere's what we know: [2-3 sentences on situation — homes damaged, families displaced, etc.]\n\nHere's how your gift helps right now:\n▸ $[X] provides emergency supplies for one family\n▸ $[X] supports temporary shelter materials\n▸ $[X] covers emergency travel for our Honduras team\n\nGive now: caminohonduras.org/give\n\nWalker & Seiny Somerville\nCAMINO Honduras`,
+      },
+      {
+        audience: 'Volunteer Mobilization',
+        channel: '✉️ Email',
+        body: `Subject: Can You Help? Emergency Response Opportunity\n\nDear [First Name],\n\nIn the wake of [DISASTER], CAMINO is evaluating a rapid-response trip to support our partner communities.\n\nIf you have skills in [construction / medical care / logistics] and can travel on short notice (approximately [TIMEFRAME]), please reply to this email with:\n- Your availability\n- Relevant skills or certifications\n- Passport expiration date\n\nWe will prioritize prior CAMINO trip alumni. No commitments yet — we're building a response roster.\n\nThank you for your servant heart.\nWalker Somerville`,
+      },
+      {
+        audience: 'Partner Church Update',
+        channel: '✉️ Email',
+        body: `Dear [Pastor Name] and [Church Name] Family,\n\nI'm writing with an urgent update about our partner communities in Honduras.\n\n[2-3 sentences on situation and impact to communities you serve together.]\n\nPrayer requests:\n- Safety and shelter for the [COMMUNITY] families\n- Walker and Seiny's safety and provision\n- Wisdom for our response\n\nGiving link to share with your congregation: caminohonduras.org/give\n\nWith gratitude for your partnership,\nWalker Somerville\nCAMINO Honduras`,
+      },
+    ],
+  },
+];
+
+function getCrisisLog() {
+  try { return JSON.parse(localStorage.getItem('camino_crisis_log') || '[]'); } catch { return []; }
+}
+function saveCrisisLog(log) { localStorage.setItem('camino_crisis_log', JSON.stringify(log)); }
+
+function getActiveCrisis() {
+  try { return JSON.parse(localStorage.getItem('camino_crisis_active') || 'null'); } catch { return null; }
+}
+function setActiveCrisis(crisis) {
+  if (crisis) localStorage.setItem('camino_crisis_active', JSON.stringify(crisis));
+  else localStorage.removeItem('camino_crisis_active');
+}
+
+function renderCrisisPanel() {
+  renderCrisisTypes();
+  renderCrisisBanner();
+  renderCrisisLog();
+}
+
+function renderCrisisTypes() {
+  const el = document.getElementById('crisisTypesList');
+  if (!el) return;
+  const active = getActiveCrisis();
+
+  el.innerHTML = CRISIS_TYPES.map(ct => {
+    const isActive = active && active.id === ct.id;
+    const sevCls = { red: 'sev-red', orange: 'sev-orange', yellow: 'sev-yellow' }[ct.severity] || '';
+    const templateHtml = isActive ? ct.templates.map((tmpl, ti) => `
+      <div class="crisis-template">
+        <h5>${escHtml(tmpl.audience)} · <span style="color:var(--muted)">${escHtml(tmpl.channel)}</span></h5>
+        <textarea id="tmpl-${ct.id}-${ti}" style="font-size:12px">${escHtml(tmpl.body)}</textarea>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button class="btn btn-ghost btn-sm" style="font-size:11px" onclick="copyTemplate('tmpl-${ct.id}-${ti}')">📋 Copy</button>
+          <button class="btn btn-ghost btn-sm" style="font-size:11px" onclick="downloadTemplate('tmpl-${ct.id}-${ti}','${escHtml(ct.title)}-${ti+1}')">⬇️ Download</button>
+        </div>
+      </div>`).join('') : '';
+
+    return `<div class="crisis-card ${sevCls}" id="crisisCard-${ct.id}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+        <div>
+          <div style="font-size:14px;font-weight:700">${ct.emoji} ${escHtml(ct.title)}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">${escHtml(ct.trigger)}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          ${isActive
+            ? `<span style="background:#fee2e2;color:#991b1b;font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px">ACTIVE</span>`
+            : `<button class="btn btn-ghost btn-sm" style="font-size:11px;border-color:#dc2626;color:#dc2626" onclick="activateCrisis('${ct.id}', false)">🚨 Activate</button>`}
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--teal);font-weight:600;cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+        ${ct.templates.length} template${ct.templates.length>1?'s':''} available ${isActive ? '▲' : '▼'}
+      </div>
+      <div style="${isActive?'':'display:none'}">
+        ${isActive ? '' : ct.templates.map((tmpl, ti) => `
+          <div class="crisis-template" style="margin-top:10px">
+            <h5>${escHtml(tmpl.audience)} · <span style="color:var(--muted)">${escHtml(tmpl.channel)}</span></h5>
+            <textarea id="tmpl-${ct.id}-${ti}" style="font-size:12px">${escHtml(tmpl.body)}</textarea>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <button class="btn btn-ghost btn-sm" style="font-size:11px" onclick="copyTemplate('tmpl-${ct.id}-${ti}')">📋 Copy</button>
+              <button class="btn btn-ghost btn-sm" style="font-size:11px" onclick="downloadTemplate('tmpl-${ct.id}-${ti}','${escHtml(ct.title)}-${ti+1}')">⬇️ Download</button>
+            </div>
+          </div>`).join('')}
+        ${templateHtml}
+        ${isActive ? `<div style="margin-top:12px"><button class="btn btn-sm" style="background:#dc2626;color:#fff;border:none;font-size:12px" onclick="resolveActiveCrisis()">✅ Mark Crisis Resolved</button></div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderCrisisBanner() {
+  const active = getActiveCrisis();
+  const banner = document.getElementById('crisisActiveBanner');
+  const resolveBtn = document.getElementById('resolveAllBtn');
+  if (!banner) return;
+  if (active) {
+    banner.classList.add('on');
+    const ct = CRISIS_TYPES.find(c => c.id === active.id);
+    document.getElementById('crisisBannerTitle').textContent = `⚠️ CRISIS ACTIVE: ${ct ? ct.title : active.id}`;
+    const detail = document.getElementById('crisisBannerDetail');
+    if (detail) detail.textContent = `Activated ${active.activatedDate}${active.drill ? ' · DRILL MODE' : ''}`;
+    const drillBadge = document.getElementById('crisisDrillBadge');
+    if (drillBadge) drillBadge.style.display = active.drill ? 'inline-block' : 'none';
+    if (resolveBtn) resolveBtn.style.display = 'inline-flex';
+  } else {
+    banner.classList.remove('on');
+    if (resolveBtn) resolveBtn.style.display = 'none';
+  }
+}
+
+function renderCrisisLog() {
+  const log = getCrisisLog();
+  const tbody = document.getElementById('crisisLogBody');
+  if (!tbody) return;
+  if (!log.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="color:var(--muted);text-align:center;padding:16px">No crisis activations on record.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = log.slice(0, 20).map(entry => {
+    const ct = CRISIS_TYPES.find(c => c.id === entry.crisisId);
+    return `<tr>
+      <td style="font-size:12px">${entry.activatedDate}</td>
+      <td style="font-size:12px">${ct ? ct.emoji + ' ' + ct.title : entry.crisisId}</td>
+      <td style="font-size:12px">Walker Somerville</td>
+      <td style="font-size:12px">
+        ${entry.resolved ? '<span style="color:#15803d;font-weight:600">✅ Resolved</span>' : '<span style="color:#dc2626;font-weight:600">🔴 Active</span>'}
+        ${entry.drill ? '<span class="drill-badge" style="margin-left:4px">DRILL</span>' : ''}
+      </td>
+      <td style="font-size:12px;color:var(--muted)">${escHtml(entry.notes||'—')}</td>
+    </tr>`;
+  }).join('');
+}
+
+function activateCrisis(crisisId, isDrill) {
+  const ct = CRISIS_TYPES.find(c => c.id === crisisId);
+  if (!ct) return;
+  const entry = { id: 'crisis_' + Date.now(), crisisId, activatedDate: TODAY, drill: !!isDrill, resolved: false, notes: isDrill ? 'Crisis drill exercise.' : '' };
+  setActiveCrisis(entry);
+  const log = getCrisisLog();
+  log.unshift(entry);
+  saveCrisisLog(log);
+  renderCrisisPanel();
+  toast((isDrill ? '🎭 Drill: ' : '🚨 Crisis activated: ') + ct.title);
+}
+
+function resolveActiveCrisis() {
+  const active = getActiveCrisis();
+  if (!active) return;
+  const log = getCrisisLog();
+  const idx = log.findIndex(e => e.id === active.id);
+  if (idx >= 0) { log[idx].resolved = true; saveCrisisLog(log); }
+  setActiveCrisis(null);
+  renderCrisisPanel();
+  toast('Crisis marked resolved.');
+}
+
+function runCrisisDrill() {
+  const types = CRISIS_TYPES.map(ct => `${ct.emoji} ${ct.title}`);
+  const choice = prompt('Select crisis type for drill (enter number):\n\n' + types.map((t,i) => `${i+1}. ${t}`).join('\n'));
+  const idx = parseInt(choice, 10) - 1;
+  if (isNaN(idx) || idx < 0 || idx >= CRISIS_TYPES.length) { toast('Drill cancelled.'); return; }
+  activateCrisis(CRISIS_TYPES[idx].id, true);
+}
+
+function copyTemplate(textareaId) {
+  const el = document.getElementById(textareaId);
+  if (!el) return;
+  navigator.clipboard.writeText(el.value).then(() => toast('Copied to clipboard.')).catch(() => {
+    el.select();
+    document.execCommand('copy');
+    toast('Copied.');
+  });
+}
+
+function downloadTemplate(textareaId, filename) {
+  const el = document.getElementById(textareaId);
+  if (!el) return;
+  const blob = new Blob([el.value], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename.replace(/[^a-z0-9\-]/gi, '-').toLowerCase() + '.txt';
+  a.click();
+}
 </script>
 </body>
 </html>
