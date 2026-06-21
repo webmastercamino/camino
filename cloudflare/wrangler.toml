@@ -117,6 +117,26 @@ database_name = "camino-db-preview"
 database_id   = "YOUR_D1_PREVIEW_DATABASE_ID"
 
 # ──────────────────────────────────────────
+# Policy Monitor Worker — KV storage
+# ──────────────────────────────────────────
+[[kv_namespaces]]
+binding    = "POLICY_STORE"            # access as env.POLICY_STORE
+id         = "YOUR_KV_POLICY_ID"       # from: wrangler kv:namespace create POLICY_STORE
+preview_id = "YOUR_KV_POLICY_PREVIEW_ID"
+
+# ──────────────────────────────────────────
+# Scheduled Triggers (Cron)
+# ──────────────────────────────────────────
+[triggers]
+crons = ["0 8 * * 1"]   # Policy Monitor: every Monday at 08:00 UTC
+
+# Workers with cron triggers must declare them alongside a named entry point.
+# Deploy policy-monitor.js separately:
+#   wrangler deploy --config wrangler-policy.toml
+# Or add it as a secondary worker with its own wrangler config.
+# See: https://developers.cloudflare.com/workers/configuration/cron-triggers/
+
+# ──────────────────────────────────────────
 # Cloudflare Access (set via dashboard, not wrangler)
 # ──────────────────────────────────────────
 # Policy: protect /admin/* with Cloudflare Access

@@ -812,9 +812,17 @@
     .feed-item-title a{color:var(--text);text-decoration:none}
     .feed-item-title a:hover{color:var(--teal);text-decoration:underline}
     .feed-item-meta{font-size:11px;color:var(--muted);margin-top:2px}
-    .feed-item-new{background:#dcfce7;color:#166534;font-size:9px;font-weight:700;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
+    .feed-item-new{border-left:3px solid #22c55e;padding-left:8px;margin-left:-8px}
+    .feed-badge-new{background:#dcfce7;color:#166534;font-size:9px;font-weight:700;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
     .feed-item-alert{background:#fee2e2;color:#991b1b;font-size:9px;font-weight:700;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
+    .feed-item-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
     .feed-empty{font-size:12px;color:var(--muted);padding:8px 0;font-style:italic;text-align:center}
+    .pw-change-entry{font-size:12px;padding:5px 0;border-bottom:1px solid #fde68a;display:flex;gap:8px;flex-wrap:wrap}
+    .pw-change-entry:last-child{border-bottom:none}
+    .pw-change-src{font-weight:700;color:#92400e;white-space:nowrap}
+    .health-checklist-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);align-items:flex-start;font-size:13px;line-height:1.5}
+    .health-checklist-item:last-child{border-bottom:none}
+    .health-checklist-item>span{font-size:20px;flex-shrink:0;margin-top:2px}
     .pw-advisory-change{background:#fee2e2;border:2px solid #dc2626;border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;display:none;align-items:center;gap:12px;flex-wrap:wrap}
     .pw-advisory-change.on{display:flex}
     .pw-changes-card{background:#fffbeb;border:1.5px solid #fcd34d;border-left:4px solid var(--amber);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px}
@@ -1632,170 +1640,372 @@
     <div class="panel-header">
       <div>
         <div class="panel-title">Policy &amp; Risk Watch</div>
-        <div class="panel-sub">Board-level monitoring of government, regulatory, and security developments affecting CAMINO operations in Honduras.</div>
+        <div class="panel-sub">Live feeds + board-level monitoring of US government, Honduras authorities, regional security, and health alerts.</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <button class="btn btn-ghost btn-sm" onclick="addPolicyToAgenda()">📋 Add to Board Agenda</button>
-        <button class="btn btn-primary btn-sm" onclick="generatePolicySummary()">📄 Generate Summary</button>
+        <button class="btn btn-ghost btn-sm" id="pwRefreshAllBtn" onclick="pwRefreshAll()">⟳ Refresh All Feeds</button>
+        <button class="btn btn-ghost btn-sm" onclick="addPolicyToAgenda()">📋 Board Agenda</button>
+        <button class="btn btn-primary btn-sm" onclick="generatePolicySummary()">📄 Summary</button>
       </div>
     </div>
 
-    <!-- Quarterly review prompt -->
     <div id="pwReviewBanner" class="grant-qr-banner" style="display:none">
-      <span id="pwReviewBannerText">⚠️ Policy &amp; Risk Review overdue — last review was more than 85 days ago.</span>
+      <span id="pwReviewBannerText">⚠️ Policy &amp; Risk Review overdue.</span>
       <button class="btn btn-sm btn-amber" onclick="markPolicyReviewed()">Mark Reviewed</button>
     </div>
 
-    <!-- Overview tiles -->
+    <div id="pwAdvisoryChangeBanner" class="pw-advisory-change">
+      <span id="pwAdvisoryChangeText" style="flex:1;font-size:13px;font-weight:700;color:#991b1b"></span>
+      <button class="btn btn-sm" style="background:#991b1b;color:#fff;border:none" onclick="this.closest('.pw-advisory-change').classList.remove('on')">Dismiss</button>
+    </div>
+
     <div class="pw-overview-grid" id="pwOverviewGrid"></div>
 
-    <!-- Review bar -->
     <div class="pw-review-bar">
-      <span id="pwLastReviewLabel">Last Board Review: <strong>June 15, 2026</strong> · Recommended cadence: Quarterly</span>
+      <span id="pwLastReviewLabel">Last Board Review: <strong>June 15, 2026</strong> · Quarterly cadence</span>
       <button class="btn btn-sm btn-primary" onclick="markPolicyReviewed()">✓ Mark Reviewed</button>
     </div>
 
-    <!-- Tabs -->
-    <div class="panel-tabs">
-      <button class="panel-tab-btn active" onclick="setPWTab('us')">🇺🇸 US Government</button>
-      <button class="panel-tab-btn" onclick="setPWTab('hn')">🇭🇳 Honduras &amp; NGO Law</button>
-      <button class="panel-tab-btn" onclick="setPWTab('regional')">🗺️ Regional Security</button>
-      <button class="panel-tab-btn" onclick="setPWTab('funding')">💰 Funding &amp; Sanctions</button>
+    <div id="pwChangesWeekCard" class="pw-changes-card" style="display:none">
+      <div class="pw-changes-title">🔔 New Items Detected This Week</div>
+      <div id="pwChangesWeekList"></div>
     </div>
 
-    <!-- Tab: US Government -->
+    <!-- Tabs (6) -->
+    <div class="panel-tabs" style="flex-wrap:wrap">
+      <button class="panel-tab-btn active" data-pwtab="us"       onclick="setPWTab('us')">🇺🇸 US Gov</button>
+      <button class="panel-tab-btn"         data-pwtab="hn"       onclick="setPWTab('hn')">🇭🇳 Honduras &amp; NGO</button>
+      <button class="panel-tab-btn"         data-pwtab="regional" onclick="setPWTab('regional')">🗺️ Regional Security</button>
+      <button class="panel-tab-btn"         data-pwtab="funding"  onclick="setPWTab('funding')">💰 Funding &amp; Sanctions</button>
+      <button class="panel-tab-btn"         data-pwtab="political"onclick="setPWTab('political')">🤝 US-HN Relations</button>
+      <button class="panel-tab-btn"         data-pwtab="health"   onclick="setPWTab('health')">🏥 Health &amp; Outbreak</button>
+    </div>
+
+    <!-- ── Tab: US Government ── -->
     <div class="pw-tab-pane active" id="pw-tab-us">
       <div class="card">
         <div class="card-title">🇺🇸 US Government Sources</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Key US government sources relevant to CAMINO's operations, travel safety, and 501(c)(3) compliance. Review before each trip and quarterly for regulatory changes.</p>
-        <div style="overflow-x:auto">
-          <table class="pw-source-table" id="pwSourceTableUS"></table>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Review before each trip and quarterly for regulatory changes.</p>
+        <div style="overflow-x:auto"><table class="pw-source-table" id="pwSourceTableUS"></table></div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-advisory"></span>
+          <div class="feed-card-title">State Dept — Honduras Travel Advisory</div>
+          <span class="feed-card-meta" id="time-advisory">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('advisory')">⟳</button>
+        </div>
+        <div id="items-advisory" class="feed-items"><div class="feed-empty">Press ⟳ to fetch live advisory</div></div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-embassy"></span>
+          <div class="feed-card-title">US Embassy Tegucigalpa — Alerts &amp; Notices</div>
+          <span class="feed-card-meta" id="time-embassy">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('embassy')">⟳</button>
+        </div>
+        <div id="items-embassy" class="feed-items"><div class="feed-empty">Press ⟳ to fetch live embassy alerts</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:4px">🌐 World Bank — Honduras Indicators <span class="live-dot stale" id="dot-worldbank" style="margin-left:6px;vertical-align:middle"></span></div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:12px">Auto-refreshes weekly. Useful for grant narratives and donor context.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px">
+          <div class="crm-metric"><div class="crm-metric__val" id="wb-pop">—</div><div class="crm-metric__lbl">Population</div></div>
+          <div class="crm-metric"><div class="crm-metric__val" id="wb-gdp">—</div><div class="crm-metric__lbl">GDP per Capita (USD)</div></div>
+          <div class="crm-metric"><div class="crm-metric__val" id="wb-poverty">—</div><div class="crm-metric__lbl">Poverty Rate</div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshWorldBank()">⟳ Refresh World Bank</button>
+          <span id="time-worldbank" style="font-size:11px;color:var(--muted)">Not fetched</span>
         </div>
       </div>
     </div>
 
-    <!-- Tab: Honduras & NGO Law -->
+    <!-- ── Tab: Honduras & NGO Law ── -->
     <div class="pw-tab-pane" id="pw-tab-hn">
-      <!-- NGO Law Status Card -->
       <div class="pw-ngo-card">
         <div class="pw-ngo-card-title">⚖️ Honduras NGO Regulatory Status</div>
-        <div class="pw-ngo-kv">
-          <span>Current law</span>
-          <span>Ley de Organizaciones No Gubernamentales (1990, amended 2011)</span>
-        </div>
-        <div class="pw-ngo-kv">
-          <span>Foreign funding restrictions</span>
-          <span><span class="pw-status-ok">No active restrictions</span> as of June 2026 — monitoring</span>
-        </div>
-        <div class="pw-ngo-kv">
-          <span>CAMINO ONG registration</span>
-          <span id="pwONGStatus"><span class="pw-status-ok">Active</span> · Registered with SRE</span>
-        </div>
-        <div class="pw-ngo-kv">
-          <span>Last renewed</span>
-          <span id="pwONGRenewed">March 2025</span>
-        </div>
-        <div class="pw-ngo-kv">
-          <span>Renewal due</span>
-          <span id="pwONGDue"><strong style="color:var(--amber)">March 2026</strong> — <em>verify with SRE</em></span>
-        </div>
-        <div class="pw-ngo-kv">
-          <span>Required to operate in Honduras</span>
-          <span>Yes — foreign NGOs must register with SRE (Secretaría de Relaciones Exteriores)</span>
-        </div>
-        <div class="pw-ngo-kv">
-          <span>Registration authority</span>
-          <span><a href="https://sre.gob.hn" target="_blank" style="color:var(--teal)">sre.gob.hn ↗</a></span>
-        </div>
-        <div class="pw-nicaragua-note">
-          <strong>⚠️ Regional Watch — Nicaragua precedent:</strong> Nicaragua's <em>Ley Especial de Control de las Organizaciones sin Fines de Lucro</em> (Law 1040, 2020) resulted in the forced dissolution of 3,000+ NGOs and expulsion of international faith-based organizations. Honduras has not enacted equivalent legislation, but similar bills have been introduced in the Honduran Congress. The board should review this risk annually and maintain good standing with Honduran authorities.
-        </div>
-        <div style="margin-top:12px">
-          <button class="btn btn-ghost btn-sm" onclick="window.open('https://gobiernotransparente.gob.hn','_blank')">View Honduras ONG Registry ↗</button>
-        </div>
+        <div class="pw-ngo-kv"><span>Current law</span><span>Ley de Organizaciones No Gubernamentales (1990, amended 2011)</span></div>
+        <div class="pw-ngo-kv"><span>Foreign funding restrictions</span><span><span class="pw-status-ok">No active restrictions</span> as of June 2026 — monitoring</span></div>
+        <div class="pw-ngo-kv"><span>CAMINO ONG registration</span><span id="pwONGStatus"><span class="pw-status-ok">Active</span> · Registered with SRE</span></div>
+        <div class="pw-ngo-kv"><span>Last renewed</span><span id="pwONGRenewed">March 2025</span></div>
+        <div class="pw-ngo-kv"><span>Renewal due</span><span id="pwONGDue"><strong style="color:var(--amber)">March 2026</strong> — <em>verify with SRE</em></span></div>
+        <div class="pw-ngo-kv"><span>Required to operate</span><span>Yes — foreign NGOs must register with SRE</span></div>
+        <div class="pw-ngo-kv"><span>Registration authority</span><span><a href="https://sre.gob.hn" target="_blank" style="color:var(--teal)">sre.gob.hn ↗</a></span></div>
+        <div class="pw-nicaragua-note"><strong>⚠️ Regional Watch — Nicaragua precedent:</strong> Nicaragua's Law 1040 (2020) expelled 3,000+ NGOs including international faith-based organizations. Honduras has not enacted equivalent legislation, but similar bills have been introduced. Review annually.</div>
+        <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" onclick="window.open('https://gobiernotransparente.gob.hn','_blank')">View Honduras ONG Registry ↗</button></div>
       </div>
-
-      <!-- Honduran sources table -->
       <div class="card">
         <div class="card-title">🇭🇳 Honduran Government Sources</div>
-        <div style="overflow-x:auto">
-          <table class="pw-source-table" id="pwSourceTableHN"></table>
-        </div>
+        <div style="overflow-x:auto"><table class="pw-source-table" id="pwSourceTableHN"></table></div>
       </div>
     </div>
 
-    <!-- Tab: Regional Security -->
+    <!-- ── Tab: Regional Security ── -->
     <div class="pw-tab-pane" id="pw-tab-regional">
-      <!-- Department map card -->
-      <div class="card" style="margin-bottom:16px">
-        <div class="card-title">🗺️ Honduras Department Security Assessment</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Staff-maintained assessment of key departments. Update after each security review or significant incident. This is CAMINO's internal read — always cross-reference with State Dept advisory.</p>
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-title">🗺️ Department Security Assessment</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Staff-maintained. Always cross-reference with State Dept advisory before trip departures.</p>
         <div class="pw-dept-grid" id="pwDeptGrid"></div>
-        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+        <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-primary btn-sm" onclick="saveDeptAssessments()">Save Assessments</button>
           <span style="font-size:11px;color:var(--muted);align-self:center" id="pwDeptSaved"></span>
         </div>
       </div>
 
-      <!-- Regional sources table -->
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-insightcrime"></span>
+          <div class="feed-card-title">InSight Crime — Honduras Security News</div>
+          <span class="feed-card-meta" id="time-insightcrime">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('insightcrime')">⟳</button>
+        </div>
+        <div id="items-insightcrime" class="feed-items"><div class="feed-empty">Press ⟳ to fetch live news</div></div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-reliefweb"></span>
+          <div class="feed-card-title">ReliefWeb — Honduras Situation Reports</div>
+          <span class="feed-card-meta" id="time-reliefweb">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('reliefweb')">⟳</button>
+        </div>
+        <div id="items-reliefweb" class="feed-items"><div class="feed-empty">Press ⟳ to fetch latest reports</div></div>
+      </div>
+
       <div class="card">
         <div class="card-title">📰 Regional Security &amp; Civil Society Sources</div>
-        <div style="overflow-x:auto">
-          <table class="pw-source-table" id="pwSourceTableRegional"></table>
-        </div>
+        <div style="overflow-x:auto"><table class="pw-source-table" id="pwSourceTableRegional"></table></div>
       </div>
     </div>
 
-    <!-- Tab: Funding & Sanctions -->
+    <!-- ── Tab: Funding & Sanctions ── -->
     <div class="pw-tab-pane" id="pw-tab-funding">
       <div class="pw-sanctions-card">
         <h4>🏦 OFAC Sanctions Check</h4>
-        <p style="font-size:13px;margin-bottom:10px">Honduras is <strong>not</strong> on any US Treasury OFAC sanctions list. Wire transfers to Honduras are permitted for registered nonprofits. Last verified: <strong id="pwOFACDate">June 15, 2026</strong>.</p>
+        <p style="font-size:13px;margin-bottom:10px">Honduras is <strong>not</strong> on any US Treasury OFAC sanctions list. Last verified: <strong id="pwOFACDate">June 15, 2026</strong>.</p>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <span class="pw-status-ok">✅ Honduras — Not Sanctioned</span>
           <button class="btn btn-ghost btn-sm" onclick="window.open('https://home.treasury.gov/policy-issues/office-of-foreign-assets-control-sanctions-programs-and-country-information','_blank')">Verify on OFAC ↗</button>
           <button class="btn btn-ghost btn-sm" onclick="logOFACVerification()">Log Verification</button>
         </div>
       </div>
-
       <div class="pw-sanctions-card">
         <h4>🏧 AML / KYC — International Wire Transfers</h4>
-        <p style="font-size:13px;margin-bottom:10px">International wire transfers from the US to Honduras require documentation. CAMINO should maintain transfer records showing: recipient name &amp; bank, purpose of funds, authorization (board minute or budget line), and amount in USD.</p>
-        <div class="form-group" style="margin-bottom:0">
-          <label for="pwAMLNotes">Internal notes</label>
-          <textarea id="pwAMLNotes" rows="2" placeholder="e.g. Transfers go to Seiny Somerville personal account at Banco Atlántida — document each transfer with a memo referencing the approved budget line."></textarea>
-        </div>
+        <p style="font-size:13px;margin-bottom:10px">Maintain transfer records: recipient name &amp; bank, purpose of funds, board authorization, amount in USD.</p>
+        <div class="form-group" style="margin-bottom:0"><label for="pwAMLNotes">Internal notes</label><textarea id="pwAMLNotes" rows="2" placeholder="e.g. Transfers go to Seiny Somerville at Banco Atlántida — reference board-approved budget line."></textarea></div>
       </div>
-
       <div class="pw-sanctions-card">
         <h4>🌐 Honduras Foreign Funding Law</h4>
-        <p style="font-size:13px;margin-bottom:10px">No current restrictions on registered NGOs receiving foreign donations in Honduras as of June 2026. Registered NGOs with SRE may receive international funds. Monitor for proposed legislation.</p>
+        <p style="font-size:13px;margin-bottom:10px">No current restrictions on registered NGOs receiving foreign donations as of June 2026. Monitor for proposed legislation.</p>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
           <span class="pw-status-ok">No active restrictions</span>
-          <span class="pw-status-watch">⚠️ Monitor — legislative proposals pending</span>
+          <span class="pw-status-watch">⚠️ Monitor — proposals pending</span>
         </div>
-        <div class="form-group" style="margin-bottom:0">
-          <label for="pwFundingNotes">Notes</label>
-          <textarea id="pwFundingNotes" rows="2" placeholder="Add notes on recent legislative developments…"></textarea>
-        </div>
+        <div class="form-group" style="margin-bottom:0"><label for="pwFundingNotes">Notes</label><textarea id="pwFundingNotes" rows="2" placeholder="Add notes on recent developments…"></textarea></div>
       </div>
-
       <div class="pw-sanctions-card">
         <h4>📋 IRS Schedule F Threshold</h4>
-        <p style="font-size:13px;margin-bottom:10px">CAMINO must file <strong>Schedule F (Form 990)</strong> if total foreign expenditures exceed <strong>$10,000/year</strong>. Given the home-construction program (~$5,500/home), this threshold is likely met. Ensure Schedule F is included with each 990 filing.</p>
+        <p style="font-size:13px;margin-bottom:10px">File <strong>Schedule F (Form 990)</strong> if foreign expenditures exceed <strong>$10,000/year</strong>. CAMINO likely exceeds this threshold.</p>
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <div class="form-group" style="margin-bottom:0;min-width:180px">
-            <label for="pwScheduleFEstimate">Current year foreign spend estimate ($)</label>
-            <input type="number" id="pwScheduleFEstimate" placeholder="e.g. 48000" value="48000" />
-          </div>
-          <div style="font-size:13px;color:var(--muted);align-self:flex-end;padding-bottom:2px">→ <strong style="color:var(--red)">Schedule F filing required</strong> (exceeds $10K threshold)</div>
+          <div class="form-group" style="margin-bottom:0;min-width:180px"><label for="pwScheduleFEstimate">Current year foreign spend estimate ($)</label><input type="number" id="pwScheduleFEstimate" value="48000" /></div>
+          <div style="font-size:13px;color:var(--muted);align-self:flex-end;padding-bottom:2px">→ <strong style="color:var(--red)">Schedule F required</strong></div>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="saveFundingNotes()" style="margin-top:10px">Save Notes</button>
-        <button class="btn btn-ghost btn-sm" onclick="window.open('https://www.irs.gov/forms-pubs/about-schedule-f-form-990','_blank')">IRS Schedule F Info ↗</button>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-ghost btn-sm" onclick="saveFundingNotes()">Save Notes</button>
+          <button class="btn btn-ghost btn-sm" onclick="window.open('https://www.irs.gov/forms-pubs/about-schedule-f-form-990','_blank')">IRS Schedule F ↗</button>
+        </div>
       </div>
     </div>
 
-    <!-- Review log -->
+    <!-- ── Tab: US-Honduras Relations & Political Watch ── -->
+    <div class="pw-tab-pane" id="pw-tab-political">
+      <!-- Risk scorecard -->
+      <div class="pol-scorecard" id="polScorecard">
+        <div class="pol-score-item"><div class="pol-score-label">🏛️ Diplomatic Relations</div><div class="pol-score-val"><span class="pw-status-ok">Normal</span> Active US Embassy</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">💸 USAID Environment</div><div class="pol-score-val"><span class="pw-status-watch">⚠️ Reduced</span> Monitor partner orgs</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">🗳️ Political Stability</div><div class="pol-score-val"><span class="pw-status-watch">Moderate</span> Election cycle active</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">🤝 NGO Environment</div><div class="pol-score-val"><span class="pw-status-ok">Open</span> No current restrictions</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">💰 Economic Stability</div><div class="pol-score-val"><span class="pw-status-watch">Moderate</span> Remittance-dependent</div></div>
+      </div>
+
+      <!-- Indicator cards -->
+      <div class="pol-indicator-card">
+        <div class="pol-indicator-title">🏛️ US-Honduras Diplomatic Status</div>
+        <div class="pol-indicator-body">
+          <strong>Status:</strong> Normal diplomatic relations. US Embassy Tegucigalpa is fully staffed and operational.<br>
+          <strong>Taiwan → China recognition (March 2023):</strong> Honduras shifted diplomatic recognition from Taiwan to China. US-Honduras relations remain active but shifted slightly — the US expressed concern. No material impact on NGO operations.
+          <div class="pol-note">Source: <a href="https://www.state.gov/countries-areas/honduras/" target="_blank" style="color:#0369a1">State Dept bilateral relations ↗</a></div>
+        </div>
+      </div>
+
+      <div class="pol-indicator-card">
+        <div class="pol-indicator-title">💸 USAID Honduras Program Status</div>
+        <div class="pol-indicator-body">
+          <strong>Status: <span style="color:var(--amber)">⚠️ Monitoring</span></strong><br>
+          Significant USAID program cuts implemented globally in 2025 under the Trump administration. Status of Honduras-specific programs is under review. Local partner organizations that receive USAID funding may be affected.
+          <div class="pol-warn">Track which partner organizations CAMINO works with that receive USAID funding — disruptions could affect community stability in CAMINO's operating areas.</div>
+          <div class="form-group" style="margin-top:10px;margin-bottom:0"><label for="polUSAIDNotes">Partner orgs receiving USAID funding (internal notes)</label><textarea id="polUSAIDNotes" rows="2" placeholder="e.g. Proyecto Aldea Global, local water-access partners…"></textarea></div>
+        </div>
+      </div>
+
+      <div class="pol-indicator-card">
+        <div class="pol-indicator-title">🗳️ Honduras Political Environment</div>
+        <div class="pol-indicator-body">
+          <strong>President:</strong> Xiomara Castro (Libre party, in office since January 2022)<br>
+          <strong>US relationship:</strong> Moderate cooperation on migration and drug trafficking; some tension over China recognition and domestic policies<br>
+          <strong>NGO environment:</strong> Castro government has generally maintained an open civil society stance. No active restrictions on foreign NGOs.<br>
+          <strong>Next general election:</strong> November 2025 (new president inaugurated January 2026 — election cycle now complete; monitor new administration's NGO stance)
+          <div class="pol-note">Honduras held general elections November 30, 2025. Monitor new administration's policies toward foreign NGOs in 2026.</div>
+        </div>
+      </div>
+
+      <div class="pol-indicator-card">
+        <div class="pol-indicator-title">✈️ Migration &amp; Deportation Policy</div>
+        <div class="pol-indicator-body">
+          <strong>US deportation flights to Honduras:</strong> Active — ICE operates regular deportation flights to Tegucigalpa (Palmerola/Comayagua) and San Pedro Sula<br>
+          <strong>TPS (Temporary Protected Status):</strong> Honduras TPS has been repeatedly extended; current status should be verified. Changes directly affect Honduran communities in the US and their families in Honduras.<br>
+          <div class="pol-warn">Remittances = ~25% of Honduras GDP. US immigration policy shifts directly affect Honduras economic stability and the communities CAMINO serves. Major policy changes could increase poverty in partner communities.</div>
+          <div class="form-group" style="margin-top:10px;margin-bottom:0"><label for="polMigrationNotes">Notes</label><textarea id="polMigrationNotes" rows="2" placeholder="Track TPS status, DACA updates, deportation policy changes…"></textarea></div>
+        </div>
+      </div>
+
+      <div class="pol-indicator-card">
+        <div class="pol-indicator-title">📊 Trade &amp; Economic Stability</div>
+        <div class="pol-indicator-body">
+          <strong>CAFTA-DR:</strong> Active — Honduras is a party to the US-Central America Free Trade Agreement<br>
+          <strong>Economic indicators:</strong> Pull from World Bank (US tab) for live GDP and poverty data<br>
+          <strong>Tariff risk:</strong> Trump administration tariff actions in 2025 included Central American goods. Monitor for changes to CAFTA-DR or bilateral trade.
+          <div class="pol-note">Economic instability in Honduras increases outmigration pressure and community poverty — directly relevant to CAMINO's housing mission.</div>
+        </div>
+      </div>
+
+      <!-- Policy news feeds -->
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-wola"></span>
+          <div class="feed-card-title">WOLA — Washington Office on Latin America</div>
+          <span class="feed-card-meta" id="time-wola">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('wola')">⟳</button>
+        </div>
+        <div id="items-wola" class="feed-items"><div class="feed-empty">Press ⟳ to fetch latest policy news</div></div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-ascoa"></span>
+          <div class="feed-card-title">AS/COA — Americas Society / Council of the Americas</div>
+          <span class="feed-card-meta" id="time-ascoa">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('ascoa')">⟳</button>
+        </div>
+        <div id="items-ascoa" class="feed-items"><div class="feed-empty">Press ⟳ to fetch latest Americas policy news</div></div>
+      </div>
+
+      <!-- Policy organizations table -->
+      <div class="card" style="margin-top:4px">
+        <div class="card-title">🔗 Policy Monitoring Organizations</div>
+        <div style="overflow-x:auto"><table class="pw-source-table" id="pwSourceTablePolitical"></table></div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="savePoliticalNotes()">Save Notes</button>
+      </div>
+    </div>
+
+    <!-- ── Tab: Health & Outbreak Watch ── -->
+    <div class="pw-tab-pane" id="pw-tab-health">
+      <div id="healthAlertBanner" class="health-alert-banner">
+        <span id="healthAlertText" style="flex:1;font-size:13px;font-weight:700;color:#991b1b"></span>
+        <button class="btn btn-sm" style="background:#991b1b;color:#fff;border:none" onclick="this.closest('.health-alert-banner').classList.remove('on')">Dismiss</button>
+      </div>
+
+      <div id="healthOKBar" class="health-ok-bar">
+        <span>✅</span>
+        <span>No active outbreak alerts for Honduras — last checked: <strong id="healthLastChecked">not yet checked</strong></span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="pwRefreshHealthFeeds()">⟳ Check Now</button>
+      </div>
+
+      <!-- Live feeds -->
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-who"></span>
+          <div class="feed-card-title">WHO Disease Outbreak News</div>
+          <span class="feed-card-meta" id="time-who">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('who')">⟳</button>
+        </div>
+        <div id="items-who" class="feed-items"><div class="feed-empty">Press ⟳ to fetch WHO outbreak alerts</div></div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-promed"></span>
+          <div class="feed-card-title">ProMED — Program for Monitoring Emerging Diseases</div>
+          <span class="feed-card-meta" id="time-promed">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('promed')">⟳</button>
+        </div>
+        <div id="items-promed" class="feed-items"><div class="feed-empty">Press ⟳ to fetch ProMED alerts</div></div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-card-header">
+          <span class="live-dot stale" id="dot-paho"></span>
+          <div class="feed-card-title">PAHO — Pan American Health Organization</div>
+          <span class="feed-card-meta" id="time-paho">Not fetched</span>
+          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('paho')">⟳</button>
+        </div>
+        <div id="items-paho" class="feed-items"><div class="feed-empty">Press ⟳ to fetch PAHO health alerts</div></div>
+      </div>
+
+      <!-- Endemic disease status -->
+      <div class="card" style="margin-top:4px">
+        <div class="card-title">🦟 Honduras Endemic Disease Status</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Staff-maintained. Update after WHO/PAHO health alerts or before trip season. Risk levels are for unvaccinated, unprophylaxed individuals.</p>
+        <div style="overflow-x:auto">
+          <table class="disease-table">
+            <thead><tr><th>Disease</th><th>Risk</th><th>Vaccine</th><th>Regions</th><th>Season</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Dengue Fever</strong></td><td><span class="drisk-hi">🔴 High — endemic</span></td><td>No (prevention only)</td><td>All departments</td><td>Year-round; peaks May–Nov</td><td>Leading cause of hospitalization; use DEET 30%+</td></tr>
+              <tr><td><strong>Malaria</strong></td><td><span class="drisk-mod">🟡 Moderate</span></td><td>Prophylaxis available</td><td>Atlantic coast, Gracias a Dios, rural areas</td><td>Year-round</td><td>Low risk in cities; consult travel medicine</td></tr>
+              <tr><td><strong>Zika</strong></td><td><span class="drisk-mod">🟡 Moderate</span></td><td>No</td><td>Nationwide</td><td>Year-round</td><td>Pregnancy precautions critical — inform all volunteers</td></tr>
+              <tr><td><strong>Chikungunya</strong></td><td><span class="drisk-mod">🟡 Moderate</span></td><td>No</td><td>Nationwide</td><td>Year-round</td><td>Similar to dengue; same prevention</td></tr>
+              <tr><td><strong>Typhoid</strong></td><td><span class="drisk-mod">🟡 Moderate</span></td><td>Yes (recommended)</td><td>Rural/limited water access</td><td>Year-round</td><td>Strict food/water precautions; vaccine recommended</td></tr>
+              <tr><td><strong>Hepatitis A</strong></td><td><span class="drisk-mod">🟡 Moderate</span></td><td>Yes (recommended)</td><td>Nationwide</td><td>Year-round</td><td>Recommend for all volunteers; fecal-oral transmission</td></tr>
+              <tr><td><strong>Cholera</strong></td><td><span class="drisk-low">🟢 Low/sporadic</span></td><td>Oral vaccine available</td><td>Rural, poor water access</td><td>Spikes post-hurricane</td><td>Monitor after major storms</td></tr>
+              <tr><td><strong>Chagas</strong></td><td><span class="drisk-low">🟢 Low</span></td><td>No</td><td>Rural, adobe structures</td><td>Year-round</td><td>Bug precaution in rural overnight stays</td></tr>
+              <tr><td><strong>Yellow Fever</strong></td><td><span class="drisk-low">🟢 Not endemic</span></td><td>Not required</td><td>Not applicable</td><td>—</td><td>Required if arriving from endemic country</td></tr>
+              <tr><td><strong>COVID variants</strong></td><td><span class="drisk-mod">🟡 Monitor</span></td><td>Yes</td><td>Nationwide</td><td>Year-round</td><td>Track current variant activity; recommend up-to-date vaccination</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pre-trip health checklist -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-title">✅ Pre-Trip Health Checklist (Standard)</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Share with all volunteers 6 weeks before departure. Consult a travel medicine provider.</p>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div class="health-checklist-item"><span>💉</span><div><strong>Required vaccinations:</strong> Hepatitis A, Typhoid (strong recommendation), Routine vaccines (MMR, Tdap, flu)</div></div>
+          <div class="health-checklist-item"><span>💊</span><div><strong>Malaria prophylaxis:</strong> Required if working in Cortés rural, Atlantic coast, or Gracias a Dios. Consult travel medicine 4–6 weeks before departure.</div></div>
+          <div class="health-checklist-item"><span>🧴</span><div><strong>Pack: </strong>DEET repellent (30%+), permethrin-treated clothing, sunscreen SPF 50+, ORS rehydration packets (dengue risk), water purification tablets, personal prescription meds (30-day supply)</div></div>
+          <div class="health-checklist-item"><span>🩺</span><div><strong>If sick during trip:</strong> Report to Walker immediately. Do not self-treat serious symptoms. CAMINO will coordinate transport to nearest clinic. Call US Embassy emergency line if hospitalization needed: +504 2236-9320</div></div>
+          <div class="health-checklist-item"><span>📄</span><div><strong>Travel insurance:</strong> Required. Must include medical evacuation coverage. CAMINO recommends Medjet Assist or equivalent. Verify before departure.</div></div>
+          <div class="health-checklist-item"><span>🤰</span><div><strong>Pregnancy:</strong> Pregnant volunteers or those planning pregnancy must consult OB/GYN before travel due to Zika risk. This is non-negotiable.</div></div>
+        </div>
+      </div>
+
+      <!-- Medical facilities -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-title">🏥 Medical Resources — CAMINO Operating Areas</div>
+        <div class="medfac-card"><div class="medfac-name">Hospital IHSS Cortés — San Pedro Sula</div><div class="medfac-meta">Public / Social Security · Emergency services · +504 2553-4424 · Moderate capability</div></div>
+        <div class="medfac-card"><div class="medfac-name">Centro Médico Bendaña — San Pedro Sula</div><div class="medfac-meta">Private · Recommended for foreign visitors · English-speaking staff available · Emergency: +504 2516-0000</div></div>
+        <div class="medfac-card"><div class="medfac-name">Hospital de Especialidades del Norte — San Pedro Sula</div><div class="medfac-meta">Private · Higher-level specialty care · Emergency: +504 2544-0800</div></div>
+        <div class="medfac-card"><div class="medfac-name">Hospital Escuela Universitario — Tegucigalpa</div><div class="medfac-meta">Public · Major referral hospital · Use for serious cases requiring specialists</div></div>
+        <div class="medfac-card"><div class="medfac-name">Medical Evacuation Services</div><div class="medfac-meta">AirMed International · CARES Honduras medevac · US Embassy Emergency Line: +504 2236-9320 · SkyMed International</div></div>
+        <div class="medfac-card"><div class="medfac-name">HealthMap — Honduras Outbreak Visualization</div><div class="medfac-meta"><a href="https://healthmap.org/en/#2/14.1/-87.2" target="_blank" style="color:var(--teal)">healthmap.org — Honduras filter ↗</a> · Live disease reporting from news + official sources</div></div>
+      </div>
+    </div>
+
+    <!-- Review log (always visible) -->
     <div class="card" style="margin-top:20px">
       <div class="card-title">📋 Policy Review Log</div>
       <div id="pwReviewLog"><div style="font-size:13px;color:var(--muted);text-align:center;padding:20px">No reviews recorded yet.</div></div>
@@ -6927,11 +7137,7 @@ function renderPWReviewLog(reviews) {
 
 function setPWTab(tabId) {
   document.querySelectorAll('#panel-policywatch .panel-tab-btn').forEach(b => {
-    const target = b.textContent.toLowerCase().includes('us gov') || b.textContent.includes('🇺🇸') ? 'us'
-      : b.textContent.includes('🇭🇳') ? 'hn'
-      : b.textContent.includes('🗺️') ? 'regional'
-      : 'funding';
-    b.classList.toggle('active', target === tabId);
+    b.classList.toggle('active', b.dataset.pwtab === tabId);
   });
   document.querySelectorAll('.pw-tab-pane').forEach(p => p.classList.toggle('active', p.id === 'pw-tab-' + tabId));
 }
@@ -7030,6 +7236,344 @@ Review quarterly and present to board at scheduled governance review meetings.`;
   <pre id="summaryText">${summary.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
   </body></html>`);
   win.document.close();
+}
+
+// ══════════════════════════════════════════════════════
+// POLICY WATCH — Live Feed Automation
+// ══════════════════════════════════════════════════════
+
+const CORS_PROXY = 'https://api.allorigins.win/get?url=';
+const FEED_CACHE_KEY = 'camino_feed_cache';
+
+const PW_FEED_CONFIG = {
+  advisory:    { url: 'https://travel.state.gov/content/travel/en/rss.html', ttl: 86400000,  label: 'State Dept Advisory' },
+  embassy:     { url: 'https://hn.usembassy.gov/feed/', ttl: 86400000,       label: 'US Embassy Tegucigalpa' },
+  insightcrime:{ url: 'https://insightcrime.org/news/brief/feed/', ttl: 172800000, label: 'InSight Crime' },
+  reliefweb:   { url: null, ttl: 259200000, label: 'ReliefWeb' }, // uses direct JSON API
+  wola:        { url: 'https://www.wola.org/feed/', ttl: 86400000, label: 'WOLA' },
+  ascoa:       { url: 'https://www.as-coa.org/rss.xml', ttl: 86400000, label: 'AS/COA' },
+  who:         { url: 'https://www.who.int/rss-feeds/news-english.xml', ttl: 86400000, label: 'WHO Outbreak News' },
+  promed:      { url: 'https://promedmail.org/feed/', ttl: 86400000, label: 'ProMED' },
+  paho:        { url: 'https://www.paho.org/en/rss.xml', ttl: 86400000, label: 'PAHO' },
+};
+
+function pwGetCache() {
+  try { return JSON.parse(localStorage.getItem(FEED_CACHE_KEY) || '{}'); } catch { return {}; }
+}
+function pwSetCache(cache) { localStorage.setItem(FEED_CACHE_KEY, JSON.stringify(cache)); }
+
+async function pwFetchRSS(url) {
+  const proxyUrl = CORS_PROXY + encodeURIComponent(url);
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), 8000);
+  const resp = await fetch(proxyUrl, { signal: ctrl.signal });
+  clearTimeout(tid);
+  const json = await resp.json();
+  const xml = json.contents;
+  const doc = new DOMParser().parseFromString(xml, 'text/xml');
+  const items = Array.from(doc.querySelectorAll('item')).slice(0, 6);
+  return items.map(it => ({
+    title: it.querySelector('title')?.textContent?.trim() || '',
+    link:  it.querySelector('link')?.textContent?.trim() || '',
+    date:  it.querySelector('pubDate')?.textContent?.trim() || '',
+    desc:  it.querySelector('description')?.textContent?.replace(/<[^>]*>/g,'').trim().slice(0,200) || ''
+  }));
+}
+
+async function pwFetchReliefWeb() {
+  const url = 'https://api.reliefweb.int/v1/reports?filter[field]=country.iso3&filter[value]=HND&limit=5&sort[]=date:desc&fields[include][]=title&fields[include][]=date&fields[include][]=url';
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), 8000);
+  const resp = await fetch(url, { signal: ctrl.signal });
+  clearTimeout(tid);
+  const json = await resp.json();
+  return (json.data || []).map(r => ({
+    title: r.fields.title || '',
+    link:  r.fields.url || '',
+    date:  r.fields.date?.created || '',
+    desc:  ''
+  }));
+}
+
+function pwTimeAgo(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  const mins = Math.round((Date.now() - d) / 60000);
+  if (mins < 60) return `${mins}m ago`;
+  if (mins < 1440) return `${Math.round(mins/60)}h ago`;
+  return `${Math.round(mins/1440)}d ago`;
+}
+
+function pwUpdateFeedUI(feedId, items, error) {
+  const dot = document.getElementById('dot-' + feedId);
+  const timeEl = document.getElementById('time-' + feedId);
+  const listEl = document.getElementById('items-' + feedId);
+  if (!listEl) return;
+
+  if (error) {
+    if (dot) { dot.className = 'live-dot error'; dot.title = 'Error'; }
+    if (timeEl) timeEl.textContent = 'Error fetching';
+    listEl.innerHTML = `<div class="feed-empty" style="color:var(--red)">Failed to load: ${error}. CORS proxy may be unavailable or feed URL changed.</div>`;
+    return;
+  }
+
+  if (dot) { dot.className = 'live-dot live'; dot.title = 'Live'; }
+  if (timeEl) timeEl.textContent = 'Updated just now';
+
+  if (!items || !items.length) {
+    listEl.innerHTML = '<div class="feed-empty">No items found in feed.</div>';
+    return;
+  }
+
+  const weekAgo = Date.now() - 7 * 86400000;
+  listEl.innerHTML = items.map(it => {
+    const isNew = it.date && new Date(it.date) > weekAgo;
+    return `<div class="feed-item${isNew ? ' feed-item-new' : ''}">
+      <div class="feed-item-title"><a href="${it.link || '#'}" target="_blank" rel="noopener">${it.title || '(no title)'}</a>${isNew ? ' <span class="feed-badge-new">NEW</span>' : ''}</div>
+      ${it.date ? `<div class="feed-item-meta">${pwTimeAgo(it.date)}</div>` : ''}
+      ${it.desc ? `<div class="feed-item-desc">${it.desc}…</div>` : ''}
+    </div>`;
+  }).join('');
+
+  pwCheckNewItems(feedId, items);
+}
+
+function pwCheckNewItems(feedId, items) {
+  const weekAgo = Date.now() - 7 * 86400000;
+  const freshItems = items.filter(it => it.date && new Date(it.date) > weekAgo);
+  if (!freshItems.length) return;
+
+  const card = document.getElementById('pwChangesWeekCard');
+  const list = document.getElementById('pwChangesWeekList');
+  if (!card || !list) return;
+
+  const cfg = PW_FEED_CONFIG[feedId] || {};
+  const existing = list.querySelectorAll('.pw-change-entry').length;
+  freshItems.forEach(it => {
+    const div = document.createElement('div');
+    div.className = 'pw-change-entry';
+    div.innerHTML = `<span class="pw-change-src">[${cfg.label || feedId}]</span> <a href="${it.link || '#'}" target="_blank">${it.title}</a> <span style="font-size:11px;color:var(--muted)">${pwTimeAgo(it.date)}</span>`;
+    list.appendChild(div);
+  });
+  card.style.display = 'block';
+
+  // Advisory level change detection
+  if (feedId === 'advisory') {
+    const lvlMatch = freshItems[0]?.title?.match(/Level\s+(\d)/i);
+    if (lvlMatch) {
+      const newLevel = parseInt(lvlMatch[1]);
+      const oldLevel = parseInt(localStorage.getItem('camino_advisory_level') || '0');
+      if (oldLevel && newLevel !== oldLevel) {
+        const banner = document.getElementById('pwAdvisoryChangeBanner');
+        const txt = document.getElementById('pwAdvisoryChangeText');
+        if (banner && txt) {
+          txt.textContent = `⚠️ Advisory Level Changed: Level ${oldLevel} → Level ${newLevel} — Review immediately before any trip departures.`;
+          banner.classList.add('on');
+        }
+      }
+      localStorage.setItem('camino_advisory_level', newLevel);
+    }
+  }
+
+  // Health alert detection
+  if (['who','promed','paho'].includes(feedId)) {
+    const hnAlert = freshItems.find(it => /honduras|HND|tegucigalpa|san pedro sula/i.test(it.title + ' ' + it.desc));
+    if (hnAlert) {
+      const banner = document.getElementById('healthAlertBanner');
+      const txt = document.getElementById('healthAlertText');
+      if (banner && txt) {
+        txt.textContent = `🚨 Health Alert: ${hnAlert.title} — Review before trip departures.`;
+        banner.classList.add('on');
+        const ok = document.getElementById('healthOKBar');
+        if (ok) ok.style.display = 'none';
+      }
+      const stored = JSON.parse(localStorage.getItem('camino_health_alerts') || '[]');
+      stored.unshift({ ts: Date.now(), src: feedId, title: hnAlert.title, link: hnAlert.link });
+      localStorage.setItem('camino_health_alerts', JSON.stringify(stored.slice(0, 20)));
+    }
+  }
+}
+
+async function pwRefreshFeed(feedId) {
+  const dot = document.getElementById('dot-' + feedId);
+  const listEl = document.getElementById('items-' + feedId);
+  if (dot) { dot.className = 'live-dot loading'; dot.title = 'Fetching…'; }
+  if (listEl) listEl.innerHTML = '<div class="feed-empty" style="color:var(--amber)">Fetching…</div>';
+
+  try {
+    let items;
+    if (feedId === 'reliefweb') {
+      items = await pwFetchReliefWeb();
+    } else {
+      const cfg = PW_FEED_CONFIG[feedId];
+      if (!cfg || !cfg.url) { throw new Error('No URL configured'); }
+      items = await pwFetchRSS(cfg.url);
+    }
+
+    const cache = pwGetCache();
+    cache[feedId] = { ts: Date.now(), items, error: null };
+    pwSetCache(cache);
+    pwUpdateFeedUI(feedId, items, null);
+
+    if (feedId === 'who' || feedId === 'promed' || feedId === 'paho') {
+      const el = document.getElementById('healthLastChecked');
+      if (el) el.textContent = new Date().toLocaleString();
+    }
+  } catch (e) {
+    pwUpdateFeedUI(feedId, null, e.message || 'Network error');
+  }
+}
+
+async function pwRefreshWorldBank() {
+  const dot = document.getElementById('dot-worldbank');
+  if (dot) { dot.className = 'live-dot loading'; dot.title = 'Fetching…'; }
+  const timeEl = document.getElementById('time-worldbank');
+  if (timeEl) timeEl.textContent = 'Fetching…';
+
+  const indicators = [
+    { id: 'SP.POP.TOTL', elId: 'wb-pop', fmt: v => v ? (v/1e6).toFixed(1) + 'M' : '—' },
+    { id: 'NY.GDP.PCAP.CD', elId: 'wb-gdp', fmt: v => v ? '$' + Math.round(v).toLocaleString() : '—' },
+    { id: 'SI.POV.NAHC', elId: 'wb-poverty', fmt: v => v ? v.toFixed(1) + '%' : '—' },
+  ];
+
+  try {
+    await Promise.all(indicators.map(async ind => {
+      const url = `https://api.worldbank.org/v2/country/HN/indicator/${ind.id}?format=json&mrv=1`;
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 8000);
+      const resp = await fetch(url, { signal: ctrl.signal });
+      clearTimeout(tid);
+      const json = await resp.json();
+      const val = json[1]?.[0]?.value;
+      const el = document.getElementById(ind.elId);
+      if (el) el.textContent = ind.fmt(val);
+    }));
+
+    if (dot) { dot.className = 'live-dot live'; dot.title = 'Live'; }
+    if (timeEl) timeEl.textContent = 'Updated just now';
+
+    const cache = pwGetCache();
+    cache['worldbank'] = { ts: Date.now() };
+    pwSetCache(cache);
+  } catch (e) {
+    if (dot) { dot.className = 'live-dot error'; dot.title = 'Error'; }
+    if (timeEl) timeEl.textContent = 'Error fetching World Bank';
+  }
+}
+
+async function pwRefreshHealthFeeds() {
+  await Promise.all(['who','promed','paho'].map(id => pwRefreshFeed(id)));
+}
+
+async function pwRefreshAll() {
+  const btn = document.getElementById('pwRefreshAllBtn');
+  if (btn) { btn.disabled = true; btn.textContent = '⟳ Refreshing…'; }
+
+  const feedIds = Object.keys(PW_FEED_CONFIG);
+  await Promise.all([
+    ...feedIds.map(id => pwRefreshFeed(id)),
+    pwRefreshWorldBank()
+  ]);
+
+  if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh All Feeds'; }
+}
+
+function pwLoadCachedFeeds() {
+  const cache = pwGetCache();
+  const now = Date.now();
+  Object.entries(PW_FEED_CONFIG).forEach(([id, cfg]) => {
+    const cached = cache[id];
+    if (!cached) return;
+    const stale = (now - cached.ts) > (cfg.ttl || 86400000);
+    const dot = document.getElementById('dot-' + id);
+    const timeEl = document.getElementById('time-' + id);
+    if (cached.items) {
+      pwUpdateFeedUI(id, cached.items, cached.error || null);
+      if (dot) dot.className = stale ? 'live-dot stale' : 'live-dot live';
+      if (timeEl) timeEl.textContent = stale ? `Stale (${pwTimeAgo(new Date(cached.ts).toISOString())})` : `Updated ${pwTimeAgo(new Date(cached.ts).toISOString())}`;
+    }
+  });
+
+  // World Bank
+  const wb = cache['worldbank'];
+  if (wb) {
+    const stale = (now - wb.ts) > 604800000; // 7 days
+    const dot = document.getElementById('dot-worldbank');
+    const timeEl = document.getElementById('time-worldbank');
+    if (dot) dot.className = stale ? 'live-dot stale' : 'live-dot live';
+    if (timeEl) timeEl.textContent = stale ? `Stale` : `Updated ${pwTimeAgo(new Date(wb.ts).toISOString())}`;
+  }
+}
+
+function pwCheckAutoRefresh() {
+  const cache = pwGetCache();
+  const now = Date.now();
+  Object.entries(PW_FEED_CONFIG).forEach(([id, cfg]) => {
+    const cached = cache[id];
+    const age = cached ? (now - cached.ts) : Infinity;
+    if (age > (cfg.ttl || 86400000)) {
+      pwRefreshFeed(id);
+    }
+  });
+  if (!cache['worldbank'] || (now - cache['worldbank'].ts) > 604800000) {
+    pwRefreshWorldBank();
+  }
+}
+
+const PW_SOURCES_POLITICAL = [
+  { name: 'WOLA', url: 'https://www.wola.org', rss: 'https://www.wola.org/feed/', focus: 'Human rights, US policy toward Latin America', priority: '🔴 Critical' },
+  { name: 'AS/COA', url: 'https://www.as-coa.org', rss: 'https://www.as-coa.org/rss.xml', focus: 'Americas business and policy', priority: '🟠 High' },
+  { name: 'Inter-American Dialogue', url: 'https://www.thedialogue.org', rss: null, focus: 'Policy analysis — US-Latin America', priority: '🟡 Medium' },
+  { name: 'CSIS Americas', url: 'https://www.csis.org/programs/americas-program', rss: null, focus: 'Strategic policy, security', priority: '🟡 Medium' },
+  { name: 'Devex', url: 'https://www.devex.com', rss: null, focus: 'USAID, development aid, NGO funding', priority: '🟠 High' },
+  { name: 'CRS Reports (Congress)', url: 'https://crsreports.congress.gov', rss: null, focus: 'Honduras country reports, TPS, CAFTA', priority: '🟡 Monitor' },
+];
+
+function renderPoliticalSourceTable() {
+  const tbl = document.getElementById('pwSourceTablePolitical');
+  if (!tbl) return;
+  const saved = JSON.parse(localStorage.getItem('camino_pw_political_notes') || '{}');
+  tbl.innerHTML = `<tr><th>Source</th><th>Priority</th><th>Focus</th><th>Feed</th><th>Notes</th></tr>` +
+    PW_SOURCES_POLITICAL.map((s,i) => `
+      <tr>
+        <td><a href="${s.url}" target="_blank" style="color:var(--teal)">${s.name} ↗</a></td>
+        <td>${s.priority}</td>
+        <td style="font-size:12px">${s.focus}</td>
+        <td style="font-size:11px">${s.rss ? '<span style="color:var(--teal)">RSS</span>' : '<span style="color:var(--muted)">Manual</span>'}</td>
+        <td><input type="text" class="pol-note-input" data-source="${s.name}" value="${saved[s.name] || ''}" placeholder="notes…" style="width:100%;padding:3px 6px;border:1px solid var(--border);border-radius:4px;font-size:12px;background:var(--surface);color:var(--text)" /></td>
+      </tr>`).join('');
+}
+
+function savePoliticalNotes() {
+  const notes = {};
+  document.querySelectorAll('.pol-note-input').forEach(inp => {
+    notes[inp.dataset.source] = inp.value;
+  });
+  const usaid = document.getElementById('polUSAIDNotes');
+  const migration = document.getElementById('polMigrationNotes');
+  const all = { sources: notes, usaid: usaid?.value || '', migration: migration?.value || '' };
+  localStorage.setItem('camino_pw_political_notes', JSON.stringify(all));
+  toast('Political watch notes saved.');
+}
+
+function pwDismissAdvisoryAlert() {
+  const banner = document.getElementById('pwAdvisoryChangeBanner');
+  if (banner) banner.classList.remove('on');
+}
+
+// Extend renderPolicyWatch to also load caches and render political table
+const _origRenderPolicyWatch = renderPolicyWatch;
+function renderPolicyWatch() {
+  _origRenderPolicyWatch();
+  setTimeout(() => {
+    renderPoliticalSourceTable();
+    pwLoadCachedFeeds();
+    pwCheckAutoRefresh();
+    const saved = JSON.parse(localStorage.getItem('camino_pw_political_notes') || '{}');
+    if (saved.usaid && document.getElementById('polUSAIDNotes')) document.getElementById('polUSAIDNotes').value = saved.usaid;
+    if (saved.migration && document.getElementById('polMigrationNotes')) document.getElementById('polMigrationNotes').value = saved.migration;
+  }, 100);
 }
 </script>
 </body>
