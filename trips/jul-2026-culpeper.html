@@ -433,7 +433,9 @@
         <div style="display:flex;flex-direction:column;gap:16px">
           <div class="kbyg-card">
             <h4>🌡️ Weather — July in Honduras</h4>
-            <p>Expect 85–95°F (29–35°C) with high humidity. July is rainy season — afternoon and evening showers are common, but mornings are usually clear. The work site is fully exposed. Moisture-wicking fabrics make a real difference. Pack a poncho.</p>
+            <div id="tripWeatherWidget">
+              <p>Expect 85–95°F (29–35°C) with high humidity. July is rainy season — afternoon and evening showers are common, but mornings are usually clear. The work site is fully exposed. Moisture-wicking fabrics make a real difference. Pack a poncho.</p>
+            </div>
           </div>
           <div class="kbyg-card">
             <h4>💧 Hydration on site</h4>
@@ -555,6 +557,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Live advisory banners — health notice + US travel advisory (populated by live-feeds.js) -->
+      <div id="tripAdvisoryBanner"></div>
 
       <!-- WhatsApp group chat -->
       <div class="whatsapp-card" id="whatsappCard" data-whatsapp="https://chat.whatsapp.com/REPLACE_WITH_GROUP_LINK"
@@ -1238,5 +1243,6 @@
     });
   })();
   </script>
+  <script src="../admin/js/live-feeds.js"></script>
 </body>
 </html>

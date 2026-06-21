@@ -1798,10 +1798,12 @@
       <div class="card">
         <div class="card-title" style="margin-bottom:4px">🌐 World Bank — Honduras Indicators <span class="live-dot stale" id="dot-worldbank" style="margin-left:6px;vertical-align:middle"></span></div>
         <p style="font-size:11px;color:var(--muted);margin-bottom:12px">Auto-refreshes weekly. Useful for grant narratives and donor context.</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px">
           <div class="crm-metric"><div class="crm-metric__val" id="wb-pop">—</div><div class="crm-metric__lbl">Population</div></div>
           <div class="crm-metric"><div class="crm-metric__val" id="wb-gdp">—</div><div class="crm-metric__lbl">GDP per Capita (USD)</div></div>
           <div class="crm-metric"><div class="crm-metric__val" id="wb-poverty">—</div><div class="crm-metric__lbl">Poverty Rate</div></div>
+          <div class="crm-metric"><div class="crm-metric__val" id="wb-unemp">—</div><div class="crm-metric__lbl">Unemployment Rate</div></div>
+          <div class="crm-metric"><div class="crm-metric__val" id="wb-life">—</div><div class="crm-metric__lbl">Life Expectancy (yrs)</div></div>
         </div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <button class="btn btn-ghost btn-sm" onclick="pwRefreshWorldBank()">⟳ Refresh World Bank</button>
@@ -4040,6 +4042,17 @@ function renderBoardHealth() {
   travelPersons.forEach(p => p.docs.forEach(d => {
     if (d.expiry) { const s = docStatus(d.expiry); if (s.cls === 'badge-expired' || s.cls === 'badge-soon') expiringDocs++; }
   }));
+  // Grant reports due within 60 days
+  const allGrants = typeof getGrants === 'function' ? getGrants() : JSON.parse(localStorage.getItem('camino_grants') || '[]');
+  const nowMs = Date.now();
+  const grantReportsDue = allGrants.filter(g => {
+    if (!g.reportDate) return false;
+    const due = new Date(g.reportDate).getTime();
+    return (g.status === 'Reporting' || g.status === 'Awarded') && due > nowMs && (due - nowMs) < 60 * 86400000;
+  }).length;
+  // Donors with overdue follow-ups
+  const allDonors = JSON.parse(localStorage.getItem('camino_donors') || '[]');
+  const overdueFollowups = allDonors.filter(d => d.followUpDate && new Date(d.followUpDate).getTime() < nowMs).length;
   el.innerHTML = `
     <div class="health-tile ${adopted >= 9 ? 'ht-good' : adopted >= 6 ? 'ht-warn' : 'ht-bad'}">
       <div class="ht-val">${adopted}/12</div><div class="ht-label">Governance Docs Adopted</div>
@@ -4058,6 +4071,12 @@ function renderBoardHealth() {
     </div>
     <div class="health-tile ${BOARD_MEMBERS.length >= 5 ? 'ht-good' : 'ht-warn'}">
       <div class="ht-val">${BOARD_MEMBERS.length}</div><div class="ht-label">Board Members</div>
+    </div>
+    <div class="health-tile ${grantReportsDue === 0 ? 'ht-good' : 'ht-warn'}">
+      <div class="ht-val">${grantReportsDue}</div><div class="ht-label">Grant Reports Due &lt;60d</div>
+    </div>
+    <div class="health-tile ${overdueFollowups === 0 ? 'ht-good' : overdueFollowups > 3 ? 'ht-bad' : 'ht-warn'}">
+      <div class="ht-val">${overdueFollowups}</div><div class="ht-label">Donors Need Follow-up</div>
     </div>`;
 }
 
@@ -7677,9 +7696,11 @@ async function pwRefreshWorldBank() {
   if (timeEl) timeEl.textContent = 'Fetching…';
 
   const indicators = [
-    { id: 'SP.POP.TOTL', elId: 'wb-pop', fmt: v => v ? (v/1e6).toFixed(1) + 'M' : '—' },
-    { id: 'NY.GDP.PCAP.CD', elId: 'wb-gdp', fmt: v => v ? '$' + Math.round(v).toLocaleString() : '—' },
-    { id: 'SI.POV.NAHC', elId: 'wb-poverty', fmt: v => v ? v.toFixed(1) + '%' : '—' },
+    { id: 'SP.POP.TOTL',    elId: 'wb-pop',     fmt: v => v ? (v/1e6).toFixed(1) + 'M' : '—' },
+    { id: 'NY.GDP.PCAP.CD', elId: 'wb-gdp',     fmt: v => v ? '$' + Math.round(v).toLocaleString() : '—' },
+    { id: 'SI.POV.NAHC',    elId: 'wb-poverty', fmt: v => v ? v.toFixed(1) + '%' : '—' },
+    { id: 'SL.UEM.TOTL.ZS', elId: 'wb-unemp',   fmt: v => v ? v.toFixed(1) + '%' : '—' },
+    { id: 'SP.DYN.LE00.IN', elId: 'wb-life',    fmt: v => v ? v.toFixed(1) + ' yrs' : '—' },
   ];
 
   try {
