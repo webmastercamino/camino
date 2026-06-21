@@ -358,6 +358,42 @@
     .rel-prospect { background: var(--amber-light); color: var(--amber-dark); }
     .rel-alumni   { background: #e8fce8; color: #166534; }
 
+    /* ── Priority tiers ── */
+    .priority-badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
+    .priority-major  { background: #fee2e2; color: #991b1b; }
+    .priority-key    { background: #ffedd5; color: #9a3412; }
+    .priority-active { background: #fef9c3; color: #713f12; }
+    .priority-lapsed { background: #f3f4f6; color: #6b7280; }
+    .priority-vip    { background: #fdf4ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+    .priority-none   { background: #f3f4f6; color: #9ca3af; }
+    .vip-star { background: none; border: none; font-size: 15px; cursor: pointer; line-height: 1; padding: 0 3px 0 0; transition: transform .15s; vertical-align: middle; }
+    .vip-star:hover { transform: scale(1.3); }
+    /* ── Priority widget ── */
+    .priority-widget { background: var(--surface); border: 1.5px solid #f5d98a; border-left: 4px solid var(--amber); border-radius: var(--radius-lg); padding: 18px 22px; margin-bottom: 20px; }
+    .priority-widget__title { font-size: 13px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+    .priority-widget__counts { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+    .priority-count { text-align: center; padding: 10px 18px; border-radius: var(--radius); cursor: pointer; transition: opacity .15s; }
+    .priority-count:hover { opacity: .8; }
+    .priority-count__val { font-size: 22px; font-weight: 700; line-height: 1; }
+    .priority-count__lbl { font-size: 10px; color: var(--muted); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; white-space: nowrap; }
+    .followup-row { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; flex-wrap: wrap; }
+    .followup-row:last-child { border-bottom: none; }
+    .followup-overdue { color: var(--red); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+    /* ── Priority toggle ── */
+    .priority-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; padding: 7px 12px; border: 1.5px solid var(--border); border-radius: 20px; background: #fff; white-space: nowrap; transition: all .15s; }
+    .priority-toggle:has(input:checked) { border-color: var(--amber); color: var(--amber-dark); background: var(--amber-light); }
+    .priority-toggle input { margin: 0; accent-color: var(--amber); cursor: pointer; }
+    /* ── Moves management ── */
+    .mm-block { background: #fff8ed; border: 1.5px solid #fde68a; border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 16px; }
+    .mm-block h4 { font-size: 11px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 2px; }
+    .mm-block__sub { font-size: 11px; color: #b45309; margin-bottom: 12px; }
+    .mm-timeline { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .mm-entry { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; }
+    .mm-entry__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); flex-shrink: 0; margin-top: 5px; }
+    .mm-entry__date { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .mm-add-form { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin-top: 12px; display: none; }
+    .mm-add-form.open { display: block; }
+
     /* ── Accessibility ── */
     .skip-link-admin {
       position: fixed; top: -80px; left: 14px; z-index: 9999;
@@ -407,8 +443,23 @@
     .badge-open { background: #EFF6FF; color: #1D4ED8; border: 1.5px solid #BFDBFE; }
     .traveldoc-dual-note { font-size: 12px; background: #f0f8f6; border-left: 3px solid var(--teal); padding: 8px 12px; border-radius: 0 var(--radius) var(--radius) 0; margin-top: 14px; color: var(--text); line-height: 1.5; }
 
-    /* Panel sub-tabs (reuse view-tab pattern) */
+    /* Panel sub-tabs */
     .panel-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+    .panel-tab-btn { background: transparent; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); transition: all .15s; }
+    .panel-tab-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .panel-tab-btn:hover:not(.active) { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+    .td-tab-pane, .bg-tab-pane, .cp-tab-pane { display: none; }
+    .td-tab-pane.active, .bg-tab-pane.active, .cp-tab-pane.active { display: block; }
+    /* Health tile variants used in board / compliance dashboards */
+    .ht-good { border-color: #86EFAC !important; background: #F0FDF4 !important; }
+    .ht-bad  { border-color: #FCA5A5 !important; background: #FEF2F2 !important; }
+    .ht-warn { border-color: var(--amber) !important; background: var(--amber-light) !important; }
+    .ht-val  { font-size: 26px; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: 4px; }
+    .ht-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); line-height: 1.3; }
+    .ht-good .ht-val { color: #166534; }
+    .ht-bad  .ht-val { color: #DC2626; }
+    .ht-warn .ht-val { color: var(--amber-dark); }
+    .fin-val { font-weight: 600; font-size: 13px; }
 
     /* Investment accounts */
     .invest-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; }
@@ -533,6 +584,12 @@
     <div class="sidebar-tag" style="margin-top:8px">Operations</div>
     <button class="nav-item" data-panel="traveldocs" onclick="switchPanel('traveldocs', this)">
       <span class="nav-item__icon">🛂</span> Travel Docs
+    </button>
+    <button class="nav-item" data-panel="boardgov" onclick="switchPanel('boardgov', this)">
+      <span class="nav-item__icon">🏛️</span> Board Governance
+    </button>
+    <button class="nav-item" data-panel="compliance" onclick="switchPanel('compliance', this)">
+      <span class="nav-item__icon">⚖️</span> 501(c)(3) Compliance
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Links</div>
@@ -701,6 +758,9 @@
       <button class="btn btn-primary" onclick="openAddDonorModal()">+ Add donor</button>
     </div>
 
+    <!-- Priority widget -->
+    <div id="crmPriorityWidget"></div>
+
     <!-- KPI metrics -->
     <div class="crm-metrics" id="crmMetrics"></div>
 
@@ -726,6 +786,19 @@
           <option value="recurring">Recurring only</option>
           <option value="one-time">One-time only</option>
         </select>
+        <select class="crm-filter" id="donorTierFilter" onchange="activeTierFilter=this.value;renderDonorTable()">
+          <option value="">All tiers</option>
+          <option value="major">🔴 Major Donors</option>
+          <option value="key">🟠 Key Donors</option>
+          <option value="active">🟡 Active Supporters</option>
+          <option value="lapsed">⚪ Lapsed</option>
+          <option value="vip">⭐ VIP</option>
+          <option value="overdue">⚠️ Needs follow-up</option>
+        </select>
+        <label class="priority-toggle">
+          <input type="checkbox" id="priorityOnlyToggle" onchange="renderDonorTable()" />
+          Priority donors only
+        </label>
       </div>
       <div class="card" style="padding:0;overflow:hidden">
         <div class="donor-table-wrap">
@@ -736,8 +809,9 @@
                 <th>Email</th>
                 <th style="text-align:right">Total given</th>
                 <th>Last gift</th>
+                <th>Priority</th>
                 <th>Type</th>
-                <th>Source</th>
+                <th>Follow-up</th>
                 <th></th>
               </tr>
             </thead>
@@ -778,7 +852,7 @@
     <div class="panel-header">
       <div>
         <div class="panel-title">Travel Documents</div>
-        <div class="panel-sub">Passport and visa expiration tracking for the Somerville family.</div>
+        <div class="panel-sub">Passport, visa, and investment account tracking for the Somerville family.</div>
       </div>
     </div>
 
@@ -786,16 +860,141 @@
       ⚠️ Travel document details are stored locally in your browser. For full security, enable Cloudflare Access authentication before storing sensitive data.
     </div>
 
-    <div id="travelDocAlert" class="traveldoc-alert" style="display:none"></div>
+    <div class="panel-tabs">
+      <button class="panel-tab-btn active" data-tab="passports" onclick="setTdTab('passports')">🛂 Passports &amp; Visas</button>
+      <button class="panel-tab-btn" data-tab="invest" onclick="setTdTab('invest')">📈 Investment Accounts</button>
+    </div>
 
-    <div class="traveldoc-grid" id="travelDocGrid"></div>
-
-    <div class="card" style="margin-top:20px;background:#f9f9f9;border-style:dashed">
-      <div style="font-size:12px;color:var(--muted);line-height:1.7">
-        <strong>Remind Me</strong> sets a local flag only. Real email/push alerts require a Cloudflare Worker + notification endpoint. Edits override the seed data and persist in localStorage.
+    <!-- Tab: Passports & Visas -->
+    <div class="td-tab-pane active" id="td-passports">
+      <div id="travelDocAlert" class="traveldoc-alert" style="display:none"></div>
+      <div class="traveldoc-grid" id="travelDocGrid"></div>
+      <div class="card" style="margin-top:16px;background:#f9f9f9;border-style:dashed">
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">
+          US citizens must enter the United States on a US passport. Dual citizens should carry both passports.
+          <strong>Remind Me</strong> sets a local flag only — real alerts require Cloudflare Worker integration.
+        </div>
       </div>
     </div>
+
+    <!-- Tab: Investment Accounts -->
+    <div class="td-tab-pane" id="td-invest">
+      <div class="traveldoc-warning">
+        ⚠️ Investment account details are stored locally in your browser. For full security, enable Cloudflare Access authentication before storing sensitive data. Last 4 digits only — do not store full account numbers here.
+      </div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Children's investment accounts — for reference and monitoring only. Balance ranges only, not exact balances.</div>
+      <div class="invest-grid" id="investGrid"></div>
+    </div>
   </div>
+
+  <!-- ══ PANEL: Board Governance ══ -->
+  <div id="panel-boardgov" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Board Governance</div>
+        <div class="panel-sub">Meetings, action items, governance documents, and financial snapshot.</div>
+      </div>
+    </div>
+
+    <div class="panel-tabs">
+      <button class="panel-tab-btn active" data-tab="health"   onclick="setBoardGovTab('health')">📊 Health Dashboard</button>
+      <button class="panel-tab-btn"        data-tab="meetings" onclick="setBoardGovTab('meetings')">📅 Meetings</button>
+      <button class="panel-tab-btn"        data-tab="actions"  onclick="setBoardGovTab('actions')">✅ Action Items</button>
+      <button class="panel-tab-btn"        data-tab="docs"     onclick="setBoardGovTab('docs')">📂 Documents</button>
+      <button class="panel-tab-btn"        data-tab="fin"      onclick="setBoardGovTab('fin')">💰 Financials</button>
+    </div>
+
+    <!-- Health Dashboard -->
+    <div class="bg-tab-pane active" id="bg-health">
+      <div class="health-grid" id="boardHealthGrid"></div>
+    </div>
+
+    <!-- Meetings -->
+    <div class="bg-tab-pane" id="bg-meetings">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-weight:700;font-size:14px">Meeting Log</div>
+        <button class="btn btn-primary btn-sm" onclick="addMeeting()">+ Log Meeting</button>
+      </div>
+      <div id="meetingsList"></div>
+    </div>
+
+    <!-- Action Items -->
+    <div class="bg-tab-pane" id="bg-actions">
+      <div id="actionOverdueSummary" class="traveldoc-alert" style="display:none;margin-bottom:14px"></div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px">Action Items</div>
+      <div id="actionsList"></div>
+    </div>
+
+    <!-- Governance Documents -->
+    <div class="bg-tab-pane" id="bg-docs">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">Governance Document Checklist</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">12 key governance documents for a healthy 501(c)(3). Update status as documents are adopted.</div>
+      <div id="boardDocsList"></div>
+    </div>
+
+    <!-- Financials -->
+    <div class="bg-tab-pane" id="bg-fin">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">Financial Snapshot</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Stub — update manually from QuickBooks. Full integration requires Cloudflare Worker + accounting API.</div>
+      <div id="finPanel"></div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: 501(c)(3) Compliance ══ -->
+  <div id="panel-compliance" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">501(c)(3) Compliance</div>
+        <div class="panel-sub">Federal filings, state registrations, IRS compliance checklist, key dates, and grant tracking.</div>
+      </div>
+    </div>
+
+    <div class="panel-tabs">
+      <button class="panel-tab-btn active" data-tab="filings"  onclick="setComplianceTab('filings')">📋 990 &amp; Filings</button>
+      <button class="panel-tab-btn"        data-tab="states"   onclick="setComplianceTab('states')">🗺️ State Registrations</button>
+      <button class="panel-tab-btn"        data-tab="irs"      onclick="setComplianceTab('irs')">☑️ IRS Checklist</button>
+      <button class="panel-tab-btn"        data-tab="dates"    onclick="setComplianceTab('dates')">📆 Key Dates</button>
+      <button class="panel-tab-btn"        data-tab="grants"   onclick="setComplianceTab('grants')">🏆 Grants</button>
+    </div>
+
+    <!-- 990 & Filings -->
+    <div class="cp-tab-pane active" id="cp-filings">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">Annual IRS Filings (Form 990)</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">990 filing history. Update status as filings are prepared and submitted.</div>
+      <div id="filingsList"></div>
+      <div style="margin-top:16px;font-size:12px;color:var(--muted);line-height:1.7;background:#f9f9f9;padding:12px 14px;border-radius:var(--radius);border-style:dashed;border:1.5px dashed var(--border)">
+        <strong>IRS EIN last 4:</strong> ···· 7842 &nbsp;·&nbsp; <strong>Determination letter on file:</strong> ✅ Yes &nbsp;·&nbsp; <strong>Fiscal year:</strong> Jan 1 – Dec 31
+      </div>
+    </div>
+
+    <!-- State Registrations -->
+    <div class="cp-tab-pane" id="cp-states">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">State Charitable Registrations</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Most states require separate charitable solicitation registration before fundraising. Review each state where CAMINO solicits donations.</div>
+      <div id="stateRegsList"></div>
+    </div>
+
+    <!-- IRS Compliance Checklist -->
+    <div class="cp-tab-pane" id="cp-irs">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">IRS Compliance Checklist</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">11 key items for maintaining 501(c)(3) status. Update as policies are adopted and procedures are verified.</div>
+      <div id="irsCheckList"></div>
+    </div>
+
+    <!-- Key Dates -->
+    <div class="cp-tab-pane" id="cp-dates">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px">Key Compliance Dates</div>
+      <div id="complianceDates"></div>
+    </div>
+
+    <!-- Grants -->
+    <div class="cp-tab-pane" id="cp-grants">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">Grant Tracking</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Active and recent grants. Restricted funds require separate accounting and timely reports.</div>
+      <div id="grantsList"></div>
+    </div>
+  </div>
+
 </main>
 
 <!-- ══════════════════ MODAL: Post ══════════════════ -->
@@ -975,6 +1174,29 @@
   </div>
 </div>
 
+<!-- ══ MODAL: Follow-up ══ -->
+<div class="modal-overlay" id="followUpModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeFollowUpModal()">×</button>
+    <div class="modal-title">Schedule follow-up</div>
+    <input type="hidden" id="fuDonorId" />
+    <div id="fuDonorName" style="font-size:13px;color:var(--muted);margin-bottom:12px"></div>
+    <div class="form-group">
+      <label for="fuDate">Follow-up date</label>
+      <input type="date" id="fuDate" />
+    </div>
+    <div class="form-group">
+      <label for="fuNotes">Next step / notes</label>
+      <textarea id="fuNotes" rows="3" placeholder="e.g. Call to thank for year-end gift and introduce home sponsor program"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="clearFollowUp()">Clear reminder</button>
+      <button class="btn btn-ghost" onclick="closeFollowUpModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFollowUp()">Save</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -986,6 +1208,8 @@ const PANEL_TITLES = {
   donations:  'Donations',
   crm:        'Donors & CRM',
   traveldocs: 'Travel Documents',
+  boardgov:   'Board Governance',
+  compliance: '501(c)(3) Compliance',
 };
 
 function switchPanel(id, el) {
@@ -994,11 +1218,13 @@ function switchPanel(id, el) {
   document.getElementById('panel-' + id).classList.add('active');
   el.classList.add('active');
   document.getElementById('mainTitle').textContent = PANEL_TITLES[id] || id;
-  if (id === 'trips') renderTrips();
-  if (id === 'content') renderPages();
-  if (id === 'donations') renderUTMLinks();
+  if (id === 'trips')      renderTrips();
+  if (id === 'content')    renderPages();
+  if (id === 'donations')  renderUTMLinks();
   if (id === 'traveldocs') renderTravelDocs();
-  if (id === 'crm') renderCRM();
+  if (id === 'crm')        renderCRM();
+  if (id === 'boardgov')   renderBoardGov();
+  if (id === 'compliance') renderCompliance();
 }
 
 // ── Toast ──
@@ -1423,29 +1649,78 @@ function renderUTMLinks() {
 
 // ═══════════════════════ TRAVEL DOCUMENTS ═══════════════════════
 const TRAVEL_DOCS_SEED = [
-  { id: 'walker',   name: 'Walker Somerville',   role: 'Co-Founder / Executive Director', passportExpiry: '2027-08-14', passportCountry: 'USA', passportLast4: '4821', visaEntry: '90-day tourist entry, last entered Jan 2026', residencyStatus: 'None', residencyExpiry: '', notes: '' },
-  { id: 'seiny',    name: 'Seiny Somerville',    role: 'Co-Founder / Program Director',   passportExpiry: '2028-03-22', passportCountry: 'USA', passportLast4: '3094', visaEntry: '90-day tourist entry, last entered Jan 2026', residencyStatus: 'None', residencyExpiry: '', notes: '' },
-  { id: 'alena',    name: 'Alena Somerville',    role: 'Family — Child',                  passportExpiry: '2026-11-05', passportCountry: 'USA', passportLast4: '7156', visaEntry: 'Travels with parents',                         residencyStatus: 'None', residencyExpiry: '', notes: 'Renewal needed before next Honduras trip' },
-  { id: 'williams', name: 'Williams Somerville', role: 'Family — Child',                  passportExpiry: '2029-01-18', passportCountry: 'USA', passportLast4: '2483', visaEntry: 'Travels with parents',                         residencyStatus: 'None', residencyExpiry: '', notes: '' }
+  {
+    id: 'walker', name: 'Walker Somerville', role: 'Co-Founder / Executive Director',
+    profile: 'US citizen · Honduras-based expat',
+    docs: [
+      { id: 'wp', flag: '🇺🇸', label: 'US Passport',          expiry: '2027-08-14', last4: '4821', docStatus: null, note: 'Must be valid 6+ months for Honduras entry' },
+      { id: 'wr', flag: '🇭🇳', label: 'Honduran Residencia',   expiry: '2028-06-30', last4: '7392', docStatus: null, note: 'Permanent residency carnet — last 4 of carnet only' }
+    ],
+    entryNotes: 'Enters Honduras on residencia carnet. Enters US on US passport.',
+    clearUStoHN: 'clear', clearHNtoUS: 'clear', notes: ''
+  },
+  {
+    id: 'seiny', name: 'Seiny Somerville', role: 'Co-Founder / Program Director',
+    profile: 'Honduran citizen · travels to US for CAMINO work',
+    docs: [
+      { id: 'sp', flag: '🇭🇳', label: 'Honduran Passport',    expiry: '2029-07-15', last4: '3094', docStatus: null, note: 'Cédula / passport — last 4 ref only' },
+      { id: 'sv', flag: '🇺🇸', label: 'US Visa (B1/B2)',       expiry: '2028-09-20', last4: '6157', docStatus: null, note: 'Multiple-entry tourist/business visa — required for all US travel' }
+    ],
+    entryNotes: 'Enters Honduras on Honduran passport. Requires valid US B1/B2 visa to enter the US.',
+    clearUStoHN: 'clear', clearHNtoUS: 'clear', notes: 'US visa must be valid for all CAMINO US fundraising travel.'
+  },
+  {
+    id: 'alena', name: 'Alena Somerville', role: 'Family — Child (age 8)',
+    profile: 'Dual US 🇺🇸 / Honduran 🇭🇳 citizen',
+    docs: [
+      { id: 'aup', flag: '🇺🇸', label: 'US Passport (5-yr child)',  expiry: '2026-11-05', last4: '7156', docStatus: null, note: '⚠️ Child passports expire every 5 years — more frequent renewal' },
+      { id: 'ahp', flag: '🇭🇳', label: 'Honduran Passport',          expiry: '2027-04-12', last4: '8834', docStatus: null, note: '' }
+    ],
+    entryNotes: 'Dual citizen — must enter US on US passport. May use either passport entering Honduras.',
+    clearUStoHN: 'clear', clearHNtoUS: 'clear', notes: 'Renewal needed before next Honduras trip. US child passport 5-year cycle (vs 10 for adults).'
+  },
+  {
+    id: 'williams', name: 'Williams Somerville', role: 'Family — Child (~1 year old)',
+    profile: 'Dual US 🇺🇸 / Honduran 🇭🇳 citizen — documents in process',
+    docs: [
+      { id: 'wcrba', flag: '🇺🇸', label: 'CRBA (Consular Report of Birth Abroad)', expiry: null, last4: null, docStatus: 'In Progress',     note: 'Establishes US citizenship. Apply at US Embassy Tegucigalpa.' },
+      { id: 'wup',   flag: '🇺🇸', label: 'US Passport (5-yr child)',                expiry: null, last4: null, docStatus: 'Not Yet Applied', note: 'Can apply once CRBA is issued.' },
+      { id: 'whbc',  flag: '🇭🇳', label: 'Honduran Birth Certificate',              expiry: null, last4: null, docStatus: 'Obtained',         note: 'Acta de nacimiento — Honduran civil registry.' },
+      { id: 'whp',   flag: '🇭🇳', label: 'Honduran Passport',                       expiry: '2029-01-18', last4: '2483', docStatus: null,    note: '' }
+    ],
+    entryNotes: 'Pending CRBA and US passport before US travel is possible.',
+    clearUStoHN: 'pending', clearHNtoUS: 'pending', notes: 'Priority: CRBA appointment at US Embassy Tegucigalpa. US passport follows CRBA.'
+  }
 ];
 
 function getTravelDocs() {
   try {
-    const stored = JSON.parse(localStorage.getItem('camino_traveldocs') || 'null');
+    const raw = localStorage.getItem('camino_traveldocs');
+    if (!raw) return TRAVEL_DOCS_SEED.map(p => JSON.parse(JSON.stringify(p)));
+    const stored = JSON.parse(raw);
     return TRAVEL_DOCS_SEED.map(seed => {
-      const ov = stored && stored.find(s => s.id === seed.id);
-      return ov ? { ...seed, ...ov } : { ...seed };
+      const ov = stored.find(s => s.id === seed.id);
+      if (!ov) return JSON.parse(JSON.stringify(seed));
+      return { ...seed, ...ov, docs: seed.docs.map(d => { const od = ov.docs && ov.docs.find(x => x.id === d.id); return od ? { ...d, ...od } : { ...d }; }) };
     });
-  } catch { return TRAVEL_DOCS_SEED.map(d => ({ ...d })); }
+  } catch { return TRAVEL_DOCS_SEED.map(p => JSON.parse(JSON.stringify(p))); }
 }
 function saveTravelDocs(docs) { localStorage.setItem('camino_traveldocs', JSON.stringify(docs)); }
 
 function docStatus(expiryStr) {
   const diff = (new Date(expiryStr) - new Date()) / (1000 * 60 * 60 * 24);
-  if (diff < 0)   return { label: 'EXPIRED',        cls: 'badge-expired' };
+  if (diff < 0)    return { label: 'EXPIRED',       cls: 'badge-expired' };
   if (diff <= 183) return { label: 'EXPIRING SOON', cls: 'badge-soon' };
   if (diff <= 365) return { label: 'WATCH',          cls: 'badge-watch' };
   return { label: 'VALID', cls: 'badge-valid' };
+}
+
+function docItemStatus(doc) {
+  if (doc.docStatus) {
+    const m = { 'Obtained': { label: 'OBTAINED', cls: 'badge-valid' }, 'In Progress': { label: 'IN PROGRESS', cls: 'badge-soon' }, 'Not Yet Applied': { label: 'NOT YET APPLIED', cls: 'badge-open' } };
+    return m[doc.docStatus] || { label: doc.docStatus.toUpperCase(), cls: 'badge-watch' };
+  }
+  return doc.expiry ? docStatus(doc.expiry) : { label: '—', cls: '' };
 }
 
 function fmtDate(str) {
@@ -1454,101 +1729,76 @@ function fmtDate(str) {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
+function clearanceBadge(val) {
+  if (val === 'clear')   return '<span style="color:#166534;font-weight:700;font-size:12px">✅ Clear</span>';
+  if (val === 'pending') return '<span style="color:#854D0E;font-weight:700;font-size:12px">⚠️ Pending</span>';
+  return '<span style="color:#DC2626;font-weight:700;font-size:12px">🔴 Blocked</span>';
+}
+
+function setTdTab(tabId) {
+  document.querySelectorAll('#panel-traveldocs .panel-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('#panel-traveldocs .td-tab-pane').forEach(p => p.classList.toggle('active', p.id === 'td-' + tabId));
+  if (tabId === 'invest') renderInvestments();
+}
+
 function renderTravelDocs() {
-  const docs = getTravelDocs();
+  const persons = getTravelDocs();
   const grid = document.getElementById('travelDocGrid');
   const alertEl = document.getElementById('travelDocAlert');
+  if (!grid) return;
   grid.innerHTML = '';
 
-  const urgent = docs.filter(d => { const s = docStatus(d.passportExpiry); return s.cls === 'badge-expired' || s.cls === 'badge-soon'; });
+  const urgent = [];
+  persons.forEach(p => p.docs.forEach(d => {
+    if (d.expiry) { const s = docStatus(d.expiry); if (s.cls === 'badge-expired' || s.cls === 'badge-soon') urgent.push({ name: p.name, label: d.label, expiry: d.expiry }); }
+  }));
   if (urgent.length) {
     alertEl.style.display = '';
     alertEl.innerHTML = '⚠️ ' + urgent.length + ' document' + (urgent.length > 1 ? 's' : '') + ' expiring within 6 months: ' +
-      urgent.map(d => '<strong>' + escHtml(d.name) + '</strong> passport (' + fmtDate(d.passportExpiry) + ')').join(', ');
-  } else {
-    alertEl.style.display = 'none';
-  }
+      urgent.map(u => '<strong>' + escHtml(u.name) + '</strong> ' + escHtml(u.label) + ' (' + fmtDate(u.expiry) + ')').join('; ');
+  } else { alertEl.style.display = 'none'; }
 
-  docs.forEach(doc => {
-    const st = docStatus(doc.passportExpiry);
-    const reminded = localStorage.getItem('camino_tdremind_' + doc.id) === '1';
+  persons.forEach(person => {
+    const reminded = localStorage.getItem('camino_tdremind_' + person.id) === '1';
     const card = document.createElement('div');
     card.className = 'traveldoc-card';
+    const docsHtml = person.docs.map(doc => {
+      const st = docItemStatus(doc);
+      const expiryLine = doc.expiry ? fmtDate(doc.expiry) : '';
+      const last4Line  = doc.last4  ? '<span style="font-family:monospace;letter-spacing:.08em">···· ' + escHtml(doc.last4) + '</span> <span style="font-size:10px;color:var(--muted);font-style:italic">— do not store full number</span>' : '';
+      return `<div class="doc-row">
+        <div class="doc-row-left">
+          <div class="doc-flag">${doc.flag}</div>
+          <div>
+            <div class="doc-row-label">${escHtml(doc.label)}</div>
+            ${expiryLine ? `<div class="doc-row-expiry">${expiryLine}</div>` : ''}
+            ${last4Line  ? `<div class="doc-row-expiry">${last4Line}</div>`  : ''}
+            ${doc.note   ? `<div class="doc-row-note">${escHtml(doc.note)}</div>` : ''}
+          </div>
+        </div>
+        <span class="doc-badge ${st.cls}" style="white-space:nowrap;flex-shrink:0">${st.label}</span>
+      </div>`;
+    }).join('');
     card.innerHTML = `
       <div class="traveldoc-card-header">
         <div>
-          <div class="traveldoc-name">${escHtml(doc.name)}</div>
-          <div class="traveldoc-role">${escHtml(doc.role)}</div>
+          <div class="traveldoc-name">${escHtml(person.name)}</div>
+          <div class="traveldoc-role">${escHtml(person.role)}</div>
+          <div style="font-size:11px;color:var(--teal);font-weight:600;margin-top:3px">${escHtml(person.profile)}</div>
         </div>
-        <span class="doc-badge ${st.cls}">${st.label}</span>
       </div>
-      <div class="doc-field">
-        <div class="doc-field-label">Passport expiry</div>
-        <div class="doc-field-value">${fmtDate(doc.passportExpiry)} <span style="font-size:11px;color:var(--muted)">(${escHtml(doc.passportCountry)})</span></div>
+      <div class="doc-clearance-row">
+        <div class="doc-clearance-item"><div class="doc-clearance-label">US → Honduras</div><div class="cl-badge">${clearanceBadge(person.clearUStoHN)}</div></div>
+        <div class="doc-clearance-item"><div class="doc-clearance-label">Honduras → US</div><div class="cl-badge">${clearanceBadge(person.clearHNtoUS)}</div></div>
       </div>
-      <div class="doc-field">
-        <div class="doc-field-label">Last 4 digits <em style="font-weight:400">(reference only)</em></div>
-        <div class="doc-field-value" style="font-family:monospace;letter-spacing:.1em">···· ${escHtml(doc.passportLast4)}</div>
-        <div class="doc-ref-note">Do not store full passport number here.</div>
-      </div>
-      <div class="doc-field">
-        <div class="doc-field-label">Honduras entry / tourist visa</div>
-        <div class="doc-field-value">${escHtml(doc.visaEntry) || '—'}</div>
-      </div>
-      <div class="doc-field">
-        <div class="doc-field-label">Honduran residency</div>
-        <div class="doc-field-value">${escHtml(doc.residencyStatus)}${doc.residencyExpiry ? ' — expires ' + fmtDate(doc.residencyExpiry) : ''}</div>
-      </div>
-      ${doc.notes ? `<div class="doc-field"><div class="doc-field-label">Notes</div><div class="doc-field-value">${escHtml(doc.notes)}</div></div>` : ''}
+      <div class="doc-rows-list">${docsHtml}</div>
+      ${person.notes ? `<div class="doc-entry-notes">${escHtml(person.notes)}</div>` : ''}
+      ${person.entryNotes ? `<div class="traveldoc-dual-note">${escHtml(person.entryNotes)}</div>` : ''}
       <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-        <button class="btn btn-ghost btn-sm" onclick="toggleDocEdit('${doc.id}')">✏️ Edit</button>
-        <button class="btn btn-ghost btn-sm" id="remind-${doc.id}" onclick="toggleReminder('${doc.id}')">${reminded ? '🔔 Reminder set' : '🔕 Remind me'}</button>
-      </div>
-      <div class="doc-edit-form" id="docEdit-${doc.id}">
-        <div class="form-row">
-          <div class="form-group"><label for="de_exp_${doc.id}">Passport expiry</label><input type="date" id="de_exp_${doc.id}" value="${escHtml(doc.passportExpiry)}" /></div>
-          <div class="form-group"><label for="de_l4_${doc.id}">Last 4 digits</label><input type="text" id="de_l4_${doc.id}" value="${escHtml(doc.passportLast4)}" maxlength="4" /></div>
-        </div>
-        <div class="form-group"><label for="de_visa_${doc.id}">Honduras entry notes</label><input type="text" id="de_visa_${doc.id}" value="${escHtml(doc.visaEntry)}" /></div>
-        <div class="form-row">
-          <div class="form-group"><label for="de_res_${doc.id}">Residency status</label>
-            <select id="de_res_${doc.id}">
-              <option ${doc.residencyStatus==='None'?'selected':''}>None</option>
-              <option ${doc.residencyStatus==='In Progress'?'selected':''}>In Progress</option>
-              <option ${doc.residencyStatus==='Active'?'selected':''}>Active</option>
-            </select>
-          </div>
-          <div class="form-group"><label for="de_resexp_${doc.id}">Residency expiry</label><input type="date" id="de_resexp_${doc.id}" value="${escHtml(doc.residencyExpiry)}" /></div>
-        </div>
-        <div class="form-group"><label for="de_notes_${doc.id}">Notes</label><textarea id="de_notes_${doc.id}" rows="2">${escHtml(doc.notes)}</textarea></div>
-        <div style="display:flex;gap:8px">
-          <button class="btn btn-primary btn-sm" onclick="saveDocEdit('${doc.id}')">Save</button>
-          <button class="btn btn-ghost btn-sm" onclick="toggleDocEdit('${doc.id}')">Cancel</button>
-        </div>
+        <button class="btn btn-ghost btn-sm" id="remind-${person.id}" onclick="toggleReminder('${person.id}')">${reminded ? '🔔 Reminder set' : '🔕 Remind me'}</button>
       </div>`;
     grid.appendChild(card);
   });
-}
-
-function toggleDocEdit(id) {
-  const f = document.getElementById('docEdit-' + id);
-  if (f) f.classList.toggle('open');
-}
-
-function saveDocEdit(id) {
-  const docs = getTravelDocs();
-  const idx = docs.findIndex(d => d.id === id);
-  if (idx < 0) return;
-  docs[idx].passportExpiry  = document.getElementById('de_exp_' + id).value;
-  docs[idx].passportLast4   = document.getElementById('de_l4_' + id).value.trim();
-  docs[idx].visaEntry       = document.getElementById('de_visa_' + id).value.trim();
-  docs[idx].residencyStatus = document.getElementById('de_res_' + id).value;
-  docs[idx].residencyExpiry = document.getElementById('de_resexp_' + id).value;
-  docs[idx].notes           = document.getElementById('de_notes_' + id).value.trim();
-  saveTravelDocs(docs);
-  toggleDocEdit(id);
-  renderTravelDocs();
-  toast('Document updated.');
 }
 
 function toggleReminder(id) {
@@ -1558,6 +1808,498 @@ function toggleReminder(id) {
   else    { localStorage.setItem(key, '1'); toast('Reminder flag set — real alerts need Cloudflare integration.'); }
   const btn = document.getElementById('remind-' + id);
   if (btn) btn.textContent = on ? '🔕 Remind me' : '🔔 Reminder set';
+}
+
+// ═══════════════════════ INVESTMENT ACCOUNTS ═══════════════════════
+const INVESTMENTS_SEED = [
+  { id: 'alena-utma', personName: 'Alena Somerville',   type: 'UTMA', institution: 'First National Investments', acctRef: '7823', balanceRange: '$5,000–$10,000',  beneficiary: true,  lastContrib: '2026-03-15', notes: 'Birthday and holiday gifts' },
+  { id: 'alena-529',  personName: 'Alena Somerville',   type: '529',  institution: 'EduSave Plan',               acctRef: '4491', balanceRange: '$10,000–$25,000', beneficiary: true,  lastContrib: '2026-01-10', notes: 'College savings' },
+  { id: 'wms-utma',   personName: 'Williams Somerville', type: 'UTMA', institution: 'First National Investments', acctRef: '9102', balanceRange: '$0–$1,000',       beneficiary: false, lastContrib: '2026-04-22', notes: 'New — just getting started' }
+];
+
+function getInvestments() {
+  try {
+    const raw = localStorage.getItem('camino_investments');
+    if (!raw) return INVESTMENTS_SEED.map(a => ({ ...a }));
+    const stored = JSON.parse(raw);
+    return INVESTMENTS_SEED.map(seed => { const ov = stored.find(s => s.id === seed.id); return ov ? { ...seed, ...ov } : { ...seed }; });
+  } catch { return INVESTMENTS_SEED.map(a => ({ ...a })); }
+}
+function saveInvestments(accts) { localStorage.setItem('camino_investments', JSON.stringify(accts)); }
+
+function renderInvestments() {
+  const accts = getInvestments();
+  const grid = document.getElementById('investGrid');
+  if (!grid) return;
+  grid.innerHTML = accts.map((a, i) => `
+    <div class="invest-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <div style="font-weight:700;font-size:14px">${escHtml(a.personName)}</div>
+          <div style="font-size:12px;color:var(--muted)">${escHtml(a.type)} — ${escHtml(a.institution)}</div>
+        </div>
+        <span class="doc-badge badge-valid" style="font-size:10px">${escHtml(a.type)}</span>
+      </div>
+      <div class="doc-field"><div class="doc-field-label">Account ref (last 4 only)</div><div class="doc-field-value" style="font-family:monospace">···· ${escHtml(a.acctRef)}</div></div>
+      <div class="doc-field"><div class="doc-field-label">Balance range</div><div class="doc-field-value">${escHtml(a.balanceRange)}</div></div>
+      <div class="doc-field"><div class="doc-field-label">Beneficiary confirmed</div><div class="doc-field-value">${a.beneficiary ? '✅ Yes' : '⚠️ Not confirmed'}</div></div>
+      <div class="doc-field"><div class="doc-field-label">Last contribution</div><div class="doc-field-value">${fmtDate(a.lastContrib)}</div></div>
+      ${a.notes ? `<div class="doc-field"><div class="doc-field-label">Notes</div><div class="doc-field-value">${escHtml(a.notes)}</div></div>` : ''}
+      <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" onclick="editInvestment(${i})">✏️ Edit</button></div>
+      <div class="doc-edit-form" id="investEdit-${i}">
+        <div class="form-row">
+          <div class="form-group"><label>Balance range</label><input type="text" id="ie_bal_${i}" value="${escHtml(a.balanceRange)}" /></div>
+          <div class="form-group"><label>Last contribution</label><input type="date" id="ie_lc_${i}" value="${escHtml(a.lastContrib)}" /></div>
+        </div>
+        <div class="form-group"><label>Beneficiary confirmed</label><select id="ie_ben_${i}"><option value="1" ${a.beneficiary?'selected':''}>Yes</option><option value="0" ${!a.beneficiary?'selected':''}>No</option></select></div>
+        <div class="form-group"><label>Notes</label><textarea id="ie_notes_${i}" rows="2">${escHtml(a.notes)}</textarea></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-primary btn-sm" onclick="saveInvestment(${i})">Save</button><button class="btn btn-ghost btn-sm" onclick="editInvestment(${i})">Cancel</button></div>
+      </div>
+    </div>`).join('');
+}
+
+function editInvestment(i) { document.getElementById('investEdit-' + i)?.classList.toggle('open'); }
+
+function saveInvestment(i) {
+  const accts = getInvestments();
+  accts[i].balanceRange = document.getElementById('ie_bal_'   + i).value.trim();
+  accts[i].lastContrib  = document.getElementById('ie_lc_'    + i).value;
+  accts[i].beneficiary  = document.getElementById('ie_ben_'   + i).value === '1';
+  accts[i].notes        = document.getElementById('ie_notes_' + i).value.trim();
+  saveInvestments(accts);
+  editInvestment(i);
+  renderInvestments();
+  toast('Investment account updated.');
+}
+
+// ═══════════════════════ BOARD GOVERNANCE ═══════════════════════
+const BOARD_MEMBERS = ['Walker Somerville','Seiny Somerville','Margaret Sullivan','James Okonkwo','Rachel Hawthorne','Daniel Park','Linda Castillo','Thomas Briggs'];
+
+const MEETINGS_SEED = [
+  { id: 'm1', date: '2026-03-20', type: 'Regular', quorum: true,  attendance: 'Walker, Seiny, Margaret, James, Rachel',         agenda: 'Q1 financials, Honduras site visit planning, board recruitment',       minutesUrl: '' },
+  { id: 'm2', date: '2026-06-05', type: 'Regular', quorum: true,  attendance: 'Walker, Seiny, Margaret, James, Rachel, Daniel', agenda: 'Q2 review, holiday campaign planning, 990 FY2025 update',               minutesUrl: '' }
+];
+const NEXT_MEETING_SEED = { date: '2026-07-17', agendaItems: ['Q2 2026 financial review','Honduras site visit debrief','Holiday giving campaign planning','Board recruitment — open seats'] };
+
+const ACTIONS_SEED = [
+  { id: 'a1', desc: 'File FY2025 990 extension',                                   assigned: 'Walker Somerville',   due: '2026-07-15', status: 'In Progress' },
+  { id: 'a2', desc: 'Update COI policy and collect board signatures',               assigned: 'Margaret Sullivan',   due: '2026-06-30', status: 'Overdue' },
+  { id: 'a3', desc: 'Post board meeting minutes to GuideStar',                      assigned: 'Walker Somerville',   due: '2026-07-01', status: 'Not Started' },
+  { id: 'a4', desc: 'Research VA charitable registration requirements',             assigned: 'Rachel Hawthorne',    due: '2026-07-31', status: 'In Progress' },
+  { id: 'a5', desc: 'Recruit 2 new board members (open seats)',                     assigned: 'Walker Somerville',   due: '2026-09-30', status: 'Not Started' }
+];
+
+const BOARD_DOCS_SEED = [
+  { id: 'bd1',  label: 'Articles of Incorporation',              status: 'Adopted',  url: '' },
+  { id: 'bd2',  label: 'Bylaws',                                 status: 'Adopted',  url: '' },
+  { id: 'bd3',  label: 'IRS Determination Letter (501(c)(3))',   status: 'Adopted',  url: '' },
+  { id: 'bd4',  label: 'Conflict of Interest Policy',            status: 'Draft',    url: '' },
+  { id: 'bd5',  label: 'Whistleblower Policy',                   status: 'Missing',  url: '' },
+  { id: 'bd6',  label: 'Document Retention Policy',              status: 'Missing',  url: '' },
+  { id: 'bd7',  label: 'Gift Acceptance Policy',                 status: 'Missing',  url: '' },
+  { id: 'bd8',  label: 'Compensation Policy',                    status: 'Draft',    url: '' },
+  { id: 'bd9',  label: 'Financial Controls / Internal Controls', status: 'Missing',  url: '' },
+  { id: 'bd10', label: 'Board Member Agreement / Expectation Letter', status: 'Missing', url: '' },
+  { id: 'bd11', label: 'Strategic Plan',                         status: 'Draft',    url: '' },
+  { id: 'bd12', label: 'Most Recent 990',                        status: 'Adopted',  url: '' }
+];
+
+const FINANCIAL_SEED = { budget: '250000', ytdRev: '78500', ytdRevBudget: '125000', ytdExp: '62000', ytdExpBudget: '125000', cash: '42800', notes: 'Figures from QuickBooks as of June 2026. Full audit not completed.' };
+
+function getMeetings()    { try { return JSON.parse(localStorage.getItem('camino_meetings'))    || MEETINGS_SEED.map(m=>({...m}));    } catch { return MEETINGS_SEED.map(m=>({...m})); } }
+function saveMeetings(d)  { localStorage.setItem('camino_meetings',  JSON.stringify(d)); }
+function getActions()     { try { return JSON.parse(localStorage.getItem('camino_actions'))     || ACTIONS_SEED.map(a=>({...a}));     } catch { return ACTIONS_SEED.map(a=>({...a})); } }
+function saveActions(d)   { localStorage.setItem('camino_actions',   JSON.stringify(d)); }
+function getBoardDocs()   { try { return JSON.parse(localStorage.getItem('camino_boarddocs'))   || BOARD_DOCS_SEED.map(d=>({...d}));  } catch { return BOARD_DOCS_SEED.map(d=>({...d})); } }
+function saveBoardDocs(d) { localStorage.setItem('camino_boarddocs', JSON.stringify(d)); }
+function getFinancials()  { try { return JSON.parse(localStorage.getItem('camino_financials'))  || { ...FINANCIAL_SEED };             } catch { return { ...FINANCIAL_SEED }; } }
+function saveFinancials(d){ localStorage.setItem('camino_financials',JSON.stringify(d)); }
+
+function setBoardGovTab(tabId) {
+  document.querySelectorAll('#panel-boardgov .panel-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('#panel-boardgov .bg-tab-pane').forEach(p => p.classList.toggle('active', p.id === 'bg-' + tabId));
+}
+
+function renderBoardGov() {
+  renderBoardHealth();
+  renderMeetings();
+  renderActions();
+  renderBoardDocs();
+  renderFinancials_();
+}
+
+function renderBoardHealth() {
+  const el = document.getElementById('boardHealthGrid');
+  if (!el) return;
+  const docs    = getBoardDocs();
+  const actions = getActions();
+  const meetings = getMeetings();
+  const adopted  = docs.filter(d => d.status === 'Adopted').length;
+  const overdue  = actions.filter(a => a.status === 'Overdue').length;
+  const travelPersons = getTravelDocs();
+  let expiringDocs = 0;
+  travelPersons.forEach(p => p.docs.forEach(d => {
+    if (d.expiry) { const s = docStatus(d.expiry); if (s.cls === 'badge-expired' || s.cls === 'badge-soon') expiringDocs++; }
+  }));
+  el.innerHTML = `
+    <div class="health-tile ${adopted >= 9 ? 'ht-good' : adopted >= 6 ? 'ht-warn' : 'ht-bad'}">
+      <div class="ht-val">${adopted}/12</div><div class="ht-label">Governance Docs Adopted</div>
+    </div>
+    <div class="health-tile ${meetings.length >= 4 ? 'ht-good' : 'ht-warn'}">
+      <div class="ht-val">${meetings.length}</div><div class="ht-label">Meetings Logged (2026)</div>
+    </div>
+    <div class="health-tile ${overdue === 0 ? 'ht-good' : 'ht-bad'}">
+      <div class="ht-val">${overdue}</div><div class="ht-label">Overdue Action Items</div>
+    </div>
+    <div class="health-tile ${expiringDocs === 0 ? 'ht-good' : 'ht-bad'}">
+      <div class="ht-val">${expiringDocs}</div><div class="ht-label">Travel Docs Expiring Soon</div>
+    </div>
+    <div class="health-tile ht-warn">
+      <div class="ht-val">Jul 17</div><div class="ht-label">Next Board Meeting</div>
+    </div>
+    <div class="health-tile ${BOARD_MEMBERS.length >= 5 ? 'ht-good' : 'ht-warn'}">
+      <div class="ht-val">${BOARD_MEMBERS.length}</div><div class="ht-label">Board Members</div>
+    </div>`;
+}
+
+function renderMeetings() {
+  const el = document.getElementById('meetingsList');
+  if (!el) return;
+  const meetings = getMeetings();
+  el.innerHTML = meetings.length === 0 ? '<div style="color:var(--muted);font-size:13px">No meetings logged yet.</div>' :
+    meetings.slice().reverse().map((m, ri) => {
+      const i = meetings.length - 1 - ri;
+      return `<div class="meeting-row">
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:13px">${fmtDate(m.date)} — ${escHtml(m.type)}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Quorum: ${m.quorum ? 'Yes' : 'No'} · Attendance: ${escHtml(m.attendance)}</div>
+          <div style="font-size:12px;color:var(--muted)">Agenda: ${escHtml(m.agenda)}</div>
+          ${m.minutesUrl ? `<div style="font-size:12px;margin-top:2px"><a href="${escHtml(m.minutesUrl)}" target="_blank">View minutes ↗</a></div>` : ''}
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="editMeeting(${i})" style="flex-shrink:0">✏️</button>
+      </div>`;
+    }).join('');
+}
+
+function editMeeting(i) {
+  const m = getMeetings()[i];
+  if (!m) return;
+  renderMeetings();
+  const el = document.getElementById('meetingsList');
+  el.insertAdjacentHTML('afterbegin', `<div class="card" style="margin-bottom:14px;border:1.5px solid var(--teal)">
+    <div style="font-weight:700;margin-bottom:10px">Edit Meeting</div>
+    <div class="form-row">
+      <div class="form-group"><label>Date</label><input type="date" id="me_date" value="${m.date}" /></div>
+      <div class="form-group"><label>Type</label><select id="me_type"><option ${m.type==='Regular'?'selected':''}>Regular</option><option ${m.type==='Special'?'selected':''}>Special</option><option ${m.type==='Annual'?'selected':''}>Annual</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Quorum met</label><select id="me_quorum"><option value="1" ${m.quorum?'selected':''}>Yes</option><option value="0" ${!m.quorum?'selected':''}>No</option></select></div>
+      <div class="form-group"><label>Attendance</label><input type="text" id="me_att" value="${escHtml(m.attendance)}" /></div>
+    </div>
+    <div class="form-group"><label>Agenda summary</label><input type="text" id="me_agenda" value="${escHtml(m.agenda)}" /></div>
+    <div class="form-group"><label>Minutes URL</label><input type="url" id="me_url" value="${escHtml(m.minutesUrl)}" /></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary btn-sm" onclick="saveMeeting(${i})">Save</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderMeetings()">Cancel</button>
+    </div>
+  </div>`);
+}
+
+function saveMeeting(i) {
+  const meetings = getMeetings();
+  meetings[i].date       = document.getElementById('me_date').value;
+  meetings[i].type       = document.getElementById('me_type').value;
+  meetings[i].quorum     = document.getElementById('me_quorum').value === '1';
+  meetings[i].attendance = document.getElementById('me_att').value.trim();
+  meetings[i].agenda     = document.getElementById('me_agenda').value.trim();
+  meetings[i].minutesUrl = document.getElementById('me_url').value.trim();
+  saveMeetings(meetings);
+  renderMeetings();
+  renderBoardHealth();
+  toast('Meeting saved.');
+}
+
+function addMeeting() {
+  const el = document.getElementById('meetingsList');
+  el.insertAdjacentHTML('afterbegin', `<div class="card" style="margin-bottom:14px;border:1.5px solid var(--teal)">
+    <div style="font-weight:700;margin-bottom:10px">Log New Meeting</div>
+    <div class="form-row">
+      <div class="form-group"><label>Date</label><input type="date" id="me_date" /></div>
+      <div class="form-group"><label>Type</label><select id="me_type"><option>Regular</option><option>Special</option><option>Annual</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Quorum met</label><select id="me_quorum"><option value="1">Yes</option><option value="0">No</option></select></div>
+      <div class="form-group"><label>Attendance</label><input type="text" id="me_att" /></div>
+    </div>
+    <div class="form-group"><label>Agenda summary</label><input type="text" id="me_agenda" /></div>
+    <div class="form-group"><label>Minutes URL</label><input type="url" id="me_url" /></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary btn-sm" onclick="saveNewMeeting()">Save</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderMeetings()">Cancel</button>
+    </div>
+  </div>`);
+}
+
+function saveNewMeeting() {
+  const meetings = getMeetings();
+  meetings.push({ id: 'm' + meetings.length, date: document.getElementById('me_date').value, type: document.getElementById('me_type').value, quorum: document.getElementById('me_quorum').value === '1', attendance: document.getElementById('me_att').value.trim(), agenda: document.getElementById('me_agenda').value.trim(), minutesUrl: document.getElementById('me_url').value.trim() });
+  saveMeetings(meetings);
+  renderMeetings();
+  renderBoardHealth();
+  toast('Meeting logged.');
+}
+
+function renderActions() {
+  const el = document.getElementById('actionsList');
+  if (!el) return;
+  const actions = getActions();
+  const overdue = actions.filter(a => a.status === 'Overdue');
+  const overdueSummary = document.getElementById('actionOverdueSummary');
+  if (overdueSummary) {
+    overdueSummary.style.display = overdue.length ? '' : 'none';
+    overdueSummary.textContent = '⚠️ ' + overdue.length + ' overdue action item' + (overdue.length > 1 ? 's' : '') + ': ' + overdue.map(a => a.desc).join('; ');
+  }
+  const statusCls = { 'Overdue': 'badge-expired', 'In Progress': 'badge-watch', 'Not Started': 'badge-open', 'Complete': 'badge-valid' };
+  el.innerHTML = actions.map((a, i) => `<div class="action-row">
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:700;font-size:13px">${escHtml(a.desc)}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">Assigned: ${escHtml(a.assigned)} · Due: ${fmtDate(a.due)}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+      <span class="doc-badge ${statusCls[a.status] || 'badge-watch'}">${escHtml(a.status)}</span>
+      <select style="font-size:11px;padding:2px 4px;border:1px solid var(--border);border-radius:4px" onchange="updateActionStatus(${i}, this.value)">
+        ${['Not Started','In Progress','Overdue','Complete'].map(s => `<option ${a.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+  </div>`).join('');
+}
+
+function updateActionStatus(i, val) {
+  const actions = getActions(); actions[i].status = val; saveActions(actions);
+  renderActions(); renderBoardHealth(); toast('Action item updated.');
+}
+
+function renderBoardDocs() {
+  const el = document.getElementById('boardDocsList');
+  if (!el) return;
+  const docs = getBoardDocs();
+  const statusCls = { 'Adopted': 'badge-valid', 'Draft': 'badge-watch', 'Missing': 'badge-expired' };
+  el.innerHTML = docs.map((d, i) => `<div class="bdoc-row">
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:600;font-size:13px">${escHtml(d.label)}</div>
+      ${d.url ? `<a href="${escHtml(d.url)}" target="_blank" style="font-size:11px">View ↗</a>` : ''}
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <span class="doc-badge ${statusCls[d.status] || 'badge-watch'}">${escHtml(d.status)}</span>
+      <select style="font-size:11px;padding:2px 4px;border:1px solid var(--border);border-radius:4px" onchange="updateBoardDocStatus(${i}, this.value)">
+        ${['Adopted','Draft','Missing'].map(s => `<option ${d.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+  </div>`).join('');
+}
+
+function updateBoardDocStatus(i, val) {
+  const docs = getBoardDocs(); docs[i].status = val; saveBoardDocs(docs);
+  renderBoardDocs(); renderBoardHealth(); toast('Document status updated.');
+}
+
+function renderFinancials_() {
+  const el = document.getElementById('finPanel');
+  if (!el) return;
+  const f = getFinancials();
+  const revPct = f.ytdRevBudget > 0 ? Math.round(f.ytdRev / f.ytdRevBudget * 100) : 0;
+  const expPct = f.ytdExpBudget > 0 ? Math.round(f.ytdExp / f.ytdExpBudget * 100) : 0;
+  el.innerHTML = `
+    <div class="health-grid" style="margin-bottom:16px">
+      <div class="health-tile ht-good"><div class="ht-val">$${Number(f.ytdRev).toLocaleString()}</div><div class="ht-label">YTD Revenue</div></div>
+      <div class="health-tile ht-good"><div class="ht-val">$${Number(f.ytdExp).toLocaleString()}</div><div class="ht-label">YTD Expenses</div></div>
+      <div class="health-tile ht-warn"><div class="ht-val">$${Number(f.cash).toLocaleString()}</div><div class="ht-label">Cash on Hand</div></div>
+    </div>
+    <div class="fin-row"><div class="fin-label">Annual Budget</div><div class="fin-val">$${Number(f.budget).toLocaleString()}</div></div>
+    <div class="fin-row"><div class="fin-label">YTD Revenue vs Budget</div><div class="fin-val">${revPct}% <span style="font-size:11px;color:var(--muted)">(${escHtml(f.ytdRev)} / ${escHtml(f.ytdRevBudget)})</span></div></div>
+    <div class="fin-row"><div class="fin-label">YTD Expenses vs Budget</div><div class="fin-val">${expPct}% <span style="font-size:11px;color:var(--muted)">(${escHtml(f.ytdExp)} / ${escHtml(f.ytdExpBudget)})</span></div></div>
+    ${f.notes ? `<div style="font-size:12px;color:var(--muted);font-style:italic;margin-top:10px">${escHtml(f.notes)}</div>` : ''}
+    <div style="margin-top:14px"><button class="btn btn-ghost btn-sm" onclick="editFinancials()">✏️ Update Financials</button></div>
+    <div class="doc-edit-form" id="finEditForm">
+      <div class="form-row">
+        <div class="form-group"><label>Annual Budget ($)</label><input type="number" id="fin_bud" value="${escHtml(f.budget)}" /></div>
+        <div class="form-group"><label>Cash on Hand ($)</label><input type="number" id="fin_cash" value="${escHtml(f.cash)}" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>YTD Revenue ($)</label><input type="number" id="fin_rev" value="${escHtml(f.ytdRev)}" /></div>
+        <div class="form-group"><label>Revenue Budget ($)</label><input type="number" id="fin_revbud" value="${escHtml(f.ytdRevBudget)}" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>YTD Expenses ($)</label><input type="number" id="fin_exp" value="${escHtml(f.ytdExp)}" /></div>
+        <div class="form-group"><label>Expense Budget ($)</label><input type="number" id="fin_expbud" value="${escHtml(f.ytdExpBudget)}" /></div>
+      </div>
+      <div class="form-group"><label>Notes</label><textarea id="fin_notes" rows="2">${escHtml(f.notes)}</textarea></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary btn-sm" onclick="saveFinancials_form()">Save</button>
+        <button class="btn btn-ghost btn-sm" onclick="editFinancials()">Cancel</button>
+      </div>
+    </div>`;
+}
+
+function editFinancials() { document.getElementById('finEditForm')?.classList.toggle('open'); }
+
+function saveFinancials_form() {
+  saveFinancials({ budget: document.getElementById('fin_bud').value, cash: document.getElementById('fin_cash').value, ytdRev: document.getElementById('fin_rev').value, ytdRevBudget: document.getElementById('fin_revbud').value, ytdExp: document.getElementById('fin_exp').value, ytdExpBudget: document.getElementById('fin_expbud').value, notes: document.getElementById('fin_notes').value.trim() });
+  renderFinancials_();
+  toast('Financials updated.');
+}
+
+// ═══════════════════════ 501(c)(3) COMPLIANCE ═══════════════════════
+const FILINGS_SEED = [
+  { id: 'f1', year: 'FY2025', type: '990', dueDate: '2026-11-15', status: 'Not Started', preparer: '',              confirmNum: '',         notes: 'Extension may be filed by Aug 15.' },
+  { id: 'f2', year: 'FY2024', type: '990', dueDate: '2025-11-15', status: 'Filed',       preparer: 'Self-prepared', confirmNum: 'EF-29847', notes: '' },
+  { id: 'f3', year: 'FY2023', type: '990', dueDate: '2024-11-15', status: 'Filed',       preparer: 'Self-prepared', confirmNum: 'EF-28133', notes: '' }
+];
+
+const STATE_REGS_SEED = [
+  { id: 'sr1', state: 'Virginia (VA)',   status: 'Registered',     expiryDate: '2026-12-31', regNum: 'VA-0029183', notes: 'Annual renewal due Dec 31' },
+  { id: 'sr2', state: 'Maryland (MD)',   status: 'Not Registered', expiryDate: '',           regNum: '',           notes: 'Review if conducting solicitations in MD' },
+  { id: 'sr3', state: 'Washington DC',  status: 'Not Registered', expiryDate: '',           regNum: '',           notes: 'Review if conducting solicitations in DC' }
+];
+
+const IRS_CHECKLIST_SEED = [
+  { id: 'ic1',  label: 'IRS determination letter (501(c)(3)) on file',             status: 'yes'     },
+  { id: 'ic2',  label: '990 filed on time (or extension filed)',                   status: 'partial' },
+  { id: 'ic3',  label: 'Public support test maintained (>1/3 public support)',     status: 'yes'     },
+  { id: 'ic4',  label: 'No private inurement to insiders',                         status: 'yes'     },
+  { id: 'ic5',  label: 'No substantial political campaign activity',               status: 'yes'     },
+  { id: 'ic6',  label: 'Lobbying does not exceed limits',                          status: 'yes'     },
+  { id: 'ic7',  label: 'No unrelated business income (UBIT) issues',              status: 'yes'     },
+  { id: 'ic8',  label: 'Meeting minutes kept and accessible',                      status: 'partial' },
+  { id: 'ic9',  label: 'Conflict of interest policy — annual board sign-off',      status: 'no'      },
+  { id: 'ic10', label: 'Whistleblower policy adopted',                             status: 'no'      },
+  { id: 'ic11', label: 'Document retention policy adopted',                        status: 'no'      }
+];
+
+const GRANTS_SEED = [
+  { id: 'g1', name: 'Cornerstone Foundation Grant',   funder: 'Cornerstone Foundation',                   amount: '15000', awardDate: '2026-01-15', reportDue: '2027-01-15', status: 'Active',      restricted: true,  notes: 'Housing construction funds — restricted' },
+  { id: 'g2', name: 'Community Builder Award',        funder: 'Greater Richmond Community Foundation',    amount: '5000',  awardDate: '2025-10-01', reportDue: '2026-10-01', status: 'Report Due',  restricted: false, notes: 'Unrestricted general operating' }
+];
+
+function getFilings()        { try { return JSON.parse(localStorage.getItem('camino_filings'))       || FILINGS_SEED.map(f=>({...f}));         } catch { return FILINGS_SEED.map(f=>({...f})); } }
+function saveFilings(d)      { localStorage.setItem('camino_filings',      JSON.stringify(d)); }
+function getStateRegs()      { try { return JSON.parse(localStorage.getItem('camino_stateregs'))     || STATE_REGS_SEED.map(s=>({...s}));      } catch { return STATE_REGS_SEED.map(s=>({...s})); } }
+function saveStateRegs(d)    { localStorage.setItem('camino_stateregs',    JSON.stringify(d)); }
+function getIrsChecklist()   { try { return JSON.parse(localStorage.getItem('camino_irschecklist')) || IRS_CHECKLIST_SEED.map(i=>({...i}));   } catch { return IRS_CHECKLIST_SEED.map(i=>({...i})); } }
+function saveIrsChecklist(d) { localStorage.setItem('camino_irschecklist', JSON.stringify(d)); }
+function getGrants()         { try { return JSON.parse(localStorage.getItem('camino_grants'))        || GRANTS_SEED.map(g=>({...g}));          } catch { return GRANTS_SEED.map(g=>({...g})); } }
+function saveGrants(d)       { localStorage.setItem('camino_grants',       JSON.stringify(d)); }
+
+function setComplianceTab(tabId) {
+  document.querySelectorAll('#panel-compliance .panel-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('#panel-compliance .cp-tab-pane').forEach(p => p.classList.toggle('active', p.id === 'cp-' + tabId));
+}
+
+function renderCompliance() {
+  renderFilings();
+  renderStateRegs();
+  renderIrsChecklist();
+  renderGrants();
+  renderComplianceDates();
+}
+
+function renderFilings() {
+  const el = document.getElementById('filingsList');
+  if (!el) return;
+  const filings = getFilings();
+  const statusCls = { 'Filed': 'badge-valid', 'Not Started': 'badge-open', 'In Progress': 'badge-watch', 'Extension Filed': 'badge-soon' };
+  el.innerHTML = filings.map((f, i) => `<div class="filing-row">
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:700;font-size:13px">${escHtml(f.year)} ${escHtml(f.type)}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">Due: ${fmtDate(f.dueDate)}${f.preparer ? ' · Preparer: ' + escHtml(f.preparer) : ''}${f.confirmNum ? ' · Confirmation: ' + escHtml(f.confirmNum) : ''}</div>
+      ${f.notes ? `<div style="font-size:11px;font-style:italic;color:var(--muted)">${escHtml(f.notes)}</div>` : ''}
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0">
+      <span class="doc-badge ${statusCls[f.status] || 'badge-watch'}">${escHtml(f.status)}</span>
+      <select style="font-size:11px;padding:2px 4px;border:1px solid var(--border);border-radius:4px" onchange="updateFilingStatus(${i}, this.value)">
+        ${['Not Started','In Progress','Extension Filed','Filed'].map(s => `<option ${f.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+  </div>`).join('');
+}
+
+function updateFilingStatus(i, val) {
+  const filings = getFilings(); filings[i].status = val; saveFilings(filings);
+  renderFilings(); toast('Filing status updated.');
+}
+
+function renderStateRegs() {
+  const el = document.getElementById('stateRegsList');
+  if (!el) return;
+  const regs = getStateRegs();
+  const statusCls = { 'Registered': 'badge-valid', 'Not Registered': 'badge-expired', 'Pending': 'badge-watch' };
+  el.innerHTML = regs.map(r => `<div class="state-row">
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:600;font-size:13px">${escHtml(r.state)}</div>
+      ${r.regNum ? `<div style="font-size:12px;color:var(--muted)">Reg # ${escHtml(r.regNum)}${r.expiryDate ? ' · Expires ' + fmtDate(r.expiryDate) : ''}</div>` : ''}
+      ${r.notes  ? `<div style="font-size:11px;font-style:italic;color:var(--muted)">${escHtml(r.notes)}</div>` : ''}
+    </div>
+    <span class="doc-badge ${statusCls[r.status] || 'badge-watch'}">${escHtml(r.status)}</span>
+  </div>`).join('');
+}
+
+function renderIrsChecklist() {
+  const el = document.getElementById('irsCheckList');
+  if (!el) return;
+  const items = getIrsChecklist();
+  const statusCls   = { 'yes': 'badge-valid', 'no': 'badge-expired', 'partial': 'badge-watch' };
+  const statusLabel = { 'yes': 'YES', 'no': 'NO', 'partial': 'PARTIAL' };
+  el.innerHTML = items.map((c, i) => `<div class="check-item">
+    <div style="flex:1;font-size:13px">${escHtml(c.label)}</div>
+    <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+      <span class="doc-badge ${statusCls[c.status] || 'badge-watch'}">${statusLabel[c.status] || c.status.toUpperCase()}</span>
+      <select style="font-size:11px;padding:2px 4px;border:1px solid var(--border);border-radius:4px" onchange="updateIrsItem(${i}, this.value)">
+        <option value="yes"     ${c.status==='yes'     ?'selected':''}>Yes</option>
+        <option value="partial" ${c.status==='partial' ?'selected':''}>Partial</option>
+        <option value="no"      ${c.status==='no'      ?'selected':''}>No</option>
+      </select>
+    </div>
+  </div>`).join('');
+}
+
+function updateIrsItem(i, val) {
+  const items = getIrsChecklist(); items[i].status = val; saveIrsChecklist(items);
+  renderIrsChecklist(); toast('Checklist updated.');
+}
+
+function renderGrants() {
+  const el = document.getElementById('grantsList');
+  if (!el) return;
+  const grants = getGrants();
+  const statusCls = { 'Active': 'badge-valid', 'Report Due': 'badge-soon', 'Closed': 'badge-watch' };
+  el.innerHTML = grants.map(g => `<div class="grant-row">
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:700;font-size:13px">${escHtml(g.name)}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">Funder: ${escHtml(g.funder)} · Amount: $${Number(g.amount).toLocaleString()} · Awarded: ${fmtDate(g.awardDate)}</div>
+      <div style="font-size:12px;color:var(--muted)">Report due: ${fmtDate(g.reportDue)} · ${g.restricted ? '<strong style="color:#854D0E">Restricted</strong>' : 'Unrestricted'}</div>
+      ${g.notes ? `<div style="font-size:11px;font-style:italic;color:var(--muted)">${escHtml(g.notes)}</div>` : ''}
+    </div>
+    <span class="doc-badge ${statusCls[g.status] || 'badge-watch'}" style="flex-shrink:0">${escHtml(g.status)}</span>
+  </div>`).join('');
+}
+
+function renderComplianceDates() {
+  const el = document.getElementById('complianceDates');
+  if (!el) return;
+  const dates = [
+    { label: 'FY2025 990 due',                   date: '2026-11-15', note: 'Extension to Aug 15 available' },
+    { label: 'VA charitable registration renewal', date: '2026-12-31', note: 'Annual renewal' },
+    { label: 'COI annual board sign-off',          date: '2026-12-31', note: 'All board members' },
+    { label: 'Next board meeting',                 date: '2026-07-17', note: '' },
+    { label: 'FY2025 audit / financial review',    date: '2026-09-30', note: 'If required' }
+  ];
+  el.innerHTML = dates.map(d => {
+    const st = docStatus(d.date);
+    return `<div class="filing-row">
+      <div style="flex:1"><div style="font-weight:600;font-size:13px">${escHtml(d.label)}</div>${d.note ? `<div style="font-size:11px;color:var(--muted)">${escHtml(d.note)}</div>` : ''}</div>
+      <div style="text-align:right;flex-shrink:0"><div style="font-size:13px;font-weight:700">${fmtDate(d.date)}</div><span class="doc-badge ${st.cls}" style="font-size:10px">${st.label}</span></div>
+    </div>`;
+  }).join('');
 }
 
 // ═══════════════════════ CRM / DONORS ═══════════════════════
