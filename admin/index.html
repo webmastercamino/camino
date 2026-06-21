@@ -1692,11 +1692,17 @@
       <div class="feed-card">
         <div class="feed-card-header">
           <span class="live-dot stale" id="dot-advisory"></span>
-          <div class="feed-card-title">State Dept — Honduras Travel Advisory</div>
+          <div class="feed-card-title">State Dept Travel Advisory — Honduras <span style="font-size:11px;font-weight:400;color:var(--muted)">(machine-readable JSON API)</span></div>
           <span class="feed-card-meta" id="time-advisory">Not fetched</span>
           <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('advisory')">⟳</button>
         </div>
-        <div id="items-advisory" class="feed-items"><div class="feed-empty">Press ⟳ to fetch live advisory</div></div>
+        <div id="items-advisory" class="feed-items"><div class="feed-empty">Press ⟳ to fetch current advisory level</div></div>
+      </div>
+
+      <div class="card" style="background:#f0fdf4;border-color:#86efac;margin-bottom:14px">
+        <div style="font-size:12px;color:#166534;line-height:1.6">
+          <strong>⚠️ Entry requirement note:</strong> Honduras briefly required measles vaccination proof in July 2025, reversed within days. Entry requirements can change without notice — always verify current requirements on <a href="https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Honduras.html" target="_blank" style="color:#0f6e56">travel.state.gov</a> and <a href="https://wwwnc.cdc.gov/travel/destinations/traveler/none/honduras" target="_blank" style="color:#0f6e56">CDC Traveler Health</a> no earlier than 2 weeks before each departure — not just at registration.
+        </div>
       </div>
 
       <div class="feed-card">
@@ -1735,7 +1741,7 @@
         <div class="pw-ngo-kv"><span>Renewal due</span><span id="pwONGDue"><strong style="color:var(--amber)">March 2026</strong> — <em>verify with SRE</em></span></div>
         <div class="pw-ngo-kv"><span>Required to operate</span><span>Yes — foreign NGOs must register with SRE</span></div>
         <div class="pw-ngo-kv"><span>Registration authority</span><span><a href="https://sre.gob.hn" target="_blank" style="color:var(--teal)">sre.gob.hn ↗</a></span></div>
-        <div class="pw-nicaragua-note"><strong>⚠️ Regional Watch — Nicaragua precedent:</strong> Nicaragua's Law 1040 (2020) expelled 3,000+ NGOs including international faith-based organizations. Honduras has not enacted equivalent legislation, but similar bills have been introduced. Review annually.</div>
+        <div class="pw-nicaragua-note"><strong>Board awareness — regional context:</strong> Nicaragua's Law 1040 (2020) resulted in 3,000+ NGOs facing significant restrictions, including international faith-based organizations. Honduras has not enacted equivalent legislation, and the current Asfura government presents a substantially lower risk environment than in prior years. ICNL (see source table below) tracks any related legislative activity. Annual board review of this topic is recommended as part of good governance.</div>
         <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" onclick="window.open('https://gobiernotransparente.gob.hn','_blank')">View Honduras ONG Registry ↗</button></div>
       </div>
       <div class="card">
@@ -1800,10 +1806,10 @@
       </div>
       <div class="pw-sanctions-card">
         <h4>🌐 Honduras Foreign Funding Law</h4>
-        <p style="font-size:13px;margin-bottom:10px">No current restrictions on registered NGOs receiving foreign donations as of June 2026. Monitor for proposed legislation.</p>
+        <p style="font-size:13px;margin-bottom:10px">No current restrictions on registered NGOs receiving foreign donations as of June 2026. Environment is stable under the Asfura government. Quarterly monitoring recommended as part of standard board governance.</p>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
           <span class="pw-status-ok">No active restrictions</span>
-          <span class="pw-status-watch">⚠️ Monitor — proposals pending</span>
+          <span style="font-size:12px;color:var(--muted)">Quarterly review recommended</span>
         </div>
         <div class="form-group" style="margin-bottom:0"><label for="pwFundingNotes">Notes</label><textarea id="pwFundingNotes" rows="2" placeholder="Add notes on recent developments…"></textarea></div>
       </div>
@@ -1825,10 +1831,10 @@
     <div class="pw-tab-pane" id="pw-tab-political">
       <!-- Risk scorecard -->
       <div class="pol-scorecard" id="polScorecard">
-        <div class="pol-score-item"><div class="pol-score-label">🏛️ Diplomatic Relations</div><div class="pol-score-val"><span class="pw-status-ok">Normal</span> Active US Embassy</div></div>
-        <div class="pol-score-item"><div class="pol-score-label">💸 USAID Environment</div><div class="pol-score-val"><span class="pw-status-watch">⚠️ Reduced</span> Monitor partner orgs</div></div>
-        <div class="pol-score-item"><div class="pol-score-label">🗳️ Political Stability</div><div class="pol-score-val"><span class="pw-status-watch">Moderate</span> Election cycle active</div></div>
-        <div class="pol-score-item"><div class="pol-score-label">🤝 NGO Environment</div><div class="pol-score-val"><span class="pw-status-ok">Open</span> No current restrictions</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">🏛️ Diplomatic Relations</div><div class="pol-score-val"><span class="pw-status-ok">Strong</span> US Embassy fully operational</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">💸 USAID Funding</div><div class="pol-score-val"><span class="pw-status-watch">Reduced</span> Monitor partner org impacts</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">🗳️ Political Environment</div><div class="pol-score-val"><span class="pw-status-ok">Positive trend</span> Asfura govt; monitor</div></div>
+        <div class="pol-score-item"><div class="pol-score-label">🤝 NGO Environment</div><div class="pol-score-val"><span class="pw-status-ok">Stable</span> No current restrictions</div></div>
         <div class="pol-score-item"><div class="pol-score-label">💰 Economic Stability</div><div class="pol-score-val"><span class="pw-status-watch">Moderate</span> Remittance-dependent</div></div>
       </div>
 
@@ -1836,8 +1842,9 @@
       <div class="pol-indicator-card">
         <div class="pol-indicator-title">🏛️ US-Honduras Diplomatic Status</div>
         <div class="pol-indicator-body">
-          <strong>Status:</strong> Normal diplomatic relations. US Embassy Tegucigalpa is fully staffed and operational.<br>
-          <strong>Taiwan → China recognition (March 2023):</strong> Honduras shifted diplomatic recognition from Taiwan to China. US-Honduras relations remain active but shifted slightly — the US expressed concern. No material impact on NGO operations.
+          <strong>Status: <span style="color:#166534">Strong</span></strong> — US Embassy Tegucigalpa fully staffed and operational. US-Honduras relations are in a positive phase under the Asfura government.<br><br>
+          <strong>New administration context (January 2026):</strong> President Nasry Asfura (National Party, conservative) took office January 27, 2026. He met with President Trump at Mar-a-Lago in February 2026 to discuss a US-Honduras free trade deal and is actively working to unwind the China diplomatic recognition made by the Castro administration. US reception has been warm.<br><br>
+          <strong>Taiwan → China shift (March 2023):</strong> The prior Castro administration shifted recognition to China. The Asfura government is expected to reverse this, which would further strengthen the US relationship. No material impact on CAMINO operations in either direction.
           <div class="pol-note">Source: <a href="https://www.state.gov/countries-areas/honduras/" target="_blank" style="color:#0369a1">State Dept bilateral relations ↗</a></div>
         </div>
       </div>
@@ -1855,11 +1862,11 @@
       <div class="pol-indicator-card">
         <div class="pol-indicator-title">🗳️ Honduras Political Environment</div>
         <div class="pol-indicator-body">
-          <strong>President:</strong> Xiomara Castro (Libre party, in office since January 2022)<br>
-          <strong>US relationship:</strong> Moderate cooperation on migration and drug trafficking; some tension over China recognition and domestic policies<br>
-          <strong>NGO environment:</strong> Castro government has generally maintained an open civil society stance. No active restrictions on foreign NGOs.<br>
-          <strong>Next general election:</strong> November 2025 (new president inaugurated January 2026 — election cycle now complete; monitor new administration's NGO stance)
-          <div class="pol-note">Honduras held general elections November 30, 2025. Monitor new administration's policies toward foreign NGOs in 2026.</div>
+          <strong>President:</strong> Nasry "Tito" Asfura (National Party, conservative) — took office January 27, 2026<br>
+          <strong>US relationship:</strong> Strong — Asfura met with Trump at Mar-a-Lago (February 2026), discussing US-Honduras free trade deal and China policy reversal<br>
+          <strong>NGO environment:</strong> <span style="color:#166534;font-weight:600">Improved</span> — Foreign agents law risk substantially lower under the Asfura administration compared to the Castro era. No active restrictions on registered foreign NGOs. ICNL (see Honduras &amp; NGO Law tab) continues to track any legislative movement.<br>
+          <strong>Prior president:</strong> Xiomara Castro (Libre party, January 2022 – January 2026) — maintained an open civil society stance; no restrictions on NGOs during her term. Context useful for understanding regulatory history.
+          <div class="pol-note">General elections were held November 30, 2025. Asfura defeated the Libre party candidate. The improved US-Honduras relationship is a positive development for organizations like CAMINO operating in both countries.</div>
         </div>
       </div>
 
@@ -1938,22 +1945,13 @@
 
       <div class="feed-card">
         <div class="feed-card-header">
-          <span class="live-dot stale" id="dot-promed"></span>
-          <div class="feed-card-title">ProMED — Program for Monitoring Emerging Diseases</div>
-          <span class="feed-card-meta" id="time-promed">Not fetched</span>
-          <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('promed')">⟳</button>
-        </div>
-        <div id="items-promed" class="feed-items"><div class="feed-empty">Press ⟳ to fetch ProMED alerts</div></div>
-      </div>
-
-      <div class="feed-card">
-        <div class="feed-card-header">
           <span class="live-dot stale" id="dot-paho"></span>
-          <div class="feed-card-title">PAHO — Pan American Health Organization</div>
+          <div class="feed-card-title">PAHO — Epidemiological Alerts &amp; Weekly Dengue Reports</div>
           <span class="feed-card-meta" id="time-paho">Not fetched</span>
           <button class="btn btn-ghost btn-sm" onclick="pwRefreshFeed('paho')">⟳</button>
         </div>
-        <div id="items-paho" class="feed-items"><div class="feed-empty">Press ⟳ to fetch PAHO health alerts</div></div>
+        <div id="items-paho" class="feed-items"><div class="feed-empty">Press ⟳ to fetch PAHO epidemiological alerts</div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">PAHO publishes weekly dengue situation reports for the Americas with Honduras case counts. ProMED RSS discontinued June 2023 — PAHO is now the primary outbreak source. <a href="https://www.paho.org/en/epidemiological-alerts-and-updates" target="_blank" style="color:var(--teal)">PAHO epi alerts page ↗</a></div>
       </div>
 
       <!-- Endemic disease status -->
@@ -2620,6 +2618,7 @@
 </div>
 <div id="toast"></div>
 
+<script src="js/live-feeds.js"></script>
 <script>
 // ── Panel switching ──
 const PANEL_TITLES = {
@@ -6887,17 +6886,18 @@ const PW_SOURCES_US = [
 ];
 
 const PW_SOURCES_HN = [
-  { id:'pw_hn_1', name:'Honduran Congress (Congreso Nacional)', url:'https://congreso.gob.hn', relevance:'critical', lastChecked:'2026-06-01', status:'In session — monitor', notes:'Watch for NGO restriction legislation, foreign-funding bills' },
-  { id:'pw_hn_2', name:'Honduras La Gaceta (Official Gazette)', url:'https://transparencia.gob.hn', relevance:'critical', lastChecked:'2026-05-15', status:'Active publication', notes:'All enacted laws published here; check for ONG regulatory changes' },
-  { id:'pw_hn_3', name:'Honduras Immigration (DGME)', url:'https://migracion.gob.hn', relevance:'critical', lastChecked:'2026-06-15', status:'90-day tourist entry — US citizens no visa required', notes:'Verify current entry requirements before each trip group departure' },
-  { id:'pw_hn_4', name:'Honduras Foreign Relations (SRE)', url:'https://sre.gob.hn', relevance:'high', lastChecked:'2026-03-10', status:'Active — CAMINO registered', notes:'Handles foreign NGO registration; contact point for ONG renewal' },
-  { id:'pw_hn_5', name:'Honduras ONG Registry (Gobierno Transparente)', url:'https://gobiernotransparente.gob.hn', relevance:'high', lastChecked:'2026-03-10', status:'CAMINO registration active', notes:'Verify annually; registration lapse could affect operational legitimacy' },
-  { id:'pw_hn_6', name:'ATIC Security Alerts', url:'https://atic.gob.hn', relevance:'high', lastChecked:'2026-06-01', status:'Monitor ongoing', notes:'Criminal investigation agency — public alerts on organized crime activity by region' },
+  { id:'pw_hn_1', name:'Honduran Congress (Congreso Nacional)', url:'https://congreso.gob.hn', relevance:'critical', lastChecked:'2026-06-01', status:'In session', notes:'Review session agendas for any NGO or civil society legislation. Quarterly check recommended.' },
+  { id:'pw_hn_2', name:'Honduras La Gaceta (Official Gazette)', url:'https://transparencia.gob.hn', relevance:'critical', lastChecked:'2026-05-15', status:'Active publication', notes:'All enacted laws published here. Check when board reviews regulatory environment.' },
+  { id:'pw_hn_3', name:'Honduras Immigration (DGME)', url:'https://migracion.gob.hn', relevance:'critical', lastChecked:'2026-06-15', status:'90-day tourist entry — US citizens no visa required', notes:'Verify entry requirements 2 weeks before each departure (requirements can change quickly — see entry note on US Gov tab).' },
+  { id:'pw_hn_4', name:'Honduras Foreign Relations (SRE)', url:'https://sre.gob.hn', relevance:'high', lastChecked:'2026-03-10', status:'Active — CAMINO registered', notes:'Handles foreign NGO registration. Primary contact for ONG renewal — verify current status annually.' },
+  { id:'pw_hn_5', name:'Honduras ONG Registry (Gobierno Transparente)', url:'https://gobiernotransparente.gob.hn', relevance:'high', lastChecked:'2026-03-10', status:'CAMINO registration active', notes:'Verify annually. Confirm with SRE that March 2026 renewal was processed.' },
+  { id:'pw_hn_6', name:'ATIC Security Alerts', url:'https://atic.gob.hn', relevance:'high', lastChecked:'2026-06-01', status:'Monitor ongoing', notes:'Public alerts on organized crime activity by department — useful for pre-trip security briefings.' },
+  { id:'pw_hn_7', name:'ICNL — Honduras Civic Freedom Monitor', url:'https://www.icnl.org/resources/civic-freedom-monitor/honduras', relevance:'critical', lastChecked:'2026-06-20', status:'Subscribe to newsletter', notes:'International Center for Not-for-Profit Law — tracks NGO law changes globally. Honduras-specific page covers any civil society legislation. Most authoritative source for foreign NGO operating risk. Subscribe to newsletter at icnl.org.' },
 ];
 
 const PW_SOURCES_REGIONAL = [
   { id:'pw_reg_1', name:'InSight Crime — Honduras', url:'https://insightcrime.org/honduras-organized-crime-news/', relevance:'critical', notes:'Organized crime and gang activity analysis by department; essential for trip-area security briefings' },
-  { id:'pw_reg_2', name:'CIVICUS Monitor — Honduras', url:'https://monitor.civicus.org/country/honduras/', relevance:'high', notes:'Civic space rating: currently "Obstructed." Tracks NGO operating environment and press freedom' },
+  { id:'pw_reg_2', name:'CIVICUS Monitor — Honduras', url:'https://monitor.civicus.org/country/honduras/', relevance:'high', notes:'Civic space rating: "Obstructed" (a mid-tier rating; most Central American countries hold this status). Useful context for understanding the broader operating environment. Review annually.' },
   { id:'pw_reg_3', name:'Freedom House — Honduras', url:'https://freedomhouse.org/country/honduras', relevance:'high', notes:'Annual Freedom in the World report. Tracks democratic backsliding that affects NGO operations' },
   { id:'pw_reg_4', name:'Human Rights Watch — Honduras', url:'https://www.hrw.org/americas/honduras', relevance:'medium', notes:'Annual report + ad-hoc alerts. Relevant for understanding community context and donor optics' },
   { id:'pw_reg_5', name:'ReliefWeb — Honduras', url:'https://reliefweb.int/country/hnd', relevance:'medium', notes:'Humanitarian situation reports, natural disaster alerts, flooding/hurricane risk updates' },
@@ -7246,15 +7246,14 @@ const CORS_PROXY = 'https://api.allorigins.win/get?url=';
 const FEED_CACHE_KEY = 'camino_feed_cache';
 
 const PW_FEED_CONFIG = {
-  advisory:    { url: 'https://travel.state.gov/content/travel/en/rss.html', ttl: 86400000,  label: 'State Dept Advisory' },
-  embassy:     { url: 'https://hn.usembassy.gov/feed/', ttl: 86400000,       label: 'US Embassy Tegucigalpa' },
+  advisory:    { url: null, via: 'advisory_api', ttl: 86400000,   label: 'State Dept Travel Advisory' },
+  embassy:     { url: 'https://hn.usembassy.gov/feed/', ttl: 86400000, label: 'US Embassy Tegucigalpa' },
   insightcrime:{ url: 'https://insightcrime.org/news/brief/feed/', ttl: 172800000, label: 'InSight Crime' },
-  reliefweb:   { url: null, ttl: 259200000, label: 'ReliefWeb' }, // uses direct JSON API
+  reliefweb:   { url: null, ttl: 259200000, label: 'ReliefWeb' },
   wola:        { url: 'https://www.wola.org/feed/', ttl: 86400000, label: 'WOLA' },
   ascoa:       { url: 'https://www.as-coa.org/rss.xml', ttl: 86400000, label: 'AS/COA' },
   who:         { url: 'https://www.who.int/rss-feeds/news-english.xml', ttl: 86400000, label: 'WHO Outbreak News' },
-  promed:      { url: 'https://promedmail.org/feed/', ttl: 86400000, label: 'ProMED' },
-  paho:        { url: 'https://www.paho.org/en/rss.xml', ttl: 86400000, label: 'PAHO' },
+  paho:        { url: 'https://www.paho.org/en/rss.xml', ttl: 86400000, label: 'PAHO — Epidemiological Alerts' },
 };
 
 function pwGetCache() {
@@ -7368,7 +7367,7 @@ function pwCheckNewItems(feedId, items) {
         const banner = document.getElementById('pwAdvisoryChangeBanner');
         const txt = document.getElementById('pwAdvisoryChangeText');
         if (banner && txt) {
-          txt.textContent = `⚠️ Advisory Level Changed: Level ${oldLevel} → Level ${newLevel} — Review immediately before any trip departures.`;
+          txt.textContent = `Advisory Level Changed: Level ${oldLevel} → Level ${newLevel} — Review before any upcoming trip departures and notify active participants.`;
           banner.classList.add('on');
         }
       }
@@ -7395,6 +7394,54 @@ function pwCheckNewItems(feedId, items) {
   }
 }
 
+async function pwFetchStateAdvisory() {
+  // Machine-readable JSON API — authoritative source for advisory levels
+  const apiUrl = 'https://cadataapi.state.gov/api/TravelAdvisories';
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), 8000);
+  let data;
+  try {
+    const resp = await fetch(apiUrl, { signal: ctrl.signal });
+    clearTimeout(tid);
+    data = await resp.json();
+  } catch {
+    clearTimeout(tid);
+    // Fallback: try via CORS proxy in case of CORS restriction
+    const proxyUrl = CORS_PROXY + encodeURIComponent(apiUrl);
+    const ctrl2 = new AbortController();
+    const tid2 = setTimeout(() => ctrl2.abort(), 8000);
+    const resp2 = await fetch(proxyUrl, { signal: ctrl2.signal });
+    clearTimeout(tid2);
+    const json2 = await resp2.json();
+    data = typeof json2.contents === 'string' ? JSON.parse(json2.contents) : json2;
+  }
+
+  // API returns array or object — normalize to array
+  const entries = Array.isArray(data) ? data : (data.TravelAdvisories || data.advisories || []);
+  const hn = entries.find(e =>
+    /honduras/i.test(e.country || e.CountryName || e.name || '')
+  );
+
+  if (!hn) return [{ title: 'Honduras advisory data not found in API response', link: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Honduras.html', date: '', desc: 'Visit travel.state.gov for current advisory status.' }];
+
+  const level = hn.advisoryLevel || hn.AdvisoryLevel || hn.level || hn.Level || '?';
+  const levelText = hn.advisoryLevelText || hn.AdvisoryLevelText || hn.levelText || hn.LevelText || '';
+  const updated = hn.date || hn.Date || hn.lastUpdated || hn.LastUpdated || '';
+  const url = hn.url || hn.Url || hn.link || 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Honduras.html';
+
+  localStorage.setItem('camino_advisory_level', String(level));
+  localStorage.setItem('camino_advisory_level_text', levelText);
+  localStorage.setItem('camino_advisory_url', url);
+
+  return [{
+    title: `Level ${level}: ${levelText || 'See advisory for details'} — Honduras`,
+    link: url,
+    date: updated,
+    desc: `Current US State Department Travel Advisory for Honduras. Level ${level} of 4. Always verify at travel.state.gov before trip departures.`,
+    advisoryLevel: level,
+  }];
+}
+
 async function pwRefreshFeed(feedId) {
   const dot = document.getElementById('dot-' + feedId);
   const listEl = document.getElementById('items-' + feedId);
@@ -7403,10 +7450,13 @@ async function pwRefreshFeed(feedId) {
 
   try {
     let items;
-    if (feedId === 'reliefweb') {
+    const cfg = PW_FEED_CONFIG[feedId];
+
+    if (feedId === 'advisory') {
+      items = await pwFetchStateAdvisory();
+    } else if (feedId === 'reliefweb') {
       items = await pwFetchReliefWeb();
     } else {
-      const cfg = PW_FEED_CONFIG[feedId];
       if (!cfg || !cfg.url) { throw new Error('No URL configured'); }
       items = await pwFetchRSS(cfg.url);
     }
@@ -7416,7 +7466,7 @@ async function pwRefreshFeed(feedId) {
     pwSetCache(cache);
     pwUpdateFeedUI(feedId, items, null);
 
-    if (feedId === 'who' || feedId === 'promed' || feedId === 'paho') {
+    if (feedId === 'who' || feedId === 'paho') {
       const el = document.getElementById('healthLastChecked');
       if (el) el.textContent = new Date().toLocaleString();
     }
