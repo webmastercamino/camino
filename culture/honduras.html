@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Honduras: People, Culture &amp; Heart — CAMINO Honduras</title>
+  <meta name="description" content="Learn about Honduras — its people, culture, Indigenous communities, food, faith, and regional context — before you serve alongside Hondurans on a CAMINO mission trip.">
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* ── Culture page hero ── */
+    .culture-hero {
+      background: linear-gradient(135deg, var(--teal) 0%, #0a4f3d 100%);
+      color: white;
+      padding: 80px 48px 72px;
+      text-align: center;
+    }
+    .culture-hero .eyebrow { color: rgba(255,255,255,.72); margin-bottom: 14px; }
+    .culture-hero h1 { font-size: 42px; font-weight: 700; line-height: 1.15; margin-bottom: 18px; color: white; }
+    .culture-hero p { font-size: 18px; opacity: .88; max-width: 620px; margin: 0 auto; line-height: 1.7; }
+
+    /* ── Quick facts ── */
+    .facts-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 48px 48px 44px;
+      background: var(--gray-100);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .fact-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 22px 18px;
+      text-align: center;
+    }
+    .fact-card__icon { font-size: 30px; margin-bottom: 10px; line-height: 1; }
+    .fact-card__label { font-size: 10px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 7px; }
+    .fact-card__value { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.5; }
+
+    /* ── People section ── */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .people-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .people-card__flag { font-size: 28px; margin-bottom: 2px; line-height: 1; }
+    .people-card h3 { font-size: 17px; font-weight: 700; color: var(--teal); margin: 0; }
+    .people-card__tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; background: var(--teal-light); color: var(--teal); margin-bottom: 2px; align-self: flex-start; }
+    .people-card p { font-size: 14px; color: var(--text-muted); line-height: 1.72; margin: 0; }
+    .people-card--highlight { background: var(--teal-light); border-color: var(--teal-mid); }
+    .people-card--highlight h3 { color: var(--teal); }
+    .people-card--highlight p { color: var(--teal); }
+    .people-card--highlight .people-card__tag { background: white; }
+
+    /* ── Life cards ── */
+    .life-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .life-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .life-card__icon { font-size: 30px; margin-bottom: 12px; line-height: 1; }
+    .life-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 9px; }
+    .life-card p { font-size: 14px; color: var(--text-muted); line-height: 1.72; margin: 0; }
+
+    /* ── Surprise list ── */
+    .surprise-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 28px;
+      background: var(--amber-light);
+      border: 1.5px solid var(--amber-mid);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .surprise-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--amber-mid);
+      font-size: 15px;
+      line-height: 1.62;
+      color: var(--text);
+    }
+    .surprise-item:last-child { border-bottom: none; }
+    .surprise-item__star { font-size: 20px; flex-shrink: 0; margin-top: 1px; line-height: 1.4; }
+
+    /* ── Dos and Don'ts ── */
+    .dos-donts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .dos-card {
+      background: var(--teal-light);
+      border: 1.5px solid var(--teal-mid);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+    }
+    .donts-card {
+      background: var(--coral-light);
+      border: 1.5px solid #e8b4a4;
+      border-radius: var(--radius-lg);
+      padding: 26px;
+    }
+    .dos-card h3 { font-size: 16px; font-weight: 700; color: var(--teal); margin-bottom: 16px; }
+    .donts-card h3 { font-size: 16px; font-weight: 700; color: var(--coral); margin-bottom: 16px; }
+    .rule-item {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(0,0,0,.07);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+    .rule-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .rule-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+    /* ── Regional cards ── */
+    .region-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .region-card {
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .region-card__header {
+      background: var(--teal);
+      color: white;
+      padding: 18px 22px;
+    }
+    .region-card__header h3 { font-size: 15px; font-weight: 700; margin: 0 0 3px; }
+    .region-card__header span { font-size: 11px; opacity: .78; }
+    .region-card__body { padding: 20px 22px; background: white; }
+    .region-card__body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin: 0; }
+
+    /* ── CTA ── */
+    .culture-cta {
+      background: var(--amber-light);
+      border-top: 1px solid var(--amber-mid);
+      padding: 72px 48px;
+      text-align: center;
+    }
+    .culture-cta h2 { font-size: 30px; font-weight: 700; margin-bottom: 10px; }
+    .culture-cta p { font-size: 16px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.7; }
+    .culture-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Section wrappers ── */
+    .culture-section { padding: 64px 48px; }
+    .culture-section__inner { max-width: 1100px; margin: 0 auto; }
+    .culture-section__inner--narrow { max-width: 820px; margin: 0 auto; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--text);
+      color: rgba(255,255,255,.72);
+      padding: 40px 48px;
+      font-size: 13px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media(max-width: 1024px) {
+      .people-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media(max-width: 900px) {
+      .facts-row { grid-template-columns: repeat(2, 1fr); padding: 32px 24px; }
+      .people-grid { grid-template-columns: 1fr; }
+      .life-grid { grid-template-columns: repeat(2, 1fr); }
+      .dos-donts { grid-template-columns: 1fr; }
+      .region-grid { grid-template-columns: 1fr; }
+    }
+    @media(max-width: 600px) {
+      .culture-hero { padding: 52px 20px 48px; }
+      .culture-hero h1 { font-size: 28px; }
+      .culture-hero p { font-size: 16px; }
+      .culture-section { padding: 48px 20px; }
+      .facts-row { grid-template-columns: 1fr 1fr; padding: 24px 20px; gap: 12px; }
+      .life-grid { grid-template-columns: 1fr; }
+      .culture-cta { padding: 52px 20px; }
+      .site-footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="../index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">CAMINO</div>
+        <div class="logo-sub">Honduras</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <div class="nav-has-drop">
+        <a href="../about.html">About ▾</a>
+        <div class="nav-drop">
+          <a href="../about/board.html">Our Board</a>
+        </div>
+      </div>
+      <a href="../stories.html">Stories</a>
+      <a href="../programs.html">Programs</a>
+      <div class="nav-has-drop">
+        <a href="../trips.html">Mission trips ▾</a>
+        <div class="nav-drop">
+          <span class="nav-drop-label">Demo</span>
+          <a href="../trips/jul-2026-culpeper.html">↗ Culpeper group trip portal</a>
+          <span class="nav-drop-label">Resources</span>
+          <a href="honduras.html" style="color:var(--text);font-weight:600">🌍 Honduras Culture</a>
+        </div>
+      </div>
+      <a href="../impact.html">Impact</a>
+      <a href="../roadmap.html">Roadmap</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+    <a href="../give.html" class="nav-cta">Give now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-mobile-menu" id="mobileMenu">
+    <a href="../about.html">About</a>
+    <a href="../about/board.html" style="font-size:12px;padding-left:20px;color:var(--text-muted);font-style:italic">↳ Our Board</a>
+    <a href="../stories.html">Stories</a>
+    <a href="../programs.html">Programs</a>
+    <a href="../trips.html">Mission trips</a>
+    <a href="../trips/jul-2026-culpeper.html" style="font-size:12px;padding-left:20px;color:var(--text-muted);font-style:italic">↗ Demo: Culpeper portal</a>
+    <a href="honduras.html" style="font-size:12px;padding-left:20px;color:var(--text-muted);font-style:italic">🌍 Honduras Culture</a>
+    <a href="../impact.html">Impact</a>
+    <a href="../roadmap.html">Roadmap</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../give.html" style="color:var(--amber);font-weight:600">Give now</a>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- 1. Hero -->
+  <section class="culture-hero" id="main">
+    <div class="eyebrow">Honduras</div>
+    <h1>Honduras: People, Culture &amp; Heart</h1>
+    <p>Before you serve alongside Hondurans, take a moment to know them.</p>
+  </section>
+
+  <!-- 2. Quick Facts -->
+  <div class="facts-row" role="region" aria-label="Quick facts about Honduras">
+    <div class="fact-card">
+      <div class="fact-card__icon" aria-hidden="true">🌍</div>
+      <div class="fact-card__label">Population</div>
+      <div class="fact-card__value">~10.7 million</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-card__icon" aria-hidden="true">🗣️</div>
+      <div class="fact-card__label">Language</div>
+      <div class="fact-card__value">Spanish (official) · Garifuna · Miskito · Lenca · Ch'orti' · Tawahka · Pech</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-card__icon" aria-hidden="true">🏔️</div>
+      <div class="fact-card__label">Geography</div>
+      <div class="fact-card__value">Mountainous interior · Caribbean &amp; Pacific coasts · Bay Islands</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-card__icon" aria-hidden="true">⛪</div>
+      <div class="fact-card__label">Faith</div>
+      <div class="fact-card__value">~85% Christian — Catholic majority, growing evangelical &amp; Protestant</div>
+    </div>
+  </div>
+
+  <!-- 3. Meet the People -->
+  <section class="culture-section" aria-labelledby="people-heading">
+    <div class="culture-section__inner">
+      <div class="section-eyebrow">Who calls Honduras home</div>
+      <h2 id="people-heading">Meet the People</h2>
+      <p class="section-sub">Honduras is home to a mosaic of peoples — each with distinct languages, traditions, and deep roots in the land. Getting to know them is the first step to serving well.</p>
+      <div class="people-grid">
+
+        <div class="people-card">
+          <div class="people-card__flag" aria-hidden="true">🤝</div>
+          <span class="people-card__tag">Majority</span>
+          <h3>Mestizo</h3>
+          <p>The majority of Hondurans are Mestizo — descendants of Indigenous and Spanish heritage. Spanish-speaking, deeply family-centered, and known across Latin America for warmth and genuine hospitality. When you sit at a Honduran table, you're joining a tradition that spans generations.</p>
+        </div>
+
+        <div class="people-card">
+          <div class="people-card__flag" aria-hidden="true">🥁</div>
+          <span class="people-card__tag">Afro-Indigenous · UNESCO recognized</span>
+          <h3>Garifuna</h3>
+          <p>Afro-Indigenous descendants of the Arawak, Carib, and West African peoples, concentrated along the Caribbean coast. Their language, music, and spiritual practices are UNESCO-recognized. The Garifuna are celebrated for punta drumming, traditional dance, and vibrant fishing communities that have maintained their identity for centuries.</p>
+        </div>
+
+        <div class="people-card">
+          <div class="people-card__flag" aria-hidden="true">🏺</div>
+          <span class="people-card__tag">Largest Indigenous group</span>
+          <h3>Lenca</h3>
+          <p>The largest Indigenous group in Honduras, living in the mountainous west — Intibucá, La Paz, and Lempira. The Lenca are known for intricate pottery, traditional dress, and a profound spiritual relationship with the land. Berta Cáceres, the internationally celebrated Goldman Prize–winning water defender, carried their voice to the world stage.</p>
+        </div>
+
+        <div class="people-card">
+          <div class="people-card__flag" aria-hidden="true">🌊</div>
+          <span class="people-card__tag">Northeastern coast</span>
+          <h3>Miskito</h3>
+          <p>The Miskito people live along northeastern Honduras and the Caribbean coast — bilingual communities with mixed Indigenous and African heritage. Traditional fishing culture and a deep connection to rivers and coastlines define Miskito life. Many communities maintain their own governance structures alongside the Honduran state.</p>
+        </div>
+
+        <div class="people-card">
+          <div class="people-card__flag" aria-hidden="true">🎉</div>
+          <span class="people-card__tag">Celebration</span>
+          <h3>Garifuna Settlement Day</h3>
+          <p>November 26 is Garifuna Settlement Day — a national celebration of arrival and resilience. Communities across the Caribbean coast welcome visitors to learn traditional cooking (hudut, tapou, ereba), watch punta dancers, and experience drumming circles. It is one of the most vibrant cultural celebrations in all of Central America.</p>
+        </div>
+
+        <div class="people-card people-card--highlight">
+          <div class="people-card__flag" aria-hidden="true">🇭🇳</div>
+          <span class="people-card__tag">Remember</span>
+          <h3>One country, many stories</h3>
+          <p>Honduras is not one story — it is dozens. The family building a home in Cortés, the Garifuna grandmother cooking hudut in Trujillo, the Lenca farmer in Intibucá — all Honduran, all distinct, all worthy of your full attention and respect.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Culture & Daily Life -->
+  <section class="culture-section" style="background:var(--gray-100)" aria-labelledby="life-heading">
+    <div class="culture-section__inner">
+      <div class="section-eyebrow">Everyday life</div>
+      <h2 id="life-heading">Culture &amp; Daily Life</h2>
+      <p class="section-sub">Understanding how Hondurans live — and what they value — will shape how you show up. And it will make the week richer for everyone.</p>
+      <div class="life-grid">
+
+        <div class="life-card">
+          <div class="life-card__icon" aria-hidden="true">👨‍👩‍👧‍👦</div>
+          <h3>Family First</h3>
+          <p>Extended family (<em>familia</em>) is the center of Honduran life. Multiple generations live together — grandparents, aunts, cousins, children. Elders are deeply respected. When you work alongside a Honduran family, you're not just helping with construction: you're joining their circle.</p>
+        </div>
+
+        <div class="life-card">
+          <div class="life-card__icon" aria-hidden="true">🙏</div>
+          <h3>Faith &amp; Community</h3>
+          <p>Church is woven into daily life. Catholic feast days, evangelical praise music, and communal prayer mark the calendar. Morning devotions before work are common in many communities. When CAMINO opens a build day with prayer, it's not unusual — it's expected and welcomed.</p>
+        </div>
+
+        <div class="life-card">
+          <div class="life-card__icon" aria-hidden="true">🫓</div>
+          <h3>Food</h3>
+          <p><strong>Baleadas</strong> — Honduras's national dish: a flour tortilla filled with beans, cream, and egg — are served morning to night. Plátanos, tamales, arroz con leche, fresh mango, papaya, and pineapple fill every table. Never refuse food offered by a host — it is a gesture of deep welcome.</p>
+        </div>
+
+        <div class="life-card">
+          <div class="life-card__icon" aria-hidden="true">🏠</div>
+          <h3>Hospitality</h3>
+          <p>Hondurans are among the most hospitable people in the world. <em>"Mi casa es tu casa"</em> is not a figure of speech. Slow down, make eye contact, and receive their welcome graciously. A mission trip that races through tasks without pausing for relationship has missed the point entirely.</p>
+        </div>
+
+        <div class="life-card">
+          <div class="life-card__icon" aria-hidden="true">⏳</div>
+          <h3>Time &amp; Pace</h3>
+          <p><em>"Ahorita"</em> means "in a little while" — which could mean five minutes or two hours. Relationships come before schedules. Build this expectation into your trip from day one. The moments that feel like delays are often where the real connection happens.</p>
+        </div>
+
+        <div class="life-card">
+          <div class="life-card__icon" aria-hidden="true">🎵</div>
+          <h3>Music</h3>
+          <p>Punta (Garifuna), cumbia, ranchera, and evangelical praise music fill communities from sunrise. Don't be surprised if the build day starts with singing — or ends with it. Music is how Hondurans celebrate, mourn, worship, and welcome strangers. Let it in.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Things That Will Surprise You -->
+  <section class="culture-section" aria-labelledby="surprise-heading">
+    <div class="culture-section__inner--narrow">
+      <div class="section-eyebrow">Expect the unexpected</div>
+      <h2 id="surprise-heading">Things That Will Surprise You</h2>
+      <p class="section-sub" style="max-width:none">A few things most first-time visitors don't expect — but will remember for the rest of their lives.</p>
+      <div class="surprise-list" role="list">
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">👧</span>
+          <span>Kids will want to hold your hand. Let them.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">👀</span>
+          <span>Community members may show up just to watch you work — and then quietly start helping. Accept the partnership.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">🌞</span>
+          <span>Lunch is the biggest meal of the day and often includes a rest period. Embrace it — your afternoon will be better for it.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">💬</span>
+          <span>Your Spanish doesn't have to be perfect. Effort and a smile go a long way — farther than fluency without warmth.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">🎁</span>
+          <span>Hondurans will offer you their best even when they have little. Receive it graciously — refusing generosity can feel like rejection.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">⭐</span>
+          <span>The stars at night in rural Honduras will take your breath away. Bring a blanket and look up.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Dos and Don'ts -->
+  <section class="culture-section" style="background:var(--gray-100)" aria-labelledby="guide-heading">
+    <div class="culture-section__inner">
+      <div class="section-eyebrow">Cultural guidance</div>
+      <h2 id="guide-heading">Dos &amp; Don'ts for Respectful Service</h2>
+      <p class="section-sub">The difference between a team that serves and a team that transforms often comes down to how they show up.</p>
+      <div class="dos-donts">
+
+        <div class="dos-card">
+          <h3>✅ Do</h3>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">📖</span>
+            <span>Learn a few Spanish phrases — see our <a href="../trips/jul-2026-culpeper.html" style="color:var(--teal);text-decoration:underline">Mission Spanish guide</a> in the trip portal</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">📷</span>
+            <span>Ask before photographing people — and respect a "no" without question</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">🍽️</span>
+            <span>Accept food and hospitality graciously — it is an honor to be offered it</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">🤝</span>
+            <span>Work <em>alongside</em> community members, not just <em>for</em> them</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">👕</span>
+            <span>Dress modestly — especially at worksites and churches (knees and shoulders covered)</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">👂</span>
+            <span>Ask questions and listen more than you talk</span>
+          </div>
+        </div>
+
+        <div class="donts-card">
+          <h3>❌ Don't</h3>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">💵</span>
+            <span>Give money or gifts directly to children — coordinate all giving through CAMINO staff</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">🤞</span>
+            <span>Promise things you can't deliver — "I'll come back," "I'll send you..." — mean what you say</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">📱</span>
+            <span>Post photos online without permission from the subjects — dignity before content</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">🇺🇸</span>
+            <span>Compare Honduras to the US out loud — it centers your frame of reference, not theirs</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">😔</span>
+            <span>Assume poverty equals lack of joy, dignity, or wisdom — it doesn't, not by a long way</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Regional Context -->
+  <section class="culture-section" aria-labelledby="region-heading">
+    <div class="culture-section__inner">
+      <div class="section-eyebrow">Where we work</div>
+      <h2 id="region-heading">Regional Context — Where CAMINO Serves</h2>
+      <p class="section-sub">CAMINO's partner communities are concentrated in northern Honduras, with ongoing ties to coastal and interior regions.</p>
+      <div class="region-grid">
+
+        <div class="region-card">
+          <div class="region-card__header">
+            <h3>Cortés Department</h3>
+            <span>San Pedro Sula · Choloma · Río Lindo</span>
+          </div>
+          <div class="region-card__body">
+            <p>Honduras's industrial heart and economic engine. Most of CAMINO's partner communities are in the surrounding neighborhoods and rural towns of this region — vibrant, diverse, and growing rapidly. San Pedro Sula is the gateway city for most mission team arrivals.</p>
+          </div>
+        </div>
+
+        <div class="region-card">
+          <div class="region-card__header">
+            <h3>Comayagua Department</h3>
+            <span>Historical capital · Colonial center</span>
+          </div>
+          <div class="region-card__body">
+            <p>A colonial gem in the geographical heart of Honduras. Comayagua served as the national capital until 1880 and is famous for its extraordinary Semana Santa (Holy Week) celebrations — among the most elaborate in all of Latin America. A mission trip hub with deep church connections.</p>
+          </div>
+        </div>
+
+        <div class="region-card">
+          <div class="region-card__header">
+            <h3>Atlantic Coast</h3>
+            <span>Caribbean culture · Garifuna communities</span>
+          </div>
+          <div class="region-card__body">
+            <p>The Caribbean coastline is where Garifuna culture thrives — fishing villages, punta rhythms, and communities protecting their identity for generations. CAMINO maintains relationships in coastal areas where church partnerships connect urban and coastal communities.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. A Note on Poverty & Dignity -->
+  <section class="culture-section" style="background:var(--teal)" aria-labelledby="dignity-heading">
+    <div style="max-width:820px;margin:0 auto;text-align:center">
+      <div class="section-eyebrow" style="color:rgba(255,255,255,.7)">A word before you go</div>
+      <h2 id="dignity-heading" style="color:white;font-size:28px;margin-bottom:24px">A Note on Poverty &amp; Dignity</h2>
+      <p style="font-size:18px;line-height:1.82;color:rgba(255,255,255,.92)">Honduras faces significant economic challenges. But please don't confuse material poverty with spiritual poverty, joy, or human dignity. The communities CAMINO serves are full of resilience, creativity, faith, and laughter. You are going to give — and you will receive even more. Come ready to be surprised by how rich these people are.</p>
+    </div>
+  </section>
+
+  <!-- 9. CTA -->
+  <section class="culture-cta" aria-labelledby="cta-heading">
+    <div class="section-eyebrow">Ready to go deeper?</div>
+    <h2 id="cta-heading">Take the next step</h2>
+    <p>Learn the language, apply for a trip, and come meet Honduras for yourself.</p>
+    <div class="culture-cta-btns">
+      <a href="../trips/jul-2026-culpeper.html" class="btn-primary">Learn Mission Spanish →</a>
+      <a href="../trips.html" class="btn-secondary">Apply for a Mission Trip →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p style="margin-bottom:6px"><strong style="color:white">CAMINO Honduras</strong> · Building homes. Transforming communities.</p>
+    <p>501(c)(3) nonprofit · <a href="../contact.html" style="color:rgba(255,255,255,.65);text-decoration:underline">Contact us</a> · <a href="../give.html" style="color:var(--amber-mid);font-weight:600">Give now</a></p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
