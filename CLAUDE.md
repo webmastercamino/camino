@@ -38,6 +38,24 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Citizenship-aware travel docs, investment accounts, board governance + compliance panels
+- What changed:
+  - **admin/index.html**: Complete overhaul of Travel Documents panel
+    - Per-person document arrays replacing flat passport fields: Walker (US expat — US passport + HN residencia), Seiny (HN citizen — HN passport + US B1/B2 visa), Alena (dual citizen — 2 passports, 5-yr US child passport EXPIRING SOON), Williams (infant — CRBA In Progress, US passport Not Yet Applied, HN docs)
+    - US↔HN travel clearance indicators per person (✅ Clear / ⚠️ Pending)
+    - New Investment Accounts sub-tab: Alena UTMA + 529, Williams UTMA; amber security warning; last-4 ref only
+    - New **Board Governance** panel (sidebar: 🏛️ Board Governance): tabs for Health Dashboard (6-tile scorecard), Meetings log + log-new form, Action Items tracker with overdue summary, Governance Docs checklist (12 items), Financial Snapshot with edit form
+    - New **501(c)(3) Compliance** panel (sidebar: ⚖️ 501(c)(3) Compliance): tabs for 990 & Filings (last 3 years), State Registrations (VA/MD/DC), IRS Compliance Checklist (11 items), Key Dates Dashboard, Grant Tracking
+    - CSS: panel-tab-btn + td/bg/cp-tab-pane visibility, ht-good/ht-bad/ht-warn/ht-val/ht-label tile variants, fin-val
+  - **about/board.html**: Walker staff bio updated ("US citizen, based full-time in Honduras"); Seiny bio updated ("Co-founder and Honduran citizen")
+- Status: Complete. Committed 2486a83 and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Fill in Mailchimp u= and id= in index.html + stories.html newsletter forms
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Phase 2: prayer.html, transparency.html, partnerships.html, volunteer.html
+
 ### 2026-06-20 — Travel docs tracker + board org chart with election tracking
 - What changed:
   - **admin/index.html**: New "Travel Docs" panel — 4 Somerville family members with color-coded passport expiry badges (EXPIRING SOON/WATCH/VALID), last-4 reference field, Honduras entry notes, residency status, inline edit form (saves to localStorage), Remind Me flag stub, summary alert bar, amber security warning. Seed data as JS constants; localStorage overrides on edit.
