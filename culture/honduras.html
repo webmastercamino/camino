@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Honduras: People, Culture &amp; Heart — CAMINO Honduras</title>
-  <meta name="description" content="Learn about Honduras — its people, culture, Indigenous communities, food, faith, and regional context — before you serve alongside Hondurans on a CAMINO mission trip.">
+  <meta name="description" content="Learn about Honduras — its people, culture, Indigenous communities, food, faith, and how to arrive as a respectful guest and learner on a CAMINO mission trip.">
   <link rel="stylesheet" href="../assets/css/style.css" />
   <style>
     /* ── Culture page hero ── */
@@ -16,7 +16,7 @@
     }
     .culture-hero .eyebrow { color: rgba(255,255,255,.72); margin-bottom: 14px; }
     .culture-hero h1 { font-size: 42px; font-weight: 700; line-height: 1.15; margin-bottom: 18px; color: white; }
-    .culture-hero p { font-size: 18px; opacity: .88; max-width: 620px; margin: 0 auto; line-height: 1.7; }
+    .culture-hero p { font-size: 18px; opacity: .88; max-width: 640px; margin: 0 auto; line-height: 1.75; }
 
     /* ── Quick facts ── */
     .facts-row {
@@ -79,6 +79,74 @@
     .life-card__icon { font-size: 30px; margin-bottom: 12px; line-height: 1; }
     .life-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 9px; }
     .life-card p { font-size: 14px; color: var(--text-muted); line-height: 1.72; margin: 0; }
+
+    /* ── Cultural humility section ── */
+    .humility-section {
+      background: #0d1a16;
+      color: white;
+      padding: 72px 48px;
+    }
+    .humility-section .section-eyebrow { color: var(--teal-mid); }
+    .humility-section h2 { color: white; font-size: 30px; margin-bottom: 10px; }
+    .humility-section > div > p.section-sub { color: rgba(255,255,255,.65); margin-bottom: 48px; }
+
+    .humility-panel {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-lg);
+      padding: 30px 32px;
+      margin-bottom: 20px;
+    }
+    .humility-panel:last-child { margin-bottom: 0; }
+    .humility-panel h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--teal-mid);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .humility-panel h3 span.panel-icon { font-size: 20px; }
+    .humility-panel p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255,255,255,.82);
+      margin: 0 0 12px;
+    }
+    .humility-panel p:last-child { margin-bottom: 0; }
+
+    .humility-quote {
+      border-left: 4px solid var(--teal-mid);
+      margin: 16px 0;
+      padding: 14px 22px;
+      background: rgba(159,225,203,.08);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .humility-quote p {
+      font-size: 17px !important;
+      font-style: italic;
+      color: rgba(255,255,255,.92) !important;
+      line-height: 1.75 !important;
+    }
+
+    .humility-panel--amber {
+      background: rgba(186,117,23,.15);
+      border-color: rgba(186,117,23,.4);
+    }
+    .humility-panel--amber h3 { color: var(--amber-mid); }
+    .humility-panel--amber p { color: rgba(255,255,255,.85); }
+
+    .photo-rule {
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255,255,255,.8);
+    }
+    .photo-rule strong { color: rgba(255,255,255,.95); }
 
     /* ── Surprise list ── */
     .surprise-list {
@@ -158,6 +226,29 @@
     .region-card__body { padding: 20px 22px; background: white; }
     .region-card__body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin: 0; }
 
+    /* ── Recommended reading ── */
+    .reading-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .reading-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+    }
+    .reading-item__icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; line-height: 1; }
+    .reading-item__body { flex: 1; }
+    .reading-item__title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .reading-item__author { font-size: 12px; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+    .reading-item__desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin: 0; }
+    .reading-item__link { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--teal); font-weight: 600; text-decoration: underline; }
+
     /* ── CTA ── */
     .culture-cta {
       background: var(--amber-light);
@@ -194,6 +285,7 @@
       .life-grid { grid-template-columns: repeat(2, 1fr); }
       .dos-donts { grid-template-columns: 1fr; }
       .region-grid { grid-template-columns: 1fr; }
+      .humility-section { padding: 52px 24px; }
     }
     @media(max-width: 600px) {
       .culture-hero { padding: 52px 20px 48px; }
@@ -204,6 +296,8 @@
       .life-grid { grid-template-columns: 1fr; }
       .culture-cta { padding: 52px 20px; }
       .site-footer { padding: 32px 20px; }
+      .humility-section { padding: 48px 20px; }
+      .humility-panel { padding: 22px 20px; }
     }
   </style>
 </head>
@@ -265,7 +359,7 @@
   <section class="culture-hero" id="main">
     <div class="eyebrow">Honduras</div>
     <h1>Honduras: People, Culture &amp; Heart</h1>
-    <p>Before you serve alongside Hondurans, take a moment to know them.</p>
+    <p>You are going as a guest and a learner. Before you arrive, take a moment to know the people you'll be working alongside — as neighbors, as hosts, as teachers.</p>
   </section>
 
   <!-- 2. Quick Facts -->
@@ -297,21 +391,21 @@
     <div class="culture-section__inner">
       <div class="section-eyebrow">Who calls Honduras home</div>
       <h2 id="people-heading">Meet the People</h2>
-      <p class="section-sub">Honduras is home to a mosaic of peoples — each with distinct languages, traditions, and deep roots in the land. Getting to know them is the first step to serving well.</p>
+      <p class="section-sub">Honduras is home to a mosaic of peoples — each with distinct languages, traditions, and deep roots in the land. Learning who they are, before you arrive, is the beginning of real respect.</p>
       <div class="people-grid">
 
         <div class="people-card">
           <div class="people-card__flag" aria-hidden="true">🤝</div>
           <span class="people-card__tag">Majority</span>
           <h3>Mestizo</h3>
-          <p>The majority of Hondurans are Mestizo — descendants of Indigenous and Spanish heritage. Spanish-speaking, deeply family-centered, and known across Latin America for warmth and genuine hospitality. When you sit at a Honduran table, you're joining a tradition that spans generations.</p>
+          <p>The majority of Hondurans are Mestizo — descendants of Indigenous and Spanish heritage. Spanish-speaking, deeply family-centered, and known across Latin America for warmth and genuine hospitality. When you sit at a Honduran table, you are the guest. Act like one.</p>
         </div>
 
         <div class="people-card">
           <div class="people-card__flag" aria-hidden="true">🥁</div>
           <span class="people-card__tag">Afro-Indigenous · UNESCO recognized</span>
           <h3>Garifuna</h3>
-          <p>Afro-Indigenous descendants of the Arawak, Carib, and West African peoples, concentrated along the Caribbean coast. Their language, music, and spiritual practices are UNESCO-recognized. The Garifuna are celebrated for punta drumming, traditional dance, and vibrant fishing communities that have maintained their identity for centuries.</p>
+          <p>Afro-Indigenous descendants of the Arawak, Carib, and West African peoples, concentrated along the Caribbean coast. Their language, music, and spiritual practices are UNESCO-recognized. The Garifuna have maintained their identity across centuries of displacement — their culture is not a curiosity; it is a living inheritance.</p>
         </div>
 
         <div class="people-card">
@@ -339,7 +433,7 @@
           <div class="people-card__flag" aria-hidden="true">🇭🇳</div>
           <span class="people-card__tag">Remember</span>
           <h3>One country, many stories</h3>
-          <p>Honduras is not one story — it is dozens. The family building a home in Cortés, the Garifuna grandmother cooking hudut in Trujillo, the Lenca farmer in Intibucá — all Honduran, all distinct, all worthy of your full attention and respect.</p>
+          <p>Honduras is not one story — it is dozens. The family in Cortés building a home, the Garifuna grandmother in Trujillo cooking hudut, the Lenca farmer in Intibucá — all Honduran, all distinct. None of them needs to be explained by you. Each one will teach you something you didn't know to look for.</p>
         </div>
 
       </div>
@@ -351,13 +445,13 @@
     <div class="culture-section__inner">
       <div class="section-eyebrow">Everyday life</div>
       <h2 id="life-heading">Culture &amp; Daily Life</h2>
-      <p class="section-sub">Understanding how Hondurans live — and what they value — will shape how you show up. And it will make the week richer for everyone.</p>
+      <p class="section-sub">Understanding how Hondurans live — and what they value — will shape how you show up. And it will make the week richer for everyone involved.</p>
       <div class="life-grid">
 
         <div class="life-card">
           <div class="life-card__icon" aria-hidden="true">👨‍👩‍👧‍👦</div>
           <h3>Family First</h3>
-          <p>Extended family (<em>familia</em>) is the center of Honduran life. Multiple generations live together — grandparents, aunts, cousins, children. Elders are deeply respected. When you work alongside a Honduran family, you're not just helping with construction: you're joining their circle.</p>
+          <p>Extended family (<em>familia</em>) is the center of Honduran life. Multiple generations live together — grandparents, aunts, cousins, children. Elders are deeply respected. When you work alongside a Honduran family, you are not arriving to fix something — you are joining their circle, on their terms.</p>
         </div>
 
         <div class="life-card">
@@ -369,37 +463,82 @@
         <div class="life-card">
           <div class="life-card__icon" aria-hidden="true">🫓</div>
           <h3>Food</h3>
-          <p><strong>Baleadas</strong> — Honduras's national dish: a flour tortilla filled with beans, cream, and egg — are served morning to night. Plátanos, tamales, arroz con leche, fresh mango, papaya, and pineapple fill every table. Never refuse food offered by a host — it is a gesture of deep welcome.</p>
+          <p><strong>Baleadas</strong> — Honduras's national dish: a flour tortilla filled with beans, cream, and egg — are served morning to night. Plátanos, tamales, arroz con leche, fresh mango, papaya, and pineapple fill every table. Never refuse food offered by a host. It is a gesture of deep welcome, and it is one of the most significant ways a community says you belong.</p>
         </div>
 
         <div class="life-card">
           <div class="life-card__icon" aria-hidden="true">🏠</div>
           <h3>Hospitality</h3>
-          <p>Hondurans are among the most hospitable people in the world. <em>"Mi casa es tu casa"</em> is not a figure of speech. Slow down, make eye contact, and receive their welcome graciously. A mission trip that races through tasks without pausing for relationship has missed the point entirely.</p>
+          <p>Hondurans are among the most hospitable people in the world. <em>"Mi casa es tu casa"</em> is not a figure of speech. Slow down, make eye contact, and receive their welcome graciously. A mission trip that races through tasks without pausing for relationship has misunderstood what it came to do.</p>
         </div>
 
         <div class="life-card">
           <div class="life-card__icon" aria-hidden="true">⏳</div>
           <h3>Time &amp; Pace</h3>
-          <p><em>"Ahorita"</em> means "in a little while" — which could mean five minutes or two hours. Relationships come before schedules. Build this expectation into your trip from day one. The moments that feel like delays are often where the real connection happens.</p>
+          <p><em>"Ahorita"</em> means "in a little while" — which could be five minutes or two hours. The community's pace is not inefficiency. It is a different relationship with time — one that centers people over tasks. Build this into your expectations from day one, and let it teach you something.</p>
         </div>
 
         <div class="life-card">
           <div class="life-card__icon" aria-hidden="true">🎵</div>
           <h3>Music</h3>
-          <p>Punta (Garifuna), cumbia, ranchera, and evangelical praise music fill communities from sunrise. Don't be surprised if the build day starts with singing — or ends with it. Music is how Hondurans celebrate, mourn, worship, and welcome strangers. Let it in.</p>
+          <p>Punta (Garifuna), cumbia, ranchera, and evangelical praise music fill communities from sunrise. Don't be surprised if the build day starts with singing — or ends with it. Music is how Hondurans celebrate, mourn, worship, and welcome strangers. Let it in and don't perform your reaction to it.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- 5. Things That Will Surprise You -->
+  <!-- 5. Cultural Humility -->
+  <section class="humility-section" aria-labelledby="humility-heading">
+    <div style="max-width:860px;margin:0 auto">
+      <div class="section-eyebrow">Before you pack</div>
+      <h2 id="humility-heading">Cultural Humility — What It Means for Mission</h2>
+      <p class="section-sub">CAMINO trains volunteers in cultural humility because the way you show up matters as much as the fact that you showed up. Read this section before you read anything else on this page.</p>
+
+      <div class="humility-panel">
+        <h3><span class="panel-icon" aria-hidden="true">🏡</span> We Go as Guests</h3>
+        <div class="humility-quote">
+          <p>"When you travel to Honduras with CAMINO, you are a guest in someone else's home — their country, their community, their story. Guests ask before assuming. Guests listen before speaking. Guests leave places better than they found them, and they take home more than they brought."</p>
+        </div>
+        <p>That is the posture CAMINO asks every volunteer to carry from the moment they land in San Pedro Sula until the moment they get back on the plane.</p>
+      </div>
+
+      <div class="humility-panel">
+        <h3><span class="panel-icon" aria-hidden="true">🌱</span> Their Community, Their Vision</h3>
+        <p>CAMINO does not arrive in Honduras with a project and look for people to execute it. We come alongside partner communities who have identified their own needs and invited us to help. The families and neighbors you will work with know their land, their soil, and their context far better than any visiting team ever will.</p>
+        <p>The best mission trips look less like construction crews arriving to fix things, and more like neighbors showing up to help a neighbor do something they've already decided to do. The community leads. You follow, assist, and learn.</p>
+      </div>
+
+      <div class="humility-panel" style="border-color:rgba(186,117,23,.4);background:rgba(186,117,23,.1)">
+        <h3 style="color:var(--amber-mid)"><span class="panel-icon" aria-hidden="true">⚠️</span> The Problem with the "Savior" Mindset</h3>
+        <p>There is a well-documented pattern in international mission called the "white savior complex" — the belief, often unconscious, that outsiders bring solutions to people who lack them. It causes real harm: it can undermine local leaders, create dependency, and communicate that communities cannot solve their own problems.</p>
+        <p>CAMINO trains our volunteers to resist this pattern. You are not going to save Honduras. Honduras is not waiting to be saved. You are going as a learner, a servant, and a guest — and the Honduran community members you work alongside will teach you more than you teach them.</p>
+        <p>If you find yourself thinking "these people need us," pause. Ask instead: what do they already have? What have they already built? What do they know that I don't?</p>
+      </div>
+
+      <div class="humility-panel humility-panel--amber">
+        <h3><span class="panel-icon" aria-hidden="true">📸</span> Photography &amp; Social Media — The Ethics</h3>
+        <p>Before you photograph anyone — especially children — ask permission. <em>"¿Puedo tomar una foto?"</em> If you can't ask in Spanish yet, gesture to your camera and wait for a clear, unambiguous yes.</p>
+        <div class="photo-rule"><strong>Before you post photos of children online, ask yourself:</strong> Would I post this photo of an American child? If not, don't post it of a Honduran child. Poverty is not content. Suffering is not a filter.</div>
+        <div class="photo-rule" style="margin-top:8px"><strong>Post photos that show dignity, joy, and strength</strong> — because that's what's actually there. A photo of a child laughing at lunch says more truth than a photo of a crumbling wall.</div>
+        <p style="margin-top:12px">Any photos shared publicly that include children require the blessing of CAMINO staff. When in doubt, don't post — you can always share privately with the team after the trip.</p>
+      </div>
+
+      <div class="humility-panel">
+        <h3><span class="panel-icon" aria-hidden="true">🧱</span> What "Service" Actually Looks Like</h3>
+        <p>The most impactful moments in mission are rarely the dramatic ones — a finished wall, a roof going up. They're the shared meals. The afternoon when a community member shows you the right way to mix cement. The kid who teaches you a song in Garifuna you'll never forget. The conversation you have over coffee at 6 AM that you didn't expect to have.</p>
+        <p>Real service is relational, not transactional. If you are counting blocks laid and hours worked, you are measuring the wrong things. The work is the occasion. The relationship is the mission.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. Things That Will Surprise You -->
   <section class="culture-section" aria-labelledby="surprise-heading">
     <div class="culture-section__inner--narrow">
       <div class="section-eyebrow">Expect the unexpected</div>
       <h2 id="surprise-heading">Things That Will Surprise You</h2>
-      <p class="section-sub" style="max-width:none">A few things most first-time visitors don't expect — but will remember for the rest of their lives.</p>
+      <p class="section-sub" style="max-width:none">A few things most first-time volunteers don't expect — but will remember long after they're home.</p>
       <div class="surprise-list" role="list">
         <div class="surprise-item" role="listitem">
           <span class="surprise-item__star" aria-hidden="true">👧</span>
@@ -407,11 +546,19 @@
         </div>
         <div class="surprise-item" role="listitem">
           <span class="surprise-item__star" aria-hidden="true">👀</span>
-          <span>Community members may show up just to watch you work — and then quietly start helping. Accept the partnership.</span>
+          <span>Community members may show up just to watch you work — and then quietly start helping. That's not observation. That's partnership. Accept it.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">🛠️</span>
+          <span>A community member will correct your technique — politely but clearly. They're right. Listen, say thank you, and do it their way.</span>
         </div>
         <div class="surprise-item" role="listitem">
           <span class="surprise-item__star" aria-hidden="true">🌞</span>
-          <span>Lunch is the biggest meal of the day and often includes a rest period. Embrace it — your afternoon will be better for it.</span>
+          <span>Lunch is the biggest meal of the day and often includes a rest period. Embrace it — your afternoon will be better for it, and the rhythm is theirs to set.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">😶</span>
+          <span>You may feel useless the first day. That's normal. Show up the second day anyway — that's when the real work begins.</span>
         </div>
         <div class="surprise-item" role="listitem">
           <span class="surprise-item__star" aria-hidden="true">💬</span>
@@ -419,7 +566,11 @@
         </div>
         <div class="surprise-item" role="listitem">
           <span class="surprise-item__star" aria-hidden="true">🎁</span>
-          <span>Hondurans will offer you their best even when they have little. Receive it graciously — refusing generosity can feel like rejection.</span>
+          <span>Hondurans will offer you their best even when they have little. Receive it graciously — refusing generosity is the greater offense.</span>
+        </div>
+        <div class="surprise-item" role="listitem">
+          <span class="surprise-item__star" aria-hidden="true">💛</span>
+          <span>You'll go to "help" and come home having received far more. That's not a cliché — it's the consistent testimony of every volunteer who has gone before you.</span>
         </div>
         <div class="surprise-item" role="listitem">
           <span class="surprise-item__star" aria-hidden="true">⭐</span>
@@ -429,39 +580,51 @@
     </div>
   </section>
 
-  <!-- 6. Dos and Don'ts -->
+  <!-- 7. Dos and Don'ts -->
   <section class="culture-section" style="background:var(--gray-100)" aria-labelledby="guide-heading">
     <div class="culture-section__inner">
-      <div class="section-eyebrow">Cultural guidance</div>
-      <h2 id="guide-heading">Dos &amp; Don'ts for Respectful Service</h2>
-      <p class="section-sub">The difference between a team that serves and a team that transforms often comes down to how they show up.</p>
+      <div class="section-eyebrow">Practical cultural guidance</div>
+      <h2 id="guide-heading">Dos &amp; Don'ts for Respectful Partnership</h2>
+      <p class="section-sub">The difference between a team that serves and a team that transforms often comes down to a hundred small choices throughout the week.</p>
       <div class="dos-donts">
 
         <div class="dos-card">
           <h3>✅ Do</h3>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">📖</span>
-            <span>Learn a few Spanish phrases — see our <a href="../trips/jul-2026-culpeper.html" style="color:var(--teal);text-decoration:underline">Mission Spanish guide</a> in the trip portal</span>
+            <span>Learn a few Spanish phrases before you go — see our <a href="../trips/jul-2026-culpeper.html" style="color:var(--teal);text-decoration:underline">Mission Spanish guide</a> in the trip portal</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">🗣️</span>
+            <span><strong>Learn to pronounce community members' names correctly.</strong> Ask them to teach you. Don't give them English nicknames because their name is unfamiliar to you.</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">📷</span>
-            <span>Ask before photographing people — and respect a "no" without question</span>
+            <span>Ask before photographing anyone — and respect a "no" immediately and without negotiation</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">🍽️</span>
-            <span>Accept food and hospitality graciously — it is an honor to be offered it</span>
+            <span>Accept food and hospitality graciously — it is one of the most significant gestures of welcome a family can offer</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">🤝</span>
-            <span>Work <em>alongside</em> community members, not just <em>for</em> them</span>
+            <span>Work <em>alongside</em> community members — follow their lead on how and where the work gets done</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">👷</span>
+            <span><strong>Follow the community's lead on roles.</strong> In many Honduran communities, women lead construction and men cook. Don't assume gender roles based on US norms.</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">👕</span>
-            <span>Dress modestly — especially at worksites and churches (knees and shoulders covered)</span>
+            <span>Dress modestly — especially at worksites and churches (knees and shoulders covered). This isn't about rules — it's about showing you understand the community's values.</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">👂</span>
             <span>Ask questions and listen more than you talk</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">⏳</span>
+            <span><strong>Slow down deliberately.</strong> The community's pace centers relationships over tasks. Match it. The schedule will adjust; the relationship won't wait.</span>
           </div>
         </div>
 
@@ -469,23 +632,31 @@
           <h3>❌ Don't</h3>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">💵</span>
-            <span>Give money or gifts directly to children — coordinate all giving through CAMINO staff</span>
+            <span>Give money or gifts directly to children — coordinate all giving through CAMINO staff, who understand the community context</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">🤞</span>
-            <span>Promise things you can't deliver — "I'll come back," "I'll send you..." — mean what you say</span>
+            <span>Promise things you can't deliver — "I'll come back," "I'll send you..." — mean what you say or say nothing</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">📱</span>
-            <span>Post photos online without permission from the subjects — dignity before content</span>
+            <span>Post photos of children online without explicit permission — dignity before content, always</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">🇺🇸</span>
-            <span>Compare Honduras to the US out loud — it centers your frame of reference, not theirs</span>
+            <span><strong>"In America we do it this way..."</strong> is a phrase that should never leave your lips. You are there to learn their way, not to offer comparison.</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon" aria-hidden="true">😔</span>
-            <span>Assume poverty equals lack of joy, dignity, or wisdom — it doesn't, not by a long way</span>
+            <span>Assume that housing insecurity or limited water access means a lack of joy, wisdom, or dignity. It doesn't — not by a long way.</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">🏠</span>
+            <span><strong>Ask to visit orphanages or arrange "orphanage tourism."</strong> This practice is widely documented as harmful to children. CAMINO does not facilitate it. If you want to understand why, ask a CAMINO staff member — they'll explain.</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-icon" aria-hidden="true">📣</span>
+            <span>Center your experience over the community's story when sharing on social media. The point is Honduras — not your reaction to it.</span>
           </div>
         </div>
 
@@ -493,12 +664,12 @@
     </div>
   </section>
 
-  <!-- 7. Regional Context -->
+  <!-- 8. Regional Context -->
   <section class="culture-section" aria-labelledby="region-heading">
     <div class="culture-section__inner">
       <div class="section-eyebrow">Where we work</div>
       <h2 id="region-heading">Regional Context — Where CAMINO Serves</h2>
-      <p class="section-sub">CAMINO's partner communities are concentrated in northern Honduras, with ongoing ties to coastal and interior regions.</p>
+      <p class="section-sub">CAMINO's partner communities are concentrated in northern Honduras, with ties to coastal and interior regions across the country.</p>
       <div class="region-grid">
 
         <div class="region-card">
@@ -527,7 +698,7 @@
             <span>Caribbean culture · Garifuna communities</span>
           </div>
           <div class="region-card__body">
-            <p>The Caribbean coastline is where Garifuna culture thrives — fishing villages, punta rhythms, and communities protecting their identity for generations. CAMINO maintains relationships in coastal areas where church partnerships connect urban and coastal communities.</p>
+            <p>The Caribbean coastline is where Garifuna culture thrives — fishing communities, punta rhythms, and a people who have protected their identity for centuries. CAMINO maintains relationships in coastal areas where church partnerships bridge urban and coastal communities.</p>
           </div>
         </div>
 
@@ -535,23 +706,73 @@
     </div>
   </section>
 
-  <!-- 8. A Note on Poverty & Dignity -->
+  <!-- 9. A Note on Poverty & Dignity -->
   <section class="culture-section" style="background:var(--teal)" aria-labelledby="dignity-heading">
     <div style="max-width:820px;margin:0 auto;text-align:center">
       <div class="section-eyebrow" style="color:rgba(255,255,255,.7)">A word before you go</div>
-      <h2 id="dignity-heading" style="color:white;font-size:28px;margin-bottom:24px">A Note on Poverty &amp; Dignity</h2>
-      <p style="font-size:18px;line-height:1.82;color:rgba(255,255,255,.92)">Honduras faces significant economic challenges. But please don't confuse material poverty with spiritual poverty, joy, or human dignity. The communities CAMINO serves are full of resilience, creativity, faith, and laughter. You are going to give — and you will receive even more. Come ready to be surprised by how rich these people are.</p>
+      <h2 id="dignity-heading" style="color:white;font-size:28px;margin-bottom:24px">A Note on Housing Insecurity &amp; Dignity</h2>
+      <p style="font-size:18px;line-height:1.82;color:rgba(255,255,255,.92)">Honduras faces significant economic challenges, and the partner communities CAMINO works with are navigating real material pressures — housing, clean water access, employment. But do not confuse those challenges with spiritual poverty, absence of joy, or lack of human dignity. The people you will meet are full of resilience, creativity, faith, and humor. You are not going to a place that needs to be rescued. You are going to meet neighbors, learn from them, and contribute something alongside them. Come ready to receive far more than you give.</p>
     </div>
   </section>
 
-  <!-- 9. CTA -->
+  <!-- 10. Recommended Reading -->
+  <section class="culture-section" style="background:var(--gray-100)" aria-labelledby="reading-heading">
+    <div class="culture-section__inner--narrow">
+      <div class="section-eyebrow">Go deeper</div>
+      <h2 id="reading-heading">Recommended Preparation</h2>
+      <p class="section-sub" style="max-width:none">For volunteers who want to show up well-prepared — these resources will challenge, equip, and sharpen your thinking before you travel.</p>
+      <div class="reading-list">
+
+        <div class="reading-item">
+          <div class="reading-item__icon" aria-hidden="true">📗</div>
+          <div class="reading-item__body">
+            <div class="reading-item__title">When Helping Hurts</div>
+            <div class="reading-item__author">Steve Corbett &amp; Brian Fikkert</div>
+            <p class="reading-item__desc">The foundational text on asset-based community development and why well-intentioned aid can perpetuate the very problems it tries to solve. If you read one book before this trip, make it this one. CAMINO's approach is shaped by its principles.</p>
+          </div>
+        </div>
+
+        <div class="reading-item">
+          <div class="reading-item__icon" aria-hidden="true">📕</div>
+          <div class="reading-item__body">
+            <div class="reading-item__title">Toxic Charity</div>
+            <div class="reading-item__author">Robert Lupton</div>
+            <p class="reading-item__desc">An honest, sometimes uncomfortable critique of how traditional charity and mission practices can undermine dignity and dependency rather than build resilience. Written by a long-term urban mission practitioner, not an outside critic.</p>
+          </div>
+        </div>
+
+        <div class="reading-item">
+          <div class="reading-item__icon" aria-hidden="true">🌐</div>
+          <div class="reading-item__body">
+            <div class="reading-item__title">Duolingo — Spanish Practice</div>
+            <div class="reading-item__author">Free · iOS &amp; Android</div>
+            <p class="reading-item__desc">Ten minutes a day for six weeks before your trip will make a real difference. You don't need fluency — you need enough to greet people by name, ask permission, say thank you, and try. That effort is noticed and deeply appreciated.</p>
+            <a class="reading-item__link" href="https://duolingo.com" target="_blank" rel="noopener noreferrer">Open Duolingo →</a>
+          </div>
+        </div>
+
+        <div class="reading-item">
+          <div class="reading-item__icon" aria-hidden="true">🃏</div>
+          <div class="reading-item__body">
+            <div class="reading-item__title">CAMINO Mission Spanish Flip Cards</div>
+            <div class="reading-item__author">Free · In the trip portal</div>
+            <p class="reading-item__desc">Our curated set of essential phrases for construction sites, community interactions, and daily life — organized by situation. Greetings, worksite commands, mealtime phrases, and emergency Spanish. Practice before you go; use them every day you're there.</p>
+            <a class="reading-item__link" href="../trips/jul-2026-culpeper.html">Open Mission Spanish guide →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. CTA -->
   <section class="culture-cta" aria-labelledby="cta-heading">
-    <div class="section-eyebrow">Ready to go deeper?</div>
-    <h2 id="cta-heading">Take the next step</h2>
-    <p>Learn the language, apply for a trip, and come meet Honduras for yourself.</p>
+    <div class="section-eyebrow">Ready to go?</div>
+    <h2 id="cta-heading">Apply for a mission trip</h2>
+    <p>You've done the reading. Now come meet Honduras — as a guest, a learner, and a partner.</p>
     <div class="culture-cta-btns">
-      <a href="../trips/jul-2026-culpeper.html" class="btn-primary">Learn Mission Spanish →</a>
-      <a href="../trips.html" class="btn-secondary">Apply for a Mission Trip →</a>
+      <a href="../trips/jul-2026-culpeper.html" class="btn-primary">Mission Spanish Guide →</a>
+      <a href="../trips.html" class="btn-secondary">See available trips →</a>
     </div>
   </section>
 
