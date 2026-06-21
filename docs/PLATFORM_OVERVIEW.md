@@ -113,6 +113,61 @@ The backend architecture is fully designed and committed to `/cloudflare/`. Acti
 
 ---
 
+## Phase 3: AI-Powered Assistant (Future)
+
+Since the Cloudflare Worker is already planned for Phase 2, adding an AI assistant is a lightweight extension — one Worker, three system prompts, near-zero marginal cost.
+
+### Free & Low-Cost Options
+
+| Option | Cost | Intelligence | Best For |
+|---|---|---|---|
+| Tidio (free tier) | $0/month | Scripted + basic AI | Public site FAQ |
+| Crisp (free tier) | $0/month | Scripted | Public site chat |
+| Intercom Starter | $39/month | AI-assisted | Donor/volunteer support |
+| Claude Haiku via Cloudflare Worker | ~$1–3/month at CAMINO's scale | Full AI | All three contexts |
+| Anthropic Nonprofit Program | Free credits (apply) | Full AI | All three contexts |
+
+**Recommended:** Apply for Anthropic's nonprofit program for credits, then build a single Cloudflare Worker with context-aware system prompts per page. Total ongoing cost: $0–3/month.
+
+### Use Cases & ROI per Context
+
+**1. Public Website Assistant**
+
+Answers visitor questions about CAMINO's mission, how to donate, trip sign-up, programs, and Honduras communities. Sample questions: *"How do I volunteer for a mission trip?"* / *"Is my donation tax-deductible?"* / *"What communities does CAMINO work in?"*
+
+ROI: Reduces repeat email inquiries to Walker and Seiny. Every hour saved = more time in the field. Estimated 2–5 hours/week redirected from answering the same questions. Free path: Tidio free tier handles scripted FAQ at zero cost until traffic grows.
+
+**2. Mission Trip Participant Assistant**
+
+Trip-specific AI that knows the schedule, packing list, weather, logistics, Spanish phrases, WhatsApp link, and emergency contacts. Sample questions: *"What should I pack for Day 3?"* / *"What's the weather like in July in Honduras?"* / *"What do I say if someone asks me a question in Spanish?"*
+
+ROI: Reduces pre-trip coordinator burden. Participants self-serve answers 24/7, including in-field where WhatsApp may lag. The PWA makes it available offline. Free path: A scripted decision-tree handles 80% of questions at zero cost; AI handles the rest.
+
+**3. Board Portal Governance Assistant**
+
+Governance-aware AI that knows CAMINO's bylaws, IRS requirements, grant landscape, and board policies. Helps draft motions, summarize grants, explain compliance, and generate minutes language. Sample questions: *"Draft a motion to approve the Q2 financial report"* / *"What does Schedule F require?"* / *"Summarize the Horizon Family Foundation grant terms"* / *"Help me write a conflict of interest disclosure statement"*
+
+ROI: Replaces hours of governance research for volunteer board members. Makes nonprofit compliance accessible to non-lawyers. Enables more engaged, informed board participation. At Haiku pricing, a full month of board queries costs under $2.
+
+### Implementation Effort
+
+| Context | Effort |
+|---|---|
+| Public site widget | 2–4 hours |
+| Trip page assistant (per trip) | 2–3 hours |
+| Board portal assistant | 4–6 hours |
+| **Total Phase 3** | **~1–2 days** |
+
+### Recommended Path
+
+1. Apply for Anthropic's nonprofit program credits (free — apply at anthropic.com)
+2. Add Tidio free widget to public site as interim (30 minutes)
+3. Build Claude-powered Worker assistant alongside Phase 2 Cloudflare work
+4. Deploy board portal assistant first (highest ROI for CAMINO's internal operations)
+5. Expand to public site and trip pages
+
+---
+
 ## Estimated Cost Comparison
 
 | Tool Replaced | Previous Cost | This Platform |
