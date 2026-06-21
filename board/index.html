@@ -271,6 +271,7 @@
   <button class="btab" data-tab="meetings">📋 Minutes <span class="btab-badge" id="ackBadge" style="display:none">!</span></button>
   <button class="btab" data-tab="actions">✅ Action Items</button>
   <button class="btab" data-tab="documents">📁 Documents</button>
+  <button class="btab" data-tab="calendar">📅 Calendar</button>
   <button class="btab" data-tab="risk">⚠️ Risk Registry <span class="btab-badge" id="critBadge">5</span></button>
 </div>
 
@@ -751,7 +752,350 @@
   </div>
 </div>
 
+<!-- ═══════════════ TAB: BOARD CALENDAR ═══════════════ -->
+<div class="board-panel" id="tab-calendar" style="display:none">
+  <style>
+    .bcal-layout{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
+    @media(max-width:780px){.bcal-layout{grid-template-columns:1fr}}
+    .bcal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .bcal-nav{background:none;border:1.5px solid var(--gray-200);border-radius:6px;padding:4px 10px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--text)}
+    .bcal-nav:hover{background:var(--gray-100)}
+    .bcal-title{font-size:15px;font-weight:700}
+    .bcal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:12px}
+    .bcal-day-head{text-align:center;font-weight:700;color:var(--text-muted);padding:4px 0;font-size:11px}
+    .bcal-day{min-height:34px;border-radius:4px;padding:3px 4px;cursor:pointer;position:relative;transition:background .12s}
+    .bcal-day:hover{background:var(--gray-100)}
+    .bcal-day.today{background:var(--teal-light);font-weight:700}
+    .bcal-day.has-event{font-weight:700}
+    .bcal-day .day-num{font-size:11px;line-height:1}
+    .bcal-dots{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px}
+    .bcal-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .bcal-dot--board{background:#0F6E56}
+    .bcal-dot--compliance{background:#DC2626}
+    .bcal-dot--grant{background:#BA7517}
+    .bcal-dot--trip{background:#2563EB}
+    .bcal-dot--other{background:#9CA3AF}
+
+    .ev-list{display:flex;flex-direction:column;gap:10px}
+    .ev-item{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:14px 16px;border-left:4px solid #9CA3AF;display:flex;gap:12px;align-items:flex-start}
+    .ev-item--board{border-left-color:#0F6E56}
+    .ev-item--compliance{border-left-color:#DC2626}
+    .ev-item--grant{border-left-color:#BA7517}
+    .ev-item--trip{border-left-color:#2563EB}
+    .ev-date-block{text-align:center;min-width:42px;flex-shrink:0}
+    .ev-date-block .ev-month{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted)}
+    .ev-date-block .ev-day{font-size:22px;font-weight:800;line-height:1;color:var(--text)}
+    .ev-body{flex:1}
+    .ev-body h4{font-size:14px;font-weight:700;margin-bottom:3px}
+    .ev-body p{font-size:12px;color:var(--text-muted);margin:0;line-height:1.5}
+    .ev-cat-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 8px;border-radius:20px;margin-top:5px}
+    .ev-cat-badge--board{background:#E1F5EE;color:#0F6E56}
+    .ev-cat-badge--compliance{background:#FEE2E2;color:#DC2626}
+    .ev-cat-badge--grant{background:#FAEEDA;color:#633806}
+    .ev-cat-badge--trip{background:#DBEAFE;color:#1D4ED8}
+    .ev-cat-badge--other{background:#F3F4F6;color:#6B7280}
+    .ev-overdue{background:#FFF1F2;border-color:#FDA4AF}
+    .ev-overdue .ev-date-block .ev-day{color:#DC2626}
+    .ev-actions{display:flex;gap:6px;margin-top:8px}
+    .ev-actions button{font-size:11px;padding:3px 8px;border-radius:4px;border:1px solid var(--gray-200);background:none;cursor:pointer;font-family:inherit;color:var(--text-muted)}
+    .ev-actions button:hover{background:var(--gray-100)}
+    .add-ev-btn{background:var(--teal);color:white;border:none;padding:9px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+    .add-ev-btn:hover{opacity:.9}
+    .ev-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+    .ev-modal{background:white;border-radius:12px;padding:28px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .ev-modal h3{font-size:17px;font-weight:700;margin-bottom:18px}
+    .ev-field{margin-bottom:14px}
+    .ev-field label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;color:var(--text-muted)}
+    .ev-field input,.ev-field select,.ev-field textarea{width:100%;padding:9px 12px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px;font-family:inherit}
+    .ev-modal-btns{display:flex;gap:10px;margin-top:18px}
+    .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .filter-pill{background:white;border:1.5px solid var(--gray-200);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text-muted);transition:all .12s}
+    .filter-pill.active{background:var(--teal);border-color:var(--teal);color:white}
+  </style>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px">
+    <div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Board governance</div>
+      <h2 class="section-h">Board Calendar</h2>
+      <p class="section-sub" style="margin-bottom:0">Meetings, compliance deadlines, grant dates, and mission trips — all in one view.</p>
+    </div>
+    <button class="add-ev-btn" onclick="openEvModal()">+ Add event</button>
+  </div>
+
+  <!-- Legend -->
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;font-size:12px">
+    <span style="display:flex;align-items:center;gap:5px"><span class="bcal-dot bcal-dot--board" style="width:10px;height:10px"></span> Board meeting</span>
+    <span style="display:flex;align-items:center;gap:5px"><span class="bcal-dot bcal-dot--compliance" style="width:10px;height:10px"></span> Compliance deadline</span>
+    <span style="display:flex;align-items:center;gap:5px"><span class="bcal-dot bcal-dot--grant" style="width:10px;height:10px"></span> Grant date</span>
+    <span style="display:flex;align-items:center;gap:5px"><span class="bcal-dot bcal-dot--trip" style="width:10px;height:10px"></span> Mission trip</span>
+    <span style="display:flex;align-items:center;gap:5px"><span class="bcal-dot bcal-dot--other" style="width:10px;height:10px"></span> Other</span>
+  </div>
+
+  <div class="bcal-layout">
+    <!-- Mini calendar -->
+    <div>
+      <div style="background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:18px">
+        <div class="bcal-header">
+          <button class="bcal-nav" id="bcalPrev">◀</button>
+          <span class="bcal-title" id="bcalTitle"></span>
+          <button class="bcal-nav" id="bcalNext">▶</button>
+        </div>
+        <div class="bcal-grid" id="bcalGrid"></div>
+      </div>
+      <!-- Year/month quick select -->
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <select id="bcalYearSel" style="flex:1;padding:7px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px;font-family:inherit">
+          <option>2026</option><option>2027</option><option>2028</option>
+        </select>
+        <select id="bcalMonthSel" style="flex:1;padding:7px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px;font-family:inherit">
+          <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+          <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+          <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+          <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Events list -->
+    <div>
+      <div class="filter-row" id="evFilterRow">
+        <button class="filter-pill active" data-filter="all" onclick="setEvFilter('all',this)">All</button>
+        <button class="filter-pill" data-filter="board" onclick="setEvFilter('board',this)">Board meetings</button>
+        <button class="filter-pill" data-filter="compliance" onclick="setEvFilter('compliance',this)">Compliance</button>
+        <button class="filter-pill" data-filter="grant" onclick="setEvFilter('grant',this)">Grants</button>
+        <button class="filter-pill" data-filter="trip" onclick="setEvFilter('trip',this)">Trips</button>
+      </div>
+      <div id="evList" class="ev-list"></div>
+    </div>
+  </div>
+
+  <!-- Add/Edit event modal -->
+  <div id="evModal" class="ev-modal-overlay" style="display:none">
+    <div class="ev-modal">
+      <h3 id="evModalTitle">Add Event</h3>
+      <div class="ev-field"><label>Title</label><input type="text" id="evTitle" placeholder="e.g. Q3 Board Meeting" /></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="ev-field"><label>Date</label><input type="date" id="evDate" /></div>
+        <div class="ev-field"><label>End date (optional)</label><input type="date" id="evEndDate" /></div>
+      </div>
+      <div class="ev-field">
+        <label>Category</label>
+        <select id="evCat">
+          <option value="board">📋 Board meeting</option>
+          <option value="compliance">⚖️ Compliance deadline</option>
+          <option value="grant">📋 Grant date</option>
+          <option value="trip">✈️ Mission trip</option>
+          <option value="other">📌 Other</option>
+        </select>
+      </div>
+      <div class="ev-field"><label>Notes (optional)</label><textarea id="evNotes" rows="2" placeholder="Agenda items, location, links…" style="resize:vertical"></textarea></div>
+      <input type="hidden" id="evEditId" />
+      <div class="ev-modal-btns">
+        <button class="add-ev-btn" onclick="saveEvent()">Save event</button>
+        <button onclick="document.getElementById('evModal').style.display='none'" style="padding:9px 18px;border-radius:var(--radius);border:1.5px solid var(--gray-200);background:none;cursor:pointer;font-family:inherit;font-size:13px">Cancel</button>
+        <button id="evDeleteBtn" onclick="deleteEvent()" style="display:none;padding:9px 18px;border-radius:var(--radius);border:none;background:#FEE2E2;color:#DC2626;cursor:pointer;font-family:inherit;font-size:13px;margin-left:auto">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+// ── Board Calendar ────────────────────────────────────────────────────────────
+var BCAL_SEED = [
+  // Board meetings
+  {id:'bm1', title:'Q3 Board Meeting', date:'2026-09-15', cat:'board', notes:'Quarterly review. Agenda: financials, grant pipeline, Q4 trip planning.'},
+  {id:'bm2', title:'Q4 Board Meeting', date:'2026-12-08', cat:'board', notes:'Year-end review. Budget approval for 2027.'},
+  {id:'bm3', title:'Annual Board Meeting', date:'2027-01-20', cat:'board', notes:'Annual meeting. Officer elections, bylaws review.'},
+  {id:'bm4', title:'Q1 Board Meeting', date:'2027-03-16', cat:'board', notes:'Q1 review.'},
+  // Compliance deadlines
+  {id:'cm1', title:'Form 990 Filing Deadline (FY2025)', date:'2026-11-15', cat:'compliance', notes:'IRS deadline for FY2025 990. CPA engagement needed by Sep.'},
+  {id:'cm2', title:'Virginia Charity Registration Renewal', date:'2026-10-01', cat:'compliance', notes:'Annual renewal with VA DACS.'},
+  {id:'cm3', title:'Honduras ONG Registration Renewal', date:'2026-03-01', cat:'compliance', notes:'Annual ONG registration renewal with SRE Honduras. Confirm status.'},
+  {id:'cm4', title:'IRS Form 990 — FY2026 Deadline', date:'2027-11-15', cat:'compliance', notes:'File FY2026 990 with IRS.'},
+  {id:'cm5', title:'D&O Insurance Renewal', date:'2027-02-01', cat:'compliance', notes:'Annual D&O and general liability renewal.'},
+  // Grant dates
+  {id:'gd1', title:'Horizon Family Foundation — Final Report Due', date:'2026-12-31', cat:'grant', notes:'Final report for 2026 $15K award. Include home count and photos.'},
+  {id:'gd2', title:'Cornerstone Foundation — Mid-Year Report', date:'2026-08-15', cat:'grant', notes:'Progress report on Yoro Dept. construction restricted grant.'},
+  {id:'gd3', title:'Q3 Grant Review (Internal)', date:'2026-09-01', cat:'grant', notes:'Quarterly pipeline review. Check deadlines and submission readiness.'},
+  // Mission trips
+  {id:'tr1', title:'Fall Mission Trip', date:'2026-10-04', endDate:'2026-10-11', cat:'trip', notes:'Northern Honduras. 8 days.'},
+  {id:'tr2', title:'Winter Build Trip', date:'2027-01-18', endDate:'2027-01-25', cat:'trip', notes:'Rio Lindo, Cortes. 8 days.'},
+  {id:'tr3', title:'Spring Build Trip', date:'2027-03-08', endDate:'2027-03-15', cat:'trip', notes:'Rio Lindo, Cortes. 8 days.'},
+];
+
+var bcalCurYear = new Date().getFullYear();
+var bcalCurMonth = new Date().getMonth();
+var evFilter = 'all';
+var BCAL_KEY = 'camino_board_events';
+
+function loadEvents(){
+  var stored = localStorage.getItem(BCAL_KEY);
+  if(stored){
+    try{ return JSON.parse(stored); } catch(e){}
+  }
+  return JSON.parse(JSON.stringify(BCAL_SEED));
+}
+function saveEvents(evs){ localStorage.setItem(BCAL_KEY, JSON.stringify(evs)); }
+
+var bcalEvents = loadEvents();
+
+var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var DAYS=['S','M','T','W','T','F','S'];
+
+function renderBcal(){
+  var title = MONTHS[bcalCurMonth] + ' ' + bcalCurYear;
+  document.getElementById('bcalTitle').textContent = title;
+  document.getElementById('bcalYearSel').value = bcalCurYear;
+  document.getElementById('bcalMonthSel').value = bcalCurMonth;
+
+  var firstDay = new Date(bcalCurYear, bcalCurMonth, 1).getDay();
+  var daysInMonth = new Date(bcalCurYear, bcalCurMonth+1, 0).getDate();
+  var today = new Date(); today.setHours(0,0,0,0);
+
+  var eventsThisMonth = bcalEvents.filter(function(ev){
+    var d = new Date(ev.date+'T00:00:00');
+    return d.getFullYear()===bcalCurYear && d.getMonth()===bcalCurMonth;
+  });
+
+  var html = DAYS.map(function(d){return '<div class="bcal-day-head">'+d+'</div>';}).join('');
+  for(var i=0;i<firstDay;i++) html += '<div></div>';
+  for(var day=1;day<=daysInMonth;day++){
+    var thisDate = new Date(bcalCurYear, bcalCurMonth, day);
+    var isToday = thisDate.getTime()===today.getTime();
+    var dayEvs = eventsThisMonth.filter(function(ev){
+      return parseInt(ev.date.split('-')[2])===day;
+    });
+    var dots = dayEvs.map(function(ev){return '<span class="bcal-dot bcal-dot--'+ev.cat+'"></span>';}).join('');
+    var cls = 'bcal-day' + (isToday?' today':'') + (dayEvs.length?' has-event':'');
+    html += '<div class="'+cls+'" onclick="bcalDayClick('+bcalCurYear+','+bcalCurMonth+','+day+')"><div class="day-num">'+day+'</div>';
+    if(dots) html += '<div class="bcal-dots">'+dots+'</div>';
+    html += '</div>';
+  }
+  document.getElementById('bcalGrid').innerHTML = html;
+  renderEvList();
+}
+
+function bcalDayClick(y,m,d){
+  var dateStr = y+'-'+(m<9?'0':'')+(m+1)+'-'+(d<10?'0':'')+d;
+  document.getElementById('evDate').value = dateStr;
+  openEvModal();
+}
+
+function renderEvList(){
+  var now = new Date(); now.setHours(0,0,0,0);
+  var evs = bcalEvents.filter(function(ev){
+    return evFilter==='all' || ev.cat===evFilter;
+  });
+  evs.sort(function(a,b){ return new Date(a.date)-new Date(b.date); });
+
+  if(!evs.length){
+    document.getElementById('evList').innerHTML='<p style="color:var(--text-muted);font-size:14px">No events in this category.</p>';
+    return;
+  }
+
+  var html = evs.map(function(ev){
+    var d = new Date(ev.date+'T00:00:00');
+    var isOverdue = d < now && ev.cat==='compliance';
+    var mon = MONTHS[d.getMonth()].substring(0,3);
+    var end = ev.endDate ? ' – '+new Date(ev.endDate+'T00:00:00').getDate()+' '+MONTHS[new Date(ev.endDate+'T00:00:00').getMonth()].substring(0,3) : '';
+    var catLabels = {board:'Board meeting',compliance:'Compliance',grant:'Grant',trip:'Mission trip',other:'Other'};
+    return '<div class="ev-item ev-item--'+ev.cat+(isOverdue?' ev-overdue':'')+'">' +
+      '<div class="ev-date-block"><div class="ev-month">'+mon+'</div><div class="ev-day">'+d.getDate()+'</div></div>' +
+      '<div class="ev-body">' +
+        '<h4>'+ev.title+(isOverdue?' <span style="font-size:11px;color:#DC2626">⚠ Overdue</span>':'')+'</h4>' +
+        (ev.notes?'<p>'+ev.notes+'</p>':'') +
+        (end?'<p style="font-size:11px;color:var(--text-muted)">'+d.getDate()+' '+mon+end+'</p>':'') +
+        '<span class="ev-cat-badge ev-cat-badge--'+ev.cat+'">'+catLabels[ev.cat]+'</span>' +
+        '<div class="ev-actions">' +
+          '<button onclick="editEvent(\''+ev.id+'\')">✏️ Edit</button>' +
+        '</div>' +
+      '</div></div>';
+  }).join('');
+  document.getElementById('evList').innerHTML = html;
+}
+
+function setEvFilter(f, btn){
+  evFilter = f;
+  document.querySelectorAll('.filter-pill').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderEvList();
+}
+
+function openEvModal(id){
+  document.getElementById('evModalTitle').textContent = id ? 'Edit Event' : 'Add Event';
+  document.getElementById('evDeleteBtn').style.display = id ? 'inline-block' : 'none';
+  document.getElementById('evEditId').value = id || '';
+  if(!id){
+    document.getElementById('evTitle').value='';
+    document.getElementById('evDate').value='';
+    document.getElementById('evEndDate').value='';
+    document.getElementById('evCat').value='board';
+    document.getElementById('evNotes').value='';
+  }
+  document.getElementById('evModal').style.display='flex';
+  setTimeout(function(){ document.getElementById('evTitle').focus(); }, 80);
+}
+
+function editEvent(id){
+  var ev = bcalEvents.find(function(e){ return e.id===id; });
+  if(!ev) return;
+  document.getElementById('evTitle').value = ev.title;
+  document.getElementById('evDate').value = ev.date;
+  document.getElementById('evEndDate').value = ev.endDate||'';
+  document.getElementById('evCat').value = ev.cat;
+  document.getElementById('evNotes').value = ev.notes||'';
+  openEvModal(id);
+}
+
+function saveEvent(){
+  var id = document.getElementById('evEditId').value;
+  var ev = {
+    id: id || 'ev'+Date.now(),
+    title: document.getElementById('evTitle').value.trim(),
+    date: document.getElementById('evDate').value,
+    endDate: document.getElementById('evEndDate').value || undefined,
+    cat: document.getElementById('evCat').value,
+    notes: document.getElementById('evNotes').value.trim()
+  };
+  if(!ev.title || !ev.date){ alert('Title and date are required.'); return; }
+  if(id){
+    bcalEvents = bcalEvents.map(function(e){ return e.id===id ? ev : e; });
+  } else {
+    bcalEvents.push(ev);
+  }
+  saveEvents(bcalEvents);
+  document.getElementById('evModal').style.display='none';
+  renderBcal();
+}
+
+function deleteEvent(){
+  var id = document.getElementById('evEditId').value;
+  if(!id || !confirm('Delete this event?')) return;
+  bcalEvents = bcalEvents.filter(function(e){ return e.id!==id; });
+  saveEvents(bcalEvents);
+  document.getElementById('evModal').style.display='none';
+  renderBcal();
+}
+
+document.getElementById('bcalPrev').addEventListener('click', function(){
+  bcalCurMonth--;
+  if(bcalCurMonth<0){ bcalCurMonth=11; bcalCurYear--; }
+  renderBcal();
+});
+document.getElementById('bcalNext').addEventListener('click', function(){
+  bcalCurMonth++;
+  if(bcalCurMonth>11){ bcalCurMonth=0; bcalCurYear++; }
+  renderBcal();
+});
+document.getElementById('bcalYearSel').addEventListener('change', function(){
+  bcalCurYear = parseInt(this.value);
+  renderBcal();
+});
+document.getElementById('bcalMonthSel').addEventListener('change', function(){
+  bcalCurMonth = parseInt(this.value);
+  renderBcal();
+});
+
 // ── Auth gate ────────────────────────────────────────────────────────────────
 var BOARD_CODE = 'camino2026'; // Temporary demo code — replace with Cloudflare Access
 function tryAuth(){
@@ -784,6 +1128,7 @@ function showPortal(){
   renderBoardMinutes();
   renderBoardActions('all');
   renderCOIStatus();
+  renderBcal();
 }
 if(sessionStorage.getItem('board-auth')==='1') showPortal();
 
@@ -795,6 +1140,7 @@ document.querySelectorAll('#boardTabBar .btab').forEach(function(btn){
     var tab = btn.getAttribute('data-tab');
     document.querySelectorAll('.board-panel').forEach(function(p){ p.style.display='none'; });
     document.getElementById('tab-'+tab).style.display='block';
+    if(tab==='calendar') renderBcal();
   });
 });
 
