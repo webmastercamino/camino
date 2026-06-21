@@ -38,6 +38,29 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Honduras Culture & Context page for mission groups
+- What changed:
+  - **culture/honduras.html** (new page): Rich educational page celebrating Honduran people and culture
+    - Teal gradient hero: "Honduras: People, Culture & Heart" with mission-framing subhead
+    - Quick facts row (4 cards): Population, Language, Geography, Faith
+    - "Meet the People" (6 cards): Mestizo, Garifuna (UNESCO), Lenca (Berta Cáceres), Miskito, Garifuna Settlement Day, "One country many stories" highlight card
+    - "Culture & Daily Life" (6 cards): Family First, Faith & Community, Food (baleadas), Hospitality, Time & Pace (ahorita), Music
+    - "Things That Will Surprise You": 6 amber-panel bullets (kids holding hands, community helpers, siesta, stars at night, etc.)
+    - Dos & Don'ts: two-column teal/coral layout — 6 dos, 5 don'ts; links to Mission Spanish in trip portal
+    - Regional Context (3 cards): Cortés, Comayagua, Atlantic Coast — where CAMINO works
+    - "A Note on Poverty & Dignity": full-width teal section with key framing paragraph
+    - CTA: "Learn Mission Spanish →" + "Apply for a Mission Trip →"
+    - Full ADA compliance: skip link, aria-labelledby on all sections, role/aria-label on lists, lang="en"
+  - **Navigation on 11 pages** (9 root + about/board.html + store/index.html): Added "Resources" label + "🌍 Honduras Culture" link in Mission Trips desktop dropdown and mobile nav on all pages
+  - **trips/jul-2026-culpeper.html**: Added teal "Know Before You Go — New to Honduras?" card at bottom of Overview tab, linking to culture/honduras.html
+- Status: Complete. Committed a561ebc and 1042cc1, both pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Verify CAMINO ONG registration renewal status with SRE (Honduras) — due March 2026
+
 ### 2026-06-20 — Automated policy watch feeds + Cloudflare scheduled monitor spec
 - What changed:
   - **admin/index.html**: Policy Watch panel expanded from 4 → 6 tabs
