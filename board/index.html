@@ -322,6 +322,9 @@
         <span class="b-nav-icon">⚠️</span> Risk Registry
         <span class="nav-badge" id="critBadge">5</span>
       </button>
+      <button class="b-nav-item" data-tab="grants" onclick="bSwitchTab('grants',this)">
+        <span class="b-nav-icon">📋</span> Grants
+      </button>
       <button class="b-nav-item" data-tab="roadmap" onclick="bSwitchTab('roadmap',this)">
         <span class="b-nav-icon">🗺️</span> Roadmap
       </button>
@@ -969,6 +972,21 @@
     </div>
   </div>
 </div><!-- /tab-calendar -->
+
+<!-- ═══════════════ TAB: GRANTS ═══════════════ -->
+<div class="board-panel" id="tab-grants" style="display:none">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px">
+    <div>
+      <h2 style="font-size:22px;font-weight:800;margin-bottom:4px">📋 Grant Pipeline</h2>
+      <p style="font-size:13px;color:var(--text-muted)">Active grants, pipeline, deadlines, and quarterly review — for board oversight.</p>
+    </div>
+    <a href="../admin/#grants" target="_blank" style="background:var(--teal);color:white;padding:8px 16px;border-radius:var(--radius);font-size:12px;font-weight:700;text-decoration:none">Manage in Admin ↗</a>
+  </div>
+  <div style="border-radius:var(--radius-lg);overflow:hidden;border:1.5px solid var(--gray-200);background:white">
+    <iframe id="grantsFrame" src="../admin/" style="width:100%;height:80vh;border:none;display:block" title="Grant Management" loading="lazy"></iframe>
+  </div>
+  <p style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center">Full grant editing available in the Admin portal. This view loads the admin panel — navigate to Grants in the sidebar.</p>
+</div>
 
 <!-- ═══════════════ TAB: ROADMAP ═══════════════ -->
 <div class="board-panel" id="tab-roadmap" style="display:none">

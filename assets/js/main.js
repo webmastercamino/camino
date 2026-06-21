@@ -16,13 +16,15 @@
   // Apply on load (default light)
   applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 
-  // Inject toggle button into desktop nav and mobile menu once DOM ready
+  // Inject toggle button just BEFORE the .nav-cta ("Give now") button
   document.addEventListener('DOMContentLoaded', function () {
     const btn = document.createElement('button');
     btn.className = 'theme-toggle-btn';
     btn.onclick = toggleTheme;
-    const navRight = document.querySelector('.nav-right, .site-nav, nav');
-    if (navRight) navRight.appendChild(btn);
+    const navCta = document.querySelector('.nav-cta');
+    if (navCta && navCta.parentNode) {
+      navCta.parentNode.insertBefore(btn, navCta);
+    }
     // Also add to mobile menu footer if present
     const mobileMenu = document.getElementById('mobileMenu');
     if (mobileMenu) {

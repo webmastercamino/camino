@@ -1172,8 +1172,8 @@ a  { text-decoration: none; color: inherit; }
 /* ── Theme toggle button (public nav) ── */
 .theme-toggle-btn {
   background: none; border: 1.5px solid var(--gray-200); border-radius: 20px;
-  padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: inherit;
+  padding: 4px 12px; font-size: 12px; cursor: pointer; font-family: inherit;
   color: var(--text-muted); display: flex; align-items: center; gap: 5px;
-  transition: border-color .15s;
+  transition: border-color .15s; white-space: nowrap; margin-right: 10px;
 }
 .theme-toggle-btn:hover { border-color: var(--teal); color: var(--teal); }
