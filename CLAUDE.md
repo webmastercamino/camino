@@ -38,6 +38,32 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Board minutes tracker + e-acknowledgement + board portal
+- What changed:
+  - **admin/index.html**: Full minutes management in Board Governance → Meetings tab
+    - MEETINGS_SEED replaced with 3 seeded meetings (Annual Jan 15 Approved/6 acked, Regular Mar 18 Approved/5 acked, Regular Jun 10 Draft/0 acked)
+    - Minutes Dashboard widget: pending-ack count, last-approved date, meetings-without-minutes count
+    - Each meeting row now has minutes status badge, acknowledgement chip count, collapsible "📋 Minutes" section
+    - Minutes expand: status dropdown, draft-by/date, distribution date, approval fields, acknowledgement chips with timestamps, editable textarea, Save button
+    - "Generate Template" button: pre-fills structured minutes template pulling open action items from the tracker
+    - Edit Meeting form extended with draftBy, draftDate, distributedDate, approvalMethod, approvalDate, minutesStatus
+  - **board/index.html**: Board portal major enhancements
+    - Tab renamed to "Minutes" with pending-ack badge
+    - Dynamic minutes list from `camino_meetings` localStorage: each row shows status badge, distribution date, ack count
+    - Expand row: full minutes text (read-only), acknowledgement chips, e-acknowledgement form (checkbox + name → saves name+timestamp to localStorage)
+    - New "Action Items" tab: All/Open/Overdue/Completed filter, Mark complete per item, reads `camino_actions` localStorage
+    - Documents tab: Annual COI e-acknowledgement card — policy text, checkbox confirmation, name field, signed record in localStorage
+    - Board member name bar in header: enter once, reused across minutes ack + COI sign
+    - Portal also calls renderBoardMinutes() and renderBoardActions() on login
+  - **about/board.html**: "Board members: access the board portal →" subtle footer link
+- Status: Complete. Committed 3058ecd and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Wire `?email=` param into Mailchimp/Formspree to pre-fill public preference center
+
 ### 2026-06-20 — Grant tracker wide-net expansion + AI-assisted application generator
 - What changed:
   - **admin/index.html**: 21 new grant prospects (g_12–g_32) across 6 program areas — Technology & Digital Literacy (Microsoft, HP, Best Buy, Samsung, Comcast), Language & Literacy (Barbara Bush Foundation, Dollar General, NEH, ProLiteracy), Health & Wellness (RWJF, CDC Foundation, Merck), Arts & Culture (NEA, Inter-American Foundation, Mellon), Women & Children (Kellogg, Caterpillar, Gates), Environment & Sustainability (Patagonia, REI, EPA). All notes pre-filled with "AI-Assisted Application — Low Burden (~30 min review)."
