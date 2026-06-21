@@ -40,22 +40,16 @@
       z-index: 100;
     }
     .sidebar-logo {
-      padding: 20px 18px 16px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 14px 16px 12px;
+      background: #fff;
+      border-bottom: 3px solid var(--amber);
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
+      gap: 8px;
     }
-    .sidebar-logo__mark {
-      width: 32px; height: 32px;
-      background: var(--amber);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-weight: 700; font-size: 13px;
-      flex-shrink: 0;
-    }
-    .sidebar-logo__text { font-size: 14px; font-weight: 700; color: #fff; line-height: 1.2; }
-    .sidebar-logo__sub  { font-size: 10px; color: rgba(255,255,255,.4); letter-spacing: .8px; text-transform: uppercase; }
+    .sidebar-logo img { height: 34px; width: auto; display: block; }
+    .sidebar-logo__sub { font-size: 9px; color: var(--muted); letter-spacing: .8px; text-transform: uppercase; text-align: right; }
     .sidebar-tag {
       margin: 12px 18px 4px;
       font-size: 9px; font-weight: 700;
@@ -1013,11 +1007,10 @@ function adminLogout(){
 <!-- ══════════════════ SIDEBAR ══════════════════ -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="sidebar-logo__mark">C</div>
-    <div>
-      <div class="sidebar-logo__text">CAMINO</div>
-      <div class="sidebar-logo__sub">Admin Panel</div>
-    </div>
+    <a href="../index.html" target="_blank">
+      <img src="../assets/images/CAMINO-logo.webp" alt="CAMINO Honduras" />
+    </a>
+    <span class="sidebar-logo__sub">Admin</span>
   </div>
 
   <nav class="sidebar-nav">
@@ -1051,9 +1044,9 @@ function adminLogout(){
     <button class="nav-item" data-panel="traveldocs" onclick="switchPanel('traveldocs', this)">
       <span class="nav-item__icon">🛂</span> Travel Docs
     </button>
-    <button class="nav-item" data-panel="operations" onclick="switchPanel('operations', this)">
-      <span class="nav-item__icon">📦</span> Operations
-    </button>
+    <a href="../ops/" target="_blank" class="nav-item" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit">
+      <span class="nav-item__icon">📦</span> Operations Portal ↗
+    </a>
 
     <div class="sidebar-tag" style="margin-top:8px">Development</div>
     <button class="nav-item" data-panel="grants" onclick="switchPanel('grants', this)">
@@ -1073,15 +1066,8 @@ function adminLogout(){
       <span class="nav-item__icon">🌍</span> Policy &amp; Risk Watch
     </button>
 
-    <div class="sidebar-tag" style="margin-top:8px">Board &amp; Finance</div>
-    <button class="nav-item" data-panel="boardgov" onclick="switchPanel('boardgov', this)">
-      <span class="nav-item__icon">🏛️</span> Board Governance
-    </button>
-    <button class="nav-item" data-panel="compliance" onclick="switchPanel('compliance', this)">
-      <span class="nav-item__icon">⚖️</span> 501(c)(3) Compliance
-    </button>
-    <button class="nav-item" onclick="window.open('../board/','_blank')" style="color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);margin-top:4px">
-      <span class="nav-item__icon">🔐</span> Board Portal ↗
+    <button class="nav-item" onclick="window.open('../board/','_blank')" style="color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.15);margin-top:4px">
+      <span class="nav-item__icon">🏛️</span> Board Portal ↗
     </button>
     <button class="nav-item" onclick="window.open('../ops/','_blank')" style="color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);margin-top:4px">
       <span class="nav-item__icon">⚙️</span> Ops Portal ↗
@@ -1685,6 +1671,12 @@ function adminLogout(){
       <button class="btn btn-primary" onclick="openGrantModal()">+ Add grant</button>
     </div>
 
+    <!-- Sample data notice -->
+    <div style="background:#fefce8;border:1px solid #fcd34d;border-radius:8px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px;font-size:13px">
+      <span style="font-size:16px">⚠️</span>
+      <span><strong>Sample data loaded.</strong> The grants, funders, and dollar amounts below are placeholders for demonstration. Replace with your actual grant history before sharing with board or funders. <button onclick="this.closest('div').style.display='none'" style="background:none;border:none;color:#92400e;font-weight:600;cursor:pointer;margin-left:8px;font-size:12px">Dismiss ✕</button></span>
+    </div>
+
     <!-- Quarterly Review Banner -->
     <div id="grantQReviewBanner" style="display:none" class="grant-qr-banner">
       <span id="grantQReviewBannerText">Q2 2026 Grant Review Due — Last review: Never.</span>
@@ -2014,6 +2006,24 @@ function adminLogout(){
     <div id="pwChangesWeekCard" class="pw-changes-card" style="display:none">
       <div class="pw-changes-title">🔔 New Items Detected This Week</div>
       <div id="pwChangesWeekList"></div>
+    </div>
+
+    <!-- ── Push to Trip Pages ── -->
+    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px 18px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#166534">📤 Push to Trip Pages</div>
+          <div style="font-size:12px;color:#4ade80;color:#166534;opacity:.8">Banners &amp; notices shown to participants on mission trip pages. Editable — changes save instantly to localStorage.</div>
+        </div>
+        <button class="btn btn-sm" style="background:#166534;color:white;border:none" onclick="renderPolicyPushPreview()">↻ Preview</button>
+      </div>
+      <div id="policy-push-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px"></div>
+    </div>
+
+    <!-- Feeds note -->
+    <div style="background:#fff7ed;border:1px solid #fbbf24;border-radius:8px;padding:8px 14px;margin-bottom:12px;font-size:12px;color:#92400e;display:flex;align-items:center;gap:8px">
+      <span>⚠️</span>
+      <span><strong>Live feeds require a backend.</strong> CORS proxy errors below are expected on a static site. Use the <strong>Check at source ↗</strong> buttons to review each source manually.</span>
     </div>
 
     <!-- Tabs (6) -->
@@ -7394,8 +7404,69 @@ const PW_DEPT_DEFAULT = [
 
 const PW_DEFAULT_REVIEW = { date: '2026-06-15', reviewer: 'Walker Somerville', notes: 'Annual risk review completed. State Dept level 2 advisory unchanged. ONG registration status confirmed with SRE. Nicaragua precedent discussed at board meeting.' };
 
+// ── Policy Push Config helpers ──────────────────────────────────────
+const PUSH_DEFAULTS = [
+  { key: 'advisory',  icon: '🌎', label: 'Travel Advisory Banner',   text: 'Honduras is currently at US State Dept Travel Advisory Level 2 (Exercise Increased Caution). Review travel.state.gov before departure.',  level: 'warning' },
+  { key: 'health',    icon: '🏥', label: 'Health Alert',              text: '',                                                                                                                                               level: 'alert'   },
+  { key: 'security',  icon: '🛡️', label: 'Security Update',           text: '',                                                                                                                                               level: 'warning' },
+  { key: 'logistics', icon: '📋', label: 'Logistics Notice',          text: '',                                                                                                                                               level: 'info'    },
+  { key: 'custom',    icon: '📢', label: 'Custom Announcement',       text: '',                                                                                                                                               level: 'info'    },
+];
+function getPushConfig() {
+  try { const r = localStorage.getItem('camino_trip_broadcast'); if (r) return JSON.parse(r); } catch {}
+  const defaults = {};
+  PUSH_DEFAULTS.forEach(d => { defaults[d.key] = { on: d.key === 'advisory', text: d.text, level: d.level, label: d.label, icon: d.icon }; });
+  return defaults;
+}
+function savePushConfig(cfg) { localStorage.setItem('camino_trip_broadcast', JSON.stringify(cfg)); }
+
+function renderPolicyPushPreview() { renderPolicyPushCards(); }
+
+function renderPolicyPushCards() {
+  const cfg = getPushConfig();
+  const container = document.getElementById('policy-push-cards');
+  if (!container) return;
+  container.innerHTML = PUSH_DEFAULTS.map(d => {
+    const item = cfg[d.key] || { on: false, text: d.text, level: d.level };
+    const levelColor = { warning: '#92400e', alert: '#991b1b', info: '#1e40af' };
+    return `<div style="background:white;border:1px solid #e5e7eb;border-radius:8px;padding:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:13px;font-weight:700">${d.icon} ${d.label}</div>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;font-weight:600;color:${item.on ? '#166534' : '#9ca3af'}">
+          <input type="checkbox" id="pp-chk-${d.key}" ${item.on ? 'checked' : ''} onchange="togglePushItem('${d.key}',this.checked)" style="accent-color:#166534" />
+          ${item.on ? 'Live on trip pages' : 'Off'}
+        </label>
+      </div>
+      <textarea id="pp-txt-${d.key}" rows="2" placeholder="Message shown on trip pages…" oninput="savePushItemText('${d.key}',this.value)"
+        style="width:100%;padding:7px 10px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:12px;font-family:inherit;resize:vertical;color:${levelColor[d.level] || '#374151'}"
+      >${escHtml(item.text || '')}</textarea>
+    </div>`;
+  }).join('');
+}
+
+function togglePushItem(key, on) {
+  const cfg = getPushConfig();
+  if (!cfg[key]) cfg[key] = {};
+  cfg[key].on = on;
+  cfg[key].text = document.getElementById('pp-txt-' + key)?.value || cfg[key].text || '';
+  savePushConfig(cfg);
+  // update label text
+  const lbl = document.querySelector(`#pp-chk-${key}`)?.closest('label');
+  if (lbl) { lbl.textContent = ''; const chk = document.createElement('input'); chk.type='checkbox'; chk.id='pp-chk-'+key; chk.checked=on; chk.onchange=()=>togglePushItem(key,chk.checked); chk.style.accentColor='#166534'; lbl.appendChild(chk); lbl.append(' ' + (on ? 'Live on trip pages' : 'Off')); lbl.style.color = on ? '#166534' : '#9ca3af'; }
+  toast((on ? '✅ "' : '⭕ "') + PUSH_DEFAULTS.find(d=>d.key===key)?.label + '" ' + (on ? 'now live on trip pages.' : 'hidden from trip pages.'));
+}
+
+function savePushItemText(key, text) {
+  const cfg = getPushConfig();
+  if (!cfg[key]) cfg[key] = {};
+  cfg[key].text = text;
+  savePushConfig(cfg);
+}
+// ────────────────────────────────────────────────────────────────────
+
 function renderPolicyWatch() {
   const stored = JSON.parse(localStorage.getItem('camino_policy_data') || '{}');
+  renderPolicyPushCards();
 
   // Quarterly review banner check
   const reviews = JSON.parse(localStorage.getItem('camino_policy_reviews') || '[]');
@@ -7462,6 +7533,16 @@ function renderPolicyWatch() {
 
   // Review log
   renderPWReviewLog(allReviews);
+
+  // Additional post-render tasks
+  setTimeout(() => {
+    if (typeof renderPoliticalSourceTable === 'function') renderPoliticalSourceTable();
+    if (typeof pwLoadCachedFeeds === 'function') pwLoadCachedFeeds();
+    if (typeof pwCheckAutoRefresh === 'function') pwCheckAutoRefresh();
+    const saved = JSON.parse(localStorage.getItem('camino_pw_political_notes') || '{}');
+    if (saved.usaid && document.getElementById('polUSAIDNotes')) document.getElementById('polUSAIDNotes').value = saved.usaid;
+    if (saved.migration && document.getElementById('polMigrationNotes')) document.getElementById('polMigrationNotes').value = saved.migration;
+  }, 100);
 }
 
 function renderPWSourceTable(tableId, sources, stored, noUrl) {
@@ -8095,17 +8176,6 @@ function pwDismissAdvisoryAlert() {
 
 // Extend renderPolicyWatch to also load caches and render political table
 const _origRenderPolicyWatch = renderPolicyWatch;
-function renderPolicyWatch() {
-  _origRenderPolicyWatch();
-  setTimeout(() => {
-    renderPoliticalSourceTable();
-    pwLoadCachedFeeds();
-    pwCheckAutoRefresh();
-    const saved = JSON.parse(localStorage.getItem('camino_pw_political_notes') || '{}');
-    if (saved.usaid && document.getElementById('polUSAIDNotes')) document.getElementById('polUSAIDNotes').value = saved.usaid;
-    if (saved.migration && document.getElementById('polMigrationNotes')) document.getElementById('polMigrationNotes').value = saved.migration;
-  }, 100);
-}
 
 
 // ═══════════════════════════════════════════════════════════════════

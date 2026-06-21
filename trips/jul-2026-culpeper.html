@@ -523,6 +523,31 @@
           }
         })();
       </script>
+      <script>
+        /* Broadcast notices pushed from Admin / Ops Portal */
+        (function() {
+          var LEVEL_STYLES = {
+            warning:  { bg:'#fefce8', border:'#fcd34d', icon:'⚠️', color:'#92400e' },
+            alert:    { bg:'#fef2f2', border:'#fca5a5', icon:'🚨', color:'#991b1b' },
+            info:     { bg:'#eff6ff', border:'#93c5fd', icon:'ℹ️',  color:'#1e40af' },
+          };
+          try {
+            var cfg = JSON.parse(localStorage.getItem('camino_trip_broadcast') || '{}');
+            var container = document.getElementById('tripBroadcastBanners');
+            if (!container) return;
+            var html = '';
+            Object.keys(cfg).forEach(function(key) {
+              var item = cfg[key];
+              if (!item.on || !item.text) return;
+              var s = LEVEL_STYLES[item.level] || LEVEL_STYLES.info;
+              html += '<div style="background:' + s.bg + ';border-left:4px solid ' + s.border + ';padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:10px;font-size:13px;color:' + s.color + ';line-height:1.6">'
+                    + s.icon + ' <strong>' + (item.label || 'Notice') + '</strong> — ' + item.text
+                    + '</div>';
+            });
+            container.innerHTML = html;
+          } catch(e) {}
+        })();
+      </script>
 
       <!-- Before You Go callout -->
       <div class="byg-card">
@@ -553,6 +578,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Broadcast notices pushed from Admin/Ops Portal -->
+      <div id="tripBroadcastBanners"></div>
 
       <!-- Live advisory banners — health notice + US travel advisory (populated by live-feeds.js) -->
       <div id="tripAdvisoryBanner"></div>

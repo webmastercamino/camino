@@ -69,22 +69,23 @@
     /* ── Top bar ── */
     .ops-topbar {
       position: sticky; top: 0; z-index: 100;
-      background: var(--teal-dark); color: white; height: 52px;
+      background: #fff; border-bottom: 3px solid var(--teal); height: 56px;
       display: flex; align-items: center; padding: 0 16px; gap: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
     }
-    .ops-topbar-brand { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-    .ops-topbar-brand .tb-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
-    .ops-topbar-brand .tb-sub  { font-size: 11px; opacity: .7; white-space: nowrap; }
+    .ops-topbar-brand { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+    .ops-topbar-brand img { height: 38px; width: auto; display: block; }
+    .ops-topbar-brand .tb-divider { width: 1px; height: 24px; background: var(--gray-200); }
+    .ops-topbar-brand .tb-sub { font-size: 12px; color: var(--muted); white-space: nowrap; font-weight: 600; }
     .ops-topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .topbar-btn {
-      padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: none;
-      cursor: pointer; transition: background .15s;
+      padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all .15s;
     }
-    .topbar-btn-outline { background: rgba(255,255,255,.15); color: white; }
-    .topbar-btn-outline:hover { background: rgba(255,255,255,.25); }
-    .topbar-btn-red { background: rgba(220,38,38,.85); color: white; }
-    .topbar-btn-red:hover { background: #dc2626; }
+    .topbar-btn-outline { background: var(--teal-light); color: var(--teal-dark); border: 1.5px solid var(--teal); }
+    .topbar-btn-outline:hover { background: var(--teal); color: white; }
+    .topbar-btn-red { background: #fee2e2; color: var(--red); border: 1.5px solid #fca5a5; }
+    .topbar-btn-red:hover { background: var(--red); color: white; }
 
     /* ── Layout ── */
     .ops-layout { display: flex; min-height: calc(100vh - 52px); }
@@ -311,10 +312,11 @@
   <!-- Top bar -->
   <header class="ops-topbar">
     <div class="ops-topbar-brand">
-      <div>
-        <div class="tb-logo">CAMINO Ops</div>
-        <div class="tb-sub">Operations &amp; Project Management</div>
-      </div>
+      <a href="../index.html" target="_blank">
+        <img src="../assets/images/CAMINO-logo.webp" alt="CAMINO Honduras" />
+      </a>
+      <div class="tb-divider"></div>
+      <span class="tb-sub">Operations Portal</span>
     </div>
     <div class="ops-topbar-right">
       <button class="topbar-btn topbar-btn-outline" onclick="window.open('../admin/','_blank')">Admin ↗</button>
@@ -471,6 +473,18 @@
         <div class="section-hd">
           <h2>Field Guide</h2>
           <div class="section-hd-sub">Emergency contacts · Health alerts · Pre-trip essentials</div>
+        </div>
+
+        <!-- ── Trip Page Broadcast ── -->
+        <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:20px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#166534">📤 Broadcast to Trip Pages</div>
+              <div style="font-size:12px;color:#4ade80;color:#4b5563;margin-top:2px">Notices pushed to this field guide are shown to participants on mission trip pages. Edit text, then toggle ON to make it live.</div>
+            </div>
+            <a href="../admin/#policywatch" target="_blank" class="btn btn-ghost btn-sm" style="font-size:11px">Also manage in Admin → Policy Watch ↗</a>
+          </div>
+          <div id="fg-broadcast-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px"></div>
         </div>
 
         <div id="fg-health-alert"></div>
@@ -1244,7 +1258,73 @@ function renderFieldGuide() {
 
   // Field notes
   renderFgNotes();
+
+  // Broadcast cards
+  renderBroadcastCards();
 }
+
+// ── Broadcast push config (shared key with admin policy push) ──────
+const BROADCAST_ITEMS = [
+  { key: 'advisory',  icon: '🌎', label: 'Travel Advisory',   color: '#92400e', bgColor: '#fefce8', borderColor: '#fcd34d' },
+  { key: 'health',    icon: '🏥', label: 'Health Alert',       color: '#991b1b', bgColor: '#fef2f2', borderColor: '#fca5a5' },
+  { key: 'security',  icon: '🛡️', label: 'Security Update',    color: '#1e40af', bgColor: '#eff6ff', borderColor: '#93c5fd' },
+  { key: 'logistics', icon: '📋', label: 'Logistics Notice',   color: '#166534', bgColor: '#f0fdf4', borderColor: '#86efac' },
+  { key: 'custom',    icon: '📢', label: 'Custom Notice',      color: '#374151', bgColor: '#f9fafb', borderColor: '#d1d5db' },
+];
+
+function getBroadcastConfig() {
+  try { const r = localStorage.getItem('camino_trip_broadcast'); if (r) return JSON.parse(r); } catch {}
+  const d = {};
+  BROADCAST_ITEMS.forEach(b => { d[b.key] = { on: b.key === 'advisory', text: b.key === 'advisory' ? 'Honduras is currently at US State Dept Travel Advisory Level 2 (Exercise Increased Caution). Review travel.state.gov before departure.' : '', label: b.label, icon: b.icon, level: b.level }; });
+  return d;
+}
+function saveBroadcastConfig(cfg) { localStorage.setItem('camino_trip_broadcast', JSON.stringify(cfg)); }
+
+function renderBroadcastCards() {
+  const cfg = getBroadcastConfig();
+  const container = document.getElementById('fg-broadcast-cards');
+  if (!container) return;
+  container.innerHTML = BROADCAST_ITEMS.map(b => {
+    const item = cfg[b.key] || { on: false, text: '' };
+    return `<div style="background:white;border:1px solid ${item.on ? b.borderColor : '#e5e7eb'};border-radius:8px;padding:12px;transition:border-color .2s">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:700">${b.icon} ${b.label}</span>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <div class="fg-toggle ${item.on ? 'on' : ''}" onclick="toggleBroadcast('${b.key}',this)" style="width:36px;height:20px;border-radius:10px;background:${item.on ? '#166534' : '#d1d5db'};position:relative;cursor:pointer;transition:background .2s;flex-shrink:0">
+            <div style="position:absolute;top:2px;left:${item.on ? '18px' : '2px'};width:16px;height:16px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+          </div>
+          <span style="font-size:11px;font-weight:600;color:${item.on ? '#166534' : '#9ca3af'}">${item.on ? 'Live' : 'Off'}</span>
+        </label>
+      </div>
+      <textarea id="bc-txt-${b.key}" rows="2"
+        placeholder="Message shown on trip pages…"
+        oninput="saveBroadcastText('${b.key}',this.value)"
+        style="width:100%;padding:7px 10px;border:1.5px solid ${item.on ? b.borderColor : '#e5e7eb'};border-radius:6px;font-size:12px;font-family:inherit;resize:vertical;color:${b.color};background:${item.on ? b.bgColor : 'white'}"
+      >${escH(item.text || '')}</textarea>
+      ${item.on ? `<div style="font-size:10px;color:#166534;font-weight:600;margin-top:4px">✅ Live on all trip pages</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function toggleBroadcast(key, toggleEl) {
+  const cfg = getBroadcastConfig();
+  if (!cfg[key]) cfg[key] = {};
+  cfg[key].on = !cfg[key].on;
+  cfg[key].text = document.getElementById('bc-txt-' + key)?.value || cfg[key].text || '';
+  const meta = BROADCAST_ITEMS.find(b => b.key === key);
+  if (meta) { cfg[key].label = meta.label; cfg[key].icon = meta.icon; cfg[key].level = meta.level === 'alert' ? 'alert' : meta.level; }
+  saveBroadcastConfig(cfg);
+  renderBroadcastCards();
+  toast((cfg[key].on ? '✅ ' : '⭕ ') + (BROADCAST_ITEMS.find(b => b.key === key)?.label || key) + (cfg[key].on ? ' now live on trip pages.' : ' hidden from trip pages.'));
+}
+
+function saveBroadcastText(key, text) {
+  const cfg = getBroadcastConfig();
+  if (!cfg[key]) cfg[key] = {};
+  cfg[key].text = text;
+  saveBroadcastConfig(cfg);
+}
+// ──────────────────────────────────────────────────────────────────
 
 function renderFgNotes() {
   const notes = getFgNotes();
