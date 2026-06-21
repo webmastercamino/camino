@@ -38,6 +38,29 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Cultural humility deepening of Honduras culture page
+- What changed:
+  - **culture/honduras.html**: Significant rewrite to center cultural humility throughout
+    - Hero reframed: volunteer arrives as "guest and learner," not as helper
+    - Meet the People: copy revised to center Hondurans as teachers/hosts; "One country many stories" sharpened
+    - Culture & Daily Life: "Family First" removes helper framing; "Time & Pace" names the value explicitly
+    - NEW section: "Cultural Humility — What It Means for Mission" (dark full-width panel) with 5 subsections:
+      - "We Go as Guests" (pull quote), "Their Community, Their Vision" (asset-based framing),
+      - "The Problem with the 'Savior' Mindset" (direct address of white savior complex),
+      - "Photography & Social Media — The Ethics" (dignity-first posting rules),
+      - "What Service Actually Looks Like" (relational over transactional)
+    - Things That Will Surprise You: expanded 6 → 9 items; added "community member corrects your technique," "you may feel useless day 1," "you'll receive far more than you give"
+    - Dos & Don'ts → renamed "Respectful Partnership"; expanded 6 dos → 9, 5 don'ts → 7; added: pronounce names correctly, don't assign gender roles by US norms, orphanage tourism prohibition, "In America we do it this way" rule, slow down deliberately
+    - Dignity section: renamed "Housing Insecurity & Dignity"; removed paternalistic language; uses "partner communities"
+    - NEW section: "Recommended Preparation" — When Helping Hurts, Toxic Charity, Duolingo, CAMINO Mission Spanish guide (each with description)
+- Status: Complete. Committed 99b18ba and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Verify CAMINO ONG registration renewal status with SRE (Honduras) — due March 2026
+
 ### 2026-06-20 — Honduras Culture & Context page for mission groups
 - What changed:
   - **culture/honduras.html** (new page): Rich educational page celebrating Honduran people and culture
