@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -542,6 +542,65 @@
     .state-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
     .state-row:last-child { border-bottom: none; }
     .state-flag { font-size: 16px; }
+
+    /* ── Grant Management ── */
+    .grant-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+    @media (max-width: 1100px) { .grant-kpis { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px)  { .grant-kpis { grid-template-columns: repeat(2, 1fr); } }
+    .grant-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; }
+    .grant-kpi__val { font-size: 26px; font-weight: 700; line-height: 1.1; }
+    .grant-kpi__lbl { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+    .grant-kpi__sub { font-size: 11px; margin-top: 2px; font-weight: 600; }
+    .grant-pipeline-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+    .gpt { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border); background: #fff; transition: all .15s; white-space: nowrap; font-family: inherit; }
+    .gpt:hover { border-color: var(--teal); }
+    .gpt.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .gpt-count { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 10px; background: rgba(0,0,0,.12); margin-left: 4px; }
+    .grant-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 12px; transition: border-color .15s; }
+    .grant-card:hover { border-color: var(--teal); }
+    .grant-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .grant-card__name    { font-size: 15px; font-weight: 700; }
+    .grant-card__program { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .grant-card__right   { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+    .grant-amount        { font-size: 18px; font-weight: 700; color: var(--teal); }
+    .grant-amount-req    { font-size: 12px; color: var(--muted); }
+    .grant-meta          { display: flex; gap: 16px; font-size: 12px; color: var(--muted); flex-wrap: wrap; margin-bottom: 10px; }
+    .grant-card__actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; }
+    .gs-Researching { background: #EFF6FF; color: #1D4ED8; }
+    .gs-InProgress  { background: var(--amber-light); color: var(--amber-dark); }
+    .gs-Submitted   { background: #F5F3FF; color: #7C3AED; }
+    .gs-Awarded     { background: var(--teal-light); color: var(--teal); }
+    .gs-Reporting   { background: #FEF9C3; color: #854D0E; }
+    .gs-Closed      { background: #DCFCE7; color: #166534; }
+    .gs-Declined    { background: #FEE2E2; color: #DC2626; }
+    .ft-Foundation  { background: #EFF6FF; color: #1D4ED8; }
+    .ft-Government  { background: #F0FDF4; color: #166534; }
+    .ft-Corporate   { background: #F3E8FF; color: #7C3AED; }
+    .ft-Church      { background: #FEF9C3; color: #854D0E; }
+    .ft-Individual  { background: var(--amber-light); color: var(--amber-dark); }
+    .gcal-row        { display: flex; align-items: flex-start; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .gcal-row:last-child { border-bottom: none; }
+    .gcal-urgency    { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+    .gcal-urgency.red    { background: var(--red); }
+    .gcal-urgency.yellow { background: #EAB308; }
+    .gcal-urgency.green  { background: #22C55E; }
+    .gcal-date       { font-weight: 700; min-width: 80px; flex-shrink: 0; font-size: 12px; }
+    .gcal-type       { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 4px; background: var(--teal-light); color: var(--teal); flex-shrink: 0; white-space: nowrap; }
+    .gcal-type.report-type   { background: var(--amber-light); color: var(--amber-dark); }
+    .gcal-type.decision-type { background: #F3E8FF; color: #7C3AED; }
+    .gcal-info  { flex: 1; min-width: 0; }
+    .gcal-name  { font-weight: 600; }
+    .gcal-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .gcal-days  { font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .gcal-days.red    { color: var(--red); }
+    .gcal-days.yellow { color: #CA8A04; }
+    .gcal-days.green  { color: #16A34A; }
+    .orgp-section { margin-bottom: 24px; }
+    .orgp-section h4 { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .docgen-modal { background: var(--surface); border-radius: var(--radius-lg); padding: 28px 32px; max-width: 820px; width: calc(100% - 40px); max-height: 92vh; overflow-y: auto; position: relative; }
+    .docgen-output { width: 100%; min-height: 420px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.65; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; resize: vertical; white-space: pre-wrap; color: var(--text); background: #fafafa; outline: none; }
+    .docgen-output:focus { border-color: var(--teal); }
+    .docgen-notice { background: var(--amber-light); border: 1.5px solid var(--amber); border-radius: var(--radius); padding: 10px 14px; font-size: 12px; color: var(--amber-dark); margin-bottom: 14px; line-height: 1.55; }
   </style>
 </head>
 <body>
@@ -590,6 +649,11 @@
     </button>
     <button class="nav-item" data-panel="compliance" onclick="switchPanel('compliance', this)">
       <span class="nav-item__icon">⚖️</span> 501(c)(3) Compliance
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">Development</div>
+    <button class="nav-item" data-panel="grants" onclick="switchPanel('grants', this)">
+      <span class="nav-item__icon">📋</span> Grants
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Links</div>
@@ -995,6 +1059,95 @@
     </div>
   </div>
 
+  <!-- ══ PANEL: Grants ══ -->
+  <div id="panel-grants" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Grant Management</div>
+        <div class="panel-sub">Track grant prospects, applications, awards, and reporting. Generate application narratives and reports.</div>
+      </div>
+      <button class="btn btn-primary" onclick="openGrantModal()">+ Add grant</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="grant-kpis" id="grantKPIs"></div>
+
+    <!-- Sub-tabs -->
+    <div class="panel-tabs" id="grantTabs">
+      <button class="view-tab active" onclick="setGrantTab('pipeline', this)">Pipeline</button>
+      <button class="view-tab" onclick="setGrantTab('calendar', this)">📅 Deadline calendar</button>
+      <button class="view-tab" onclick="setGrantTab('profile', this)">🏢 Org profile</button>
+    </div>
+
+    <!-- Pipeline tab -->
+    <div id="grantTabPipeline">
+      <div class="grant-pipeline-tabs" id="grantPipelineTabs"></div>
+      <div id="grantCards"></div>
+    </div>
+
+    <!-- Calendar tab -->
+    <div id="grantTabCalendar" style="display:none">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:6px">📅 Upcoming deadlines — next 90 days</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">
+          <span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block"></span> &lt;2 weeks</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px"><span style="width:8px;height:8px;border-radius:50%;background:#EAB308;display:inline-block"></span> 2–4 weeks</span>
+          <span style="display:inline-flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#22C55E;display:inline-block"></span> &gt;4 weeks</span>
+        </p>
+        <div id="grantCalendarList"></div>
+      </div>
+    </div>
+
+    <!-- Org Profile tab -->
+    <div id="grantTabProfile" style="display:none">
+      <div class="card">
+        <div class="card-title">🏢 CAMINO Org Profile — Grant Boilerplate</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px">This profile feeds all document generators. Keep it current. Changes save automatically to localStorage.</p>
+        <div class="orgp-section">
+          <h4>Legal &amp; Identity</h4>
+          <div class="form-row">
+            <div class="form-group"><label for="orgLegalName">Legal name</label><input type="text" id="orgLegalName" oninput="saveOrgProfile()" /></div>
+            <div class="form-group"><label for="orgDbaName">DBA / operating name</label><input type="text" id="orgDbaName" oninput="saveOrgProfile()" /></div>
+          </div>
+          <div class="form-row-3">
+            <div class="form-group"><label for="orgEIN">EIN</label><input type="text" id="orgEIN" placeholder="XX-XXXXXXX" oninput="saveOrgProfile()" /></div>
+            <div class="form-group"><label for="orgState">Incorporation state</label><input type="text" id="orgState" oninput="saveOrgProfile()" /></div>
+            <div class="form-group"><label for="org501cDate">501(c)(3) recognized</label><input type="text" id="org501cDate" placeholder="January 1, 2016" oninput="saveOrgProfile()" /></div>
+          </div>
+        </div>
+        <div class="orgp-section">
+          <h4>Mission &amp; Vision</h4>
+          <div class="form-group"><label for="orgMission">Mission statement</label><textarea id="orgMission" rows="3" oninput="saveOrgProfile()"></textarea></div>
+          <div class="form-group"><label for="orgVision">Vision statement</label><textarea id="orgVision" rows="2" oninput="saveOrgProfile()"></textarea></div>
+        </div>
+        <div class="orgp-section">
+          <h4>Impact Stats</h4>
+          <div class="form-row-3">
+            <div class="form-group"><label for="orgHomesBuilt">Homes built</label><input type="text" id="orgHomesBuilt" oninput="saveOrgProfile()" /></div>
+            <div class="form-group"><label for="orgVolunteers">Volunteers served</label><input type="text" id="orgVolunteers" oninput="saveOrgProfile()" /></div>
+            <div class="form-group"><label for="orgCommunities">Communities reached</label><input type="text" id="orgCommunities" oninput="saveOrgProfile()" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="orgYears">Years operating</label><input type="text" id="orgYears" oninput="saveOrgProfile()" /></div>
+            <div class="form-group"><label for="orgBudget">Annual budget (approx)</label><input type="text" id="orgBudget" oninput="saveOrgProfile()" /></div>
+          </div>
+        </div>
+        <div class="orgp-section">
+          <h4>Programs</h4>
+          <div id="orgPrograms"></div>
+        </div>
+        <div class="orgp-section" style="margin-bottom:8px">
+          <h4>Grant boilerplate intro</h4>
+          <div class="form-group" style="margin-bottom:0"><label for="orgBoilerplate">Standard opening paragraph</label><textarea id="orgBoilerplate" rows="4" oninput="saveOrgProfile()"></textarea></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button class="btn btn-primary" onclick="saveOrgProfile();toast('Org profile saved.')">Save profile</button>
+          <button class="btn btn-ghost btn-sm" onclick="resetOrgProfile()">Reset to defaults</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <!-- ══════════════════ MODAL: Post ══════════════════ -->
@@ -1197,6 +1350,103 @@
   </div>
 </div>
 
+<!-- ══════════════════ MODAL: Grant ══════════════════ -->
+<div class="modal-overlay" id="grantModal">
+  <div class="modal" style="max-width:680px">
+    <button class="modal-close" onclick="closeGrantModal()">×</button>
+    <div class="modal-title" id="grantModalTitle">Add grant</div>
+    <input type="hidden" id="grantEditId" />
+    <div class="form-row">
+      <div class="form-group"><label for="gFunderName">Funder name *</label><input type="text" id="gFunderName" /></div>
+      <div class="form-group"><label for="gFunderType">Funder type</label>
+        <select id="gFunderType"><option>Foundation</option><option>Government</option><option>Corporate</option><option>Church</option><option>Individual</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="gProgram">Grant program name</label><input type="text" id="gProgram" /></div>
+      <div class="form-group"><label for="gFocusArea">Focus area</label>
+        <select id="gFocusArea"><option>Mission Trips</option><option>Community Development</option><option>Education</option><option>Emergency Relief</option><option>General Operating</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="gAmtReq">Amount requested ($)</label><input type="number" id="gAmtReq" placeholder="0" /></div>
+      <div class="form-group"><label for="gAmtAwarded">Amount awarded ($)</label><input type="number" id="gAmtAwarded" placeholder="0" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="gStatus">Status</label>
+        <select id="gStatus"><option>Researching</option><option>In Progress</option><option>Submitted</option><option>Awarded</option><option>Reporting</option><option>Closed</option><option>Declined</option></select>
+      </div>
+      <div class="form-group"><label for="gRestricted">Fund type</label>
+        <select id="gRestricted"><option value="false">Unrestricted</option><option value="true">Restricted</option></select>
+      </div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group"><label for="gDeadline">Application deadline</label><input type="date" id="gDeadline" /></div>
+      <div class="form-group"><label for="gDecision">Decision date</label><input type="date" id="gDecision" /></div>
+      <div class="form-group"><label for="gReportDue">Report due date</label><input type="date" id="gReportDue" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="gContactName">Contact name</label><input type="text" id="gContactName" /></div>
+      <div class="form-group"><label for="gContactEmail">Contact email</label><input type="email" id="gContactEmail" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="gContactPhone">Contact phone</label><input type="tel" id="gContactPhone" /></div>
+      <div class="form-group"><label for="gFunderWebsite">Funder website</label><input type="url" id="gFunderWebsite" placeholder="https://…" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="gAppDocUrl">Application doc URL</label><input type="url" id="gAppDocUrl" placeholder="Google Drive link…" /></div>
+      <div class="form-group"><label for="gAwardLetterUrl">Award letter URL</label><input type="url" id="gAwardLetterUrl" placeholder="Google Drive link…" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="gReportDocUrl">Report doc URL</label><input type="url" id="gReportDocUrl" placeholder="Google Drive link…" /></div>
+      <div class="form-group"><label for="gNextEligible">Next eligible date</label><input type="date" id="gNextEligible" /></div>
+    </div>
+    <div class="form-group"><label for="gNotes">Notes / relationship history</label><textarea id="gNotes" rows="3"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeGrantModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGrant()">Save grant</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL: Grant Document Generator ══════════════════ -->
+<div class="modal-overlay" id="grantDocModal">
+  <div class="docgen-modal">
+    <button class="modal-close" onclick="closeGrantDocModal()">×</button>
+    <div class="modal-title" id="docGenTitle">Generate Document</div>
+    <div class="form-row" style="margin-bottom:14px">
+      <div class="form-group">
+        <label>Document type</label>
+        <select id="docGenType" onchange="generateDoc()">
+          <option value="application">Grant Application Narrative</option>
+          <option value="report">Grant Progress / Final Report</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Scope</label>
+        <select id="docGenScope" onchange="generateDoc()">
+          <option value="full">Full document</option>
+          <option value="cover">Cover letter only</option>
+          <option value="narrative">Program narrative only</option>
+          <option value="budget">Budget narrative only</option>
+        </select>
+      </div>
+    </div>
+    <div class="docgen-notice">
+      ✏️ <strong>Review before submitting.</strong> All <code>[BRACKETED FIELDS]</code> require your confirmation. Customize the narrative for each specific funder. This is a strong starting draft — not a finished document.
+    </div>
+    <textarea class="docgen-output" id="docGenOutput" spellcheck="true"></textarea>
+    <div class="modal-footer" style="justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span style="font-size:12px;color:var(--muted)">Paste into Word, Google Docs, or the grant portal.</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost" onclick="closeGrantDocModal()">Close</button>
+        <button class="btn btn-ghost" onclick="downloadGrantDoc()">⬇ Download .txt</button>
+        <button class="btn btn-primary" onclick="copyGrantDoc()">Copy to clipboard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -1210,6 +1460,7 @@ const PANEL_TITLES = {
   traveldocs: 'Travel Documents',
   boardgov:   'Board Governance',
   compliance: '501(c)(3) Compliance',
+  grants:     'Grant Management',
 };
 
 function switchPanel(id, el) {
@@ -1225,6 +1476,7 @@ function switchPanel(id, el) {
   if (id === 'crm')        renderCRM();
   if (id === 'boardgov')   renderBoardGov();
   if (id === 'compliance') renderCompliance();
+  if (id === 'grants')     renderGrantsPanel();
 }
 
 // ── Toast ──
@@ -2304,6 +2556,37 @@ function renderComplianceDates() {
 
 // ═══════════════════════ CRM / DONORS ═══════════════════════
 
+const PRIORITY_TIERS = {
+  vip:    { label: '⭐ VIP',             cls: 'priority-vip'    },
+  major:  { label: '🔴 Major Donor',     cls: 'priority-major'  },
+  key:    { label: '🟠 Key Donor',        cls: 'priority-key'    },
+  active: { label: '🟡 Active Supporter', cls: 'priority-active' },
+  lapsed: { label: '⚪ Lapsed',           cls: 'priority-lapsed' },
+};
+const TODAY = '2026-06-20';
+const TIER_SORT = { vip: 0, major: 1, key: 2, active: 3, lapsed: 4, '': 5 };
+
+function daysSince(dateStr) {
+  if (!dateStr || dateStr === '—') return 9999;
+  const then = new Date(dateStr + 'T00:00:00');
+  const now  = new Date(TODAY + 'T00:00:00');
+  return Math.floor((now - then) / 86400000);
+}
+
+function calcPriority(d, vipSet) {
+  const completed     = d.donations.filter(g => g.status === 'completed');
+  const lifetimeCents = completed.reduce((s, g) => s + g.amount, 0);
+  const lastGiftDate  = completed.length ? completed[0].date : null;
+  const lastGiftDays  = lastGiftDate ? daysSince(lastGiftDate) : 9999;
+  const largestGift   = completed.reduce((max, g) => g.amount > max ? g.amount : max, 0);
+  if (vipSet.has(d.id))                                          return 'vip';
+  if (lastGiftDays > 547)                                        return 'lapsed';
+  if (lifetimeCents >= 1000000 || largestGift >= 250000)         return 'major';
+  if (lifetimeCents >= 250000  || d.recurringFreq === 'monthly') return 'key';
+  if (lastGiftDays <= 365 && lifetimeCents >= 50000)             return 'active';
+  return '';
+}
+
 const CRM_DONORS_SEED = [
   {
     id: 'd001', firstName: 'Margaret', lastName: 'Whitfield', email: 'mwhitfield@culpeperfirst.org',
@@ -2311,9 +2594,9 @@ const CRM_DONORS_SEED = [
     churchAffiliation: 'Culpeper Community Church', recurring: true, recurringAmt: 100, recurringFreq: 'monthly',
     notes: 'Long-time supporter. Going on July 2026 trip. Helped recruit 6 other participants.',
     donations: [
-      { id: 'dnt001', date: '2026-06-01', amount: 10000, campaign: 'general', status: 'completed' },
-      { id: 'dnt002', date: '2026-05-01', amount: 10000, campaign: 'general', status: 'completed' },
-      { id: 'dnt003', date: '2026-04-01', amount: 10000, campaign: 'general', status: 'completed' },
+      { id: 'dnt001', date: '2026-06-01', amount: 10000, campaign: 'general',    status: 'completed' },
+      { id: 'dnt002', date: '2026-05-01', amount: 10000, campaign: 'general',    status: 'completed' },
+      { id: 'dnt003', date: '2026-04-01', amount: 10000, campaign: 'general',    status: 'completed' },
       { id: 'dnt004', date: '2025-12-18', amount: 25000, campaign: 'home-build', status: 'completed' },
     ],
     trips: ['Culpeper Community Church — Summer Build (July 2026)'],
@@ -2322,9 +2605,9 @@ const CRM_DONORS_SEED = [
     id: 'd002', firstName: 'Robert', lastName: 'Kincaid', email: 'rkincaid@gmail.com',
     phone: '(804) 555-0288', city: 'Richmond', state: 'VA', type: 'donor', source: 'web',
     churchAffiliation: 'Bon Air Baptist Church', recurring: false, recurringAmt: 0,
-    notes: 'Gave after seeing Facebook post. $500 one-time gift.',
+    notes: 'Gave $5,000 after seeing Facebook post about the Summer Build. No prior contact — organic reach.',
     donations: [
-      { id: 'dnt010', date: '2026-04-14', amount: 50000, campaign: 'home-build', status: 'completed' },
+      { id: 'dnt010', date: '2026-04-14', amount: 500000, campaign: 'home-build', status: 'completed' },
     ],
     trips: [],
   },
@@ -2332,11 +2615,11 @@ const CRM_DONORS_SEED = [
     id: 'd003', firstName: 'Denise', lastName: 'Hartley', email: 'denise.hartley@crossroads-church.org',
     phone: '(757) 555-0093', city: 'Virginia Beach', state: 'VA', type: 'both', source: 'referral',
     churchAffiliation: 'Crossroads Church VA Beach', recurring: true, recurringAmt: 50, recurringFreq: 'monthly',
-    notes: 'Mission pastor at Crossroads. Evaluating a 2027 group trip for their youth group.',
+    notes: 'Mission pastor at Crossroads. VIP — personally stewarded. Evaluating 2027 youth group trip.',
     donations: [
-      { id: 'dnt020', date: '2026-06-01', amount: 5000, campaign: 'mission-trips', status: 'completed' },
-      { id: 'dnt021', date: '2026-05-01', amount: 5000, campaign: 'mission-trips', status: 'completed' },
-      { id: 'dnt022', date: '2025-11-27', amount: 20000, campaign: 'general', status: 'completed' },
+      { id: 'dnt020', date: '2026-06-01', amount:  5000, campaign: 'mission-trips', status: 'completed' },
+      { id: 'dnt021', date: '2026-05-01', amount:  5000, campaign: 'mission-trips', status: 'completed' },
+      { id: 'dnt022', date: '2025-11-27', amount: 20000, campaign: 'general',       status: 'completed' },
     ],
     trips: [],
   },
@@ -2344,12 +2627,12 @@ const CRM_DONORS_SEED = [
     id: 'd004', firstName: 'Thomas', lastName: 'Beaumont', email: 'tbeaumont@hawthornelaw.com',
     phone: '(202) 555-0377', city: 'Washington', state: 'DC', type: 'donor', source: 'manual',
     churchAffiliation: 'National Community Church', recurring: true, recurringAmt: 500, recurringFreq: 'monthly',
-    notes: 'Attorney. Major donor. Prefers email only. Connected through board member James Okafor.',
+    notes: 'Attorney. Major donor. Prefers email only. Connected through board member James Okafor. Year-end gift potential of $25k.',
     donations: [
-      { id: 'dnt030', date: '2026-06-01', amount: 50000, campaign: 'general', status: 'completed' },
-      { id: 'dnt031', date: '2026-05-01', amount: 50000, campaign: 'general', status: 'completed' },
-      { id: 'dnt032', date: '2026-04-01', amount: 50000, campaign: 'general', status: 'completed' },
-      { id: 'dnt033', date: '2025-12-31', amount: 100000, campaign: 'home-build', status: 'completed' },
+      { id: 'dnt030', date: '2026-06-01', amount:   50000, campaign: 'general',    status: 'completed' },
+      { id: 'dnt031', date: '2026-05-01', amount:   50000, campaign: 'general',    status: 'completed' },
+      { id: 'dnt032', date: '2026-04-01', amount:   50000, campaign: 'general',    status: 'completed' },
+      { id: 'dnt033', date: '2025-12-31', amount: 1000000, campaign: 'home-build', status: 'completed' },
     ],
     trips: [],
   },
@@ -2359,7 +2642,7 @@ const CRM_DONORS_SEED = [
     churchAffiliation: 'Culpeper Community Church', recurring: false, recurringAmt: 0,
     notes: 'Nurse. First-time volunteer, July 2026 trip. Fundraising toward $1,200 trip goal.',
     donations: [
-      { id: 'dnt040', date: '2026-03-22', amount: 7500, campaign: 'mission-trips', status: 'completed' },
+      { id: 'dnt040', date: '2026-03-22', amount: 50000, campaign: 'mission-trips', status: 'completed' },
     ],
     trips: ['Culpeper Community Church — Summer Build (July 2026)'],
   },
@@ -2379,10 +2662,10 @@ const CRM_DONORS_SEED = [
     id: 'd007', firstName: 'Susan', lastName: 'Templeton', email: 'stempleton@yahoo.com',
     phone: '(540) 555-0294', city: 'Fredericksburg', state: 'VA', type: 'donor', source: 'web',
     churchAffiliation: '', recurring: false, recurringAmt: 0,
-    notes: 'Retired teacher. Gives annually at Christmas.',
+    notes: 'Retired teacher. Gave at Christmas 2023 and spring 2024 — no contact since. Re-engagement candidate.',
     donations: [
-      { id: 'dnt060', date: '2025-12-20', amount: 15000, campaign: 'general', status: 'completed' },
-      { id: 'dnt061', date: '2024-12-22', amount: 10000, campaign: 'general', status: 'completed' },
+      { id: 'dnt060', date: '2024-05-10', amount: 10000, campaign: 'general', status: 'completed' },
+      { id: 'dnt061', date: '2023-12-22', amount: 10000, campaign: 'general', status: 'completed' },
     ],
     trips: [],
   },
@@ -2404,7 +2687,7 @@ const CRM_DONORS_SEED = [
     churchAffiliation: 'Calvary Oak Church', recurring: false, recurringAmt: 0,
     notes: 'Church office admin. Manages giving from Calvary Oak as a group. Coordinates with their missions pastor.',
     donations: [
-      { id: 'dnt080', date: '2026-02-14', amount: 200000, campaign: 'home-build', status: 'completed' },
+      { id: 'dnt080', date: '2026-02-14', amount: 200000, campaign: 'home-build',    status: 'completed' },
       { id: 'dnt081', date: '2025-06-01', amount: 100000, campaign: 'community-dev', status: 'completed' },
     ],
     trips: ['Spring Mission — Open Enrollment (March 2026)'],
@@ -2413,9 +2696,9 @@ const CRM_DONORS_SEED = [
     id: 'd010', firstName: 'David', lastName: 'Fontaine', email: 'dfontaine@gmail.com',
     phone: '(434) 555-0671', city: 'Charlottesville', state: 'VA', type: 'volunteer', source: 'web',
     churchAffiliation: 'Trinity Fellowship', recurring: false, recurringAmt: 0,
-    notes: 'Construction contractor. Applied for March 2026 trip. Skilled builder — very valuable on site.',
+    notes: 'Construction contractor. Applied for March 2026 trip. Skilled builder. Lost contact since trip.',
     donations: [
-      { id: 'dnt090', date: '2026-01-15', amount: 5000, campaign: 'mission-trips', status: 'completed' },
+      { id: 'dnt090', date: '2024-09-01', amount: 5000, campaign: 'mission-trips', status: 'completed' },
     ],
     trips: ['Spring Mission — Open Enrollment (March 2026)'],
   },
@@ -2451,7 +2734,10 @@ const CRM_CHURCHES_SEED = [
 
 let crmDonors   = [];
 let crmChurches = [];
-let expandedDonorId = null;
+let expandedDonorId  = null;
+let activeTierFilter = '';
+
+// ── Storage helpers ──
 
 function getCRMDonors() {
   try {
@@ -2460,7 +2746,6 @@ function getCRMDonors() {
   } catch {}
   return CRM_DONORS_SEED.map(d => ({ ...d }));
 }
-
 function getCRMChurches() {
   try {
     const stored = JSON.parse(localStorage.getItem('camino_crm_churches') || 'null');
@@ -2468,17 +2753,42 @@ function getCRMChurches() {
   } catch {}
   return CRM_CHURCHES_SEED.map(c => ({ ...c }));
 }
-
 function saveCRMDonors()   { localStorage.setItem('camino_crm_donors',   JSON.stringify(crmDonors)); }
 function saveCRMChurches() { localStorage.setItem('camino_crm_churches', JSON.stringify(crmChurches)); }
+
+function getVIPFlags() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_crm_vip') || 'null');
+    if (stored) return new Set(stored);
+  } catch {}
+  return new Set(['d003']);
+}
+function saveVIPFlags(set) { localStorage.setItem('camino_crm_vip', JSON.stringify([...set])); }
+
+function getFollowUps() {
+  try { return JSON.parse(localStorage.getItem('camino_crm_followups') || '{}'); } catch { return {}; }
+}
+function saveFollowUps(obj) { localStorage.setItem('camino_crm_followups', JSON.stringify(obj)); }
+
+function getEffectiveFollowUp(donorId, followUps) { return followUps[donorId] || null; }
+
+function getMoves(donorId) {
+  try { return JSON.parse(localStorage.getItem('camino_crm_moves_' + donorId) || '[]'); } catch { return []; }
+}
+function saveMoves(donorId, moves) { localStorage.setItem('camino_crm_moves_' + donorId, JSON.stringify(moves)); }
+
+// ── Format helpers ──
 
 function centsToUSD(cents) {
   return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
 
+// ── Main render ──
+
 function renderCRM() {
   crmDonors   = getCRMDonors();
   crmChurches = getCRMChurches();
+  renderPriorityWidget();
   renderCRMMetrics();
   renderDonorTable();
   renderChurchTable();
@@ -2492,11 +2802,11 @@ function renderCRMMetrics() {
   const recurring    = crmDonors.filter(d => d.recurring).length;
   const newThisMonth = crmDonors.filter(d => { const latest = d.donations[0]; return latest && latest.date >= '2026-06-01'; }).length;
   const metrics = [
-    { val: totalDonors,          lbl: 'Total donors',          sub: '',               color: 'var(--teal)' },
-    { val: centsToUSD(ytdCents), lbl: 'Raised YTD',            sub: 'Jan–Jun 2026',   color: 'var(--amber)' },
-    { val: centsToUSD(avgGift),  lbl: 'Avg gift',              sub: 'all time',       color: 'var(--teal)' },
-    { val: recurring,            lbl: 'Recurring donors',      sub: 'active',         color: '#7c3aed' },
-    { val: newThisMonth,         lbl: 'New donors this month', sub: 'June 2026',      color: '#0369a1' },
+    { val: totalDonors,          lbl: 'Total donors',          sub: '',             color: 'var(--teal)'  },
+    { val: centsToUSD(ytdCents), lbl: 'Raised YTD',            sub: 'Jan–Jun 2026', color: 'var(--amber)' },
+    { val: centsToUSD(avgGift),  lbl: 'Avg gift',              sub: 'all time',     color: 'var(--teal)'  },
+    { val: recurring,            lbl: 'Recurring donors',      sub: 'active',       color: '#7c3aed'      },
+    { val: newThisMonth,         lbl: 'New donors this month', sub: 'June 2026',    color: '#0369a1'      },
   ];
   document.getElementById('crmMetrics').innerHTML = metrics.map(m => `
     <div class="crm-metric">
@@ -2506,40 +2816,123 @@ function renderCRMMetrics() {
     </div>`).join('');
 }
 
+// ── Priority widget ──
+
+function renderPriorityWidget() {
+  const vipSet    = getVIPFlags();
+  const followUps = getFollowUps();
+  const tiers = { major: [], key: [], active: [], lapsed: [], vip: [] };
+  crmDonors.forEach(d => { const t = calcPriority(d, vipSet); if (t && tiers[t]) tiers[t].push(d); });
+
+  const overdue = crmDonors.filter(d => {
+    const t  = calcPriority(d, vipSet);
+    if (!t) return false;
+    const fu = getEffectiveFollowUp(d.id, followUps);
+    return fu && fu.dueDate && fu.dueDate <= TODAY && !fu.done;
+  });
+
+  const el = document.getElementById('crmPriorityWidget');
+  if (!el) return;
+  el.innerHTML = `
+    <div class="priority-widget">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:6px">
+        <strong style="font-size:14px">Priority Donors</strong>
+        ${overdue.length ? `<span class="followup-overdue">⚠️ ${overdue.length} donor${overdue.length>1?'s':''} need${overdue.length===1?'s':''} follow-up</span>` : ''}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:${overdue.length?'14px':'0'}">
+        ${tierCountChip('🔴','Major',  tiers.major.length,  'major')}
+        ${tierCountChip('🟠','Key',    tiers.key.length,    'key')}
+        ${tierCountChip('🟡','Active', tiers.active.length, 'active')}
+        ${tierCountChip('⚪','Lapsed', tiers.lapsed.length, 'lapsed')}
+        ${tierCountChip('⭐','VIP',    tiers.vip.length,    'vip')}
+      </div>
+      ${overdue.length ? `
+        <div style="border-top:1px solid #fde68a;padding-top:12px">
+          <div style="font-size:11px;font-weight:700;color:var(--amber-dark);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Overdue Follow-ups</div>
+          ${overdue.map(d => `
+            <div class="followup-row">
+              <span style="font-size:13px;font-weight:600">${escHtml(d.firstName + ' ' + d.lastName)}</span>
+              <span class="followup-overdue">OVERDUE</span>
+              <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:11px" onclick="event.stopPropagation();openFollowUpModal('${d.id}')">Follow Up</button>
+            </div>`).join('')}
+        </div>` : ''}
+    </div>`;
+}
+
+function tierCountChip(emoji, label, count, tier) {
+  if (!count) return '';
+  return `<div class="priority-count" onclick="document.getElementById('donorTierFilter').value='${tier}';activeTierFilter='${tier}';renderDonorTable()" title="Filter: ${label}">
+    <div style="font-size:18px">${emoji}</div>
+    <div style="font-size:20px;font-weight:700">${count}</div>
+    <div style="font-size:11px;color:var(--muted)">${label}</div>
+  </div>`;
+}
+
+// ── Donor table ──
+
 function renderDonorTable() {
-  const search  = (document.getElementById('donorSearch')?.value || '').toLowerCase();
-  const typeF   = document.getElementById('donorTypeFilter')?.value || '';
-  const recurF  = document.getElementById('donorRecurringFilter')?.value || '';
+  const search       = (document.getElementById('donorSearch')?.value         || '').toLowerCase();
+  const typeF        =  document.getElementById('donorTypeFilter')?.value      || '';
+  const recurF       =  document.getElementById('donorRecurringFilter')?.value || '';
+  const tierF        =  document.getElementById('donorTierFilter')?.value      || activeTierFilter || '';
+  const priorityOnly =  document.getElementById('priorityOnlyToggle')?.checked || false;
+  const vipSet       = getVIPFlags();
+  const followUps    = getFollowUps();
 
   let donors = crmDonors.filter(d => {
     if (search && !`${d.firstName} ${d.lastName} ${d.email}`.toLowerCase().includes(search)) return false;
     if (typeF && d.type !== typeF) return false;
     if (recurF === 'recurring' && !d.recurring) return false;
     if (recurF === 'one-time'  &&  d.recurring) return false;
+    const tier = calcPriority(d, vipSet);
+    if (priorityOnly && !tier) return false;
+    if (tierF === 'overdue') {
+      const fu = getEffectiveFollowUp(d.id, followUps);
+      if (!fu || !fu.dueDate || fu.dueDate > TODAY || fu.done) return false;
+    } else if (tierF && tier !== tierF) {
+      return false;
+    }
     return true;
+  });
+
+  donors.sort((a, b) => {
+    const ta = TIER_SORT[calcPriority(a, vipSet)] ?? 5;
+    const tb = TIER_SORT[calcPriority(b, vipSet)] ?? 5;
+    return ta - tb;
   });
 
   const tbody = document.getElementById('donorTableBody');
   tbody.innerHTML = '';
 
   donors.forEach(d => {
-    const total    = d.donations.reduce((s, g) => s + g.amount, 0);
-    const lastGift = d.donations.length ? d.donations[0].date : '—';
+    const completed  = d.donations.filter(g => g.status === 'completed');
+    const total      = completed.reduce((s, g) => s + g.amount, 0);
+    const lastGift   = completed.length ? completed[0].date : '—';
+    const tier       = calcPriority(d, vipSet);
+    const tierMeta   = PRIORITY_TIERS[tier];
+    const fu         = getEffectiveFollowUp(d.id, followUps);
     const isExpanded = expandedDonorId === d.id;
+    const isOverdue  = fu && fu.dueDate && fu.dueDate <= TODAY && !fu.done;
 
     const row = document.createElement('tr');
     row.className = 'donor-row' + (isExpanded ? ' expanded' : '');
     row.onclick   = () => toggleDonorDetail(d.id);
     row.innerHTML = `
       <td class="donor-name-cell">
+        <button class="vip-star" title="${tier === 'vip' ? 'Remove VIP' : 'Mark VIP'}" onclick="event.stopPropagation();toggleVIP('${d.id}')">${tier === 'vip' ? '⭐' : '☆'}</button>
         ${escHtml(d.firstName + ' ' + d.lastName)}
         ${d.recurring ? '<span class="type-badge type-recurring">RECURRING</span>' : ''}
       </td>
       <td class="donor-email-cell">${escHtml(d.email)}</td>
       <td class="donor-amt-cell">${centsToUSD(total)}</td>
       <td class="donor-date-cell">${lastGift}</td>
+      <td>${tierMeta ? `<span class="priority-badge ${tierMeta.cls}">${tierMeta.label}</span>` : '<span style="color:var(--muted);font-size:12px">—</span>'}</td>
       <td><span class="type-badge type-${d.type}">${d.type}</span></td>
-      <td style="font-size:12px;color:var(--muted)">${escHtml(d.source)}</td>
+      <td>
+        ${tier ? `<button class="btn btn-ghost btn-sm" style="font-size:11px${isOverdue ? ';color:var(--red);font-weight:700' : ''}" onclick="event.stopPropagation();openFollowUpModal('${d.id}')">
+          ${isOverdue ? '⚠️ OVERDUE' : (fu && fu.dueDate ? '📅 ' + fu.dueDate : '+ Follow up')}
+        </button>` : ''}
+      </td>
       <td style="font-size:12px;color:var(--muted)">${isExpanded ? '▲' : '▼'}</td>`;
     tbody.appendChild(row);
 
@@ -2547,15 +2940,15 @@ function renderDonorTable() {
       const detailRow = document.createElement('tr');
       detailRow.className = 'donor-detail-row';
       const td = document.createElement('td');
-      td.colSpan = 7;
-      td.innerHTML = buildDonorDetail(d);
+      td.colSpan = 8;
+      td.innerHTML = buildDonorDetail(d, vipSet, followUps);
       detailRow.appendChild(td);
       tbody.appendChild(detailRow);
     }
   });
 
   if (!donors.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No donors match your search.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">No donors match your search.</td></tr>';
   }
 }
 
@@ -2564,11 +2957,19 @@ function toggleDonorDetail(id) {
   renderDonorTable();
 }
 
-function buildDonorDetail(d) {
-  const total     = d.donations.reduce((s, g) => s + g.amount, 0);
-  const largest   = d.donations.reduce((a, b) => b.amount > a.amount ? b : a, { amount: 0, date: '—' });
-  const firstGift = d.donations.length ? d.donations[d.donations.length - 1].date : '—';
-  const giftRows  = d.donations.slice(0, 5).map(g =>
+// ── Donor detail panel ──
+
+function buildDonorDetail(d, vipSet, followUps) {
+  const completed = d.donations.filter(g => g.status === 'completed');
+  const total     = completed.reduce((s, g) => s + g.amount, 0);
+  const largest   = completed.reduce((a, b) => b.amount > a.amount ? b : a, { amount: 0, date: '—' });
+  const firstGift = completed.length ? completed[completed.length - 1].date : '—';
+  const tier      = calcPriority(d, vipSet);
+  const tierMeta  = PRIORITY_TIERS[tier];
+  const fu        = getEffectiveFollowUp(d.id, followUps);
+  const isOverdue = fu && fu.dueDate && fu.dueDate <= TODAY && !fu.done;
+
+  const giftRows = completed.slice(0, 5).map(g =>
     `<tr>
       <td>${g.date}</td>
       <td style="font-weight:600">${centsToUSD(g.amount)}</td>
@@ -2584,11 +2985,35 @@ function buildDonorDetail(d) {
     ? d.trips.map(t => `<div style="font-size:12px;color:var(--teal);margin-bottom:4px">✈️ ${escHtml(t)}</div>`).join('')
     : '<div style="font-size:12px;color:var(--muted)">No trip participation on record.</div>';
 
+  const priorityBadge = tierMeta ? `<span class="priority-badge ${tierMeta.cls}" style="margin-right:6px">${tierMeta.label}</span>` : '';
+
+  const fuBox = tier ? `
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:14px 18px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Next Step</div>
+          ${fu && fu.dueDate
+            ? `<div style="font-size:13px"><span style="font-weight:600${isOverdue ? ';color:var(--red)' : ''}">${isOverdue ? '⚠️ OVERDUE: ' : '📅 Due ' + fu.dueDate + ': '}</span>${escHtml(fu.notes || '')}</div>`
+            : '<div style="font-size:13px;color:var(--muted)">No follow-up scheduled.</div>'}
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openFollowUpModal('${d.id}')">
+          ${fu && fu.dueDate ? 'Edit reminder' : '+ Schedule follow-up'}
+        </button>
+      </div>
+    </div>` : '';
+
+  const mmSection = (tier === 'major' || tier === 'vip') ? buildMovesManagement(d) : '';
+
   return `<div class="donor-detail-inner">
+    <div style="margin-bottom:14px;display:flex;align-items:center;flex-wrap:wrap;gap:6px">
+      ${priorityBadge}
+      <span style="font-size:13px;color:var(--muted)">${escHtml(d.firstName + ' ' + d.lastName)}</span>
+    </div>
+    ${fuBox}
+    ${mmSection}
     <div class="detail-grid">
       <div class="detail-block">
         <h4>Contact info</h4>
-        <div class="detail-kv"><span>Name</span><span>${escHtml(d.firstName + ' ' + d.lastName)}</span></div>
         <div class="detail-kv"><span>Email</span><span style="font-family:monospace;font-size:12px">${escHtml(d.email)}</span></div>
         <div class="detail-kv"><span>Phone</span><span>${escHtml(d.phone || '—')}</span></div>
         <div class="detail-kv"><span>Location</span><span>${escHtml((d.city || '') + (d.state ? ', ' + d.state : '') || '—')}</span></div>
@@ -2600,7 +3025,7 @@ function buildDonorDetail(d) {
         <div class="detail-kv"><span>Lifetime total</span><span style="color:var(--teal)">${centsToUSD(total)}</span></div>
         <div class="detail-kv"><span>Largest gift</span><span>${centsToUSD(largest.amount)} on ${largest.date}</span></div>
         <div class="detail-kv"><span>First gift</span><span>${firstGift}</span></div>
-        <div class="detail-kv"><span>Total gifts</span><span>${d.donations.length}</span></div>
+        <div class="detail-kv"><span>Total gifts</span><span>${completed.length}</span></div>
         ${recurringInfo}
       </div>
       <div class="detail-block">
@@ -2620,9 +3045,132 @@ function buildDonorDetail(d) {
       <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();toast('Receipt stub — Cloudflare Worker will send via Resend.')">📧 Send receipt</button>
       <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toast('Communication logged (stub).')">📝 Log communication</button>
       <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toast('Add to trip — Mission Trips panel.')">✈️ Add to trip</button>
+      ${tier ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toggleVIP('${d.id}')">${tier === 'vip' ? '☆ Remove VIP' : '⭐ Mark VIP'}</button>` : ''}
     </div>
   </div>`;
 }
+
+// ── Moves Management ──
+
+function buildMovesManagement(d) {
+  const moves = getMoves(d.id);
+  const tpIcons = { call: '📞', email: '📧', meeting: '🤝', visit: '🏠' };
+  const timelineHtml = moves.length
+    ? moves.slice().reverse().map(m => `
+        <div class="mm-entry">
+          <span style="font-size:16px">${tpIcons[m.type] || '📋'}</span>
+          <div>
+            <div style="font-weight:600;font-size:12px">${m.date} · <span style="text-transform:capitalize">${m.type}</span></div>
+            <div style="color:var(--muted);font-size:12px">${escHtml(m.notes)}</div>
+          </div>
+        </div>`).join('')
+    : '<div style="font-size:12px;color:var(--muted)">No touchpoints logged yet.</div>';
+
+  return `
+    <div class="mm-block">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <h4 style="margin:0;font-size:13px">Moves Management</h4>
+        <button class="btn btn-ghost btn-sm" style="font-size:11px" onclick="event.stopPropagation();openAddTouchpointForm('${d.id}')">+ Log touchpoint</button>
+      </div>
+      <div class="mm-timeline" id="mmTimeline-${d.id}">${timelineHtml}</div>
+      <div class="mm-add-form" id="mmAddForm-${d.id}">
+        <div class="form-row" style="margin-top:12px">
+          <div class="form-group">
+            <label>Type</label>
+            <select id="mmType-${d.id}">
+              <option value="call">📞 Call</option>
+              <option value="email">📧 Email</option>
+              <option value="meeting">🤝 Meeting</option>
+              <option value="visit">🏠 Site visit</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="mmDate-${d.id}" value="${TODAY}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea id="mmNotes-${d.id}" rows="2" placeholder="What was discussed, next actions…"></textarea>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();saveTouchpoint('${d.id}')">Save</button>
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();document.getElementById('mmAddForm-${d.id}').classList.remove('open')">Cancel</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function openAddTouchpointForm(donorId) {
+  const form = document.getElementById('mmAddForm-' + donorId);
+  if (form) form.classList.toggle('open');
+}
+
+function saveTouchpoint(donorId) {
+  const type  = document.getElementById('mmType-'  + donorId)?.value;
+  const date  = document.getElementById('mmDate-'  + donorId)?.value;
+  const notes = document.getElementById('mmNotes-' + donorId)?.value.trim();
+  if (!date || !notes) { toast('Date and notes are required.'); return; }
+  const moves = getMoves(donorId);
+  moves.push({ date, type: type || 'call', notes });
+  saveMoves(donorId, moves);
+  toast('Touchpoint logged.');
+  renderDonorTable();
+}
+
+// ── VIP toggle ──
+
+function toggleVIP(donorId) {
+  const vipSet = getVIPFlags();
+  if (vipSet.has(donorId)) vipSet.delete(donorId); else vipSet.add(donorId);
+  saveVIPFlags(vipSet);
+  renderPriorityWidget();
+  renderDonorTable();
+}
+
+// ── Follow-up modal ──
+
+function openFollowUpModal(donorId) {
+  const donor = crmDonors.find(d => d.id === donorId);
+  if (!donor) return;
+  const followUps = getFollowUps();
+  const fu = getEffectiveFollowUp(donorId, followUps);
+  document.getElementById('fuDonorId').value         = donorId;
+  document.getElementById('fuDonorName').textContent = donor.firstName + ' ' + donor.lastName;
+  document.getElementById('fuDate').value            = fu ? fu.dueDate : '';
+  document.getElementById('fuNotes').value           = fu ? (fu.notes || '') : '';
+  document.getElementById('followUpModal').classList.add('open');
+}
+
+function saveFollowUp() {
+  const donorId = document.getElementById('fuDonorId').value;
+  const dueDate = document.getElementById('fuDate').value;
+  const notes   = document.getElementById('fuNotes').value.trim();
+  if (!dueDate) { toast('Please set a due date.'); return; }
+  const followUps = getFollowUps();
+  followUps[donorId] = { dueDate, notes, done: false };
+  saveFollowUps(followUps);
+  closeFollowUpModal();
+  renderPriorityWidget();
+  renderDonorTable();
+  toast('Follow-up reminder saved.');
+}
+
+function clearFollowUp() {
+  const donorId = document.getElementById('fuDonorId').value;
+  if (!donorId) return;
+  const followUps = getFollowUps();
+  delete followUps[donorId];
+  saveFollowUps(followUps);
+  closeFollowUpModal();
+  renderPriorityWidget();
+  renderDonorTable();
+  toast('Follow-up reminder cleared.');
+}
+
+function closeFollowUpModal() { document.getElementById('followUpModal').classList.remove('open'); }
+
+// ── Churches ──
 
 function renderChurchTable() {
   const tbody = document.getElementById('churchTableBody');
@@ -2647,12 +3195,16 @@ function renderChurchTable() {
   });
 }
 
+// ── Tab switching ──
+
 function setCrmTab(tab, el) {
   document.querySelectorAll('.crm-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   document.querySelectorAll('.crm-subpanel').forEach(p => p.classList.remove('active'));
   document.getElementById('crmSub' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
 }
+
+// ── Add donor modal ──
 
 function openAddDonorModal() {
   ['dnFirst','dnLast','dnEmail','dnPhone','dnCity','dnNotes'].forEach(id => {
@@ -2671,21 +3223,21 @@ function saveNewDonor() {
   const email = document.getElementById('dnEmail').value.trim();
   if (!first || !last || !email) { alert('First name, last name, and email are required.'); return; }
   const newDonor = {
-    id:         'd_' + Date.now(),
-    firstName:  first,
-    lastName:   last,
+    id:                'd_' + Date.now(),
+    firstName:         first,
+    lastName:          last,
     email,
-    phone:      document.getElementById('dnPhone').value.trim(),
-    city:       document.getElementById('dnCity').value.trim(),
-    state:      '',
-    type:       document.getElementById('dnType').value,
-    source:     document.getElementById('dnSource').value,
-    notes:      document.getElementById('dnNotes').value.trim(),
+    phone:             document.getElementById('dnPhone').value.trim(),
+    city:              document.getElementById('dnCity').value.trim(),
+    state:             '',
+    type:              document.getElementById('dnType').value,
+    source:            document.getElementById('dnSource').value,
+    notes:             document.getElementById('dnNotes').value.trim(),
     churchAffiliation: '',
-    recurring:  false,
-    recurringAmt: 0,
-    donations:  [],
-    trips:      [],
+    recurring:         false,
+    recurringAmt:      0,
+    donations:         [],
+    trips:             [],
   };
   crmDonors.unshift(newDonor);
   saveCRMDonors();
@@ -2693,6 +3245,8 @@ function saveNewDonor() {
   renderCRM();
   toast('Donor added.');
 }
+
+// ── Add church modal ──
 
 function openAddChurchModal() {
   ['chName','chDenom','chCity','chState','chContact','chContactEmail','chLastTrip','chNotes'].forEach(id => {
@@ -2729,6 +3283,7 @@ function saveNewChurch() {
 // Close CRM modals on overlay click
 document.getElementById('donorModal').addEventListener('click', e => { if (e.target === document.getElementById('donorModal')) closeDonorModal(); });
 document.getElementById('churchModal').addEventListener('click', e => { if (e.target === document.getElementById('churchModal')) closeChurchModal(); });
+document.getElementById('followUpModal').addEventListener('click', e => { if (e.target === document.getElementById('followUpModal')) closeFollowUpModal(); });
 
 // ═══════════════════════ UTILITIES ═══════════════════════
 function escHtml(str) {
@@ -2738,6 +3293,602 @@ function escHtml(str) {
 // Close modals on overlay click
 document.getElementById('postModal').addEventListener('click', e => { if (e.target === document.getElementById('postModal')) closePostModal(); });
 document.getElementById('tripModal').addEventListener('click', e => { if (e.target === document.getElementById('tripModal')) closeTripModal(); });
+
+// ═══════════════════════════════════════════════
+// GRANT MANAGEMENT
+// ═══════════════════════════════════════════════
+const GRANT_STATUS_META = {
+  'Researching': {icon:'🔵', cls:'gs-Researching'},
+  'In Progress': {icon:'🟡', cls:'gs-InProgress'},
+  'Submitted':   {icon:'📤', cls:'gs-Submitted'},
+  'Awarded':     {icon:'🟢', cls:'gs-Awarded'},
+  'Reporting':   {icon:'📊', cls:'gs-Reporting'},
+  'Closed':      {icon:'✅', cls:'gs-Closed'},
+  'Declined':    {icon:'❌', cls:'gs-Declined'},
+};
+const GRANT_STATUS_ORDER = ['Researching','In Progress','Submitted','Awarded','Reporting','Closed','Declined'];
+
+const SEED_GRANTS = [
+  {id:'g_1',funderName:'Horizon Family Foundation',funderType:'Foundation',programName:'Community Development Initiative',focusArea:'Community Development',amountRequested:15000,amountAwarded:15000,status:'Awarded',applicationDeadline:'',decisionDate:'2026-03-15',reportDueDate:'2026-08-31',restricted:true,contactName:'Sarah Whitfield',contactEmail:'grants@horizonfamilyfoundation.org',contactPhone:'(540) 555-0187',funderWebsite:'https://horizonfamilyfoundation.org',notes:'Strong relationship — they visited a build site in 2024. Report due Aug 2026.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-01-01'},
+  {id:'g_2',funderName:'United Methodist Global Ministries',funderType:'Church',programName:'Global Mission Partnerships',focusArea:'Mission Trips',amountRequested:8500,amountAwarded:0,status:'Submitted',applicationDeadline:'2026-05-01',decisionDate:'2026-07-15',reportDueDate:'',restricted:true,contactName:'Rev. Thomas Adeyemi',contactEmail:'tadeyemi@umgm.org',contactPhone:'(404) 555-0234',funderWebsite:'https://umgm.org',notes:'Referral from First UMC Culpeper. Decision expected July 2026.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-05-01'},
+  {id:'g_3',funderName:'Community First Bank Foundation',funderType:'Corporate',programName:'Community Investment Fund',focusArea:'General Operating',amountRequested:5000,amountAwarded:0,status:'In Progress',applicationDeadline:'2026-07-15',decisionDate:'',reportDueDate:'',restricted:false,contactName:'Linda Barrows',contactEmail:'foundation@communityfirstbank.com',contactPhone:'(540) 555-0091',funderWebsite:'',notes:'Application 60% complete. Need budget narrative and board list.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-07-01'},
+  {id:'g_4',funderName:'Virginia Conference UMC',funderType:'Church',programName:'Missional Giving Program',focusArea:'Mission Trips',amountRequested:3000,amountAwarded:0,status:'Researching',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:true,contactName:'District Office',contactEmail:'missions@vaumc.org',contactPhone:'',funderWebsite:'https://vaumc.org',notes:'Identified as prospect. Need to confirm eligibility and deadline.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:''},
+  {id:'g_5',funderName:'Google.org Impact Challenge',funderType:'Corporate',programName:'Impact Challenge: Latin America',focusArea:'General Operating',amountRequested:50000,amountAwarded:0,status:'Researching',applicationDeadline:'',decisionDate:'',reportDueDate:'',restricted:false,contactName:'Impact Challenge Team',contactEmail:'impactchallenge@google.org',contactPhone:'',funderWebsite:'https://google.org',notes:'Highly competitive. Next eligible: Jan 2027. Start building impact data now.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-01-15'},
+  {id:'g_6',funderName:'LocalCorp Community Fund',funderType:'Corporate',programName:'Annual Community Grants',focusArea:'Education',amountRequested:2500,amountAwarded:0,status:'Declined',applicationDeadline:'2026-01-15',decisionDate:'2026-03-01',reportDueDate:'',restricted:false,contactName:'CSR Team',contactEmail:'csr@localcorp.com',contactPhone:'',funderWebsite:'',notes:'Declined. Feedback: "Reapply next cycle with stronger impact metrics." Revisit Q4 2026.',applicationDocUrl:'',awardLetterUrl:'',reportDocUrl:'',reapplyEligible:true,nextEligibleDate:'2027-01-15'},
+];
+
+let grantData = [];
+let activeGrantStatus = 'All';
+
+function loadGrants() {
+  const saved = localStorage.getItem('camino_grants');
+  if (saved) { try { grantData = JSON.parse(saved); } catch(e) { grantData = SEED_GRANTS.slice(); } }
+  else { grantData = SEED_GRANTS.slice(); }
+}
+function saveGrantData() { localStorage.setItem('camino_grants', JSON.stringify(grantData)); }
+
+// ── Org Profile ──
+const DEFAULT_ORG_PROFILE = {
+  legalName:'Central American Ministry Outreach, Inc.',dbaName:'CAMINO Honduras',ein:'XX-XXXXXXX',incorporationState:'Virginia',nonprofit501c3Date:'January 1, 2016',
+  missionStatement:'CAMINO empowers families in Honduras by providing safe, permanent housing and connecting them with the resources, community, and faith needed to break the cycle of poverty.',
+  visionStatement:'A Honduras where every family has a safe place to call home.',
+  homesBuilt:'115+',volunteersServed:'400+',communitiesReached:'22',yearsOperating:'12',annualBudget:'$450,000',fullTimeStaff:'4',boardSize:'6',
+  serviceRegions:'Cortés, Yoro, and Santa Bárbara departments, Honduras',execDirector:'Walker Somerville',execEmail:'walker@caminohonduras.com',execPhone:'',
+  programs:[
+    {name:'Home Construction',desc:'CAMINO builds concrete-block homes for families living in extreme poverty across northern Honduras. Each home costs approximately $5,500 to complete and lasts a lifetime.'},
+    {name:'Community Infrastructure',desc:'Beyond housing, CAMINO develops water access, sanitation, and road infrastructure in partnership with local communities and municipal governments.'},
+    {name:'Mission Trips',desc:'CAMINO organizes week-long mission trips for volunteers (4–25 people) to serve alongside Honduran families on build sites and in community development projects.'},
+    {name:'Church Planting',desc:'CAMINO partners with local congregations to plant churches in underserved communities, providing spiritual care and ongoing support for families we serve.'},
+  ],
+  boilerplate:'CAMINO Honduras (Central American Ministry Outreach, Inc.) is a 501(c)(3) nonprofit headquartered in Virginia, serving families in extreme poverty across northern Honduras since 2014. In over a decade of operation, CAMINO has built more than 115 permanent homes, engaged 400+ volunteers from across the United States, and reached 22 communities with housing, infrastructure, and faith-based development.',
+};
+let orgProfile = Object.assign({}, DEFAULT_ORG_PROFILE);
+
+function loadOrgProfile() {
+  const saved = localStorage.getItem('camino_org_profile');
+  if (saved) { try { orgProfile = Object.assign({}, DEFAULT_ORG_PROFILE, JSON.parse(saved)); } catch(e) {} }
+}
+function saveOrgProfile() {
+  orgProfile.legalName = document.getElementById('orgLegalName').value;
+  orgProfile.dbaName   = document.getElementById('orgDbaName').value;
+  orgProfile.ein       = document.getElementById('orgEIN').value;
+  orgProfile.incorporationState = document.getElementById('orgState').value;
+  orgProfile.nonprofit501c3Date = document.getElementById('org501cDate').value;
+  orgProfile.missionStatement   = document.getElementById('orgMission').value;
+  orgProfile.visionStatement    = document.getElementById('orgVision').value;
+  orgProfile.homesBuilt         = document.getElementById('orgHomesBuilt').value;
+  orgProfile.volunteersServed   = document.getElementById('orgVolunteers').value;
+  orgProfile.communitiesReached = document.getElementById('orgCommunities').value;
+  orgProfile.yearsOperating     = document.getElementById('orgYears').value;
+  orgProfile.annualBudget       = document.getElementById('orgBudget').value;
+  orgProfile.boilerplate        = document.getElementById('orgBoilerplate').value;
+  localStorage.setItem('camino_org_profile', JSON.stringify(orgProfile));
+}
+function resetOrgProfile() {
+  if (!confirm('Reset org profile to defaults?')) return;
+  orgProfile = Object.assign({}, DEFAULT_ORG_PROFILE);
+  localStorage.removeItem('camino_org_profile');
+  populateOrgProfileForm();
+  toast('Org profile reset to defaults.');
+}
+function populateOrgProfileForm() {
+  const p = orgProfile;
+  document.getElementById('orgLegalName').value  = p.legalName||'';
+  document.getElementById('orgDbaName').value    = p.dbaName||'';
+  document.getElementById('orgEIN').value        = p.ein||'';
+  document.getElementById('orgState').value      = p.incorporationState||'';
+  document.getElementById('org501cDate').value   = p.nonprofit501c3Date||'';
+  document.getElementById('orgMission').value    = p.missionStatement||'';
+  document.getElementById('orgVision').value     = p.visionStatement||'';
+  document.getElementById('orgHomesBuilt').value = p.homesBuilt||'';
+  document.getElementById('orgVolunteers').value = p.volunteersServed||'';
+  document.getElementById('orgCommunities').value= p.communitiesReached||'';
+  document.getElementById('orgYears').value      = p.yearsOperating||'';
+  document.getElementById('orgBudget').value     = p.annualBudget||'';
+  document.getElementById('orgBoilerplate').value= p.boilerplate||'';
+  const pc = document.getElementById('orgPrograms');
+  if (!pc) return;
+  pc.innerHTML = (p.programs||[]).map((prog,i)=>`
+    <div style="background:#f8f8f8;border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Program ${i+1}</div>
+      <div class="form-group" style="margin-bottom:6px"><label>Name</label>
+        <input type="text" value="${escHtml(prog.name)}" oninput="orgProfile.programs[${i}].name=this.value;saveOrgProfile()" />
+      </div>
+      <div class="form-group" style="margin-bottom:0"><label>Description</label>
+        <textarea rows="2" oninput="orgProfile.programs[${i}].desc=this.value;saveOrgProfile()">${escHtml(prog.desc)}</textarea>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── KPIs ──
+function renderGrantKPIs() {
+  const awarded    = grantData.filter(g=>['Awarded','Reporting','Closed'].includes(g.status));
+  const awardedYTD = awarded.reduce((s,g)=>s+(g.amountAwarded||0),0);
+  const submitted  = grantData.filter(g=>g.status==='Submitted');
+  const pipeline   = submitted.reduce((s,g)=>s+(g.amountRequested||0),0);
+  const now = new Date();
+  const in30 = new Date(now); in30.setDate(in30.getDate()+30);
+  const reportsDue = grantData.filter(g=>g.reportDueDate&&new Date(g.reportDueDate+'T12:00:00')<=in30&&new Date(g.reportDueDate+'T12:00:00')>=now).length;
+  const decided    = grantData.filter(g=>['Submitted','Awarded','Reporting','Closed'].includes(g.status)).length;
+  const rate       = decided ? Math.round(awarded.length/decided*100) : 0;
+  document.getElementById('grantKPIs').innerHTML = `
+    <div class="grant-kpi"><div class="grant-kpi__val" style="color:var(--teal)">$${awardedYTD.toLocaleString()}</div><div class="grant-kpi__lbl">Total awarded YTD</div><div class="grant-kpi__sub" style="color:var(--teal)">${awarded.length} grant${awarded.length!==1?'s':''}</div></div>
+    <div class="grant-kpi"><div class="grant-kpi__val" style="color:#7C3AED">${submitted.length}</div><div class="grant-kpi__lbl">Pending decisions</div><div class="grant-kpi__sub" style="color:#7C3AED">$${pipeline.toLocaleString()}</div></div>
+    <div class="grant-kpi"><div class="grant-kpi__val" style="color:${reportsDue>0?'var(--amber-dark)':'var(--muted)'}">${reportsDue}</div><div class="grant-kpi__lbl">Reports due ≤ 30 days</div><div class="grant-kpi__sub" style="color:var(--muted)">${reportsDue>0?'Action needed':'All current'}</div></div>
+    <div class="grant-kpi"><div class="grant-kpi__val" style="color:var(--amber)">$${pipeline.toLocaleString()}</div><div class="grant-kpi__lbl">Pipeline (submitted)</div><div class="grant-kpi__sub" style="color:var(--amber)">${submitted.length} pending</div></div>
+    <div class="grant-kpi"><div class="grant-kpi__val" style="color:#166534">${rate}%</div><div class="grant-kpi__lbl">Success rate</div><div class="grant-kpi__sub" style="color:var(--muted)">${awarded.length}/${decided} decided</div></div>`;
+}
+
+// ── Pipeline tabs ──
+function renderPipelineTabs() {
+  const counts = {};
+  GRANT_STATUS_ORDER.forEach(s=>{counts[s]=0;});
+  grantData.forEach(g=>{if(counts[g.status]!==undefined)counts[g.status]++;});
+  const tabs = [{key:'All',label:'All',count:grantData.length},...GRANT_STATUS_ORDER.map(s=>({key:s,label:GRANT_STATUS_META[s].icon+' '+s,count:counts[s]}))];
+  document.getElementById('grantPipelineTabs').innerHTML = tabs.map(t=>`
+    <button class="gpt${t.key===activeGrantStatus?' active':''}" onclick="activeGrantStatus='${t.key}';renderPipelineTabs();renderGrantCards()">${escHtml(t.label)}<span class="gpt-count">${t.count}</span></button>`).join('');
+}
+
+// ── Grant cards ──
+function renderGrantCards() {
+  const filtered = activeGrantStatus==='All' ? grantData : grantData.filter(g=>g.status===activeGrantStatus);
+  const el = document.getElementById('grantCards');
+  if (!filtered.length) { el.innerHTML='<div style="text-align:center;padding:48px 20px;color:var(--muted);font-size:14px">No grants in this status.</div>'; return; }
+  el.innerHTML = filtered.map(g=>{
+    const sm = GRANT_STATUS_META[g.status]||{icon:'?',cls:'gs-Researching'};
+    const ftCls = 'ft-'+(g.funderType||'').replace(/\s+/g,'');
+    const isAwarded = ['Awarded','Reporting'].includes(g.status);
+    const amtDisplay = isAwarded
+      ? `<div class="grant-amount">$${(g.amountAwarded||0).toLocaleString()}</div><div class="grant-amount-req">awarded</div>`
+      : `<div class="grant-amount" style="color:var(--amber)">$${(g.amountRequested||0).toLocaleString()}</div><div class="grant-amount-req">requested</div>`;
+    const metaParts = [
+      g.applicationDeadline ? `<span>📅 Due ${fmtDate(g.applicationDeadline)}</span>` : '',
+      g.decisionDate && !isAwarded ? `<span>⏰ Decision ${fmtDate(g.decisionDate)}</span>` : '',
+      g.reportDueDate ? `<span>📊 Report ${fmtDate(g.reportDueDate)}</span>` : '',
+      g.nextEligibleDate && g.status==='Declined' ? `<span>🔄 Re-eligible ${fmtDate(g.nextEligibleDate)}</span>` : '',
+    ].filter(Boolean).join('');
+    const resBadge = `<span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:4px;background:${g.restricted?'#FEF9C3':'#F0F9FF'};color:${g.restricted?'#854D0E':'#0369A1'}">${g.restricted?'Restricted':'Unrestricted'}</span>`;
+    return `<div class="grant-card">
+      <div class="grant-card__header">
+        <div>
+          <div class="grant-card__name">${escHtml(g.funderName)}</div>
+          <div class="grant-card__program">${escHtml(g.programName||'')}</div>
+          <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+            <span class="grant-status-pill ${sm.cls}">${sm.icon} ${g.status}</span>
+            <span class="type-badge ${ftCls}">${escHtml(g.funderType)}</span>
+            ${resBadge}
+            <span style="font-size:11px;color:var(--muted)">${escHtml(g.focusArea)}</span>
+          </div>
+        </div>
+        <div class="grant-card__right">${amtDisplay}</div>
+      </div>
+      ${metaParts?`<div class="grant-meta">${metaParts}</div>`:''}
+      ${g.notes?`<div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:10px;padding:10px 12px;background:#f9f9f9;border-radius:var(--radius);border-left:3px solid var(--border)">${escHtml(g.notes)}</div>`:''}
+      ${g.contactName?`<div style="font-size:12px;color:var(--muted);margin-bottom:8px">📧 ${escHtml(g.contactName)}${g.contactEmail?' — <a href="mailto:'+escHtml(g.contactEmail)+'" style="color:var(--teal)">'+escHtml(g.contactEmail)+'</a>':''}</div>`:''}
+      <div class="grant-card__actions">
+        <button class="btn btn-ghost btn-sm" onclick="openGrantDocModal('${g.id}')">📄 Generate doc</button>
+        <button class="btn btn-ghost btn-sm" onclick="openGrantModal('${g.id}')">✏️ Edit</button>
+        ${g.funderWebsite?`<a href="${escHtml(g.funderWebsite)}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">🌐 Website ↗</a>`:''}
+        ${g.applicationDocUrl?`<a href="${escHtml(g.applicationDocUrl)}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">📁 Application</a>`:''}
+        ${g.awardLetterUrl?`<a href="${escHtml(g.awardLetterUrl)}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">🏆 Award letter</a>`:''}
+        ${g.reportDocUrl?`<a href="${escHtml(g.reportDocUrl)}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">📊 Report</a>`:''}
+        <button class="btn btn-sm" style="background:#FEE2E2;color:#DC2626;border:none;margin-left:auto" onclick="deleteGrant('${g.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Calendar ──
+function renderGrantCalendar() {
+  const now = new Date(); now.setHours(0,0,0,0);
+  const cutoff = new Date(now); cutoff.setDate(cutoff.getDate()+90);
+  const events = [];
+  grantData.forEach(g=>{
+    const push = (dateStr, type) => {
+      if (!dateStr) return;
+      const d = new Date(dateStr+'T12:00:00');
+      if (d>=now && d<=cutoff) events.push({date:d,type,grantName:g.funderName,status:g.status});
+    };
+    push(g.applicationDeadline,'Application deadline');
+    push(g.decisionDate,'Decision expected');
+    push(g.reportDueDate,'Report due');
+  });
+  events.sort((a,b)=>a.date-b.date);
+  const el = document.getElementById('grantCalendarList');
+  if (!events.length) { el.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);font-size:14px">No deadlines in the next 90 days.</div>'; return; }
+  el.innerHTML = events.map(ev=>{
+    const days = Math.ceil((ev.date-now)/(1000*60*60*24));
+    const u = days<=14?'red':days<=28?'yellow':'green';
+    const tc = ev.type.includes('Report')?'report-type':ev.type.includes('Decision')?'decision-type':'';
+    return `<div class="gcal-row">
+      <div class="gcal-urgency ${u}"></div>
+      <div class="gcal-date">${ev.date.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+      <span class="gcal-type ${tc}">${escHtml(ev.type)}</span>
+      <div class="gcal-info"><div class="gcal-name">${escHtml(ev.grantName)}</div><div class="gcal-sub">${GRANT_STATUS_META[ev.status]?.icon||''} ${ev.status}</div></div>
+      <div class="gcal-days ${u}">${days}d</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Tab switching ──
+function setGrantTab(tab, el) {
+  document.querySelectorAll('#grantTabs .view-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('grantTabPipeline').style.display = tab==='pipeline'?'':'none';
+  document.getElementById('grantTabCalendar').style.display = tab==='calendar'?'':'none';
+  document.getElementById('grantTabProfile').style.display  = tab==='profile'?'':'none';
+  if (tab==='calendar') renderGrantCalendar();
+  if (tab==='profile')  { loadOrgProfile(); populateOrgProfileForm(); }
+}
+
+// ── Render panel ──
+function renderGrantsPanel() {
+  loadGrants(); loadOrgProfile();
+  renderGrantKPIs(); renderPipelineTabs(); renderGrantCards();
+}
+
+// ── Grant modal ──
+function openGrantModal(id) {
+  const g = id ? grantData.find(x=>x.id===id) : null;
+  document.getElementById('grantModalTitle').textContent = g ? 'Edit grant' : 'Add grant';
+  document.getElementById('grantEditId').value = g ? g.id : '';
+  const set = (k,v) => { const el=document.getElementById(k); if(el) el.value=v; };
+  set('gFunderName', g?.funderName||''); set('gFunderType', g?.funderType||'Foundation');
+  set('gProgram', g?.programName||''); set('gFocusArea', g?.focusArea||'Mission Trips');
+  set('gAmtReq', g?.amountRequested||''); set('gAmtAwarded', g?.amountAwarded||'');
+  set('gStatus', g?.status||'Researching'); set('gRestricted', String(g?.restricted||false));
+  set('gDeadline', g?.applicationDeadline||''); set('gDecision', g?.decisionDate||'');
+  set('gReportDue', g?.reportDueDate||''); set('gContactName', g?.contactName||'');
+  set('gContactEmail', g?.contactEmail||''); set('gContactPhone', g?.contactPhone||'');
+  set('gFunderWebsite', g?.funderWebsite||''); set('gNextEligible', g?.nextEligibleDate||'');
+  set('gAppDocUrl', g?.applicationDocUrl||''); set('gAwardLetterUrl', g?.awardLetterUrl||'');
+  set('gReportDocUrl', g?.reportDocUrl||''); set('gNotes', g?.notes||'');
+  document.getElementById('grantModal').classList.add('open');
+}
+function closeGrantModal() { document.getElementById('grantModal').classList.remove('open'); }
+
+function saveGrant() {
+  const name = document.getElementById('gFunderName').value.trim();
+  if (!name) { alert('Funder name is required.'); return; }
+  const editId = document.getElementById('grantEditId').value;
+  const g = {
+    id: editId || 'g_'+Date.now(),
+    funderName:         name,
+    funderType:         document.getElementById('gFunderType').value,
+    programName:        document.getElementById('gProgram').value.trim(),
+    focusArea:          document.getElementById('gFocusArea').value,
+    amountRequested:    parseFloat(document.getElementById('gAmtReq').value)||0,
+    amountAwarded:      parseFloat(document.getElementById('gAmtAwarded').value)||0,
+    status:             document.getElementById('gStatus').value,
+    restricted:         document.getElementById('gRestricted').value==='true',
+    applicationDeadline:document.getElementById('gDeadline').value,
+    decisionDate:       document.getElementById('gDecision').value,
+    reportDueDate:      document.getElementById('gReportDue').value,
+    contactName:        document.getElementById('gContactName').value.trim(),
+    contactEmail:       document.getElementById('gContactEmail').value.trim(),
+    contactPhone:       document.getElementById('gContactPhone').value.trim(),
+    funderWebsite:      document.getElementById('gFunderWebsite').value.trim(),
+    notes:              document.getElementById('gNotes').value.trim(),
+    applicationDocUrl:  document.getElementById('gAppDocUrl').value.trim(),
+    awardLetterUrl:     document.getElementById('gAwardLetterUrl').value.trim(),
+    reportDocUrl:       document.getElementById('gReportDocUrl').value.trim(),
+    reapplyEligible:    true,
+    nextEligibleDate:   document.getElementById('gNextEligible').value,
+  };
+  if (editId) { const idx=grantData.findIndex(x=>x.id===editId); if(idx>=0) grantData[idx]=g; }
+  else { grantData.unshift(g); }
+  saveGrantData();
+  closeGrantModal();
+  renderGrantKPIs(); renderPipelineTabs(); renderGrantCards();
+  toast(editId ? 'Grant updated.' : 'Grant added.');
+}
+
+function deleteGrant(id) {
+  const g = grantData.find(x=>x.id===id);
+  if (!g || !confirm('Delete grant for "'+g.funderName+'"?')) return;
+  grantData = grantData.filter(x=>x.id!==id);
+  saveGrantData(); renderGrantKPIs(); renderPipelineTabs(); renderGrantCards();
+  toast('Grant deleted.');
+}
+
+// ── Document Generator ──
+let currentDocGrantId = null;
+function openGrantDocModal(grantId) {
+  currentDocGrantId = grantId;
+  const g = grantData.find(x=>x.id===grantId);
+  document.getElementById('docGenTitle').textContent = '📄 Generate Document — '+(g?.funderName||'');
+  document.getElementById('grantDocModal').classList.add('open');
+  loadOrgProfile();
+  generateDoc();
+}
+function closeGrantDocModal() { document.getElementById('grantDocModal').classList.remove('open'); }
+
+function generateDoc() {
+  const g = currentDocGrantId ? grantData.find(x=>x.id===currentDocGrantId) : null;
+  if (!g) return;
+  const type  = document.getElementById('docGenType').value;
+  const scope = document.getElementById('docGenScope').value;
+  document.getElementById('docGenOutput').value = type==='application' ? buildApplicationDoc(g,orgProfile,scope) : buildReportDoc(g,orgProfile);
+}
+
+function ep(str) { return String(str||'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"'); }
+
+function buildApplicationDoc(g, p, scope) {
+  const amt   = '$'+g.amountRequested.toLocaleString();
+  const today = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const ein   = p.ein||'[EIN — confirm before submitting]';
+
+  const coverLetter =
+`══════════════════════════════════════════════
+COVER LETTER
+══════════════════════════════════════════════
+${today}
+
+${ep(g.contactName)||'[Grants Officer / Grants Committee]'}
+${ep(g.funderName)}
+${g.funderWebsite ? ep(g.funderWebsite) : '[Funder address — add before submitting]'}
+
+Dear ${g.contactName ? ep(g.contactName) : 'Grants Committee'}:
+
+My name is ${ep(p.execDirector)||'Walker Somerville'}, and I serve as the Executive Director of ${ep(p.legalName)||'Central American Ministry Outreach, Inc.'} — also known as CAMINO Honduras — a 501(c)(3) nonprofit organization building safe, permanent homes and transforming communities in northern Honduras. We write to respectfully request ${amt} from ${ep(g.funderName)}${g.programName?' through the '+ep(g.programName):''} to support our [${ep(g.focusArea)} program — add specific project name before submitting].
+
+Since 2014, CAMINO has built more than ${ep(p.homesBuilt)||'115'} permanent homes, engaged ${ep(p.volunteersServed)||'400+'} volunteers from across the United States, and reached ${ep(p.communitiesReached)||'22'} communities across ${ep(p.serviceRegions)||'northern Honduras'}. Our model pairs North American volunteer teams with Honduran families and local partners to deliver housing at approximately $5,500 per home.
+
+[EDIT: Add 2–3 sentences explaining why THIS funder is a strong match. Reference the funder's stated priorities and how CAMINO's programs align.]
+
+We would welcome the opportunity to discuss our work and are grateful for your consideration.
+
+Sincerely,
+
+${ep(p.execDirector)||'Walker Somerville'}
+Executive Director, CAMINO Honduras
+${ep(p.execEmail)||'[email]'}${p.execPhone?' | '+ep(p.execPhone):''}
+www.caminohonduras.com | EIN: ${ein}`;
+
+  const orgOverview =
+`
+
+══════════════════════════════════════════════
+ORGANIZATION OVERVIEW
+══════════════════════════════════════════════
+Legal Name:         ${ep(p.legalName)||'[Legal name]'}
+Operating Name:     ${ep(p.dbaName)||'CAMINO Honduras'}
+EIN:                ${ein}
+State:              ${ep(p.incorporationState)||'Virginia'}
+501(c)(3) since:    ${ep(p.nonprofit501c3Date)||'[Date]'}
+Annual Budget:      ${ep(p.annualBudget)||'[Budget]'}
+
+MISSION
+${ep(p.missionStatement)||'[Mission statement]'}
+
+VISION
+${ep(p.visionStatement)||'[Vision statement]'}
+
+HISTORY & TRACK RECORD
+CAMINO Honduras was founded in 2014 by Walker and Seiny Somerville. Today we operate with a full-time staff of ${ep(p.fullTimeStaff)||'4'} and a volunteer board of ${ep(p.boardSize)||'6'} directors.
+
+- ${ep(p.homesBuilt)||'115+'} permanent homes built
+- ${ep(p.volunteersServed)||'400+'} volunteers served
+- ${ep(p.communitiesReached)||'22'} communities reached
+- ${ep(p.yearsOperating)||'12'} years of continuous operation
+- Average home cost: $5,500 (materials + skilled Honduran labor + coordination)
+- 100% of homes built on legally titled land
+
+PROGRAMS
+${(p.programs||[]).map(pr=>`${ep(pr.name)}: ${ep(pr.desc)}`).join('\n\n')}`;
+
+  const narrative =
+`
+
+══════════════════════════════════════════════
+PROGRAM / PROJECT NARRATIVE
+══════════════════════════════════════════════
+PROBLEM STATEMENT
+Honduras consistently ranks among the poorest nations in Latin America, with approximately 59% of the population living below the poverty line (World Bank, 2024). In the communities CAMINO serves, inadequate housing is not just a symptom of poverty — it is a primary driver. Families in dirt-floor, tin-roof structures face heightened risk of respiratory illness, injury, flooding, and insecurity. Children cannot study. Adults struggle to maintain employment. The cycle repeats.
+
+CAMINO'S APPROACH
+[EDIT: Describe the specific project or program this grant will fund.]
+
+CAMINO's ${ep(g.focusArea)} program addresses [specific need] through [approach]. Our theory of change: when families receive [safe housing / trip resources / infrastructure support], they are positioned to [measurable outcome], leading to [long-term transformation].
+
+PROJECT ACTIVITIES & TIMELINE (grant period: [START DATE – END DATE])
+Q1: [Activity 1 — e.g., community assessment, site selection, volunteer recruitment]
+Q2: [Activity 2 — e.g., materials procurement, foundation preparation, team arrival]
+Q3: [Activity 3 — e.g., construction phases, community training, infrastructure work]
+Q4: [Activity 4 — e.g., home dedications, impact evaluation, report preparation]
+
+COMMUNITY PARTNERSHIP
+Every CAMINO project requires: (1) formal partnership with local community leadership, (2) family commitment and sweat equity, (3) clear land title documentation, and (4) local skilled labor at prevailing wages. This model ensures community ownership, increases durability, and preserves dignity.`;
+
+  const goalsOutcomes =
+`
+
+══════════════════════════════════════════════
+GOALS & OUTCOMES
+══════════════════════════════════════════════
+OBJECTIVES [EDIT: Replace with 3–5 SMART objectives for this grant]
+
+Objective 1: By [DATE], CAMINO will [complete X homes / serve X volunteers] in [location], measured by [construction logs / volunteer records].
+
+Objective 2: By [DATE], [X%] of families will report [improved housing conditions / outcome] measured by [pre/post survey].
+
+Objective 3: By [DATE], CAMINO will deliver a complete final report to ${ep(g.funderName)} documenting all activities, outcomes, and expenditures.
+
+EVALUATION
+CAMINO tracks outcomes through construction logs, photo documentation, pre/post community surveys (administered in Spanish by Seiny Somerville), volunteer satisfaction surveys, and annual board review of program data.`;
+
+  const budget =
+`
+
+══════════════════════════════════════════════
+BUDGET NARRATIVE
+══════════════════════════════════════════════
+AMOUNT REQUESTED:   ${amt}
+TOTAL PROJECT COST: $[total — add before submitting]
+OTHER FUNDING:      $[amount] from [source]
+
+LINE-ITEM BREAKDOWN [EDIT: Replace with actual project budget]
+Personnel (in-country staff)               $[    ]
+Materials & construction supplies          $[    ]
+Skilled Honduran labor (prevailing wage)   $[    ]
+Land title documentation / legal fees      $[    ]
+Volunteer coordination & logistics         $[    ]
+Community partnership activities           $[    ]
+Monitoring & evaluation                    $[    ]
+Program administration (≤15%)             $[    ]
+─────────────────────────────────────────
+TOTAL                                      $[    ]
+
+LEVERAGE: This request of ${amt} will be matched with $[X] from individual donors, $[X] from volunteer trip fees, and $[X] in-kind volunteer labor.`;
+
+  const capacity =
+`
+
+══════════════════════════════════════════════
+ORGANIZATIONAL CAPACITY
+══════════════════════════════════════════════
+${ep(p.boilerplate)||'[Org boilerplate — update in Org Profile tab]'}
+
+BOARD OVERSIGHT
+Our ${ep(p.boardSize)||'6'}-member volunteer board meets quarterly and includes expertise in nonprofit law, accounting, international development, and missions. All expenditures over $1,000 require dual-signature authorization.
+
+FINANCIAL HEALTH
+- Annual budget: ${ep(p.annualBudget)||'[Budget]'}
+- Program efficiency: [X%] of expenses go directly to programs [add before submitting]
+- No material findings in most recent financial review
+
+PARTNERSHIPS
+CAMINO partners with established Honduran community leaders, local municipal governments, and a network of US partner churches who fund and staff mission trips. Key partners include [add before submitting].
+
+[END OF APPLICATION — Remove section headers before pasting into grant portal]`;
+
+  const sections = {full:coverLetter+orgOverview+narrative+goalsOutcomes+budget+capacity, cover:coverLetter, narrative:narrative+goalsOutcomes, budget};
+  return sections[scope] || sections.full;
+}
+
+function buildReportDoc(g, p) {
+  const today = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  return `══════════════════════════════════════════════
+GRANT PROGRESS / FINAL REPORT
+${ep(g.funderName)} — ${ep(g.programName)||'[Program]'}
+══════════════════════════════════════════════
+Organization:   ${ep(p.legalName)||'Central American Ministry Outreach, Inc.'} (CAMINO Honduras)
+EIN:            ${ep(p.ein)||'[EIN]'}
+Award amount:   $${(g.amountAwarded||0).toLocaleString()}
+Grant period:   [Start date] – [End date — confirm before submitting]
+Report date:    ${today}
+Prepared by:    ${ep(p.execDirector)||'Walker Somerville'}, Executive Director
+
+──────────────────────────────────────────
+EXECUTIVE SUMMARY
+──────────────────────────────────────────
+[EDIT: 2–3 sentences summarizing the grant period — what was accomplished and the most significant outcome.]
+
+During this grant period, CAMINO Honduras used the $${(g.amountAwarded||0).toLocaleString()} award from ${ep(g.funderName)} to [primary activity]. We are pleased to report [headline outcome]. [Add: any notable challenge and how it was addressed.]
+
+──────────────────────────────────────────
+ACTIVITIES COMPLETED
+──────────────────────────────────────────
+[EDIT: List each major activity with dates, locations, and participants.]
+
+Activity 1: [Name]
+  Dates:        [Month/Year]
+  Location:     [Community, Department, Honduras]
+  Participants: [X volunteers / X community members / X families]
+  Description:  [2–3 sentences]
+
+Activity 2: [Name]
+  Dates:        [Month/Year]
+  Location:     [Community, Department, Honduras]
+  Participants: [X volunteers / X community members / X families]
+  Description:  [2–3 sentences]
+
+──────────────────────────────────────────
+OUTCOMES ACHIEVED vs. GOALS
+──────────────────────────────────────────
+[EDIT: Compare original objectives to actual results. Be honest about shortfalls.]
+
+Goal 1: [Restate original objective]
+Result: [What happened] — [Met / Partially met / Not met — explain]
+
+Goal 2: [Restate original objective]
+Result: [What happened] — [Met / Partially met / Not met — explain]
+
+Goal 3: [Restate original objective]
+Result: [What happened] — [Met / Partially met / Not met — explain]
+
+──────────────────────────────────────────
+STORIES & TESTIMONIALS
+──────────────────────────────────────────
+[EDIT: Replace with real stories — 1–2 compelling family or volunteer quotes.]
+
+"[Direct quote from a family member about the impact on their life.]"
+— [First name], family served in [Community], [Month Year]
+
+"[Direct quote from a volunteer.]"
+— [Name], volunteer from [Church / City], [Trip date]
+
+──────────────────────────────────────────
+FINANCIAL REPORT — BUDGET VS. ACTUAL
+──────────────────────────────────────────
+TOTAL AWARDED:    $${(g.amountAwarded||0).toLocaleString()}
+TOTAL EXPENDED:   $[amount — verify against books]
+BALANCE:          $[remaining — explain any unexpended funds]
+
+                              Budgeted    Actual      Variance
+Personnel                     $[    ]     $[    ]     $[    ]
+Materials & supplies           $[    ]     $[    ]     $[    ]
+Skilled labor                  $[    ]     $[    ]     $[    ]
+Land / legal                   $[    ]     $[    ]     $[    ]
+Volunteer coordination         $[    ]     $[    ]     $[    ]
+Program administration         $[    ]     $[    ]     $[    ]
+──────────────────────────────────────────────────────────
+TOTAL                          $[    ]     $[    ]     $[    ]
+
+[Explain variances > 10%]
+
+──────────────────────────────────────────
+PHOTOS
+──────────────────────────────────────────
+[Insert 4–6 photos with captions:
+  • Before/after of construction site
+  • Volunteer team with community members
+  • Family at home dedication
+  • Community activity or program highlight
+  Captions: community name, date, brief description.]
+
+──────────────────────────────────────────
+THANK YOU
+──────────────────────────────────────────
+On behalf of the families we serve and the CAMINO team, we extend our sincere gratitude to ${ep(g.funderName)} for this investment. Your partnership directly enabled [specific outcome]. We welcome any questions.
+
+${ep(p.execDirector)||'Walker Somerville'}, Executive Director
+${ep(p.execEmail)||'[email]'}${p.execPhone?' | '+ep(p.execPhone):''}
+
+[END OF REPORT — Attach receipts, site logs, and volunteer rosters per funder requirements.]`;
+}
+
+function copyGrantDoc() {
+  const ta = document.getElementById('docGenOutput');
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(()=>toast('Copied to clipboard!')).catch(()=>{document.execCommand('copy');toast('Copied!');});
+}
+function downloadGrantDoc() {
+  const g = currentDocGrantId ? grantData.find(x=>x.id===currentDocGrantId) : null;
+  const text = document.getElementById('docGenOutput').value;
+  const type = document.getElementById('docGenType').value;
+  const fname = ((g?.funderName||'CAMINO').replace(/[^a-zA-Z0-9]+/g,'-').toLowerCase())+'-'+type+'.txt';
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,'+encodeURIComponent(text);
+  a.download = fname; a.click();
+}
+function fmtDate(str) {
+  if (!str) return '—';
+  try { return new Date(str+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); } catch(e) { return str; }
+}
+document.getElementById('grantModal').addEventListener('click', e => { if (e.target===document.getElementById('grantModal')) closeGrantModal(); });
+document.getElementById('grantDocModal').addEventListener('click', e => { if (e.target===document.getElementById('grantDocModal')) closeGrantDocModal(); });
 
 // ═══════════════════════ INIT ═══════════════════════
 initCal();
