@@ -38,6 +38,29 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Automated policy watch feeds + Cloudflare scheduled monitor spec
+- What changed:
+  - **admin/index.html**: Policy Watch panel expanded from 4 → 6 tabs
+    - 9 live feeds via CORS proxy (allorigins.win) or direct JSON API: State Dept advisory, US Embassy, ReliefWeb, InSight Crime, WOLA, AS/COA, WHO, ProMED, PAHO
+    - "Refresh All" button + per-feed ⟳ buttons with animated live-dot status badges
+    - localStorage feed cache with per-feed TTL (24h–7d); auto-refresh on panel open
+    - Advisory level change detection → red alert banner auto-shown on level shift
+    - "Changes This Week" amber card auto-populates with fresh items across all feeds
+    - World Bank tiles: population, GDP per capita, poverty rate (direct JSON API)
+    - Tab 5 (Political Watch): 5 indicator cards (diplomacy, USAID cuts, Castro env, migration/TPS/remittances, CAFTA-DR), WOLA + AS/COA live feeds, policy org source table
+    - Tab 6 (Health & Outbreak): WHO/ProMED/PAHO live feeds, 10-disease endemic table, pre-trip health checklist, Honduras medical facilities, health alert → crisis comms integration
+    - data-pwtab attribute on tab buttons (replaces fragile text-matching)
+  - **cloudflare/workers/policy-monitor.js**: NEW Cloudflare Scheduled Worker — cron "0 8 * * 1", fetches all sources weekly, compares with POLICY_STORE KV, sends Resend email alert on advisory level change, sends Monday digest
+  - **cloudflare/wrangler.toml**: POLICY_STORE KV namespace + [triggers] crons entry
+  - **trips/jul-2026-culpeper.html**: Health advisory card in Logistics tab reads `camino_health_alerts` localStorage; shows red alert if recent Honduras-tagged alert detected
+- Status: Complete. Committed 74590c1 and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Deploy policy-monitor.js to Cloudflare Workers with POLICY_STORE KV + BOARD_EMAIL_LIST env var
+
 ### 2026-06-20 — Participant profiles, activity considerations, notification templates
 - What changed:
   - **admin/index.html**: Full participant profile system on Mission Trips panel
