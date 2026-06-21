@@ -910,6 +910,49 @@
   </style>
 </head>
 <body>
+<!-- ══════════════ ADMIN PASSWORD GATE ══════════════ -->
+<div id="adminGate" style="position:fixed;inset:0;background:linear-gradient(135deg,#1a1a2e 0%,#0d1117 100%);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="background:white;border-radius:16px;padding:44px;max-width:420px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.6)">
+    <div style="width:56px;height:56px;border-radius:50%;background:#BA7517;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:white;margin:0 auto 18px;letter-spacing:-1px">OPS</div>
+    <h1 style="font-size:22px;font-weight:800;margin-bottom:8px;color:#1a1a18">Admin Portal</h1>
+    <p style="font-size:13px;color:#6b6b68;line-height:1.65;margin-bottom:24px">CAMINO Honduras · Authorized staff only.<br>Site admin, CRM, social calendar, trips &amp; grants.</p>
+    <input type="password" id="adminPwInput" placeholder="Admin password"
+      style="width:100%;padding:12px 16px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:15px;font-family:inherit;box-sizing:border-box;margin-bottom:10px"
+      autocomplete="current-password" />
+    <div id="adminPwError" style="display:none;color:#DC2626;font-size:13px;margin-bottom:10px">Incorrect password. Contact Walker Somerville.</div>
+    <button onclick="checkAdminPw()" style="width:100%;background:#BA7517;color:white;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:4px">Enter Admin →</button>
+    <p style="font-size:12px;color:#9a9a98;margin-top:16px">
+      Board members: <a href="../board/" style="color:#0F6E56;font-weight:600">Board Portal →</a>
+    </p>
+  </div>
+</div>
+<script>
+(function(){
+  if(sessionStorage.getItem('camino_admin_auth')==='true'){
+    document.getElementById('adminGate').style.display='none';
+    return;
+  }
+  var inp=document.getElementById('adminPwInput');
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')checkAdminPw();});
+  setTimeout(function(){inp.focus();},120);
+})();
+function checkAdminPw(){
+  // Default password: camino-admin  (Walker: change this to something private)
+  if(document.getElementById('adminPwInput').value==='camino-admin'){
+    sessionStorage.setItem('camino_admin_auth','true');
+    document.getElementById('adminGate').style.display='none';
+  }else{
+    document.getElementById('adminPwError').style.display='block';
+    document.getElementById('adminPwInput').value='';
+    document.getElementById('adminPwInput').focus();
+  }
+}
+function adminLogout(){
+  sessionStorage.removeItem('camino_admin_auth');
+  location.reload();
+}
+</script>
+
 <a href="#admin-main" class="skip-link-admin">Skip to main content</a>
 
 <!-- ══════════════════ SIDEBAR ══════════════════ -->
@@ -953,12 +996,6 @@
     <button class="nav-item" data-panel="traveldocs" onclick="switchPanel('traveldocs', this)">
       <span class="nav-item__icon">🛂</span> Travel Docs
     </button>
-    <button class="nav-item" data-panel="boardgov" onclick="switchPanel('boardgov', this)">
-      <span class="nav-item__icon">🏛️</span> Board Governance
-    </button>
-    <button class="nav-item" data-panel="compliance" onclick="switchPanel('compliance', this)">
-      <span class="nav-item__icon">⚖️</span> 501(c)(3) Compliance
-    </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Development</div>
     <button class="nav-item" data-panel="grants" onclick="switchPanel('grants', this)">
@@ -978,16 +1015,27 @@
       <span class="nav-item__icon">🌍</span> Policy &amp; Risk Watch
     </button>
 
+    <div class="sidebar-tag" style="margin-top:8px">Board &amp; Finance</div>
+    <button class="nav-item" data-panel="boardgov" onclick="switchPanel('boardgov', this)">
+      <span class="nav-item__icon">🏛️</span> Board Governance
+    </button>
+    <button class="nav-item" data-panel="compliance" onclick="switchPanel('compliance', this)">
+      <span class="nav-item__icon">⚖️</span> 501(c)(3) Compliance
+    </button>
+    <button class="nav-item" onclick="window.open('../board/','_blank')" style="color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);margin-top:4px">
+      <span class="nav-item__icon">🔐</span> Board Portal ↗
+    </button>
+
     <div class="sidebar-tag" style="margin-top:8px">Links</div>
     <button class="nav-item" onclick="window.open('../index.html','_blank')">
       <span class="nav-item__icon">🌐</span> View site ↗
     </button>
   </nav>
 
-  <div class="sidebar-footer">
-    POC — open, no auth.<br>
-    Backend: <a href="https://developers.cloudflare.com/workers/" target="_blank">Cloudflare Workers</a> planned.<br>
-    Data: localStorage (client-side).
+  <div class="sidebar-footer" style="padding:14px 18px;font-size:11px;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.08)">
+    <button onclick="adminLogout()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;width:100%;margin-bottom:8px">⬅ Log out</button>
+    CAMINO Admin · localStorage POC<br>
+    Cloudflare Workers backend planned.
   </div>
 </aside>
 
@@ -996,8 +1044,8 @@
   <header class="main-header">
     <h1 id="mainTitle">Social Calendar</h1>
     <div class="main-header__right">
-      <span class="badge-poc">POC · No auth</span>
-      <span>CAMINO Honduras</span>
+      <span class="badge-poc">Admin · Authenticated</span>
+      <button onclick="adminLogout()" style="background:none;border:1px solid #ccc;padding:4px 10px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;color:var(--muted)">Log out</button>
     </div>
   </header>
 
