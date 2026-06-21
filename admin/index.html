@@ -1014,12 +1014,7 @@ function adminLogout(){
   </div>
 
   <nav class="sidebar-nav">
-    <div class="sidebar-tag">Content</div>
-    <button class="nav-item active" data-panel="calendar" onclick="switchPanel('calendar', this)">
-      <span class="nav-item__icon">📅</span> Social Calendar
-    </button>
-
-    <div class="sidebar-tag" style="margin-top:8px">Trips</div>
+    <div class="sidebar-tag">Trips</div>
     <button class="nav-item" data-panel="trips" onclick="switchPanel('trips', this)">
       <span class="nav-item__icon">✈️</span> Mission Trips
     </button>
@@ -1035,9 +1030,9 @@ function adminLogout(){
       <span class="nav-item__icon">💛</span> Donations
     </button>
 
-    <div class="sidebar-tag" style="margin-top:8px">People</div>
+    <div class="sidebar-tag" style="margin-top:8px">CRM</div>
     <button class="nav-item" data-panel="crm" onclick="switchPanel('crm', this)">
-      <span class="nav-item__icon">👥</span> Donors &amp; CRM
+      <span class="nav-item__icon">👥</span> Donors - Individuals
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Operations</div>
@@ -1054,6 +1049,9 @@ function adminLogout(){
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Communications</div>
+    <button class="nav-item" data-panel="calendar" onclick="switchPanel('calendar', this)">
+      <span class="nav-item__icon">📅</span> Social Calendar
+    </button>
     <button class="nav-item" data-panel="comms" onclick="switchPanel('comms', this)">
       <span class="nav-item__icon">📡</span> Communication Plan
     </button>
