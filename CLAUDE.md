@@ -50,6 +50,23 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
   4. Replace placeholder board photos/LinkedIn links in about/board.html
   5. Set real WhatsApp group link in trips/jul-2026-culpeper.html
 
+### 2026-06-20 — Cloudflare backend architecture + Donor CRM + Stripe donation form
+- What changed:
+  - **cloudflare/README.md**: Full architecture doc — Cloudflare Pages, Workers, D1, KV, R2, Access, Queues; data flow diagrams, deploy instructions, env var table
+  - **cloudflare/schema.sql**: Complete D1 schema — 9 tables (contacts, donations, recurring_giving, trips, trip_participants, churches, communications, board_members, grants, audit_log); indexes; seed INSERT for 4 trips
+  - **cloudflare/wrangler.toml**: Full Workers config — D1 binding, 3 KV namespaces, 3 R2 buckets, 3 Queue producers + 2 consumers, routes, env vars
+  - **cloudflare/workers/donate.js**: Stripe Worker stub — validates request, upserts D1 contact, creates PaymentIntent (or SetupIntent for recurring), inserts pending donation, returns clientSecret; queue consumer for receipt processing
+  - **cloudflare/workers/send-receipt.js**: Resend receipt Worker — fetches D1 donor + donation, renders full branded HTML tax receipt (IRS language, EIN, gift summary), POSTs to Resend API, marks receipt_sent in D1, logs communication
+  - **give.html**: New donation form section above existing give-cards — frequency toggle (one-time/monthly/quarterly), amount presets ($25–$500) + custom, designation dropdown, donor info fields, Stripe Elements placeholder, submit simulation with spinner, thank-you card with fake confirmation number
+  - **admin/index.html**: Full Donor CRM panel — 5 KPI metrics (total donors, YTD raised, avg gift, recurring, new this month), donor table with search/type/recurring filters, expandable donor detail panel (contact info, giving summary, gift history, trips, notes, action buttons), Partner Churches tab; 10 seeded donors + 5 seeded churches with realistic data; Add Donor + Add Church modals
+- Status: Complete. All POC — localStorage for donor data, Cloudflare Workers are stubs showing full production shape.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Wire real Stripe keys into donate.js Worker and deploy to Cloudflare
+  4. Replace `[Member]` placeholders in about/board.html governance table
+  5. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+
 <!-- Most recent session at the top. Format:
 ### [DATE] — [brief title]
 - What changed: ...

@@ -297,6 +297,67 @@
     }
     #toast.show { transform: translateY(0); opacity: 1; }
 
+    /* ── CRM / Donors ── */
+    .crm-metrics { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+    @media (max-width: 900px) { .crm-metrics { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .crm-metrics { grid-template-columns: repeat(2, 1fr); } }
+    .crm-metric { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; }
+    .crm-metric__val { font-size: 26px; font-weight: 700; line-height: 1.1; }
+    .crm-metric__lbl { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+    .crm-metric__sub { font-size: 11px; color: var(--teal); margin-top: 2px; font-weight: 600; }
+    .crm-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+    .crm-tab { padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: none; font-family: inherit; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color .15s, border-color .15s; }
+    .crm-tab:hover { color: var(--text); }
+    .crm-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+    .crm-subpanel { display: none; }
+    .crm-subpanel.active { display: block; }
+    .donor-table-wrap { overflow-x: auto; }
+    .donor-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .donor-table th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); border-bottom: 1.5px solid var(--border); background: #f8f8f8; white-space: nowrap; }
+    .donor-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .donor-table tr:last-child td { border-bottom: none; }
+    .donor-table tr.donor-row { cursor: pointer; transition: background .12s; }
+    .donor-table tr.donor-row:hover { background: var(--teal-light); }
+    .donor-table tr.donor-row.expanded { background: #f0faf7; }
+    .donor-name-cell { font-weight: 600; color: var(--text); }
+    .donor-email-cell { color: var(--muted); font-family: monospace; font-size: 12px; }
+    .donor-amt-cell { font-weight: 700; color: var(--teal); text-align: right; white-space: nowrap; }
+    .donor-date-cell { white-space: nowrap; color: var(--muted); font-size: 12px; }
+    .type-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; padding: 2px 8px; border-radius: 12px; white-space: nowrap; }
+    .type-donor     { background: var(--teal-light); color: var(--teal); }
+    .type-volunteer { background: var(--amber-light); color: var(--amber-dark); }
+    .type-church    { background: #f3e8ff; color: #7c3aed; }
+    .type-both      { background: #e0f2fe; color: #0369a1; }
+    .type-recurring { background: #dcfce7; color: #166534; font-size: 9px; margin-left: 4px; }
+    .donor-detail-row td { padding: 0; }
+    .donor-detail-inner { background: #f8fbff; border-top: 1.5px solid var(--teal); padding: 24px 28px; animation: slideDown .2s ease; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr 1fr; } }
+    .detail-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; }
+    .detail-block h4 { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 12px; }
+    .detail-kv { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+    .detail-kv span:first-child { color: var(--muted); }
+    .detail-kv span:last-child  { font-weight: 600; color: var(--text); text-align: right; max-width: 60%; }
+    .mini-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .mini-table th { text-align: left; padding: 5px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); border-bottom: 1px solid var(--border); background: #f8f8f8; }
+    .mini-table td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
+    .mini-table tr:last-child td { border-bottom: none; }
+    .status-completed { color: #166534; font-weight: 700; font-size: 10px; }
+    .status-recurring { color: #0369a1; font-weight: 700; font-size: 10px; }
+    .status-pending   { color: var(--amber); font-weight: 700; font-size: 10px; }
+    .crm-search-row { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .crm-search { flex: 1; min-width: 180px; max-width: 320px; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 13px; font-family: inherit; outline: none; transition: border-color .15s; }
+    .crm-search:focus { border-color: var(--teal); }
+    .crm-filter { padding: 8px 10px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 12px; font-family: inherit; outline: none; background: #fff; cursor: pointer; }
+    .church-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .church-table th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); border-bottom: 1.5px solid var(--border); background: #f8f8f8; }
+    .church-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .church-table tr:last-child td { border-bottom: none; }
+    .rel-partner  { background: var(--teal-light); color: var(--teal); }
+    .rel-prospect { background: var(--amber-light); color: var(--amber-dark); }
+    .rel-alumni   { background: #e8fce8; color: #166534; }
+
     /* ── Accessibility ── */
     .skip-link-admin {
       position: fixed; top: -80px; left: 14px; z-index: 9999;
@@ -328,6 +389,108 @@
     .traveldoc-warning { background: var(--amber-light); border-left: 4px solid var(--amber); border-radius: var(--radius); padding: 12px 16px; font-size: 12px; color: var(--amber-dark); line-height: 1.6; margin-bottom: 16px; }
     .doc-edit-form { border-top: 1.5px solid var(--border); margin-top: 14px; padding-top: 14px; display: none; }
     .doc-edit-form.open { display: block; }
+
+    /* doc-row (new per-document list inside card) */
+    .doc-rows-list { margin: 10px 0 6px; }
+    .doc-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .doc-row:last-child { border-bottom: none; }
+    .doc-row-left { display: flex; gap: 8px; align-items: flex-start; flex: 1; min-width: 0; }
+    .doc-flag { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .doc-row-label { font-size: 13px; font-weight: 600; line-height: 1.3; }
+    .doc-row-expiry { font-size: 12px; color: var(--muted); margin-top: 2px; font-family: monospace; letter-spacing: .03em; }
+    .doc-row-note { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 2px; line-height: 1.4; }
+    .doc-clearance-row { display: flex; gap: 20px; margin: 12px 0 8px; padding: 10px 14px; background: #f5f5f5; border-radius: var(--radius); }
+    .doc-clearance-item { display: flex; flex-direction: column; gap: 3px; }
+    .doc-clearance-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+    .cl-badge { font-size: 12px; font-weight: 700; }
+    .doc-entry-notes { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.5; padding-top: 6px; }
+    .badge-open { background: #EFF6FF; color: #1D4ED8; border: 1.5px solid #BFDBFE; }
+    .traveldoc-dual-note { font-size: 12px; background: #f0f8f6; border-left: 3px solid var(--teal); padding: 8px 12px; border-radius: 0 var(--radius) var(--radius) 0; margin-top: 14px; color: var(--text); line-height: 1.5; }
+
+    /* Panel sub-tabs (reuse view-tab pattern) */
+    .panel-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+
+    /* Investment accounts */
+    .invest-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; }
+    .invest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 700px) { .invest-grid { grid-template-columns: 1fr; } }
+    .invest-type-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .5px; padding: 2px 8px; border-radius: 4px; background: var(--teal-light); color: var(--teal); margin-bottom: 8px; }
+    .invest-owner { font-size: 11px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+    .invest-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .invest-inst { font-size: 12px; color: var(--muted); }
+    .invest-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 8px; font-size: 13px; }
+    .invest-label { color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; }
+    .invest-value { font-weight: 600; }
+
+    /* Board governance */
+    .meeting-row { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .meeting-row:last-child { border-bottom: none; }
+    .meeting-date { font-weight: 700; min-width: 90px; flex-shrink: 0; }
+    .meeting-info { flex: 1; min-width: 0; }
+    .meeting-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 4px; background: var(--teal-light); color: var(--teal); margin-bottom: 4px; display: inline-block; }
+    .meeting-agenda { color: var(--muted); font-size: 12px; margin-top: 4px; line-height: 1.5; }
+    .meeting-attend { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .action-row { display: grid; grid-template-columns: 1fr 140px 110px 90px; gap: 10px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .action-row:last-child { border-bottom: none; }
+    .action-row:first-child { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); padding: 6px 14px; }
+    @media (max-width: 700px) { .action-row { grid-template-columns: 1fr; } }
+    .action-overdue { color: var(--red); font-weight: 700; }
+    .pill-Open       { background: #f0f0f0; color: var(--muted); }
+    .pill-InProgress { background: var(--amber-light); color: var(--amber-dark); }
+    .pill-Complete   { background: #e8fce8; color: #166534; }
+    .bdoc-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .bdoc-row:last-child { border-bottom: none; }
+    .bdoc-status-icon { font-size: 16px; flex-shrink: 0; }
+    .bdoc-name { flex: 1; font-weight: 600; }
+    .bdoc-date { font-size: 11px; color: var(--muted); flex-shrink: 0; }
+    .bdoc-note { font-size: 11px; color: var(--muted); font-style: italic; }
+    .health-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 640px) { .health-grid { grid-template-columns: repeat(2, 1fr); } }
+    .health-tile { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 16px; text-align: center; }
+    .health-tile.warn  { border-color: var(--amber); background: var(--amber-light); }
+    .health-tile.alert { border-color: var(--red); background: #FEF2F2; }
+    .health-tile.ok    { border-color: #86EFAC; background: #F0FDF4; }
+    .health-num { font-size: 28px; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: 4px; }
+    .health-tile.warn .health-num  { color: var(--amber-dark); }
+    .health-tile.alert .health-num { color: var(--red); }
+    .health-tile.ok .health-num    { color: #166534; }
+    .health-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+    .fin-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; gap: 12px; }
+    .fin-row:last-child { border-bottom: none; }
+    .fin-label { font-weight: 600; }
+    .fin-input { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 6px 10px; font-size: 13px; font-family: inherit; width: 160px; text-align: right; }
+    .fin-input:focus { outline: none; border-color: var(--teal); }
+    .fin-progress { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .progress-bar-wrap { width: 160px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+
+    /* Compliance */
+    .filing-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; font-size: 13px; }
+    .filing-row:last-child { border-bottom: none; }
+    .filing-year { font-weight: 700; min-width: 80px; }
+    .filing-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 4px; background: #f0f0f0; color: var(--muted); }
+    .filing-status-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
+    .fs-filed      { background: #DCFCE7; color: #166534; }
+    .fs-inprep     { background: var(--teal-light); color: var(--teal); }
+    .fs-notstarted { background: #FEF9C3; color: #854D0E; }
+    .fs-overdue    { background: #FEE2E2; color: #DC2626; }
+    .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .check-item:last-child { border-bottom: none; }
+    .check-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .check-desc { flex: 1; }
+    .check-note { font-size: 11px; color: var(--muted); margin-top: 2px; font-style: italic; }
+    .grant-row { display: grid; grid-template-columns: 1fr 120px 100px 90px; gap: 10px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .grant-row:last-child { border-bottom: none; }
+    .grant-header { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); padding: 6px 14px; }
+    @media (max-width: 700px) { .grant-row { grid-template-columns: 1fr; } }
+    .grant-status-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+    .gs-Applied  { background: #f0f0f0; color: var(--muted); }
+    .gs-Awarded  { background: var(--teal-light); color: var(--teal); }
+    .gs-Reporting{ background: var(--amber-light); color: var(--amber-dark); }
+    .gs-Closed   { background: #e8fce8; color: #166534; }
+    .state-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .state-row:last-child { border-bottom: none; }
+    .state-flag { font-size: 16px; }
   </style>
 </head>
 <body>
@@ -360,6 +523,11 @@
     </button>
     <button class="nav-item" data-panel="donations" onclick="switchPanel('donations', this)">
       <span class="nav-item__icon">💛</span> Donations
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">People</div>
+    <button class="nav-item" data-panel="crm" onclick="switchPanel('crm', this)">
+      <span class="nav-item__icon">👥</span> Donors &amp; CRM
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Operations</div>
@@ -523,6 +691,88 @@
     </div>
   </div>
 
+  <!-- ══ PANEL: Donors & CRM ══ -->
+  <div id="panel-crm" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Donors &amp; CRM</div>
+        <div class="panel-sub">Contact records, giving history, church partners. Seeded with demo data — Cloudflare D1 backend planned.</div>
+      </div>
+      <button class="btn btn-primary" onclick="openAddDonorModal()">+ Add donor</button>
+    </div>
+
+    <!-- KPI metrics -->
+    <div class="crm-metrics" id="crmMetrics"></div>
+
+    <!-- Sub-tabs -->
+    <div class="crm-tabs">
+      <button class="crm-tab active" onclick="setCrmTab('donors', this)">Donors</button>
+      <button class="crm-tab" onclick="setCrmTab('churches', this)">Partner Churches</button>
+    </div>
+
+    <!-- ── Donors sub-panel ── -->
+    <div class="crm-subpanel active" id="crmSubDonors">
+      <div class="crm-search-row">
+        <input type="search" class="crm-search" id="donorSearch" placeholder="Search by name or email…" oninput="renderDonorTable()" />
+        <select class="crm-filter" id="donorTypeFilter" onchange="renderDonorTable()">
+          <option value="">All types</option>
+          <option value="donor">Donor</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="both">Donor + Volunteer</option>
+          <option value="church">Church contact</option>
+        </select>
+        <select class="crm-filter" id="donorRecurringFilter" onchange="renderDonorTable()">
+          <option value="">All giving</option>
+          <option value="recurring">Recurring only</option>
+          <option value="one-time">One-time only</option>
+        </select>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="donor-table-wrap">
+          <table class="donor-table" id="donorTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th style="text-align:right">Total given</th>
+                <th>Last gift</th>
+                <th>Type</th>
+                <th>Source</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="donorTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Churches sub-panel ── -->
+    <div class="crm-subpanel" id="crmSubChurches">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+        <button class="btn btn-primary btn-sm" onclick="openAddChurchModal()">+ Add church</button>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="overflow-x:auto">
+          <table class="church-table" id="churchTable">
+            <thead>
+              <tr>
+                <th>Church</th>
+                <th>Denomination</th>
+                <th>Location</th>
+                <th>Contact</th>
+                <th>Last trip</th>
+                <th>Relationship</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="churchTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══ PANEL: Travel Documents ══ -->
   <div id="panel-traveldocs" class="panel">
     <div class="panel-header">
@@ -648,16 +898,94 @@
   </div>
 </div>
 
+<!-- ══ MODAL: Add Donor ══ -->
+<div class="modal-overlay" id="donorModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeDonorModal()">×</button>
+    <div class="modal-title">Add donor</div>
+    <div class="form-row">
+      <div class="form-group"><label for="dnFirst">First name</label><input type="text" id="dnFirst" /></div>
+      <div class="form-group"><label for="dnLast">Last name</label><input type="text" id="dnLast" /></div>
+    </div>
+    <div class="form-group"><label for="dnEmail">Email</label><input type="email" id="dnEmail" /></div>
+    <div class="form-row">
+      <div class="form-group"><label for="dnPhone">Phone</label><input type="tel" id="dnPhone" /></div>
+      <div class="form-group"><label for="dnCity">City</label><input type="text" id="dnCity" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dnType">Type</label>
+        <select id="dnType">
+          <option value="donor">Donor</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="both">Donor + Volunteer</option>
+          <option value="church">Church contact</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dnSource">Source</label>
+        <select id="dnSource">
+          <option value="web">Web</option>
+          <option value="manual">Manual</option>
+          <option value="import">Import</option>
+          <option value="referral">Referral</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label for="dnNotes">Notes</label><textarea id="dnNotes" rows="2" placeholder="Any relevant notes…"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDonorModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNewDonor()">Save donor</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: Add Church ══ -->
+<div class="modal-overlay" id="churchModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeChurchModal()">×</button>
+    <div class="modal-title">Add partner church</div>
+    <div class="form-group"><label for="chName">Church name</label><input type="text" id="chName" /></div>
+    <div class="form-row">
+      <div class="form-group"><label for="chDenom">Denomination</label><input type="text" id="chDenom" placeholder="e.g. Methodist, Baptist, Non-denom" /></div>
+      <div class="form-group">
+        <label for="chRel">Relationship</label>
+        <select id="chRel">
+          <option value="prospect">Prospect</option>
+          <option value="partner">Partner</option>
+          <option value="alumni">Alumni</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="chCity">City</label><input type="text" id="chCity" /></div>
+      <div class="form-group"><label for="chState">State</label><input type="text" id="chState" maxlength="2" placeholder="VA" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="chContact">Contact name</label><input type="text" id="chContact" /></div>
+      <div class="form-group"><label for="chContactEmail">Contact email</label><input type="email" id="chContactEmail" /></div>
+    </div>
+    <div class="form-group"><label for="chLastTrip">Last trip date</label><input type="text" id="chLastTrip" placeholder="e.g. July 2024" /></div>
+    <div class="form-group"><label for="chNotes">Notes</label><textarea id="chNotes" rows="2"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeChurchModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNewChurch()">Save church</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
 // ── Panel switching ──
 const PANEL_TITLES = {
-  calendar: 'Social Calendar',
-  trips: 'Mission Trips',
-  content: 'Site Pages',
-  donations: 'Donations',
-  traveldocs: 'Travel Documents'
+  calendar:   'Social Calendar',
+  trips:      'Mission Trips',
+  content:    'Site Pages',
+  donations:  'Donations',
+  crm:        'Donors & CRM',
+  traveldocs: 'Travel Documents',
 };
 
 function switchPanel(id, el) {
@@ -670,6 +998,7 @@ function switchPanel(id, el) {
   if (id === 'content') renderPages();
   if (id === 'donations') renderUTMLinks();
   if (id === 'traveldocs') renderTravelDocs();
+  if (id === 'crm') renderCRM();
 }
 
 // ── Toast ──
@@ -1230,6 +1559,434 @@ function toggleReminder(id) {
   const btn = document.getElementById('remind-' + id);
   if (btn) btn.textContent = on ? '🔕 Remind me' : '🔔 Reminder set';
 }
+
+// ═══════════════════════ CRM / DONORS ═══════════════════════
+
+const CRM_DONORS_SEED = [
+  {
+    id: 'd001', firstName: 'Margaret', lastName: 'Whitfield', email: 'mwhitfield@culpeperfirst.org',
+    phone: '(540) 555-0142', city: 'Culpeper', state: 'VA', type: 'both', source: 'web',
+    churchAffiliation: 'Culpeper Community Church', recurring: true, recurringAmt: 100, recurringFreq: 'monthly',
+    notes: 'Long-time supporter. Going on July 2026 trip. Helped recruit 6 other participants.',
+    donations: [
+      { id: 'dnt001', date: '2026-06-01', amount: 10000, campaign: 'general', status: 'completed' },
+      { id: 'dnt002', date: '2026-05-01', amount: 10000, campaign: 'general', status: 'completed' },
+      { id: 'dnt003', date: '2026-04-01', amount: 10000, campaign: 'general', status: 'completed' },
+      { id: 'dnt004', date: '2025-12-18', amount: 25000, campaign: 'home-build', status: 'completed' },
+    ],
+    trips: ['Culpeper Community Church — Summer Build (July 2026)'],
+  },
+  {
+    id: 'd002', firstName: 'Robert', lastName: 'Kincaid', email: 'rkincaid@gmail.com',
+    phone: '(804) 555-0288', city: 'Richmond', state: 'VA', type: 'donor', source: 'web',
+    churchAffiliation: 'Bon Air Baptist Church', recurring: false, recurringAmt: 0,
+    notes: 'Gave after seeing Facebook post. $500 one-time gift.',
+    donations: [
+      { id: 'dnt010', date: '2026-04-14', amount: 50000, campaign: 'home-build', status: 'completed' },
+    ],
+    trips: [],
+  },
+  {
+    id: 'd003', firstName: 'Denise', lastName: 'Hartley', email: 'denise.hartley@crossroads-church.org',
+    phone: '(757) 555-0093', city: 'Virginia Beach', state: 'VA', type: 'both', source: 'referral',
+    churchAffiliation: 'Crossroads Church VA Beach', recurring: true, recurringAmt: 50, recurringFreq: 'monthly',
+    notes: 'Mission pastor at Crossroads. Evaluating a 2027 group trip for their youth group.',
+    donations: [
+      { id: 'dnt020', date: '2026-06-01', amount: 5000, campaign: 'mission-trips', status: 'completed' },
+      { id: 'dnt021', date: '2026-05-01', amount: 5000, campaign: 'mission-trips', status: 'completed' },
+      { id: 'dnt022', date: '2025-11-27', amount: 20000, campaign: 'general', status: 'completed' },
+    ],
+    trips: [],
+  },
+  {
+    id: 'd004', firstName: 'Thomas', lastName: 'Beaumont', email: 'tbeaumont@hawthornelaw.com',
+    phone: '(202) 555-0377', city: 'Washington', state: 'DC', type: 'donor', source: 'manual',
+    churchAffiliation: 'National Community Church', recurring: true, recurringAmt: 500, recurringFreq: 'monthly',
+    notes: 'Attorney. Major donor. Prefers email only. Connected through board member James Okafor.',
+    donations: [
+      { id: 'dnt030', date: '2026-06-01', amount: 50000, campaign: 'general', status: 'completed' },
+      { id: 'dnt031', date: '2026-05-01', amount: 50000, campaign: 'general', status: 'completed' },
+      { id: 'dnt032', date: '2026-04-01', amount: 50000, campaign: 'general', status: 'completed' },
+      { id: 'dnt033', date: '2025-12-31', amount: 100000, campaign: 'home-build', status: 'completed' },
+    ],
+    trips: [],
+  },
+  {
+    id: 'd005', firstName: 'Carla', lastName: 'Reyes', email: 'carlareyes@gmail.com',
+    phone: '(540) 555-0551', city: 'Culpeper', state: 'VA', type: 'volunteer', source: 'web',
+    churchAffiliation: 'Culpeper Community Church', recurring: false, recurringAmt: 0,
+    notes: 'Nurse. First-time volunteer, July 2026 trip. Fundraising toward $1,200 trip goal.',
+    donations: [
+      { id: 'dnt040', date: '2026-03-22', amount: 7500, campaign: 'mission-trips', status: 'completed' },
+    ],
+    trips: ['Culpeper Community Church — Summer Build (July 2026)'],
+  },
+  {
+    id: 'd006', firstName: 'Harold', lastName: 'Osei', email: 'harold.osei@faithchapel.net',
+    phone: '(703) 555-0812', city: 'Fairfax', state: 'VA', type: 'both', source: 'web',
+    churchAffiliation: 'Faith Chapel Fairfax', recurring: true, recurringAmt: 200, recurringFreq: 'quarterly',
+    notes: 'Deacon at Faith Chapel. First trip was Winter 2026. Wants to bring a group in 2027.',
+    donations: [
+      { id: 'dnt050', date: '2026-04-01', amount: 20000, campaign: 'general', status: 'completed' },
+      { id: 'dnt051', date: '2026-01-01', amount: 20000, campaign: 'general', status: 'completed' },
+      { id: 'dnt052', date: '2025-10-01', amount: 20000, campaign: 'general', status: 'completed' },
+    ],
+    trips: ['Winter Build — Open Enrollment (January 2026)'],
+  },
+  {
+    id: 'd007', firstName: 'Susan', lastName: 'Templeton', email: 'stempleton@yahoo.com',
+    phone: '(540) 555-0294', city: 'Fredericksburg', state: 'VA', type: 'donor', source: 'web',
+    churchAffiliation: '', recurring: false, recurringAmt: 0,
+    notes: 'Retired teacher. Gives annually at Christmas.',
+    donations: [
+      { id: 'dnt060', date: '2025-12-20', amount: 15000, campaign: 'general', status: 'completed' },
+      { id: 'dnt061', date: '2024-12-22', amount: 10000, campaign: 'general', status: 'completed' },
+    ],
+    trips: [],
+  },
+  {
+    id: 'd008', firstName: 'Marcus', lastName: 'Chen', email: 'm.chen@northstartech.io',
+    phone: '(571) 555-0139', city: 'Herndon', state: 'VA', type: 'donor', source: 'referral',
+    churchAffiliation: 'Reston Bible Church', recurring: true, recurringAmt: 250, recurringFreq: 'monthly',
+    notes: 'Tech founder. Found CAMINO through LinkedIn. Interested in sponsoring a full home annually.',
+    donations: [
+      { id: 'dnt070', date: '2026-06-01', amount: 25000, campaign: 'home-build', status: 'completed' },
+      { id: 'dnt071', date: '2026-05-01', amount: 25000, campaign: 'home-build', status: 'completed' },
+      { id: 'dnt072', date: '2026-04-01', amount: 25000, campaign: 'home-build', status: 'completed' },
+    ],
+    trips: [],
+  },
+  {
+    id: 'd009', firstName: 'Patricia', lastName: 'Holloway', email: 'pholloway@calvaryoak.org',
+    phone: '(540) 555-0423', city: 'Warrenton', state: 'VA', type: 'church', source: 'manual',
+    churchAffiliation: 'Calvary Oak Church', recurring: false, recurringAmt: 0,
+    notes: 'Church office admin. Manages giving from Calvary Oak as a group. Coordinates with their missions pastor.',
+    donations: [
+      { id: 'dnt080', date: '2026-02-14', amount: 200000, campaign: 'home-build', status: 'completed' },
+      { id: 'dnt081', date: '2025-06-01', amount: 100000, campaign: 'community-dev', status: 'completed' },
+    ],
+    trips: ['Spring Mission — Open Enrollment (March 2026)'],
+  },
+  {
+    id: 'd010', firstName: 'David', lastName: 'Fontaine', email: 'dfontaine@gmail.com',
+    phone: '(434) 555-0671', city: 'Charlottesville', state: 'VA', type: 'volunteer', source: 'web',
+    churchAffiliation: 'Trinity Fellowship', recurring: false, recurringAmt: 0,
+    notes: 'Construction contractor. Applied for March 2026 trip. Skilled builder — very valuable on site.',
+    donations: [
+      { id: 'dnt090', date: '2026-01-15', amount: 5000, campaign: 'mission-trips', status: 'completed' },
+    ],
+    trips: ['Spring Mission — Open Enrollment (March 2026)'],
+  },
+];
+
+const CRM_CHURCHES_SEED = [
+  {
+    id: 'ch001', name: 'Culpeper Community Church', denomination: 'Non-denominational',
+    city: 'Culpeper', state: 'VA', contactName: 'Pastor Brian Mercer', contactEmail: 'bmercer@culpeperfirst.org',
+    relationship: 'partner', lastTrip: 'July 2026', notes: 'Primary sending church. Brings 10–16 members annually.',
+  },
+  {
+    id: 'ch002', name: 'Bon Air Baptist Church', denomination: 'Southern Baptist',
+    city: 'Richmond', state: 'VA', contactName: 'Rev. James Tillman', contactEmail: 'jtillman@bonairbaptist.org',
+    relationship: 'alumni', lastTrip: 'January 2025', notes: 'Sent 8 members on 2025 Winter Build. Considering 2027 return.',
+  },
+  {
+    id: 'ch003', name: 'Crossroads Church Virginia Beach', denomination: 'Non-denominational',
+    city: 'Virginia Beach', state: 'VA', contactName: 'Denise Hartley', contactEmail: 'denise.hartley@crossroads-church.org',
+    relationship: 'prospect', lastTrip: '—', notes: 'Mission pastor evaluating a 2027 youth group trip.',
+  },
+  {
+    id: 'ch004', name: 'National Community Church', denomination: 'Non-denominational (multi-site)',
+    city: 'Washington', state: 'DC', contactName: 'Pastor Kevin Lam', contactEmail: 'klam@theaterchurch.com',
+    relationship: 'partner', lastTrip: 'October 2024', notes: 'Strong donor base through Thomas Beaumont connection. Annual gift.',
+  },
+  {
+    id: 'ch005', name: 'Calvary Oak Church', denomination: 'Presbyterian (PCA)',
+    city: 'Warrenton', state: 'VA', contactName: 'Patricia Holloway', contactEmail: 'pholloway@calvaryoak.org',
+    relationship: 'partner', lastTrip: 'March 2026', notes: 'Consistent partner. Contributed $3,000 to home-build fund in 2026.',
+  },
+];
+
+let crmDonors   = [];
+let crmChurches = [];
+let expandedDonorId = null;
+
+function getCRMDonors() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_crm_donors') || 'null');
+    if (stored && stored.length) return stored;
+  } catch {}
+  return CRM_DONORS_SEED.map(d => ({ ...d }));
+}
+
+function getCRMChurches() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('camino_crm_churches') || 'null');
+    if (stored && stored.length) return stored;
+  } catch {}
+  return CRM_CHURCHES_SEED.map(c => ({ ...c }));
+}
+
+function saveCRMDonors()   { localStorage.setItem('camino_crm_donors',   JSON.stringify(crmDonors)); }
+function saveCRMChurches() { localStorage.setItem('camino_crm_churches', JSON.stringify(crmChurches)); }
+
+function centsToUSD(cents) {
+  return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+function renderCRM() {
+  crmDonors   = getCRMDonors();
+  crmChurches = getCRMChurches();
+  renderCRMMetrics();
+  renderDonorTable();
+  renderChurchTable();
+}
+
+function renderCRMMetrics() {
+  const totalDonors  = crmDonors.length;
+  const ytdCents     = crmDonors.flatMap(d => d.donations).filter(d => d.status === 'completed' && d.date >= '2026-01-01').reduce((s, d) => s + d.amount, 0);
+  const allGifts     = crmDonors.flatMap(d => d.donations).filter(d => d.status === 'completed');
+  const avgGift      = allGifts.length ? Math.round(allGifts.reduce((s,d) => s + d.amount, 0) / allGifts.length) : 0;
+  const recurring    = crmDonors.filter(d => d.recurring).length;
+  const newThisMonth = crmDonors.filter(d => { const latest = d.donations[0]; return latest && latest.date >= '2026-06-01'; }).length;
+  const metrics = [
+    { val: totalDonors,          lbl: 'Total donors',          sub: '',               color: 'var(--teal)' },
+    { val: centsToUSD(ytdCents), lbl: 'Raised YTD',            sub: 'Jan–Jun 2026',   color: 'var(--amber)' },
+    { val: centsToUSD(avgGift),  lbl: 'Avg gift',              sub: 'all time',       color: 'var(--teal)' },
+    { val: recurring,            lbl: 'Recurring donors',      sub: 'active',         color: '#7c3aed' },
+    { val: newThisMonth,         lbl: 'New donors this month', sub: 'June 2026',      color: '#0369a1' },
+  ];
+  document.getElementById('crmMetrics').innerHTML = metrics.map(m => `
+    <div class="crm-metric">
+      <div class="crm-metric__val" style="color:${m.color}">${m.val}</div>
+      <div class="crm-metric__lbl">${m.lbl}</div>
+      ${m.sub ? `<div class="crm-metric__sub">${m.sub}</div>` : ''}
+    </div>`).join('');
+}
+
+function renderDonorTable() {
+  const search  = (document.getElementById('donorSearch')?.value || '').toLowerCase();
+  const typeF   = document.getElementById('donorTypeFilter')?.value || '';
+  const recurF  = document.getElementById('donorRecurringFilter')?.value || '';
+
+  let donors = crmDonors.filter(d => {
+    if (search && !`${d.firstName} ${d.lastName} ${d.email}`.toLowerCase().includes(search)) return false;
+    if (typeF && d.type !== typeF) return false;
+    if (recurF === 'recurring' && !d.recurring) return false;
+    if (recurF === 'one-time'  &&  d.recurring) return false;
+    return true;
+  });
+
+  const tbody = document.getElementById('donorTableBody');
+  tbody.innerHTML = '';
+
+  donors.forEach(d => {
+    const total    = d.donations.reduce((s, g) => s + g.amount, 0);
+    const lastGift = d.donations.length ? d.donations[0].date : '—';
+    const isExpanded = expandedDonorId === d.id;
+
+    const row = document.createElement('tr');
+    row.className = 'donor-row' + (isExpanded ? ' expanded' : '');
+    row.onclick   = () => toggleDonorDetail(d.id);
+    row.innerHTML = `
+      <td class="donor-name-cell">
+        ${escHtml(d.firstName + ' ' + d.lastName)}
+        ${d.recurring ? '<span class="type-badge type-recurring">RECURRING</span>' : ''}
+      </td>
+      <td class="donor-email-cell">${escHtml(d.email)}</td>
+      <td class="donor-amt-cell">${centsToUSD(total)}</td>
+      <td class="donor-date-cell">${lastGift}</td>
+      <td><span class="type-badge type-${d.type}">${d.type}</span></td>
+      <td style="font-size:12px;color:var(--muted)">${escHtml(d.source)}</td>
+      <td style="font-size:12px;color:var(--muted)">${isExpanded ? '▲' : '▼'}</td>`;
+    tbody.appendChild(row);
+
+    if (isExpanded) {
+      const detailRow = document.createElement('tr');
+      detailRow.className = 'donor-detail-row';
+      const td = document.createElement('td');
+      td.colSpan = 7;
+      td.innerHTML = buildDonorDetail(d);
+      detailRow.appendChild(td);
+      tbody.appendChild(detailRow);
+    }
+  });
+
+  if (!donors.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No donors match your search.</td></tr>';
+  }
+}
+
+function toggleDonorDetail(id) {
+  expandedDonorId = expandedDonorId === id ? null : id;
+  renderDonorTable();
+}
+
+function buildDonorDetail(d) {
+  const total     = d.donations.reduce((s, g) => s + g.amount, 0);
+  const largest   = d.donations.reduce((a, b) => b.amount > a.amount ? b : a, { amount: 0, date: '—' });
+  const firstGift = d.donations.length ? d.donations[d.donations.length - 1].date : '—';
+  const giftRows  = d.donations.slice(0, 5).map(g =>
+    `<tr>
+      <td>${g.date}</td>
+      <td style="font-weight:600">${centsToUSD(g.amount)}</td>
+      <td>${escHtml(g.campaign)}</td>
+      <td><span class="status-${g.status}">${g.status.toUpperCase()}</span></td>
+    </tr>`).join('');
+
+  const recurringInfo = d.recurring
+    ? `<div class="detail-kv"><span>Frequency</span><span>${d.recurringFreq} · ${centsToUSD(d.recurringAmt * 100)}</span></div>`
+    : '<div class="detail-kv"><span>Giving type</span><span>One-time</span></div>';
+
+  const tripsHtml = d.trips.length
+    ? d.trips.map(t => `<div style="font-size:12px;color:var(--teal);margin-bottom:4px">✈️ ${escHtml(t)}</div>`).join('')
+    : '<div style="font-size:12px;color:var(--muted)">No trip participation on record.</div>';
+
+  return `<div class="donor-detail-inner">
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h4>Contact info</h4>
+        <div class="detail-kv"><span>Name</span><span>${escHtml(d.firstName + ' ' + d.lastName)}</span></div>
+        <div class="detail-kv"><span>Email</span><span style="font-family:monospace;font-size:12px">${escHtml(d.email)}</span></div>
+        <div class="detail-kv"><span>Phone</span><span>${escHtml(d.phone || '—')}</span></div>
+        <div class="detail-kv"><span>Location</span><span>${escHtml((d.city || '') + (d.state ? ', ' + d.state : '') || '—')}</span></div>
+        <div class="detail-kv"><span>Church</span><span>${escHtml(d.churchAffiliation || '—')}</span></div>
+        <div class="detail-kv"><span>Source</span><span>${escHtml(d.source)}</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Giving summary</h4>
+        <div class="detail-kv"><span>Lifetime total</span><span style="color:var(--teal)">${centsToUSD(total)}</span></div>
+        <div class="detail-kv"><span>Largest gift</span><span>${centsToUSD(largest.amount)} on ${largest.date}</span></div>
+        <div class="detail-kv"><span>First gift</span><span>${firstGift}</span></div>
+        <div class="detail-kv"><span>Total gifts</span><span>${d.donations.length}</span></div>
+        ${recurringInfo}
+      </div>
+      <div class="detail-block">
+        <h4>Notes &amp; trips</h4>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">${escHtml(d.notes || '—')}</div>
+        ${tripsHtml}
+      </div>
+    </div>
+    <div class="detail-block" style="margin-bottom:16px">
+      <h4>Giving history (last 5)</h4>
+      <table class="mini-table">
+        <thead><tr><th>Date</th><th>Amount</th><th>Campaign</th><th>Status</th></tr></thead>
+        <tbody>${giftRows || '<tr><td colspan="4" style="color:var(--muted)">No gifts on record.</td></tr>'}</tbody>
+      </table>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();toast('Receipt stub — Cloudflare Worker will send via Resend.')">📧 Send receipt</button>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toast('Communication logged (stub).')">📝 Log communication</button>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toast('Add to trip — Mission Trips panel.')">✈️ Add to trip</button>
+    </div>
+  </div>`;
+}
+
+function renderChurchTable() {
+  const tbody = document.getElementById('churchTableBody');
+  tbody.innerHTML = '';
+  crmChurches.forEach(ch => {
+    const relClass = ch.relationship === 'partner' ? 'rel-partner' : ch.relationship === 'alumni' ? 'rel-alumni' : 'rel-prospect';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-weight:600">${escHtml(ch.name)}</td>
+      <td style="font-size:12px;color:var(--muted)">${escHtml(ch.denomination)}</td>
+      <td style="font-size:12px;color:var(--muted)">${escHtml(ch.city + ', ' + ch.state)}</td>
+      <td>
+        <div style="font-size:13px;font-weight:600">${escHtml(ch.contactName)}</div>
+        <div style="font-size:11px;color:var(--muted);font-family:monospace">${escHtml(ch.contactEmail)}</div>
+      </td>
+      <td style="font-size:12px;color:var(--muted)">${escHtml(ch.lastTrip || '—')}</td>
+      <td><span class="type-badge ${relClass}">${ch.relationship}</span></td>
+      <td>
+        <button class="btn btn-ghost btn-sm btn-icon" title="Edit" onclick="toast('Edit church — coming soon.')">✏️</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function setCrmTab(tab, el) {
+  document.querySelectorAll('.crm-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.crm-subpanel').forEach(p => p.classList.remove('active'));
+  document.getElementById('crmSub' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+
+function openAddDonorModal() {
+  ['dnFirst','dnLast','dnEmail','dnPhone','dnCity','dnNotes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('dnType').value   = 'donor';
+  document.getElementById('dnSource').value = 'web';
+  document.getElementById('donorModal').classList.add('open');
+}
+function closeDonorModal() { document.getElementById('donorModal').classList.remove('open'); }
+
+function saveNewDonor() {
+  const first = document.getElementById('dnFirst').value.trim();
+  const last  = document.getElementById('dnLast').value.trim();
+  const email = document.getElementById('dnEmail').value.trim();
+  if (!first || !last || !email) { alert('First name, last name, and email are required.'); return; }
+  const newDonor = {
+    id:         'd_' + Date.now(),
+    firstName:  first,
+    lastName:   last,
+    email,
+    phone:      document.getElementById('dnPhone').value.trim(),
+    city:       document.getElementById('dnCity').value.trim(),
+    state:      '',
+    type:       document.getElementById('dnType').value,
+    source:     document.getElementById('dnSource').value,
+    notes:      document.getElementById('dnNotes').value.trim(),
+    churchAffiliation: '',
+    recurring:  false,
+    recurringAmt: 0,
+    donations:  [],
+    trips:      [],
+  };
+  crmDonors.unshift(newDonor);
+  saveCRMDonors();
+  closeDonorModal();
+  renderCRM();
+  toast('Donor added.');
+}
+
+function openAddChurchModal() {
+  ['chName','chDenom','chCity','chState','chContact','chContactEmail','chLastTrip','chNotes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('chRel').value = 'prospect';
+  document.getElementById('churchModal').classList.add('open');
+}
+function closeChurchModal() { document.getElementById('churchModal').classList.remove('open'); }
+
+function saveNewChurch() {
+  const name = document.getElementById('chName').value.trim();
+  if (!name) { alert('Church name is required.'); return; }
+  const newChurch = {
+    id:           'ch_' + Date.now(),
+    name,
+    denomination: document.getElementById('chDenom').value.trim(),
+    city:         document.getElementById('chCity').value.trim(),
+    state:        document.getElementById('chState').value.trim(),
+    contactName:  document.getElementById('chContact').value.trim(),
+    contactEmail: document.getElementById('chContactEmail').value.trim(),
+    relationship: document.getElementById('chRel').value,
+    lastTrip:     document.getElementById('chLastTrip').value.trim(),
+    notes:        document.getElementById('chNotes').value.trim(),
+  };
+  crmChurches.push(newChurch);
+  saveCRMChurches();
+  closeChurchModal();
+  renderChurchTable();
+  toast('Church added.');
+}
+
+// Close CRM modals on overlay click
+document.getElementById('donorModal').addEventListener('click', e => { if (e.target === document.getElementById('donorModal')) closeDonorModal(); });
+document.getElementById('churchModal').addEventListener('click', e => { if (e.target === document.getElementById('churchModal')) closeChurchModal(); });
 
 // ═══════════════════════ UTILITIES ═══════════════════════
 function escHtml(str) {

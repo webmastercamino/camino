@@ -1,0 +1,126 @@
+name       = "camino-workers"
+main       = "workers/donate.js"
+account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+compatibility_date = "2024-09-01"
+
+# ──────────────────────────────────────────
+# Routes — map URL patterns to this worker
+# ──────────────────────────────────────────
+[[routes]]
+pattern = "caminohonduras.org/api/*"
+zone_name = "caminohonduras.org"
+
+[[routes]]
+pattern = "www.caminohonduras.org/api/*"
+zone_name = "caminohonduras.org"
+
+# ──────────────────────────────────────────
+# Cloudflare D1 — SQLite donor database
+# ──────────────────────────────────────────
+[[d1_databases]]
+binding      = "DB"               # access in Worker as env.DB
+database_name = "camino-db"
+database_id  = "YOUR_D1_DATABASE_ID"  # from: wrangler d1 create camino-db
+
+# ──────────────────────────────────────────
+# Cloudflare KV — sessions, settings, cache
+# ──────────────────────────────────────────
+[[kv_namespaces]]
+binding    = "SESSIONS"            # access as env.SESSIONS
+id         = "YOUR_KV_SESSIONS_ID"
+preview_id = "YOUR_KV_SESSIONS_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding    = "CACHE"               # access as env.CACHE
+id         = "YOUR_KV_CACHE_ID"
+preview_id = "YOUR_KV_CACHE_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding    = "SETTINGS"            # access as env.SETTINGS
+id         = "YOUR_KV_SETTINGS_ID"
+preview_id = "YOUR_KV_SETTINGS_PREVIEW_ID"
+
+# ──────────────────────────────────────────
+# Cloudflare R2 — media, documents, receipts
+# ──────────────────────────────────────────
+[[r2_buckets]]
+binding    = "MEDIA"               # public photos, trip images
+bucket_name = "camino-media"
+
+[[r2_buckets]]
+binding    = "DOCS"                # 990s, IRS letter, board minutes
+bucket_name = "camino-docs"
+
+[[r2_buckets]]
+binding    = "RECEIPTS"            # generated PDF tax receipts
+bucket_name = "camino-receipts"
+
+# ──────────────────────────────────────────
+# Cloudflare Queues — async email & notifications
+# ──────────────────────────────────────────
+[[queues.producers]]
+binding    = "RECEIPT_QUEUE"       # enqueue in donate.js / stripe-webhook.js
+queue      = "camino-receipt-queue"
+
+[[queues.producers]]
+binding    = "WELCOME_QUEUE"       # enqueue for new donors
+queue      = "camino-welcome-queue"
+
+[[queues.producers]]
+binding    = "NOTIFY_QUEUE"        # admin notifications (Slack / email)
+queue      = "camino-notify-queue"
+
+[[queues.consumers]]
+queue                  = "camino-receipt-queue"
+max_batch_size         = 10
+max_batch_timeout      = 30
+max_retries            = 3
+dead_letter_queue      = "camino-receipt-queue-dlq"
+
+[[queues.consumers]]
+queue                  = "camino-welcome-queue"
+max_batch_size         = 10
+max_batch_timeout      = 30
+max_retries            = 3
+
+# ──────────────────────────────────────────
+# Environment variables
+# Secrets (Stripe key, Resend key) must be set via:
+#   wrangler secret put STRIPE_SECRET_KEY
+# ──────────────────────────────────────────
+[vars]
+ENVIRONMENT        = "production"
+ORG_NAME           = "CAMINO Honduras"
+ORG_EIN            = "XX-XXXXXXX"           # replace with real EIN
+ADMIN_EMAIL        = "walker@caminohonduras.org"
+FROM_EMAIL         = "receipts@caminohonduras.org"
+SITE_URL           = "https://caminohonduras.org"
+STRIPE_CURRENCY    = "usd"
+RECEIPT_PDF_BUCKET = "camino-receipts"
+
+# Secrets (do NOT put real values here — use wrangler secret put):
+# STRIPE_SECRET_KEY         = "sk_live_..."
+# STRIPE_WEBHOOK_SECRET     = "whsec_..."
+# RESEND_API_KEY            = "re_..."
+# SLACK_WEBHOOK_URL         = "https://hooks.slack.com/..."
+
+# ──────────────────────────────────────────
+# Preview / Development environment
+# ──────────────────────────────────────────
+[env.preview]
+name = "camino-workers-preview"
+vars = { ENVIRONMENT = "preview", SITE_URL = "https://preview.caminohonduras.org" }
+
+[[env.preview.d1_databases]]
+binding       = "DB"
+database_name = "camino-db-preview"
+database_id   = "YOUR_D1_PREVIEW_DATABASE_ID"
+
+# ──────────────────────────────────────────
+# Cloudflare Access (set via dashboard, not wrangler)
+# ──────────────────────────────────────────
+# Policy: protect /admin/* with Cloudflare Access
+# Allowed emails: @caminohonduras.org + specific board members
+# Identity providers: Google, GitHub
+# Audit log: enabled
+# Session duration: 8 hours

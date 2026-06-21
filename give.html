@@ -64,6 +64,323 @@
     <p>Every dollar CAMINO receives goes directly to Honduras — building homes, digging wells, educating youth, and planting churches. 100% of program donations fund the work on the ground.</p>
   </section>
 
+  <!-- ══ DONATION FORM ══ -->
+  <section class="section" id="donate-form-section" style="background:#fff;padding-bottom:0">
+    <div style="max-width:780px;margin:0 auto;padding:0 20px">
+      <div class="section-eyebrow">Give securely online</div>
+      <h2 style="margin-bottom:6px">Make a gift to CAMINO</h2>
+      <p class="section-sub" style="margin-bottom:32px">Secured by Stripe · Processed on Cloudflare · 100% to Honduras</p>
+
+      <!-- Form card -->
+      <div id="donateFormWrap" style="background:#fff;border:1.5px solid #e0e0e0;border-radius:16px;padding:36px 40px;box-shadow:0 4px 24px rgba(0,0,0,.07)">
+
+        <!-- Step 1: Frequency -->
+        <div class="give-step" style="margin-bottom:28px">
+          <div class="give-step-label">Giving frequency</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="freq-btn active" data-freq="one-time" onclick="setFreq(this,'one-time')">One-time</button>
+            <button type="button" class="freq-btn" data-freq="monthly"  onclick="setFreq(this,'monthly')">Monthly</button>
+            <button type="button" class="freq-btn" data-freq="quarterly" onclick="setFreq(this,'quarterly')">Quarterly</button>
+          </div>
+          <!-- Monthly giving explainer -->
+          <div id="recurringNote" style="display:none;margin-top:12px;background:#e1f5ee;border-radius:8px;padding:12px 16px;font-size:13px;color:#0F6E56;line-height:1.6">
+            <strong>Monthly giving</strong> — your card is charged automatically each month. You can cancel anytime by emailing us or logging into your Stripe billing portal. Recurring donors receive quarterly impact reports.
+          </div>
+        </div>
+
+        <!-- Step 2: Amount -->
+        <div class="give-step" style="margin-bottom:28px">
+          <div class="give-step-label">Gift amount</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+            <button type="button" class="amt-btn" data-amt="25"  onclick="setAmt(this,25)">$25</button>
+            <button type="button" class="amt-btn" data-amt="50"  onclick="setAmt(this,50)">$50</button>
+            <button type="button" class="amt-btn active" data-amt="100" onclick="setAmt(this,100)">$100</button>
+            <button type="button" class="amt-btn" data-amt="250" onclick="setAmt(this,250)">$250</button>
+            <button type="button" class="amt-btn" data-amt="500" onclick="setAmt(this,500)">$500</button>
+            <button type="button" class="amt-btn" data-amt="custom" onclick="setAmt(this,'custom')">Custom</button>
+          </div>
+          <div id="customAmtWrap" style="display:none;max-width:200px">
+            <div style="position:relative">
+              <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;font-weight:600;color:#6b6b68">$</span>
+              <input type="number" id="customAmt" min="1" max="100000" placeholder="Enter amount" oninput="updateTotal()"
+                style="width:100%;padding:11px 12px 11px 28px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:16px;font-family:inherit;outline:none;transition:border-color .15s"
+                onfocus="this.style.borderColor='#0F6E56'" onblur="this.style.borderColor='#e0e0e0'" />
+            </div>
+          </div>
+          <!-- Impact hint -->
+          <div id="impactHint" style="margin-top:10px;font-size:13px;color:#6b6b68;min-height:18px"></div>
+        </div>
+
+        <!-- Step 3: Campaign -->
+        <div class="give-step" style="margin-bottom:28px">
+          <div class="give-step-label">Designation</div>
+          <select id="campaignSelect" onchange="updateTotal()"
+            style="width:100%;max-width:380px;padding:10px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;background:#fff;outline:none;cursor:pointer">
+            <option value="general">General Fund — greatest need</option>
+            <option value="home-build">Home Construction — $2,000 per home</option>
+            <option value="community-dev">Community Development</option>
+            <option value="mission-trips">Mission Trips — send a volunteer</option>
+            <option value="sponsor-volunteer">Sponsor a Volunteer</option>
+          </select>
+        </div>
+
+        <!-- Step 4: Donor info -->
+        <div class="give-step" style="margin-bottom:28px">
+          <div class="give-step-label">Your information</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px">
+            <div>
+              <label for="donorFirst" style="display:block;font-size:11px;font-weight:700;color:#6b6b68;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">First name *</label>
+              <input type="text" id="donorFirst" required autocomplete="given-name"
+                style="width:100%;padding:10px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none"
+                onfocus="this.style.borderColor='#0F6E56'" onblur="this.style.borderColor='#e0e0e0'" />
+            </div>
+            <div>
+              <label for="donorLast" style="display:block;font-size:11px;font-weight:700;color:#6b6b68;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Last name *</label>
+              <input type="text" id="donorLast" required autocomplete="family-name"
+                style="width:100%;padding:10px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none"
+                onfocus="this.style.borderColor='#0F6E56'" onblur="this.style.borderColor='#e0e0e0'" />
+            </div>
+            <div style="grid-column:1/-1">
+              <label for="donorEmail" style="display:block;font-size:11px;font-weight:700;color:#6b6b68;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Email address *</label>
+              <input type="email" id="donorEmail" required autocomplete="email"
+                style="width:100%;padding:10px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none"
+                onfocus="this.style.borderColor='#0F6E56'" onblur="this.style.borderColor='#e0e0e0'" />
+            </div>
+            <div style="grid-column:1/-1">
+              <label for="donorPhone" style="display:block;font-size:11px;font-weight:700;color:#6b6b68;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Phone <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+              <input type="tel" id="donorPhone" autocomplete="tel"
+                style="width:100%;max-width:260px;padding:10px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none"
+                onfocus="this.style.borderColor='#0F6E56'" onblur="this.style.borderColor='#e0e0e0'" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Card details (Stripe Elements placeholder) -->
+        <div class="give-step" style="margin-bottom:32px">
+          <div class="give-step-label">Card details</div>
+          <!-- Stripe Elements would mount here in production -->
+          <div id="stripeElementsPlaceholder"
+            style="border:1.5px solid #e0e0e0;border-radius:8px;padding:14px 16px;max-width:440px;background:#fafafa;position:relative">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="flex:1">
+                <div style="font-size:14px;color:#1a1a18;font-family:system-ui,sans-serif;letter-spacing:.05em">4242  4242  4242  4242</div>
+                <div style="display:flex;gap:16px;margin-top:6px">
+                  <span style="font-size:12px;color:#9b9b98">MM / YY</span>
+                  <span style="font-size:12px;color:#9b9b98">CVC</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:4px;align-items:center">
+                <div style="background:#1a1f71;color:#fff;border-radius:3px;font-size:9px;font-weight:700;padding:3px 5px">VISA</div>
+                <div style="background:#eb001b;border-radius:50%;width:18px;height:18px;opacity:.8"></div>
+                <div style="background:#f79e1b;border-radius:50%;width:18px;height:18px;margin-left:-8px;opacity:.8"></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:#9b9b98;display:flex;align-items:center;gap:6px">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1" y="6" width="10" height="7" rx="1.5" stroke="#9b9b98" stroke-width="1.5"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2" stroke="#9b9b98" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Secured by Stripe · Cloudflare Worker processes payment · card not charged in this demo
+          </div>
+        </div>
+
+        <!-- Error message -->
+        <div id="donateError" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;font-size:13px;color:#dc2626;margin-bottom:16px"></div>
+
+        <!-- Submit -->
+        <button type="button" id="donateSubmitBtn" onclick="simulateDonation()"
+          style="width:100%;max-width:440px;padding:16px 24px;background:#BA7517;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px"
+          onmouseover="this.style.background='#633806'" onmouseout="this.style.background='#BA7517'">
+          <span id="submitBtnText">Give $100 to CAMINO</span>
+          <svg id="submitSpinner" style="display:none;animation:spin 1s linear infinite" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,.3)" stroke-width="3"/><path d="M12 3a9 9 0 019 9" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+        </button>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+
+        <p style="font-size:12px;color:#9b9b98;margin-top:12px;max-width:440px;line-height:1.6">
+          By giving, you agree to our terms. CAMINO Honduras is a 501(c)(3) non-profit.
+          Your gift is tax-deductible to the fullest extent of U.S. law.
+          A receipt will be emailed to you automatically.
+        </p>
+      </div>
+
+      <!-- Thank-you card (hidden until submit) -->
+      <div id="donateThankYou" style="display:none;background:#e1f5ee;border:1.5px solid #0F6E56;border-radius:16px;padding:36px 40px;text-align:center">
+        <div style="font-size:48px;margin-bottom:16px">🏠</div>
+        <h3 style="font-size:24px;color:#0F6E56;margin-bottom:8px">Thank you for your gift!</h3>
+        <p style="font-size:15px;color:#1a1a18;margin-bottom:6px">Confirmation: <strong id="thankYouConfNum" style="font-family:monospace;color:#0F6E56"></strong></p>
+        <p style="font-size:14px;color:#6b6b68;margin-bottom:24px">A tax receipt has been sent to <strong id="thankYouEmail"></strong></p>
+        <div style="background:#fff;border-radius:10px;padding:20px 24px;display:inline-block;text-align:left;max-width:400px;width:100%">
+          <div style="font-size:12px;color:#9b9b98;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Gift Summary</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:14px;color:#6b6b68">Amount</span>
+            <span style="font-size:14px;font-weight:700;color:#1a1a18" id="thankYouAmt"></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:14px;color:#6b6b68">Designation</span>
+            <span style="font-size:14px;color:#1a1a18" id="thankYouCampaign"></span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span style="font-size:14px;color:#6b6b68">Frequency</span>
+            <span style="font-size:14px;color:#1a1a18" id="thankYouFreq"></span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:#0F6E56;margin-top:20px;line-height:1.6">
+          No goods or services were provided in exchange for this contribution.<br>
+          CAMINO Honduras is a registered 501(c)(3) non-profit.
+        </p>
+        <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="trips.html" style="display:inline-block;padding:10px 20px;background:#0F6E56;color:#fff;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none">Join a mission trip</a>
+          <a href="index.html" style="display:inline-block;padding:10px 20px;background:#fff;color:#0F6E56;border:1.5px solid #0F6E56;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none">Back to home</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra bottom padding so the form doesn't run into the next section -->
+    <div style="height:56px"></div>
+  </section>
+
+  <style>
+    .give-step-label {
+      font-size:11px;font-weight:700;color:#6b6b68;
+      text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;
+    }
+    .freq-btn {
+      padding:9px 20px;border-radius:20px;border:1.5px solid #e0e0e0;
+      background:#fff;font-size:13px;font-weight:600;font-family:inherit;
+      cursor:pointer;transition:all .15s;color:#1a1a18;
+    }
+    .freq-btn:hover { border-color:#BA7517;color:#BA7517; }
+    .freq-btn.active { background:#BA7517;border-color:#BA7517;color:#fff; }
+
+    .amt-btn {
+      padding:10px 18px;border-radius:10px;border:1.5px solid #e0e0e0;
+      background:#fff;font-size:15px;font-weight:700;font-family:inherit;
+      cursor:pointer;transition:all .15s;color:#1a1a18;min-width:64px;
+    }
+    .amt-btn:hover { border-color:#0F6E56;color:#0F6E56; }
+    .amt-btn.active { background:#0F6E56;border-color:#0F6E56;color:#fff; }
+  </style>
+
+  <script>
+    // ─── Donation form state ───
+    let giveFreq   = 'one-time';
+    let giveAmt    = 100;
+    let giveCustom = false;
+
+    const IMPACT = {
+      25:  '$25 buys cement, rebar, or roofing materials',
+      50:  '$50 covers a day of local construction labor',
+      100: '$100 funds nearly a week of local labor',
+      250: '$250 is halfway to a complete family home',
+      500: '$500 covers a full week of skilled construction',
+      1000:'$1,000 builds half a permanent family home',
+      2000:'$2,000 builds a complete, permanent family home',
+    };
+
+    const CAMPAIGN_LABELS = {
+      'general':           'General Fund',
+      'home-build':        'Home Construction',
+      'community-dev':     'Community Development',
+      'mission-trips':     'Mission Trips',
+      'sponsor-volunteer': 'Sponsor a Volunteer',
+    };
+
+    function setFreq(btn, freq) {
+      giveFreq = freq;
+      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('recurringNote').style.display = (freq !== 'one-time') ? '' : 'none';
+      updateTotal();
+    }
+
+    function setAmt(btn, amt) {
+      document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const customWrap = document.getElementById('customAmtWrap');
+      if (amt === 'custom') {
+        giveCustom = true;
+        giveAmt = 0;
+        customWrap.style.display = '';
+        document.getElementById('customAmt').focus();
+      } else {
+        giveCustom = false;
+        giveAmt = amt;
+        customWrap.style.display = 'none';
+      }
+      updateTotal();
+    }
+
+    function updateTotal() {
+      if (giveCustom) {
+        const raw = parseFloat(document.getElementById('customAmt').value);
+        giveAmt = isNaN(raw) ? 0 : raw;
+      }
+      const fmtAmt = giveAmt > 0
+        ? '$' + (Number.isInteger(giveAmt) ? giveAmt : giveAmt.toFixed(2)).toLocaleString()
+        : '$—';
+      const freqLabel = giveFreq === 'one-time' ? '' : ' / ' + giveFreq;
+      document.getElementById('submitBtnText').textContent = giveAmt > 0
+        ? 'Give ' + fmtAmt + freqLabel + ' to CAMINO'
+        : 'Enter an amount above';
+
+      // Impact hint
+      const hint = document.getElementById('impactHint');
+      const nearest = Object.keys(IMPACT).map(Number).reduce((a, b) =>
+        Math.abs(b - giveAmt) < Math.abs(a - giveAmt) ? b : a, 25);
+      hint.textContent = giveAmt >= 25 ? IMPACT[nearest] || '' : '';
+    }
+
+    function simulateDonation() {
+      const first = document.getElementById('donorFirst').value.trim();
+      const last  = document.getElementById('donorLast').value.trim();
+      const email = document.getElementById('donorEmail').value.trim();
+      const errEl = document.getElementById('donateError');
+
+      errEl.style.display = 'none';
+      if (!first || !last) { showErr('Please enter your first and last name.'); return; }
+      if (!email || !email.includes('@')) { showErr('Please enter a valid email address.'); return; }
+      if (!giveAmt || giveAmt < 1) { showErr('Please select or enter a gift amount of at least $1.'); return; }
+
+      // Show spinner
+      const btn = document.getElementById('donateSubmitBtn');
+      const spinner = document.getElementById('submitSpinner');
+      btn.disabled = true;
+      btn.style.opacity = '.7';
+      spinner.style.display = '';
+
+      // Simulate API call
+      setTimeout(() => {
+        spinner.style.display = 'none';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+
+        // Generate fake confirmation number
+        const confNum = 'CAM-2026-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+        const campaign = document.getElementById('campaignSelect').value;
+        const fmtAmt   = '$' + (Number.isInteger(giveAmt) ? giveAmt : giveAmt.toFixed(2)).toLocaleString();
+        const freqLabel = giveFreq === 'one-time' ? 'One-time' : giveFreq.charAt(0).toUpperCase() + giveFreq.slice(1);
+
+        document.getElementById('thankYouConfNum').textContent  = confNum;
+        document.getElementById('thankYouEmail').textContent    = email;
+        document.getElementById('thankYouAmt').textContent      = fmtAmt;
+        document.getElementById('thankYouCampaign').textContent = CAMPAIGN_LABELS[campaign] || campaign;
+        document.getElementById('thankYouFreq').textContent     = freqLabel;
+
+        document.getElementById('donateFormWrap').style.display = 'none';
+        document.getElementById('donateThankYou').style.display = '';
+        document.getElementById('donateThankYou').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 1600);
+    }
+
+    function showErr(msg) {
+      const el = document.getElementById('donateError');
+      el.textContent = msg;
+      el.style.display = '';
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Init
+    updateTotal();
+  </script>
+
   <!-- Give options -->
   <section class="give-options-section">
     <div class="section-eyebrow">Make a difference</div>
