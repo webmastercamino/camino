@@ -21,24 +21,64 @@
     .cf-note{font-size:11px;color:var(--text-muted);line-height:1.6;margin-top:18px;padding-top:14px;border-top:1px solid var(--gray-200)}
     .cf-badge{display:inline-block;background:#F6821F;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;margin-right:4px}
 
-    /* ── Board header ── */
-    .board-header{background:#fff;border-bottom:3px solid #1a7a72;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.07)}
-    .board-header__brand{display:flex;align-items:center;gap:12px}
-    .board-header__brand img{height:38px;width:auto;display:block}
-    .board-badge{background:#1a7a72;border-radius:4px;padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff}
-    .board-header__meta{font-size:12px;color:#6b7280;display:flex;align-items:center;gap:16px}
-    .board-header__meta a{color:#6b7280;text-decoration:none;font-size:11px}
-    .board-header__meta a:hover{color:#1a7a72}
-    .logout-btn{background:none;border:1px solid #d1d5db;color:#6b7280;padding:5px 12px;border-radius:4px;font-size:11px;cursor:pointer;font-family:inherit}
-    .logout-btn:hover{border-color:#1a7a72;color:#1a7a72}
+    /* ── Theme variables ── */
+    :root{
+      --sb-bg:#1a1a2e; --sb-logo-bg:#fff; --sb-logo-border:var(--amber);
+      --sb-text:rgba(255,255,255,.6); --sb-text-hi:rgba(255,255,255,.92);
+      --sb-active:var(--teal); --sb-hover:rgba(255,255,255,.07);
+      --sb-tag:rgba(255,255,255,.3); --sb-divider:rgba(255,255,255,.08);
+      --sb-footer:rgba(255,255,255,.3);
+    }
+    [data-theme="light"]{
+      --sb-bg:#f1f5f9; --sb-logo-bg:#fff; --sb-logo-border:var(--amber);
+      --sb-text:#374151; --sb-text-hi:#111827;
+      --sb-active:var(--teal); --sb-hover:rgba(0,0,0,.05);
+      --sb-tag:#9ca3af; --sb-divider:#e2e8f0;
+      --sb-footer:#6b7280;
+    }
 
-    /* ── Tab bar ── */
-    #boardTabBar{background:#0a2416;display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid rgba(255,255,255,.08)}
-    #boardTabBar::-webkit-scrollbar{display:none}
-    #boardTabBar .btab{flex:0 0 auto;padding:13px 22px;font-size:13px;font-weight:600;color:rgba(255,255,255,.65);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s}
-    #boardTabBar .btab:hover{color:#fff}
-    #boardTabBar .btab.active{color:#fff;border-bottom-color:#BA7517;background:rgba(255,255,255,.07)}
-    .btab-badge{background:var(--coral);color:white;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:middle}
+    /* ── Layout ── */
+    body{display:flex;min-height:100vh}
+    #boardApp{display:none;width:100%;min-height:100vh;flex-direction:row}
+    #boardApp.open{display:flex}
+
+    /* ── Sidebar ── */
+    .b-sidebar{width:220px;flex-shrink:0;background:var(--sb-bg);min-height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:background .25s}
+    .b-logo{padding:14px 16px 12px;background:var(--sb-logo-bg);border-bottom:3px solid var(--sb-logo-border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-shrink:0}
+    .b-logo img{height:34px;width:auto;display:block}
+    .b-logo-sub{font-size:9px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;text-align:right;line-height:1.3}
+    .b-nav{flex:1;padding:4px 10px 16px;overflow-y:auto}
+    .b-tag{margin:12px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--sb-tag)}
+    .b-nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--radius);font-size:13px;font-weight:500;color:var(--sb-text);cursor:pointer;transition:background .15s,color .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+    .b-nav-item:hover{background:var(--sb-hover);color:var(--sb-text-hi)}
+    .b-nav-item.active{background:var(--sb-active);color:#fff}
+    .b-nav-item .nav-badge{margin-left:auto;background:var(--coral);color:white;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
+    .b-nav-icon{font-size:16px;flex-shrink:0}
+    .b-footer{padding:14px 18px;border-top:1px solid var(--sb-divider);font-size:11px;color:var(--sb-footer);line-height:1.7}
+    .b-footer a{color:var(--sb-footer);text-decoration:none}
+    .b-footer a:hover{color:var(--sb-text-hi)}
+    .b-signout{background:none;border:1px solid var(--sb-divider);color:var(--sb-footer);padding:5px 12px;border-radius:4px;font-size:11px;cursor:pointer;font-family:inherit;margin-top:6px;width:100%}
+    .b-signout:hover{border-color:var(--teal);color:var(--teal)}
+
+    /* ── Main content ── */
+    .b-main{margin-left:220px;flex:1;min-height:100vh;background:var(--bg,#f8fafc)}
+
+    /* ── Theme toggle ── */
+    .theme-toggle{display:flex;align-items:center;gap:5px}
+    .theme-label{font-size:9px;color:var(--sb-tag);letter-spacing:.5px;text-transform:uppercase}
+    .theme-switch{position:relative;width:32px;height:18px;flex-shrink:0}
+    .theme-switch input{opacity:0;width:0;height:0;position:absolute}
+    .theme-track{position:absolute;inset:0;background:#4b5563;border-radius:9px;cursor:pointer;transition:background .2s}
+    .theme-track:before{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+    .theme-switch input:checked ~ .theme-track{background:#BA7517}
+    .theme-switch input:checked ~ .theme-track:before{left:16px}
+
+    /* ── Tab panels ── */
+    .board-panel{display:none;padding:32px 28px;max-width:1140px;margin:0 auto}
+    @media(max-width:640px){.board-panel{padding:20px 16px}}
+    .board-panel.active{display:block}
+
+    .board-badge{background:#1a7a72;border-radius:4px;padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff}
 
     /* ── Tab panels ── */
     .board-panel{display:none;padding:32px 28px;max-width:1140px;margin:0 auto}
@@ -246,32 +286,62 @@
   </div>
 </div>
 
-<!-- ── BOARD HEADER ── -->
-<div class="board-header" id="boardPortal" style="display:none">
-  <div class="board-header__brand">
-    <a href="../index.html" target="_blank">
-      <img src="../assets/images/CAMINO-logo.webp" alt="CAMINO Honduras" />
-    </a>
-    <span class="board-badge">Board Portal</span>
-  </div>
-  <div class="board-header__meta">
-    <span id="boardDate"></span>
-    <div id="nameDisplay"></div>
-    <a href="../index.html">← Public site</a>
-    <button class="logout-btn" onclick="logout()">Sign out</button>
-  </div>
-</div>
+<!-- ── BOARD APP (shown after login) ── -->
+<div id="boardApp">
 
-<!-- ── TAB BAR ── -->
-<div id="boardTabBar" style="display:none">
-  <button class="btab active" data-tab="dashboard">📊 Dashboard</button>
-  <button class="btab" data-tab="financials">💰 Financials</button>
-  <button class="btab" data-tab="meetings">📋 Minutes <span class="btab-badge" id="ackBadge" style="display:none">!</span></button>
-  <button class="btab" data-tab="actions">✅ Action Items</button>
-  <button class="btab" data-tab="documents">📁 Documents</button>
-  <button class="btab" data-tab="calendar">📅 Calendar</button>
-  <button class="btab" data-tab="risk">⚠️ Risk Registry <span class="btab-badge" id="critBadge">5</span></button>
-</div>
+  <!-- Sidebar -->
+  <aside class="b-sidebar">
+    <div class="b-logo">
+      <a href="../index.html" target="_blank">
+        <img src="../assets/images/CAMINO-logo.webp" alt="CAMINO Honduras" />
+      </a>
+      <span class="b-logo-sub">Board<br>Portal</span>
+    </div>
+
+    <nav class="b-nav">
+      <button class="b-nav-item active" data-tab="dashboard" onclick="bSwitchTab('dashboard',this)">
+        <span class="b-nav-icon">📊</span> Dashboard
+      </button>
+      <button class="b-nav-item" data-tab="financials" onclick="bSwitchTab('financials',this)">
+        <span class="b-nav-icon">💰</span> Financials
+      </button>
+      <button class="b-nav-item" data-tab="meetings" onclick="bSwitchTab('meetings',this)">
+        <span class="b-nav-icon">📋</span> Minutes
+        <span class="nav-badge" id="ackBadge" style="display:none">!</span>
+      </button>
+      <button class="b-nav-item" data-tab="actions" onclick="bSwitchTab('actions',this)">
+        <span class="b-nav-icon">✅</span> Action Items
+      </button>
+      <button class="b-nav-item" data-tab="documents" onclick="bSwitchTab('documents',this)">
+        <span class="b-nav-icon">📁</span> Documents
+      </button>
+      <button class="b-nav-item" data-tab="calendar" onclick="bSwitchTab('calendar',this)">
+        <span class="b-nav-icon">📅</span> Calendar
+      </button>
+      <button class="b-nav-item" data-tab="risk" onclick="bSwitchTab('risk',this)">
+        <span class="b-nav-icon">⚠️</span> Risk Registry
+        <span class="nav-badge" id="critBadge">5</span>
+      </button>
+    </nav>
+
+    <div class="b-footer">
+      <div id="nameDisplay" style="font-weight:600;font-size:12px;color:var(--sb-text-hi);margin-bottom:2px"></div>
+      <div id="boardDate" style="font-size:11px"></div>
+      <a href="../index.html" style="display:block;margin-top:6px">← Public site</a>
+      <button class="b-signout" onclick="logout()">Sign out</button>
+      <div class="theme-toggle" style="margin-top:10px">
+        <span class="theme-label">☀ Light</span>
+        <label class="theme-switch" title="Toggle dark/light sidebar">
+          <input type="checkbox" id="themeToggle" onchange="applyTheme(this.checked?'dark':'light')" />
+          <span class="theme-track"></span>
+        </label>
+        <span class="theme-label">Dark 🌙</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="b-main">
 
 <!-- ═══════════════ TAB: DASHBOARD ═══════════════ -->
 <div class="board-panel active" id="tab-dashboard" style="display:none">
@@ -895,7 +965,10 @@
       </div>
     </div>
   </div>
-</div>
+</div><!-- /tab-calendar -->
+
+  </div><!-- /b-main -->
+</div><!-- /boardApp -->
 
 <script>
 // ── Board Calendar ────────────────────────────────────────────────────────────
@@ -1115,32 +1188,41 @@ function logout(){
 }
 function showPortal(){
   document.getElementById('authGate').style.display='none';
-  document.getElementById('boardPortal').style.display='flex';
-  document.getElementById('boardTabBar').style.display='flex';
+  document.getElementById('boardApp').classList.add('open');
   document.querySelectorAll('.board-panel').forEach(function(p){ p.style.display='none'; });
   document.getElementById('tab-dashboard').style.display='block';
   document.getElementById('tab-dashboard').classList.add('active');
-  document.getElementById('boardDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  document.getElementById('boardDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
   buildRiskTable('all');
   renderNameBar();
   renderBoardMinutes();
   renderBoardActions('all');
   renderCOIStatus();
   renderBcal();
+  // Apply saved theme
+  var t = localStorage.getItem('camino_theme') || 'dark';
+  applyTheme(t);
 }
 if(sessionStorage.getItem('board-auth')==='1') showPortal();
 
 // ── Tab switching ─────────────────────────────────────────────────────────────
-document.querySelectorAll('#boardTabBar .btab').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    document.querySelectorAll('#boardTabBar .btab').forEach(function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
-    var tab = btn.getAttribute('data-tab');
-    document.querySelectorAll('.board-panel').forEach(function(p){ p.style.display='none'; });
-    document.getElementById('tab-'+tab).style.display='block';
-    if(tab==='calendar') renderBcal();
-  });
-});
+function bSwitchTab(tab, btn){
+  document.querySelectorAll('.b-nav-item').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('.board-panel').forEach(function(p){ p.style.display='none'; });
+  var panel = document.getElementById('tab-'+tab);
+  if(panel) panel.style.display='block';
+  if(tab==='calendar') renderBcal();
+}
+
+// ── Theme toggle ──────────────────────────────────────────────────────────────
+function applyTheme(theme){
+  document.body.dataset.theme = theme;
+  localStorage.setItem('camino_theme', theme);
+  var toggle = document.getElementById('themeToggle');
+  if(toggle) toggle.checked = (theme === 'dark');
+}
+(function(){ applyTheme(localStorage.getItem('camino_theme') || 'dark'); })();
 
 // ── Financial sub-tabs ────────────────────────────────────────────────────────
 function showFinTab(id, btn){

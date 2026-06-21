@@ -81,6 +81,30 @@
     .sidebar-footer a { color: rgba(255,255,255,.4); text-decoration: none; }
     .sidebar-footer a:hover { color: rgba(255,255,255,.7); }
 
+    /* ── Field Guide ── */
+    .fg-section{background:white;border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px}
+    .fg-section h3{font-size:15px;font-weight:700;margin-bottom:12px}
+    .contact-card{background:white;border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:12px}
+    .contact-name{font-weight:700;font-size:14px;margin-bottom:4px}
+    .contact-role{font-size:12px;color:var(--muted);margin-bottom:10px}
+    .contact-row{font-size:13px;margin-bottom:4px}
+    /* ── Spanish Flashcards ── */
+    .sf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+    .sf-card{perspective:600px;height:110px;cursor:pointer}
+    .sf-inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+    .sf-card.flipped .sf-inner{transform:rotateY(180deg)}
+    .sf-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;text-align:center;border:1.5px solid var(--border)}
+    .sf-front{background:white}
+    .sf-back{background:var(--teal-light);border-color:var(--teal);transform:rotateY(180deg)}
+    .sf-en{font-size:15px;font-weight:700;color:var(--text)}
+    .sf-es{font-size:15px;font-weight:700;color:var(--teal)}
+    .sf-phonetic{font-size:11px;color:var(--muted);margin-top:3px}
+    .sf-speak-btn{margin-top:8px;background:var(--teal);color:white;border:none;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
+    .sf-speak-btn:hover{opacity:.85}
+    .sf-cat-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .sf-tab{padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text-muted);transition:all .15s}
+    .sf-tab.active{background:var(--teal);color:white;border-color:var(--teal)}
+
     /* ── Main ── */
     .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
     .main-header {
@@ -996,6 +1020,19 @@ function checkAdminPw(){
     document.getElementById('adminPwInput').focus();
   }
 }
+// ── Theme toggle (shared across portals via camino_theme key) ──
+function applyPortalTheme(theme) {
+  document.body.dataset.theme = theme;
+  localStorage.setItem('camino_theme', theme);
+  const toggle = document.getElementById('adminThemeToggle');
+  const track  = document.getElementById('adminThemeTrack');
+  const knob   = document.getElementById('adminThemeKnob');
+  if (toggle) toggle.checked = (theme === 'dark');
+  if (track)  track.style.background  = (theme === 'dark') ? '#BA7517' : '#4b5563';
+  if (knob)   knob.style.left         = (theme === 'dark') ? '16px' : '2px';
+}
+(function(){ applyPortalTheme(localStorage.getItem('camino_theme') || 'dark'); })();
+
 function adminLogout(){
   sessionStorage.removeItem('camino_admin_auth');
   location.reload();
@@ -1072,6 +1109,9 @@ function adminLogout(){
     <button class="nav-item" data-panel="policywatch" onclick="switchPanel('policywatch', this)">
       <span class="nav-item__icon">🌍</span> Policy &amp; Risk Watch
     </button>
+    <button class="nav-item" data-panel="fieldguide" onclick="switchPanel('fieldguide', this)">
+      <span class="nav-item__icon">🏥</span> Field Guide
+    </button>
 
     <button class="nav-item" onclick="window.open('../board/','_blank')" style="color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.15);margin-top:4px">
       <span class="nav-item__icon">🏛️</span> Board Portal ↗
@@ -1088,6 +1128,16 @@ function adminLogout(){
 
   <div class="sidebar-footer" style="padding:14px 18px;font-size:11px;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.08)">
     <button onclick="adminLogout()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;width:100%;margin-bottom:8px">⬅ Log out</button>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <span style="font-size:10px;letter-spacing:.5px;text-transform:uppercase">☀</span>
+      <label style="position:relative;width:32px;height:18px;flex-shrink:0;cursor:pointer">
+        <input type="checkbox" id="adminThemeToggle" onchange="applyPortalTheme(this.checked?'dark':'light')" style="opacity:0;width:0;height:0;position:absolute" />
+        <span id="adminThemeTrack" style="position:absolute;inset:0;background:#4b5563;border-radius:9px;transition:background .2s">
+          <span id="adminThemeKnob" style="position:absolute;top:2px;left:2px;width:14px;height:14px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)"></span>
+        </span>
+      </label>
+      <span style="font-size:10px;letter-spacing:.5px;text-transform:uppercase">🌙</span>
+    </div>
     CAMINO Admin · localStorage POC<br>
     Cloudflare Workers backend planned.
   </div>
@@ -1197,6 +1247,74 @@ function adminLogout(){
         </div>
       </div>
       <div id="notifQueueList" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: Field Guide ══ -->
+  <div id="panel-fieldguide" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">🏥 Field Guide</div>
+        <div class="panel-sub">Emergency contacts · Mission Spanish · Health alerts · Pre-trip essentials</div>
+      </div>
+    </div>
+
+    <!-- ── Mission Spanish Flashcards ── -->
+    <div class="fg-section">
+      <h3>🗣️ Mission Spanish</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Tap a card to flip it to Spanish. Tap the speaker button to hear pronunciation.</p>
+      <div class="sf-cat-tabs" id="sfCatTabs"></div>
+      <div class="sf-grid" id="sfGrid"></div>
+    </div>
+
+    <!-- ── Emergency Contacts ── -->
+    <div class="fg-section">
+      <h3>🚨 Emergency Contacts</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
+        <div class="contact-card">
+          <div class="contact-name">Walker Somerville</div>
+          <div class="contact-role">Executive Director · Honduras Field Lead</div>
+          <div class="contact-row">📱 WhatsApp: <a href="https://wa.me/15402776621" target="_blank">+1 (540) 277-6621</a></div>
+          <div class="contact-row" style="color:var(--muted);font-size:12px">Primary contact for all field emergencies</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Seiny Somerville</div>
+          <div class="contact-role">Honduras Operations · Co-Founder</div>
+          <div class="contact-row" style="color:var(--muted);font-size:12px">Local logistics · community relations · translation</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">US Embassy — Tegucigalpa</div>
+          <div class="contact-role">American Citizens Services (ACS)</div>
+          <div class="contact-row">📞 <a href="tel:+50422369320">+504 2236-9320</a></div>
+          <div class="contact-row">🌐 <a href="https://hn.usembassy.gov/u-s-citizen-services/" target="_blank" rel="noopener">hn.usembassy.gov</a></div>
+          <div class="contact-row" style="color:var(--muted);font-size:12px">After hours: +504 2238-5114</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Honduras Emergency Numbers</div>
+          <div class="contact-role">National emergency services</div>
+          <div class="contact-row">🚒 Fire / Police / Ambulance: <strong>911</strong></div>
+          <div class="contact-row">🏥 Cruz Roja (Red Cross): <strong>195</strong></div>
+          <div class="contact-row">👮 Tourist Police (POLITUR): <strong>2222-8476</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Health Reminders ── -->
+    <div class="fg-section">
+      <h3>💊 Health Reminders for Honduras</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;font-size:13px">
+        <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:var(--radius);padding:12px"><strong>Dengue fever</strong> — Endemic. DEET repellent at dusk/dawn. Long sleeves when possible.</div>
+        <div style="background:#fefce8;border:1px solid #fcd34d;border-radius:var(--radius);padding:12px"><strong>Water safety</strong> — Bottled water only. No ice unless confirmed purified. No raw produce in tap water.</div>
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:var(--radius);padding:12px"><strong>Sun &amp; heat</strong> — Can exceed 35°C. Drink 3L water daily on build days. Rest in shade midday.</div>
+        <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:var(--radius);padding:12px"><strong>Recommended vaccines</strong> — Hep A, Typhoid, Tdap, Influenza. Malaria prophylaxis if traveling to Mosquitia.</div>
+        <div style="background:#f9fafb;border:1px solid var(--border);border-radius:var(--radius);padding:12px"><strong>Travel insurance</strong> — Confirm medical evacuation coverage. Keep policy numbers on hand.</div>
+      </div>
+    </div>
+
+    <!-- ── Broadcast (links to Policy Watch) ── -->
+    <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:var(--radius-lg);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <div style="font-size:13px;font-weight:700;color:#166534">📤 Broadcast Notices</div>
+      <button class="btn btn-secondary btn-sm" onclick="switchPanel('policywatch', document.querySelector('[data-panel=policywatch]'))">Manage in Policy Watch →</button>
     </div>
   </div>
 
@@ -3084,6 +3202,7 @@ const PANEL_TITLES = {
   comms:      'Communication Plan',
   crisis:     'Crisis Communications',
   policywatch: 'Policy & Risk Watch',
+  fieldguide:  '🏥 Field Guide',
   operations:  '📦 Operations',
 };
 
@@ -3105,6 +3224,7 @@ function switchPanel(id, el) {
   if (id === 'comms')      renderCommsPanel();
   if (id === 'crisis')     renderCrisisPanel();
   if (id === 'policywatch') renderPolicyWatch();
+  if (id === 'fieldguide')  renderFieldGuide();
   if (id === 'operations')  renderOperationsPanel();
 }
 
@@ -7485,6 +7605,111 @@ function savePushItemText(key, text) {
   savePushConfig(cfg);
 }
 // ────────────────────────────────────────────────────────────────────
+
+// ── Field Guide ────────────────────────────────────────────────────
+const SF_PHRASES = {
+  bathroom:  [
+    {en:'Bathroom / Restroom', es:'El baño', ph:'el BAH-nyo'},
+    {en:'Where is the bathroom?', es:'¿Dónde está el baño?', ph:'DON-deh es-TAH el BAH-nyo'},
+    {en:'I need to use the bathroom', es:'Necesito usar el baño', ph:'neh-seh-SEE-toh oo-SAR el BAH-nyo'},
+    {en:'Is there a bathroom nearby?', es:'¿Hay un baño cerca?', ph:'eye oon BAH-nyo SEHR-kah'},
+    {en:'Thank you', es:'Gracias', ph:'GRAH-syahs'},
+    {en:'Excuse me', es:'Disculpe / Con permiso', ph:'dees-KOOL-peh'},
+  ],
+  greetings: [
+    {en:'Good morning', es:'Buenos días', ph:'BWEH-nos DEE-ahs'},
+    {en:'Good afternoon', es:'Buenas tardes', ph:'BWEH-nahs TAR-dehs'},
+    {en:'Good evening / night', es:'Buenas noches', ph:'BWEH-nahs NOH-chehs'},
+    {en:'How are you?', es:'¿Cómo está usted?', ph:'KOH-moh es-TAH oos-TEHD'},
+    {en:'I am well, thank you', es:'Estoy bien, gracias', ph:'es-TOY byehn, GRAH-syahs'},
+    {en:'My name is…', es:'Me llamo…', ph:'meh YAH-moh'},
+    {en:'Nice to meet you', es:'Mucho gusto', ph:'MOO-choh GOOS-toh'},
+    {en:'See you tomorrow', es:'Hasta mañana', ph:'AHS-tah mah-NYAH-nah'},
+  ],
+  religious: [
+    {en:'God bless you', es:'Que Dios te bendiga', ph:'keh dyohs teh behn-DEE-gah'},
+    {en:'We are here to serve', es:'Estamos aquí para servir', ph:'es-TAH-mohs ah-KEE PAH-rah sehr-VEER'},
+    {en:'I will pray for you', es:'Voy a orar por ti', ph:'boy ah oh-RAR por tee'},
+    {en:'Let us pray together', es:'Oremos juntos', ph:'oh-REH-mohs HOON-tohs'},
+    {en:'We are brothers in Christ', es:'Somos hermanos en Cristo', ph:'SOH-mohs ehr-MAH-nohs ehn KREES-toh'},
+    {en:'Thanks be to God', es:'Gracias a Dios', ph:'GRAH-syahs ah dyohs'},
+    {en:'Sunday service', es:'El culto del domingo', ph:'el KOOL-toh del doh-MEEN-goh'},
+    {en:'Church', es:'La iglesia', ph:'lah ee-GLEH-syah'},
+  ],
+  family: [
+    {en:'Husband', es:'Esposo / Marido', ph:'es-POH-soh'},
+    {en:'Wife', es:'Esposa', ph:'es-POH-sah'},
+    {en:'Brother', es:'Hermano', ph:'ehr-MAH-noh'},
+    {en:'Sister', es:'Hermana', ph:'ehr-MAH-nah'},
+    {en:'Father', es:'Padre / Papá', ph:'PAH-dreh / pah-PAH'},
+    {en:'Mother', es:'Madre / Mamá', ph:'MAH-dreh / mah-MAH'},
+    {en:'Son', es:'Hijo', ph:'EE-hoh'},
+    {en:'Daughter', es:'Hija', ph:'EE-hah'},
+    {en:'Family', es:'Familia', ph:'fah-MEE-lyah'},
+    {en:'Children', es:'Niños', ph:'NEE-nyohs'},
+  ],
+};
+const SF_CATS = [
+  {key:'greetings', label:'👋 Greetings'},
+  {key:'bathroom',  label:'🚻 Bathroom'},
+  {key:'religious', label:'✝️ Religious'},
+  {key:'family',    label:'👨‍👩‍👧 Family'},
+];
+let sfActiveCat = 'greetings';
+
+function renderFieldGuide() {
+  renderSfCatTabs();
+  renderSfGrid(sfActiveCat);
+}
+
+function renderSfCatTabs() {
+  const el = document.getElementById('sfCatTabs');
+  if (!el) return;
+  el.innerHTML = SF_CATS.map(c =>
+    `<button class="sf-tab ${c.key === sfActiveCat ? 'active' : ''}" onclick="sfSetCat('${c.key}')">${c.label}</button>`
+  ).join('');
+}
+
+function sfSetCat(cat) {
+  sfActiveCat = cat;
+  renderSfCatTabs();
+  renderSfGrid(cat);
+}
+
+function renderSfGrid(cat) {
+  const grid = document.getElementById('sfGrid');
+  if (!grid) return;
+  const phrases = SF_PHRASES[cat] || [];
+  grid.innerHTML = phrases.map((p, i) =>
+    `<div class="sf-card" id="sfc-${i}" onclick="sfFlip(${i})">
+      <div class="sf-inner">
+        <div class="sf-face sf-front">
+          <div class="sf-en">${p.en}</div>
+          <div class="sf-phonetic" style="color:#9ca3af;margin-top:4px">tap to flip</div>
+        </div>
+        <div class="sf-face sf-back">
+          <div class="sf-es">${p.es}</div>
+          <div class="sf-phonetic">${p.ph}</div>
+          <button class="sf-speak-btn" onclick="event.stopPropagation();sfSpeak('${escH(p.es)}')">🔊 Say it</button>
+        </div>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function sfFlip(i) {
+  document.getElementById('sfc-'+i)?.classList.toggle('flipped');
+}
+
+function sfSpeak(text) {
+  if (!window.speechSynthesis) { alert('Text-to-speech not supported in this browser.'); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'es-HN';
+  u.rate = 0.85;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+// ───────────────────────────────────────────────────────────────────
 
 function renderPolicyWatch() {
   const stored = JSON.parse(localStorage.getItem('camino_policy_data') || '{}');
