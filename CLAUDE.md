@@ -38,6 +38,20 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Honduras Fun Facts section added to culture page
+- What changed:
+  - **culture/honduras.html**: New "Did You Know? Honduras Is Full of Surprises" section (12 cards)
+    - Placed after Regional Context, before Dignity section
+    - 3-column grid, alternating white/amber/teal colorways, emoji icons, label chips
+    - Facts: "Honduras" = depths (Columbus 1502), Mesoamerican Barrier Reef (2nd globally), largest Central American coffee producer, scarlet macaw (national bird, La Mosquitia), Copán Maya ruins (predates Chichen Itza, UNESCO WHS), Soccer War of 1969, sapo (toad) game, Garifuna UNESCO Intangible Heritage 2001, 107 protected areas (~22% territory), Tegucigalpa has no railway, major exporter of bananas/pineapples/shrimp/African palm, white-tailed deer (national animal)
+    - Responsive: 3-col → 2-col (≤900px) → 1-col (≤600px)
+- Status: Complete. Committed 225e906 and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+
 ### 2026-06-20 — Cultural humility deepening of Honduras culture page
 - What changed:
   - **culture/honduras.html**: Significant rewrite to center cultural humility throughout
