@@ -664,6 +664,19 @@
     .docgen-output { width: 100%; min-height: 420px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.65; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; resize: vertical; white-space: pre-wrap; color: var(--text); background: #fafafa; outline: none; }
     .docgen-output:focus { border-color: var(--teal); }
     .docgen-notice { background: var(--amber-light); border: 1.5px solid var(--amber); border-radius: var(--radius); padding: 10px 14px; font-size: 12px; color: var(--amber-dark); margin-bottom: 14px; line-height: 1.55; }
+
+    /* ── Quarterly Review ── */
+    .grant-qr-banner { display:flex; align-items:center; gap:12px; background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:var(--radius); padding:12px 16px; margin-bottom:16px; font-size:13px; font-weight:600; color:#92400E; flex-wrap:wrap; }
+    .grant-qr-banner .btn { margin-left:auto; white-space:nowrap; }
+    .qr-section { margin-bottom:22px; }
+    .qr-section-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--teal); margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid #E1F5EE; }
+    .qr-item { display:flex; align-items:flex-start; gap:10px; padding:8px 10px; border-radius:6px; cursor:pointer; font-size:13px; line-height:1.5; margin-bottom:2px; transition:background .12s; }
+    .qr-item:hover { background:#f4f4f4; }
+    .qr-item input[type="checkbox"] { flex-shrink:0; margin-top:3px; width:15px; height:15px; cursor:pointer; accent-color:var(--teal); }
+    .qr-progress-bar-wrap { background:var(--border); border-radius:20px; height:8px; margin-bottom:6px; overflow:hidden; }
+    .qr-progress-bar { background:var(--teal); height:8px; border-radius:20px; width:0; transition:width .3s; }
+    .qr-progress-text { font-size:12px; color:var(--muted); margin-bottom:16px; }
+    .review-log-entry { padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius); margin-bottom:8px; }
   </style>
 </head>
 <body>
@@ -1143,6 +1156,12 @@
       <button class="btn btn-primary" onclick="openGrantModal()">+ Add grant</button>
     </div>
 
+    <!-- Quarterly Review Banner -->
+    <div id="grantQReviewBanner" style="display:none" class="grant-qr-banner">
+      <span id="grantQReviewBannerText">Q2 2026 Grant Review Due — Last review: Never.</span>
+      <button class="btn btn-sm" onclick="openQuarterlyReview()">Start Review →</button>
+    </div>
+
     <!-- KPIs -->
     <div class="grant-kpis" id="grantKPIs"></div>
 
@@ -1151,6 +1170,7 @@
       <button class="view-tab active" onclick="setGrantTab('pipeline', this)">Pipeline</button>
       <button class="view-tab" onclick="setGrantTab('calendar', this)">📅 Deadline calendar</button>
       <button class="view-tab" onclick="setGrantTab('profile', this)">🏢 Org profile</button>
+      <button class="view-tab" onclick="setGrantTab('qreview', this)">📋 Quarterly Review</button>
     </div>
 
     <!-- Pipeline tab -->
@@ -1229,6 +1249,19 @@
         <div style="display:flex;gap:10px;margin-top:16px">
           <button class="btn btn-primary" onclick="saveOrgProfile();toast('Org profile saved.')">Save profile</button>
           <button class="btn btn-ghost btn-sm" onclick="resetOrgProfile()">Reset to defaults</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quarterly Review tab -->
+    <div id="grantTabQReview" style="display:none">
+      <div class="card">
+        <div class="card-title">📋 Quarterly Grant Review</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">A structured review each quarter keeps the grant pipeline healthy, funder relationships warm, and reporting on track. Best practice: complete once per quarter (every 85 days or fewer).</p>
+        <button class="btn btn-primary" id="qrStartBtn" onclick="openQuarterlyReview()">+ Start Review</button>
+        <div style="margin-top:28px">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px">Review Log</div>
+          <div id="grantQRLog"><div style="font-size:13px;color:var(--muted);text-align:center;padding:20px">No quarterly reviews recorded yet.</div></div>
         </div>
       </div>
     </div>
@@ -1717,6 +1750,27 @@
   </div>
 </div>
 
+
+<!-- ══════════════════ MODAL: Quarterly Grant Review ══════════════════ -->
+<div class="modal-overlay" id="qrModal">
+  <div class="modal" style="max-width:640px;max-height:92vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeQRModal()">×</button>
+    <div class="modal-title" id="qrModalTitle">Q2 2026 Grant Review</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check off each item as you address it. Complete the review to generate a summary for board meeting minutes.</p>
+    <div class="qr-progress-bar-wrap"><div id="qrProgressBar" class="qr-progress-bar"></div></div>
+    <div class="qr-progress-text" id="qrProgressText">0 of 15 items reviewed</div>
+    <div id="qrChecklistBody"></div>
+    <div id="qrSummarySection" style="display:none;margin-top:16px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--teal)">✅ Review summary — copy for board minutes</div>
+      <textarea id="qrSummaryText" class="docgen-output" style="min-height:180px;font-size:11px" readonly></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeQRModal()">Close</button>
+      <button class="btn btn-ghost" id="qrCopyBtn" style="display:none" onclick="copyQRSummary()">Copy summary</button>
+      <button class="btn btn-primary" onclick="markQRComplete()">Mark Review Complete →</button>
+    </div>
+  </div>
+</div>
 
 <!-- ══ MODAL: Comms Preferences ══ -->
 <div class="modal-overlay" id="prefsModal">
@@ -3956,14 +4010,21 @@ function setGrantTab(tab, el) {
   document.getElementById('grantTabPipeline').style.display = tab==='pipeline'?'':'none';
   document.getElementById('grantTabCalendar').style.display = tab==='calendar'?'':'none';
   document.getElementById('grantTabProfile').style.display  = tab==='profile'?'':'none';
+  document.getElementById('grantTabQReview').style.display  = tab==='qreview'?'':'none';
   if (tab==='calendar') renderGrantCalendar();
   if (tab==='profile')  { loadOrgProfile(); populateOrgProfileForm(); }
+  if (tab==='qreview')  {
+    const b = document.getElementById('qrStartBtn');
+    if (b) b.textContent = '+ Start '+getQRQuarter().label+' Review';
+    renderQRLog();
+  }
 }
 
 // ── Render panel ──
 function renderGrantsPanel() {
   loadGrants(); loadOrgProfile();
   renderGrantKPIs(); renderPipelineTabs(); renderGrantCards();
+  checkQRBanner();
 }
 
 // ── Grant modal ──
@@ -4028,6 +4089,152 @@ function deleteGrant(id) {
   grantData = grantData.filter(x=>x.id!==id);
   saveGrantData(); renderGrantKPIs(); renderPipelineTabs(); renderGrantCards();
   toast('Grant deleted.');
+}
+
+// ── Quarterly Review ──
+const QR_SECTIONS = [
+  { title: 'Pipeline Health', items: [
+    'Review all grants in "Researching" status — are any worth advancing to application?',
+    'Check all application deadlines in next 90 days',
+    'Identify any new grant prospects to add',
+    'Review declined grants — any eligible for re-application?',
+  ]},
+  { title: 'Active Grants', items: [
+    'Review all grants in "Awarded" or "Reporting" status',
+    'Confirm all report due dates are on calendar',
+    'Check compliance with any grant restrictions',
+    'Document any program changes that affect grant deliverables',
+  ]},
+  { title: 'Relationships', items: [
+    'Log a touchpoint with each active funder (call/email/note)',
+    'Review funder newsletters/RFPs for new opportunities',
+    'Update contact information for all active funders',
+  ]},
+  { title: 'Strategic Review', items: [
+    'Is grant revenue on track vs annual budget?',
+    'Are there funding gaps that need new grant sources?',
+    'Review vocational training program progress (future grant eligibility)',
+    'Identify 1–2 new grant prospects to research next quarter',
+  ]},
+];
+const QR_TOTAL = QR_SECTIONS.reduce((s,sec)=>s+sec.items.length, 0);
+
+function getQRQuarter() {
+  const now = new Date();
+  const m = now.getMonth() + 1;
+  const q = m<=3?1:m<=6?2:m<=9?3:4;
+  return { q, year: now.getFullYear(), label: 'Q'+q+' '+now.getFullYear() };
+}
+function getQRLog()   { try { return JSON.parse(localStorage.getItem('camino_grant_qr_log'))||[]; } catch { return []; } }
+function saveQRLog(l) { localStorage.setItem('camino_grant_qr_log', JSON.stringify(l)); }
+
+function checkQRBanner() {
+  const banner = document.getElementById('grantQReviewBanner');
+  if (!banner) return;
+  const log = getQRLog();
+  const { label } = getQRQuarter();
+  let show = false, lastText = 'Never';
+  if (!log.length) {
+    show = true;
+  } else {
+    const days = Math.floor((Date.now() - new Date(log[0].date).getTime()) / 86400000);
+    lastText = log[0].date.slice(0,10);
+    if (days > 85) show = true;
+  }
+  const textEl = document.getElementById('grantQReviewBannerText');
+  if (textEl) textEl.textContent = '📋 '+label+' Grant Review Due — Last review: '+lastText+'.';
+  banner.style.display = show ? 'flex' : 'none';
+}
+
+let qrState = {};
+
+function openQuarterlyReview() {
+  qrState = {};
+  document.getElementById('qrModalTitle').textContent = getQRQuarter().label+' Grant Review';
+  document.getElementById('qrSummarySection').style.display = 'none';
+  document.getElementById('qrCopyBtn').style.display = 'none';
+  renderQRChecklist();
+  document.getElementById('qrModal').classList.add('open');
+}
+function closeQRModal() { document.getElementById('qrModal').classList.remove('open'); }
+
+function renderQRChecklist() {
+  const container = document.getElementById('qrChecklistBody');
+  let html = '', idx = 0;
+  QR_SECTIONS.forEach(sec => {
+    html += '<div class="qr-section"><div class="qr-section-title">'+escHtml(sec.title)+'</div>';
+    sec.items.forEach(item => {
+      const key = 'qr_'+idx;
+      html += '<label class="qr-item" for="'+key+'">'
+        +'<input type="checkbox" id="'+key+'" onchange="qrState[\''+key+'\']=this.checked;updateQRCount()" />'
+        +'<span>'+escHtml(item)+'</span></label>';
+      idx++;
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+  updateQRCount();
+}
+
+function updateQRCount() {
+  const checked = Object.values(qrState).filter(Boolean).length;
+  const pct = Math.round((checked/QR_TOTAL)*100);
+  const t = document.getElementById('qrProgressText');
+  if (t) t.textContent = checked+' of '+QR_TOTAL+' items reviewed';
+  const b = document.getElementById('qrProgressBar');
+  if (b) b.style.width = pct+'%';
+}
+
+function markQRComplete() {
+  const log = getQRLog();
+  const { label } = getQRQuarter();
+  const now = new Date();
+  const dateStr = now.toISOString();
+  const checked = Object.values(qrState).filter(Boolean).length;
+  let summary = label+' Grant Review — '+dateStr.slice(0,10)+'\n';
+  summary += '=====================================\n';
+  summary += 'Items reviewed: '+checked+'/'+QR_TOTAL+'\n\n';
+  let idx = 0;
+  QR_SECTIONS.forEach(sec => {
+    summary += sec.title+':\n';
+    sec.items.forEach(item => {
+      summary += (qrState['qr_'+idx] ? '☑' : '☐')+' '+item+'\n';
+      idx++;
+    });
+    summary += '\n';
+  });
+  summary += 'Board agenda suggestion: Add "Grant Report" to next board meeting → see Board Governance panel.';
+  document.getElementById('qrSummaryText').value = summary;
+  document.getElementById('qrSummarySection').style.display = '';
+  document.getElementById('qrCopyBtn').style.display = '';
+  log.unshift({ date: dateStr, quarter: label, checked, total: QR_TOTAL });
+  saveQRLog(log);
+  checkQRBanner();
+  renderQRLog();
+  toast('✅ '+label+' review recorded. Copy the summary for board minutes.');
+}
+
+function copyQRSummary() {
+  const ta = document.getElementById('qrSummaryText');
+  ta.select();
+  document.execCommand('copy');
+  toast('Review summary copied.');
+}
+
+function renderQRLog() {
+  const el = document.getElementById('grantQRLog');
+  if (!el) return;
+  const log = getQRLog();
+  if (!log.length) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:20px">No quarterly reviews recorded yet.</div>';
+    return;
+  }
+  el.innerHTML = log.map(e => '<div class="review-log-entry">'
+    +'<div style="display:flex;justify-content:space-between;align-items:center">'
+    +'<div style="font-weight:700;font-size:13px">'+escHtml(e.quarter)+'</div>'
+    +'<span class="doc-badge badge-valid">✅ Complete</span></div>'
+    +'<div style="font-size:12px;color:var(--muted);margin-top:4px">'+e.date.slice(0,10)+' · '+e.checked+'/'+e.total+' items reviewed</div>'
+    +'</div>').join('');
 }
 
 // ── Document Generator ──
@@ -4331,6 +4538,7 @@ function fmtDate(str) {
 }
 document.getElementById('grantModal').addEventListener('click', e => { if (e.target===document.getElementById('grantModal')) closeGrantModal(); });
 document.getElementById('grantDocModal').addEventListener('click', e => { if (e.target===document.getElementById('grantDocModal')) closeGrantDocModal(); });
+document.getElementById('qrModal').addEventListener('click', e => { if (e.target===document.getElementById('qrModal')) closeQRModal(); });
 
 // ═══════════════════════ INIT ═══════════════════════
 initCal();

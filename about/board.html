@@ -186,6 +186,18 @@
     .transp-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
     .transp-body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
     .transp-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── Grant opportunities callout ── */
+    .grant-opp-card { background: var(--teal); border-radius: var(--radius-lg); padding: 28px 32px; color: white; margin-top: 28px; }
+    @media (max-width: 600px) { .grant-opp-card { padding: 22px 18px; } }
+    .grant-opp-header { font-size: 18px; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+    .grant-opp-card p  { color: rgba(255,255,255,0.92); }
+    .grant-opp-card ul { color: rgba(255,255,255,0.92); padding-left: 20px; margin-bottom: 20px; }
+    .grant-opp-card li { margin-bottom: 6px; line-height: 1.65; font-size: 14px; }
+    .grant-opp-card .btn-secondary { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.4); color: white; }
+    .grant-opp-card .btn-secondary:hover { background: rgba(255,255,255,0.22); }
+    .grant-opp-card .btn-primary { background: white; color: var(--teal); border-color: white; }
+    .grant-opp-card .btn-primary:hover { background: #f0faf7; }
   </style>
 </head>
 <body>
@@ -456,6 +468,81 @@
     </div>
   </section>
 
+  <!-- Grant Funding & Transparency -->
+  <section class="section" style="background:var(--gray-100)">
+    <div class="section-eyebrow">Funding transparency</div>
+    <h2>Grant Funding &amp; Transparency</h2>
+    <p class="section-sub">CAMINO actively pursues grant funding to support our programs in Honduras. We are committed to full transparency with our funders and the public.</p>
+
+    <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Current &amp; Recent Grants</h3>
+    <div class="gov-table-wrap">
+      <table class="gov-table" aria-label="CAMINO current and recent awarded grants">
+        <thead>
+          <tr>
+            <th>Funder</th>
+            <th>Program</th>
+            <th>Amount</th>
+            <th>Year</th>
+            <th>Purpose</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Horizon Family Foundation</strong></td>
+            <td>Community Development Initiative</td>
+            <td style="white-space:nowrap"><strong>$15,000</strong></td>
+            <td>2026</td>
+            <td>Home construction &amp; community infrastructure, Cortés Dept.</td>
+            <td><span class="gov-badge gov-current">✅ Awarded</span></td>
+          </tr>
+          <tr>
+            <td><strong>Cornerstone Foundation</strong></td>
+            <td>Community Development Initiative</td>
+            <td style="white-space:nowrap"><strong>$15,000</strong></td>
+            <td>2025</td>
+            <td>Housing construction — restricted to Yoro Dept. build sites</td>
+            <td><span class="gov-badge gov-founder">✅ Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>Greater Richmond Community Foundation</strong></td>
+            <td>Community Builder Award</td>
+            <td style="white-space:nowrap"><strong>$5,000</strong></td>
+            <td>2025</td>
+            <td>General operating support — unrestricted</td>
+            <td><span class="gov-badge gov-reelect">✅ Closed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:12px;line-height:1.7">
+      CAMINO publicly discloses all grants above $5,000 as part of our commitment to financial transparency.
+      For complete financial disclosure, see our <a href="#" style="color:var(--teal);font-weight:600">Form 990 ↗</a> and
+      <a href="#" style="color:var(--teal);font-weight:600">GuideStar profile ↗</a>.
+    </p>
+
+    <!-- Grant Opportunities callout -->
+    <div class="grant-opp-card">
+      <div class="grant-opp-header">Is your foundation interested in supporting CAMINO's work in Honduras?</div>
+      <p style="font-size:14px;line-height:1.7;margin-bottom:12px">CAMINO welcomes grant funding for our core programs and emerging initiatives:</p>
+      <ul>
+        <li><strong>Mission trips</strong> — volunteer coordination, travel, and site logistics for groups of 4–25</li>
+        <li><strong>Community development</strong> — home construction ($5,500/home), water access, and infrastructure</li>
+        <li><strong>Future: vocational training</strong> — skills development pilot launching 2026–2027</li>
+      </ul>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <a href="#" class="btn-secondary" aria-label="Download CAMINO Form 990 (link placeholder)">View our Form 990</a>
+        <a href="../contact.html?subject=Funding%20Opportunities" class="btn-primary">Contact us about funding opportunities</a>
+      </div>
+    </div>
+
+    <!-- Admin pipeline link -->
+    <div style="margin-top:28px;text-align:center">
+      <a href="../admin/#grants" class="btn-secondary" style="font-size:14px;display:inline-block">View Grant Pipeline →</a>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:8px">Board members and authorized staff only</p>
+    </div>
+  </section>
+
   <!-- Join the Board CTA -->
   <section class="section">
     <div style="max-width:760px;margin:0 auto">
@@ -485,60 +572,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Grant Transparency -->
-  <section class="section">
-    <div class="section-eyebrow">Financial transparency</div>
-    <h2>Grant Transparency</h2>
-    <p class="section-sub">CAMINO publicly discloses all grants over $5,000 as part of our commitment to financial transparency and donor trust.</p>
-
-    <div class="gov-table-wrap">
-      <table class="gov-table" aria-label="CAMINO grants over $5,000">
-        <thead>
-          <tr>
-            <th>Funder</th>
-            <th>Program</th>
-            <th>Amount</th>
-            <th>Year</th>
-            <th>Purpose</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Horizon Family Foundation</strong></td>
-            <td>Community Development Initiative</td>
-            <td style="white-space:nowrap"><strong>$15,000</strong></td>
-            <td>2026</td>
-            <td>Home construction &amp; community infrastructure, Cortés Dept.</td>
-            <td><span class="gov-badge gov-current">✅ Awarded</span></td>
-          </tr>
-          <tr>
-            <td><strong>United Methodist Global Ministries</strong></td>
-            <td>Global Mission Partnerships</td>
-            <td style="white-space:nowrap"><strong>$8,500</strong></td>
-            <td>2026</td>
-            <td>Mission trip support — volunteer coordination &amp; site logistics</td>
-            <td><span class="gov-badge gov-reelect">⏰ Pending</span></td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted)">[Foundation name]</td>
-            <td style="color:var(--text-muted)">[Program name]</td>
-            <td style="white-space:nowrap;color:var(--text-muted)">[Amount]</td>
-            <td style="color:var(--text-muted)">2025</td>
-            <td style="color:var(--text-muted)">[Replace with real grant data before publishing]</td>
-            <td><span class="gov-badge gov-founder">🏛️ Closed</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="font-size:13px;color:var(--text-muted);margin-top:16px;line-height:1.7">
-      This table reflects grants above $5,000 received or pending as of the current fiscal year.
-      For complete financial disclosure including all revenue sources, see our annual
-      <a href="#" style="color:var(--teal);font-weight:600">Form 990 ↗</a> and
-      <a href="#" style="color:var(--teal);font-weight:600">GuideStar profile ↗</a>.
-    </p>
   </section>
 
   <!-- CTA -->
