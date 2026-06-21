@@ -38,6 +38,24 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Policy & Risk Watch dashboard for board
+- What changed:
+  - **admin/index.html**: New "Intelligence" sidebar section with "🌍 Policy & Risk Watch" panel
+    - Overview card: 5 risk tiles (US Level 2 advisory, NGO status, foreign funding risk, OFAC clear, last review age)
+    - Quarterly review prompt (same 85-day cadence as grant review) + review log in localStorage
+    - Tab 1 (US Government): 7 monitored sources — State Dept, US Embassy ACS, CDC Travel, USAID, OFAC, IRS Schedule F, Congress; each row has Open ↗, Log Review, editable notes
+    - Tab 2 (Honduras & NGO Law): 6 sources — Congreso, La Gaceta, DGME, SRE, ONG registry, ATIC; prominent NGO Law Status card with CAMINO registration fields; Nicaragua Law 1040 precedent warning
+    - Tab 3 (Regional Security): 6 civil-society sources; editable 6-department assessment grid (Cortés, Comayagua, Francisco Morazán, Atlántida, Colón, Copán) with risk level + notes saved to localStorage
+    - Tab 4 (Funding & Sanctions): OFAC verify log, AML/KYC notes, Honduras foreign funding law status, IRS Schedule F threshold tracker
+    - "Add to Board Agenda" button, "Generate Summary" button (print-ready 1-page policy brief)
+- Status: Complete. Committed bb107da and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Verify CAMINO ONG registration renewal status with SRE (Honduras) — due March 2026
+
 ### 2026-06-20 — Board minutes tracker + e-acknowledgement + board portal
 - What changed:
   - **admin/index.html**: Full minutes management in Board Governance → Meetings tab
