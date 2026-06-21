@@ -38,6 +38,37 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-21 — Portal nav overhaul, admin dashboard, dark mode, Field Guide
+- What changed:
+  - **admin/index.html**: Complete sidebar reorganization:
+    - Added Home dashboard as default landing panel (KPI tiles, quick-access cards, alerts bar)
+    - Social Calendar moved from Content → Communications section
+    - CRM section renamed from "People"; sub-nav for Donors, Individuals, Churches, Corporations
+    - Operations sidebar button replaced with link to /ops/ portal
+    - Field Guide moved from Ops → Admin Intelligence section
+    - Field Guide panel: Mission Spanish flashcards (4 categories, flip cards, Web Speech TTS "Say it"), emergency contacts, health reminders
+    - Board Governance + 501c3 Compliance removed from admin (board portal only)
+    - Grants sample data banner added
+    - Dark/light theme toggle added to sidebar footer; defaults to light
+  - **board/index.html**: Major restructure — horizontal tab bar replaced with dark sidebar matching admin style
+    - Logo + "Board Portal" badge in sidebar header
+    - 8 nav items including new Roadmap
+    - Theme toggle (☀/🌙) in sidebar footer; defaults to light
+    - Roadmap panel: embedded iframe of roadmap.html + "Open full page ↗"
+  - **ops/index.html**: Sidebar color changed to dark (#1a1a2e) matching admin; Field Guide replaced with link to admin
+  - **All 20 public pages**: Roadmap link removed from nav (roadmap.html still exists)
+  - **assets/css/style.css**: [data-theme="dark"] full-page dark mode variables + component overrides; .theme-toggle-btn
+  - **assets/js/main.js**: Site-wide dark/light toggle injected into nav on all public pages; defaults to light
+  - **trips/jul-2026-culpeper.html**: Broadcast banners from camino_trip_broadcast displayed in Logistics tab
+  - **ops/index.html**: Broadcast push toggle cards in Field Guide panel (renderBroadcastCards)
+- Status: Complete. Committed 0075197 and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Add traffic analytics (Cloudflare Web Analytics or GA4 — need measurement ID)
+
 ### 2026-06-20 — Honduras Fun Facts section added to culture page
 - What changed:
   - **culture/honduras.html**: New "Did You Know? Honduras Is Full of Surprises" section (12 cards)
