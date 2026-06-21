@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CAMINO Docs Review — Site Update Findings</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;font-size:15px;line-height:1.6}
+  .header{background:linear-gradient(135deg,#0a2e1a,#0f3d22);color:white;padding:36px 48px}
+  .header h1{font-size:26px;font-weight:700;margin-bottom:6px}
+  .header p{opacity:.75;font-size:14px}
+  .wrap{max-width:960px;margin:0 auto;padding:36px 48px}
+  h2{font-size:18px;font-weight:700;margin:32px 0 12px;padding-bottom:6px;border-bottom:2px solid #e8e8e4}
+  h3{font-size:14px;font-weight:700;margin:16px 0 6px;color:#444}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}
+  th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#888;padding:8px 10px;border-bottom:2px solid #e8e8e4;background:#f0eeea}
+  td{padding:9px 10px;border-bottom:1px solid #e8e8e4;vertical-align:top}
+  tr:hover td{background:#faf9f6}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .ok{background:#d1fae5;color:#065f46}
+  .fix{background:#fee2e2;color:#991b1b}
+  .update{background:#fef3c7;color:#92400e}
+  .new{background:#dbeafe;color:#1e40af}
+  .section{background:white;border-radius:10px;border:1px solid #e8e8e4;padding:24px;margin-bottom:20px}
+  .fact-row{display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid #f0eeea}
+  .fact-row:last-child{border-bottom:none}
+  .fact-label{font-size:12px;font-weight:700;color:#888;min-width:160px;flex-shrink:0}
+  .fact-val{font-size:14px;color:#1a1a18}
+  .story-card{background:#f0fdf4;border-left:4px solid #059669;border-radius:6px;padding:14px 16px;margin-bottom:10px}
+  .story-card h4{font-size:13px;font-weight:700;color:#065f46;margin-bottom:4px}
+  .story-card p{font-size:13px;color:#444;line-height:1.6}
+  .warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:6px;padding:12px 16px;font-size:13px;color:#78350f;margin-bottom:10px}
+  .priority{font-size:12px;font-weight:700;color:#dc2626}
+  ul{padding-left:18px}
+  ul li{margin-bottom:4px;font-size:14px}
+  @media(max-width:600px){.wrap{padding:20px}.header{padding:24px 20px}.fact-label{min-width:120px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>CAMINO Honduras — Docs Review Findings</h1>
+  <p>Internal documents (2018–2021) reviewed against current site content · June 2026</p>
+</div>
+
+<div class="wrap">
+
+  <div class="warn">⚠️ Donor names, addresses, and financial amounts are <strong>not included here</strong>. This document is safe to share. The raw spreadsheets remain in the local docs/ folder only.</div>
+
+  <!-- LEGAL / COMPLIANCE -->
+  <h2>Legal &amp; Compliance — Confirmed Facts</h2>
+  <div class="section">
+    <div class="fact-row"><span class="fact-label">Legal name</span><span class="fact-val">Central American Ministry Outreach, Inc.</span></div>
+    <div class="fact-row"><span class="fact-label">EIN</span><span class="fact-val"><strong>84-3568852</strong> — currently a placeholder in the admin panel. Update it. <span class="badge fix">Fix needed</span></span></div>
+    <div class="fact-row"><span class="fact-label">State of incorporation</span><span class="fact-val">Texas (NOT Virginia) — incorporated October 23, 2019 <span class="badge update">Note</span></span></div>
+    <div class="fact-row"><span class="fact-label">Texas File Number</span><span class="fact-val">803456606</span></div>
+    <div class="fact-row"><span class="fact-label">501(c)(3) effective</span><span class="fact-val">October 23, 2019</span></div>
+    <div class="fact-row"><span class="fact-label">Pre-2019 donations</span><span class="fact-val">Flowed through fiscal sponsor "Running for Him 24/7 Ministries" — <em>do not mention on public site</em></span></div>
+  </div>
+
+  <!-- SITE ACCURACY -->
+  <h2>Site Accuracy — What Matches, What Doesn't</h2>
+  <table>
+    <thead><tr><th>Site claim</th><th>Source says</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>$2,000 per complete home</td>
+        <td>Confirmed by caminohonduras.com — "3 houses at $2,000 each." Board approved $1,200/house in Feb 2020 (materials ~$800, labour ~$400); the $2,000 figure on the site likely includes volunteer overhead/logistics. Ask Walker to confirm which number to use publicly.</td>
+        <td><span class="badge update">Clarify with Walker</span></td>
+      </tr>
+      <tr>
+        <td>$5,500/home (shown in some pages)</td>
+        <td>Not in any document. Likely from the prior live site's mission trip "project budget" framing. The current live site uses $2,000. Recommend removing $5,500.</td>
+        <td><span class="badge fix">Remove $5,500</span></td>
+      </tr>
+      <tr>
+        <td>115+ homes built</td>
+        <td>32 confirmed by March 2020. Growth to 115+ by 2026 is plausible (~13/year) but not documented here. Keep as-is but flag for Walker to confirm.</td>
+        <td><span class="badge update">Walker to confirm</span></td>
+      </tr>
+      <tr>
+        <td>65 families on waitlist</td>
+        <td>Dec 2020 minutes say "150 families within 15-min drive" of current work areas — 65 may be a filtered/qualified number. Confirmed on live site. Keep.</td>
+        <td><span class="badge ok">Consistent</span></td>
+      </tr>
+      <tr>
+        <td>Founded 2014, first home fall 2017</td>
+        <td>2014 arrival as missionaries confirmed. First home 2017 consistent with growth data.</td>
+        <td><span class="badge ok">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td>Mission trip: $600 room &amp; board + $500 project fund</td>
+        <td>Confirmed on caminohonduras.com. 2020 docs show $820–$850/person all-in (excl. airfare) — cost has risen slightly since then.</td>
+        <td><span class="badge ok">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td>Trip duration: 8 days</td>
+        <td>Confirmed on caminohonduras.com.</td>
+        <td><span class="badge ok">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td>Contact email on site</td>
+        <td>Real email from live site: <strong>CAMINO.ContactUs@gmail.com</strong></td>
+        <td><span class="badge fix">Add to contact.html</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- MISSION TRIPS PAGE — NEW DATA -->
+  <h2>Mission Trips Page (caminohonduras.com) — Data Not Yet on Our Site</h2>
+  <div class="section">
+    <h3>Project options teams can select from:</h3>
+    <ul style="margin-bottom:16px">
+      <li>Build homes for families (65 families waiting)</li>
+      <li>Install playgrounds — <strong>La Union, La Calera, El Crique, Tapiquilares</strong></li>
+      <li>Church construction/improvements — <strong>Belen, La Coroza, Caracol</strong></li>
+      <li>Participate in Methodist church plants</li>
+      <li>Community projects and orphanage improvements</li>
+    </ul>
+    <h3>15-person team example (from live site):</h3>
+    <p style="font-size:14px;color:#444">15 people × $500 project fund = $7,500 → builds 3 houses with funds left over for additional initiatives. This is a compelling framing we should add to trips.html and the trip portal.</p>
+  </div>
+
+  <!-- BOARD -->
+  <h2>Board Members — 2020 (Verify Current Status with Walker)</h2>
+  <div class="section">
+    <table>
+      <thead><tr><th>Name</th><th>Role (2020)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>George Dasher</td><td>Board Chair</td><td>Active in minutes through Dec 2020</td></tr>
+        <tr><td>Walker Somerville</td><td>Founder / Executive Director</td><td>Confirmed current</td></tr>
+        <tr><td>Jeff Aldis</td><td>Treasurer</td><td>Active in minutes through Dec 2020</td></tr>
+        <tr><td>Laura Somerville</td><td>Board Member</td><td>Walker's family member</td></tr>
+        <tr><td>Chad Sledge</td><td>Board Member</td><td>Active in minutes</td></tr>
+        <tr><td>Lee Anne Orndorff</td><td>Board Member</td><td>Active in minutes</td></tr>
+        <tr><td>Jair Serrano</td><td>Board Member</td><td>Active in minutes</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:#888;margin-top:8px">These are 6-year-old names. Walker needs to confirm who is still on the board before updating about/board.html.</p>
+  </div>
+
+  <!-- STORY OPPORTUNITIES -->
+  <h2>Impact Stories — Real, Usable, Not Currently on Site</h2>
+
+  <div class="story-card">
+    <h4>Hurricane Eta &amp; Iota Resilience (November 2020)</h4>
+    <p>Two Category 4 hurricanes struck Honduras within two weeks of each other in November 2020. CAMINO-built homes survived without losing roofs while surrounding structures were destroyed. This is a powerful proof-of-quality story and donor retention narrative — "your gift builds to last."</p>
+  </div>
+
+  <div class="story-card">
+    <h4>Juan Carlos — Community Member Turned Apprentice</h4>
+    <p>Juan Carlos was a community member and CAMINO scholarship recipient who became Walker's house-building apprentice. This is the "sustainable employment" impact story the site currently describes abstractly — Juan Carlos makes it real.</p>
+  </div>
+
+  <div class="story-card">
+    <h4>Kelsey's Missions (Culpeper, VA) — House #33</h4>
+    <p>Kelsey's Missions from Culpeper funded the 33rd house specifically. The Culpeper July 2026 trip portal already references this church — this connection predates that trip and adds historical context.</p>
+  </div>
+
+  <div class="story-card">
+    <h4>Belen Water Well — $6,500 Real Cost</h4>
+    <p>The Belen community water well came in at ~$6,500 (under the $25K estimate because water was found at a shallower depth). Good "donor dollars go far" story and a real infrastructure milestone to add to the impact timeline.</p>
+  </div>
+
+  <div class="story-card">
+    <h4>Guatemala Vision</h4>
+    <p>By 2020 Walker had made connections in Guatemala and begun K'iche language study. The long-term vision is "all of Central America, not just Honduras." This supports the CNN Heroes / 15-year anniversary narrative on the roadmap.</p>
+  </div>
+
+  <!-- FINANCIALS CONTEXT -->
+  <h2>Financials Context (not for public pages)</h2>
+  <div class="section">
+    <div class="fact-row"><span class="fact-label">2021 monthly ops need</span><span class="fact-val">$1,200/month (Walker's own figure from budget doc)</span></div>
+    <div class="fact-row"><span class="fact-label">2020 trip cost (per person)</span><span class="fact-val">$820–$850 excl. airfare (now $1,100 total: $600 + $500)</span></div>
+    <div class="fact-row"><span class="fact-label">Belen water well actual cost</span><span class="fact-val">~$6,500 (water found shallower than expected)</span></div>
+    <div class="fact-row"><span class="fact-label">Total donations in spreadsheet</span><span class="fact-val">$87,525 (cumulative through ~2021) — ask Walker for current figure</span></div>
+    <div class="fact-row"><span class="fact-label">Donor base</span><span class="fact-val">213 donation records — mix of churches, individuals, foundations</span></div>
+  </div>
+
+  <!-- ACTION LIST -->
+  <h2>Recommended Site Updates (Priority Order)</h2>
+  <table>
+    <thead><tr><th>#</th><th>Action</th><th>Priority</th><th>File</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Update EIN to <strong>84-3568852</strong> in admin panel org profile</td><td><span class="badge fix">High</span></td><td>admin/index.html</td></tr>
+      <tr><td>2</td><td>Add real contact email: CAMINO.ContactUs@gmail.com to contact.html (replace Formspree stub)</td><td><span class="badge fix">High</span></td><td>contact.html</td></tr>
+      <tr><td>3</td><td>Remove $5,500/home figure wherever it appears — live site uses $2,000</td><td><span class="badge fix">High</span></td><td>programs.html, trips pages</td></tr>
+      <tr><td>4</td><td>Add project selection options to trips.html and trip portal (playgrounds, church construction, community projects)</td><td><span class="badge update">Medium</span></td><td>trips.html, trips/jul-2026-culpeper.html</td></tr>
+      <tr><td>5</td><td>Add 15-person team math example ($7,500 → 3 houses) to trips.html</td><td><span class="badge update">Medium</span></td><td>trips.html</td></tr>
+      <tr><td>6</td><td>Add Hurricane Eta/Iota resilience story to stories.html or programs.html</td><td><span class="badge update">Medium</span></td><td>stories.html</td></tr>
+      <tr><td>7</td><td>Add Juan Carlos impact story to stories.html or about.html</td><td><span class="badge update">Medium</span></td><td>stories.html</td></tr>
+      <tr><td>8</td><td>Add Belen water well milestone to impact.html annual timeline (2019 or 2020)</td><td><span class="badge new">Low</span></td><td>impact.html</td></tr>
+      <tr><td>9</td><td>Verify board member names with Walker before updating about/board.html</td><td><span class="badge update">Walker action</span></td><td>about/board.html</td></tr>
+      <tr><td>10</td><td>Confirm Texas incorporation on admin compliance panel (currently shows VA)</td><td><span class="badge update">Medium</span></td><td>admin/index.html</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
