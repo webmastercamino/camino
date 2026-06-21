@@ -38,6 +38,18 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Board page grants section + admin quarterly grant review
+- What changed:
+  - **about/board.html**: New "Grant Funding & Transparency" section inserted between Board Governance table and 990 section — current grants table (Horizon Family Foundation $15K awarded, Cornerstone Foundation $15K active, Greater Richmond $5K closed), teal "Grant Opportunities" callout for foundations (programs list + contact CTA), "View Grant Pipeline →" link to admin with board/staff note. Old minimal Grant Transparency section removed (superseded). `.grant-opp-card` CSS added.
+  - **admin/index.html**: Quarterly Grant Review system — amber banner auto-shown when last review >85 days ago or never done; "📋 Quarterly Review" tab in Grants panel with review log; modal with 15-item checklist across 4 sections (Pipeline Health, Active Grants, Relationships, Strategic Review); progress bar; "Mark Review Complete" generates copyable board-minutes summary with checked/unchecked items; review log persists to localStorage.
+- Status: Complete. Committed 9c8f177 and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Wire `?email=` param into Mailchimp/Formspree to pre-fill public preference center
+
 ### 2026-06-20 — Donor comms plan, crisis playbooks, gift log, address fields, preference center
 - What changed:
   - **admin/index.html**: Communication Plan panel — 4 tabs: This Month (monthly touchpoint dashboard, "Mark contacted" per touchpoint), Cadence Plans (per-tier visual calendar with month dots), Channel Map (11-row × 4-tier physical/email/SMS matrix, Print Mailing Labels for Major donors), Preferences (per-donor channel/frequency/topic grid with Edit modal)
