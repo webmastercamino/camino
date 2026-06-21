@@ -38,6 +38,46 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Participant profiles, activity considerations, notification templates
+- What changed:
+  - **admin/index.html**: Full participant profile system on Mission Trips panel
+    - Each trip row now has a "👥 Participants" expand button — collapses/expands a full sub-section
+    - Participant dashboard: enrolled count vs capacity, heat sensitivity / dietary / EpiPen / arrival stats
+    - Participant card grid with initials avatars (red for high heat sensitivity), flight info, badges
+    - Quick filters: All / Heat Sensitive / Dietary Needs / Arriving Today / Departing Today
+    - Export Contact List and Export Emergency Contacts (clipboard copy, formatted text)
+    - Daily leader check-in alert bar auto-shown when high-heat participants are enrolled
+    - Add/Edit/Delete participant modal — full profile form:
+      Contact (name, phone w/ country code, email, emergency contact, church),
+      Travel (airline, flight #, arrival airport SAP/TGU, datetime, insurance w/ policy last-4),
+      Activity & Wellness Considerations (heat sensitivity, activity level, dietary, EpiPen,
+      rescue inhaler, daily medication flag, water restriction, mobility aid, leader notes, consent checkbox)
+    - Privacy disclaimer framing: "not a medical record, trip leadership only"
+    - 8 seeded participants for Culpeper Jul 2026 trip: David Martinez (HIGH heat), Susan Anderson (EpiPen + nut allergy),
+      Jennifer Baker (vegetarian), Patricia Davis (gluten-free celiac), James Johnson (light duty + cane),
+      Robert Thompson (mild heat), Margaret Wilson (group leader), Michael Brown (builder)
+    - Notification Templates section per trip (7 templates): Pre-Trip 1 Wk Out, Day Before, Arrival Welcome ⭐,
+      Daily Morning, Health Alert, Return Day, Post-Trip 1 Wk Follow-Up
+    - Templates auto-fill with participant first name, trip URL, leader info, WhatsApp link
+    - Copy personalized template per participant; Copy for All bulk export to clipboard
+    - Arrival today card with targeted "Send Arrival Welcome for N arriving today" button
+    - Per-participant sent status checkboxes (persisted to localStorage per trip)
+    - Phase 2 stub banner referencing notifications.js Cloudflare Worker
+  - **cloudflare/workers/notifications.js**: Notification Worker stub
+    - POST /api/notify: manual trigger with tripId, templateKey, optional participantIds
+    - Cron scheduled trigger: checks D1 for participants whose arrival datetime just passed → sends arrival welcome
+    - Twilio SMS integration (env vars: TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM_NUMBER)
+    - WhatsApp Business API (env vars: WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_ACCESS_TOKEN)
+    - Per-participant personalized message building with [FirstName] substitution
+    - Delivery status logging to D1 notification_log table
+- Status: Complete. Committed d56ea9b and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Wire D1 schema for trip_participants table + notification_log table (see cloudflare/schema.sql)
+
 ### 2026-06-20 — Policy & Risk Watch dashboard for board
 - What changed:
   - **admin/index.html**: New "Intelligence" sidebar section with "🌍 Policy & Risk Watch" panel
