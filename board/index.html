@@ -99,16 +99,60 @@
     .agenda-list li{padding:8px 0;border-top:1px solid rgba(15,110,86,.15);font-size:13px;display:flex;gap:12px;align-items:baseline}
     .agenda-list li:first-child{border-top:none}
     .agenda-time{font-size:11px;font-weight:700;color:var(--teal);min-width:48px}
-    .minutes-list{display:flex;flex-direction:column;gap:10px}
-    .minutes-item{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden}
-    .minutes-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none}
-    .minutes-header:hover{background:var(--gray-100)}
-    .minutes-header h4{font-size:14px;font-weight:700;margin:0}
-    .minutes-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
-    .minutes-toggle{font-size:18px;color:var(--text-muted);transition:transform .2s;flex-shrink:0}
-    .minutes-body{display:none;padding:16px 18px;border-top:1px solid var(--gray-200);font-size:13px;color:var(--text-muted);line-height:1.7}
-    .minutes-item.open .minutes-toggle{transform:rotate(180deg)}
-    .minutes-item.open .minutes-body{display:block}
+
+    /* ── Minutes & Acknowledgement ── */
+    .min-row{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:10px}
+    .min-row-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none}
+    .min-row-header:hover{background:var(--gray-100)}
+    .min-row-header h4{font-size:14px;font-weight:700;margin:0}
+    .min-row-meta{font-size:11px;color:var(--text-muted);margin-top:3px}
+    .min-row-body{display:none;padding:18px 18px 20px;border-top:1px solid var(--gray-200)}
+    .min-row.open .min-row-body{display:block}
+    .min-row-toggle{font-size:18px;color:var(--text-muted);transition:transform .2s;flex-shrink:0}
+    .min-row.open .min-row-toggle{transform:rotate(180deg)}
+    .ack-status{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;flex-shrink:0}
+    .ack-pending{background:#fef9c3;color:#854d0e}
+    .ack-done{background:#dcfce7;color:#16a34a}
+    .ack-draft{background:var(--gray-200);color:var(--gray-600)}
+    .ack-form{background:var(--teal-light);border:1.5px solid var(--teal);border-radius:var(--radius);padding:16px 18px;margin-top:16px}
+    .ack-btn{background:var(--teal);color:white;border:none;border-radius:var(--radius);padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px}
+    .ack-btn:hover{opacity:.9}
+    .ack-done-box{background:#dcfce7;border:1.5px solid #86efac;border-radius:var(--radius);padding:12px 16px;margin-top:16px;font-size:13px;color:#15803d;font-weight:600}
+    .min-text-view{background:var(--gray-100);border-radius:var(--radius);padding:16px;font-size:12px;line-height:1.8;white-space:pre-wrap;font-family:monospace;max-height:380px;overflow-y:auto;margin:14px 0;border:1px solid var(--gray-200)}
+    .min-status-bp{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.3px}
+    .msbp-draft{background:var(--gray-200);color:var(--gray-600)}
+    .msbp-reviewed{background:#dbeafe;color:#1d4ed8}
+    .msbp-approved{background:#dcfce7;color:#16a34a}
+
+    /* ── Action items (board view) ── */
+    .ai-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--gray-200)}
+    .ai-item:last-child{border-bottom:none}
+    .ai-priority{font-size:16px;flex-shrink:0;margin-top:1px}
+    .ai-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.3px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+    .aib-overdue{background:#fee2e2;color:#dc2626}
+    .aib-inprog{background:#fef9c3;color:#854d0e}
+    .aib-open{background:var(--gray-200);color:var(--gray-600)}
+    .aib-done{background:#dcfce7;color:#16a34a}
+    .ai-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .aifbtn{font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:white;cursor:pointer;font-family:inherit;transition:all .15s}
+    .aifbtn.active{background:var(--teal);color:white;border-color:var(--teal)}
+
+    /* ── COI acknowledgement ── */
+    .coi-card{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:22px 26px;margin-top:24px}
+    .coi-signed-box{background:#dcfce7;border:1.5px solid #86efac;border-radius:var(--radius);padding:14px 18px;font-size:13px;color:#15803d;font-weight:600;margin-top:16px}
+
+    /* ── Name bar in header ── */
+    .name-entry{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius);padding:4px 10px}
+    .name-entry input{background:none;border:none;color:white;font-size:12px;font-family:inherit;outline:none;width:110px}
+    .name-entry input::placeholder{color:rgba(255,255,255,.45)}
+    .name-entry label{font-size:11px;color:rgba(255,255,255,.55);white-space:nowrap}
+    .name-save-btn{background:none;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.7);border-radius:3px;padding:2px 8px;font-size:11px;cursor:pointer;font-family:inherit}
+    .name-save-btn:hover{background:rgba(255,255,255,.15);color:white}
+    .welcome-name{font-size:13px;color:rgba(255,255,255,.85);font-weight:600}
+
+    @media(max-width:640px){
+      .min-row-header{flex-wrap:wrap;gap:8px}
+    }
 
     /* ── Document library ── */
     .doc-folder{margin-bottom:8px}
@@ -211,6 +255,7 @@
   </div>
   <div class="board-header__meta">
     <span id="boardDate"></span>
+    <div id="nameDisplay"></div>
     <a href="../index.html">← Public site</a>
     <button class="logout-btn" onclick="logout()">Sign out</button>
   </div>
@@ -220,7 +265,8 @@
 <div id="boardTabBar" style="display:none">
   <button class="btab active" data-tab="dashboard">📊 Dashboard</button>
   <button class="btab" data-tab="financials">💰 Financials</button>
-  <button class="btab" data-tab="meetings">📋 Meetings</button>
+  <button class="btab" data-tab="meetings">📋 Minutes <span class="btab-badge" id="ackBadge" style="display:none">!</span></button>
+  <button class="btab" data-tab="actions">✅ Action Items</button>
   <button class="btab" data-tab="documents">📁 Documents</button>
   <button class="btab" data-tab="risk">⚠️ Risk Registry <span class="btab-badge" id="critBadge">5</span></button>
 </div>
@@ -457,75 +503,33 @@
   </div>
 </div>
 
-<!-- ═══════════════ TAB: MEETINGS ═══════════════ -->
+<!-- ═══════════════ TAB: MINUTES & ACKNOWLEDGEMENT ═══════════════ -->
 <div class="board-panel" id="tab-meetings" style="display:none">
-  <div class="section-h">Board Meetings</div>
-  <div class="section-sub">Meeting agendas, minutes, and action item tracking. All documents stored in the Documents tab.</div>
+  <div class="section-h">Minutes &amp; Acknowledgement</div>
+  <div class="section-sub">Review meeting minutes and submit your electronic acknowledgement. Board members should acknowledge all distributed minutes within 5 business days.</div>
 
-  <!-- Upcoming meeting -->
-  <div class="meeting-upcoming">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);margin-bottom:6px">Upcoming meeting</div>
-    <h3>Q3 2026 Board Meeting — August 15, 2026 · 10:00 AM Eastern</h3>
-    <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px">Video call (Zoom link to be sent) · Estimated duration: 90 minutes · Quorum required: 3 members</div>
-    <ul class="agenda-list">
-      <li><span class="agenda-time">10:00</span> Call to order — approval of Q2 minutes</li>
-      <li><span class="agenda-time">10:10</span> <strong>Financial report — Walker: YTD vs. budget review, corporate/grants gap</strong></li>
-      <li><span class="agenda-time">10:30</span> <strong>🔴 Insurance decision: D&amp;O + general liability — approve purchase</strong></li>
-      <li><span class="agenda-time">10:50</span> Programs update: Culpeper trip debrief, fall trip preparation</li>
-      <li><span class="agenda-time">11:05</span> <strong>Governance: board composition — recruit 2–3 independent members</strong></li>
-      <li><span class="agenda-time">11:20</span> Risk register review: succession plan status, operating reserve</li>
-      <li><span class="agenda-time">11:35</span> Website &amp; digital update: Thanksgiving launch checklist</li>
-      <li><span class="agenda-time">11:45</span> New business / adjournment</li>
-    </ul>
-  </div>
+  <!-- Pending acknowledgement summary -->
+  <div id="bpAckSummary" style="display:none;margin-bottom:20px"></div>
 
-  <!-- Past minutes -->
-  <div style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">Past meeting minutes</div>
-  <div class="minutes-list">
-    <div class="minutes-item">
-      <div class="minutes-header" onclick="toggleMinutes(this)">
-        <div><h4>Q2 2026 Board Meeting — June 20, 2026</h4><div class="minutes-meta">Attendees: Walker Somerville, David Taylor · Action items: 6 · Status: Approved</div></div>
-        <span class="minutes-toggle">▾</span>
-      </div>
-      <div class="minutes-body">
-        <strong>Decisions made:</strong><br>
-        1. Approved $12,000 Q3 construction budget for Tapiquilares community.<br>
-        2. Authorized website Thanksgiving launch target (Phase 1 completion by Nov 15).<br>
-        3. Approved incorporation of ROI brief into board materials for donor conversations.<br><br>
-        <strong>Action items from this meeting:</strong><br>
-        • Walker: Obtain insurance quotes from GuideOne and Brotherhood Mutual by Aug 1.<br>
-        • Walker: Draft succession plan outline by Aug 15.<br>
-        • David Taylor: Complete Phase 1 website gap list (Formspree, Mailchimp) by Jul 15.<br>
-        • Walker: Reach out to 2 prospective board candidates by Sep 1.<br><br>
-        <em style="font-size:11px">Sample minutes — Walker to update with actual meeting notes.</em>
-      </div>
-    </div>
-    <div class="minutes-item">
-      <div class="minutes-header" onclick="toggleMinutes(this)">
-        <div><h4>Q1 2026 Board Meeting — March 14, 2026</h4><div class="minutes-meta">Attendees: Walker Somerville · Action items: 4 · Status: Approved</div></div>
-        <span class="minutes-toggle">▾</span>
-      </div>
-      <div class="minutes-body">
-        <strong>Decisions made:</strong><br>
-        1. Approved FY2026 operating budget of $120,000.<br>
-        2. Set Thanksgiving 2026 as website launch deadline.<br>
-        3. Agreed to pursue corporate mission trip channel as Phase 2 priority.<br><br>
-        <strong>Financial highlights:</strong> Q1 income $24,600 vs. budget $24,600 — on plan. Operating reserve stands at $4,200 — below target minimum.<br><br>
-        <em style="font-size:11px">Sample minutes — Walker to update with actual meeting notes.</em>
-      </div>
-    </div>
-    <div class="minutes-item">
-      <div class="minutes-header" onclick="toggleMinutes(this)">
-        <div><h4>Q4 2025 Annual Review — December 12, 2025</h4><div class="minutes-meta">Attendees: Walker Somerville · Action items: 5 · Status: Approved</div></div>
-        <span class="minutes-toggle">▾</span>
-      </div>
-      <div class="minutes-body">
-        <strong>Annual summary:</strong> 17 homes built in 2025. 65 families on waitlist. $118,000 income vs. $115,500 expenses — surplus of $2,500.<br><br>
-        <strong>2026 priorities set:</strong> Website redesign, board formation, insurance purchase, corporate channel launch.<br><br>
-        <em style="font-size:11px">Sample minutes — Walker to update with actual meeting notes.</em>
-      </div>
-    </div>
+  <!-- Minutes list (rendered by JS) -->
+  <div id="bpMinutesList">
+    <div style="color:var(--text-muted);font-size:13px">Loading…</div>
   </div>
+</div>
+
+<!-- ═══════════════ TAB: ACTION ITEMS ═══════════════ -->
+<div class="board-panel" id="tab-actions" style="display:none">
+  <div class="section-h">Action Items</div>
+  <div class="section-sub">Board action items assigned from meeting minutes. Mark items complete when resolved.</div>
+
+  <div class="ai-filter">
+    <span style="font-size:11px;font-weight:700;color:var(--text-muted)">Filter:</span>
+    <button class="aifbtn active" onclick="filterBPActions('all',this)">All</button>
+    <button class="aifbtn" onclick="filterBPActions('open',this)">Open</button>
+    <button class="aifbtn" onclick="filterBPActions('overdue',this)">Overdue</button>
+    <button class="aifbtn" onclick="filterBPActions('done',this)">Completed</button>
+  </div>
+  <div id="bpActionsList"></div>
 </div>
 
 <!-- ═══════════════ TAB: DOCUMENTS ═══════════════ -->
@@ -626,6 +630,20 @@
         <div class="doc-file"><span class="doc-file__icon">📄</span><span class="doc-file__name"><a href="#" style="color:var(--text)">US State Dept. Honduras Travel Advisory (Level 3)</a></span><span class="doc-status doc-status--pending">Monitor</span><span class="doc-file__date">Current</span></div>
       </div>
     </div>
+  </div>
+
+  <!-- ── COI Annual Acknowledgement ── -->
+  <div class="coi-card">
+    <div style="font-size:16px;font-weight:700;margin-bottom:4px">Annual Conflict of Interest Acknowledgement</div>
+    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:16px">IRS best practice and most grant funders require board members to complete an annual conflict of interest (COI) disclosure. By signing below, you affirm that you have read the CAMINO Honduras Conflict of Interest Policy and that you have disclosed any relationships or financial interests that could constitute a conflict.</div>
+    <div style="background:var(--gray-100);border-radius:var(--radius);padding:14px 16px;font-size:12px;color:var(--text);line-height:1.7;margin-bottom:16px">
+      <strong>I hereby affirm that:</strong><br>
+      1. I have read and understand the CAMINO Honduras Conflict of Interest Policy.<br>
+      2. I have disclosed to the board any relationships, financial interests, or other circumstances that could constitute a conflict of interest with the organization.<br>
+      3. I will promptly disclose any new conflicts of interest that arise during my term of service.<br>
+      4. I will recuse myself from board votes in which I have a material financial interest.
+    </div>
+    <div id="coiStatus"></div>
   </div>
 </div>
 
@@ -759,6 +777,10 @@ function showPortal(){
   document.getElementById('tab-dashboard').classList.add('active');
   document.getElementById('boardDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
   buildRiskTable('all');
+  renderNameBar();
+  renderBoardMinutes();
+  renderBoardActions('all');
+  renderCOIStatus();
 }
 if(sessionStorage.getItem('board-auth')==='1') showPortal();
 
@@ -783,16 +805,333 @@ function showFinTab(id, btn){
   btn.classList.add('active');
 }
 
-// ── Meetings accordion ─────────────────────────────────────────────────────────
-function toggleMinutes(header){
-  var item = header.closest('.minutes-item');
-  item.classList.toggle('open');
-}
-
 // ── Document folders ───────────────────────────────────────────────────────────
 function toggleFolder(header){
   var folder = header.closest('.doc-folder');
   folder.classList.toggle('open');
+}
+
+// ── Board member name ──────────────────────────────────────────────────────────
+function getBPName(){ return localStorage.getItem('bp_member_name') || ''; }
+function saveBPName(n){ localStorage.setItem('bp_member_name', n.trim()); }
+
+function renderNameBar(){
+  var el = document.getElementById('nameDisplay');
+  if(!el) return;
+  var name = getBPName();
+  if(name){
+    el.innerHTML = '<span class="welcome-name">Welcome, '+escBP(name)+'</span> <button class="name-save-btn" onclick="editNameBar()">change</button>';
+  } else {
+    el.innerHTML = '<div class="name-entry"><label>Your name:</label><input type="text" id="bpNameInput" placeholder="Enter your name…" /><button class="name-save-btn" onclick="saveNameBar()">Save</button></div>';
+    var inp = document.getElementById('bpNameInput');
+    if(inp) inp.addEventListener('keydown',function(e){ if(e.key==='Enter') saveNameBar(); });
+  }
+}
+function editNameBar(){
+  localStorage.removeItem('bp_member_name');
+  renderNameBar();
+}
+function saveNameBar(){
+  var inp = document.getElementById('bpNameInput');
+  if(!inp || !inp.value.trim()) return;
+  saveBPName(inp.value);
+  renderNameBar();
+  renderBoardMinutes();
+  renderCOIStatus();
+}
+function escBP(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Minutes & Acknowledgement ─────────────────────────────────────────────────
+// Seed data mirrors admin panel MEETINGS_SEED — reads localStorage first
+var BP_MEETINGS_SEED = [
+  {
+    id:'m1', date:'2026-01-15', type:'Annual', quorum:true,
+    attendance:'Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville, Seiny Lopez',
+    minutesStatus:'Approved',
+    minutesText:'CAMINO Honduras, Inc.\nBoard of Directors Meeting Minutes\nAnnual Meeting — January 15, 2026\nLocation: Video call (Zoom)\nCalled to order: 10:02 AM by Margaret Chen (Board Chair)\n\nATTENDANCE\nPresent: Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville, Seiny Lopez\nAbsent: None\nQuorum: Yes (6 of 6 members present)\n\nAPPROVAL OF PREVIOUS MINUTES\nMotion to approve December 12, 2025 minutes: James Morrison\nSecond: Rachel Park\nVote: Approved unanimously\n\nREPORTS\nExecutive Director Report: Walker reported 17 homes built in 2025, 65 families on waitlist. Honduras operations stable. Seiny managing community partnerships effectively.\nFinancial Report: FY2025 surplus of $2,500. Operating reserve at $4,200 — below target. 990-N filed November 2025.\nProgram Report: Rio Lindo community development on track. Church planting initiative added 2 new partner churches.\n\nOLD BUSINESS\n1. Insurance purchase — discussed GuideOne and Brotherhood Mutual quotes. Tabled pending D&O quotes (Q2 2026 deadline set).\n2. Board composition — agreed to recruit 2–3 independent members by September 2026.\n\nNEW BUSINESS\n1. 2026 operating budget of $120,000 APPROVED unanimously.\n2. Thanksgiving 2026 website launch target APPROVED.\n3. Corporate mission trip channel designated as Phase 2 priority.\n\nACTION ITEMS\n• Walker: Obtain D&O and liability insurance quotes by April 1, 2026.\n• Walker: Identify 2–3 independent board candidates by June 1, 2026.\n• Walker: Begin succession plan document by March 15, 2026.\n• Board: Review and adopt conflict of interest policy at March meeting.\n\nNEXT MEETING\nRegular Meeting — March 18, 2026, 10:00 AM Eastern · Video call\n\nMeeting adjourned: 11:47 AM\nRespectfully submitted,\nMargaret Chen, Secretary',
+    distributedDate:'2026-01-25', approvalDate:'2026-03-18',
+    acknowledgements:[
+      {name:'Margaret Chen',ts:'2026-01-26T09:15:00'},{name:'James Morrison',ts:'2026-01-27T14:30:00'},
+      {name:'Rachel Park',ts:'2026-01-28T10:00:00'},{name:'Daniel Foster',ts:'2026-01-29T16:45:00'},
+      {name:'Walker Somerville',ts:'2026-01-26T08:00:00'},{name:'Seiny Lopez',ts:'2026-01-30T11:20:00'}
+    ]
+  },
+  {
+    id:'m2', date:'2026-03-18', type:'Regular', quorum:true,
+    attendance:'Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville',
+    minutesStatus:'Approved',
+    minutesText:'CAMINO Honduras, Inc.\nBoard of Directors Meeting Minutes\nRegular Meeting — March 18, 2026\nLocation: Video call (Zoom)\nCalled to order: 10:05 AM by Margaret Chen (Board Chair)\n\nATTENDANCE\nPresent: Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville\nAbsent: Seiny Lopez (excused)\nQuorum: Yes (5 of 6 members present)\n\nAPPROVAL OF PREVIOUS MINUTES\nMotion to approve January 15, 2026 Annual Meeting minutes: Daniel Foster\nSecond: James Morrison\nVote: Approved unanimously\n\nREPORTS\nExecutive Director Report: Q1 income $24,600 — on plan. 4 homes underway in Tapiquilares. Culpeper group trip confirmed July 2026 (14 participants).\nFinancial Report: Operating reserve steady at $4,200. Insurance quotes received from GuideOne — $2,800/yr for D&O + liability.\nProgram Report: Rio Lindo community: 2 new families in intake process. Cornerstone Community (Culpeper) confirmed for July trip.\n\nOLD BUSINESS\n1. Insurance — MOTION to authorize Walker to purchase D&O + general liability from GuideOne: Approved 5-0.\n2. Board recruitment — Walker has 2 candidates in conversation. Target: confirmed by June 2026.\n\nNEW BUSINESS\n1. Conflict of Interest Policy (draft) presented. Tabled — vote at June meeting.\n2. Site visit: Walker proposes board member on-site visit October 2026.\n\nACTION ITEMS\n• Walker: Submit GuideOne insurance application by April 15, 2026.\n• Walker: Schedule candidate interviews by May 1, 2026.\n• Margaret: Revise COI policy draft and redistribute by May 15, 2026.\n• All board: Review COI policy draft before June meeting.\n\nNEXT MEETING\nRegular Meeting — June 10, 2026, 10:00 AM Eastern · Video call\n\nMeeting adjourned: 11:52 AM\nRespectfully submitted,\nMargaret Chen, Secretary',
+    distributedDate:'2026-03-28', approvalDate:'2026-06-10',
+    acknowledgements:[
+      {name:'Margaret Chen',ts:'2026-03-29T10:10:00'},{name:'James Morrison',ts:'2026-03-30T09:00:00'},
+      {name:'Rachel Park',ts:'2026-04-01T14:20:00'},{name:'Daniel Foster',ts:'2026-04-02T11:05:00'},
+      {name:'Walker Somerville',ts:'2026-03-29T07:45:00'}
+    ]
+  },
+  {
+    id:'m3', date:'2026-06-10', type:'Regular', quorum:true,
+    attendance:'Margaret Chen, James Morrison, Rachel Park, Walker Somerville',
+    minutesStatus:'Draft',
+    minutesText:'CAMINO Honduras, Inc.\nBoard of Directors Meeting Minutes\nRegular Meeting — June 10, 2026\nLocation: Video call (Zoom)\nCalled to order: 10:08 AM by Margaret Chen (Board Chair)\n\nATTENDANCE\nPresent: Margaret Chen, James Morrison, Rachel Park, Walker Somerville\nAbsent: Daniel Foster (excused), Seiny Lopez (excused)\nQuorum: Yes (4 of 6 members present)\n\nAPPROVAL OF PREVIOUS MINUTES\nMotion to approve March 18, 2026 minutes: [Name]\nSecond: [Name]\nVote: [Approved / Not approved]\n\nREPORTS\nExecutive Director Report: [summary — Walker to complete]\nFinancial Report: YTD income $59,600 vs. budget $60,000 — essentially on plan. Corporate/grants line behind at 17% of plan. Operating reserve stable at $4,200.\nProgram Report: [summary]\n\nOLD BUSINESS\n[items]\n\nNEW BUSINESS\n1. Holiday campaign planning — Thanksgiving 2026 website launch target confirmed.\n2. 990 FY2025 — e-Postcard due November 2026. Walker to calendar.\n3. COI Policy — [vote result]\n\nACTION ITEMS\n[auto-populated from action items logged in this meeting]\n\nNEXT MEETING\nQ3 2026 Board Meeting — August 15, 2026, 10:00 AM Eastern · Video call\n\nMeeting adjourned: [time]\nRespectfully submitted,\nMargaret Chen, Secretary',
+    distributedDate:'', approvalDate:'',
+    acknowledgements:[]
+  }
+];
+
+function getBPMeetings(){
+  try { return JSON.parse(localStorage.getItem('camino_meetings')) || BP_MEETINGS_SEED.map(function(m){ return Object.assign({},m); }); }
+  catch(e){ return BP_MEETINGS_SEED.map(function(m){ return Object.assign({},m); }); }
+}
+function saveBPMeetings(d){ localStorage.setItem('camino_meetings', JSON.stringify(d)); }
+
+function fmtBPDate(s){
+  if(!s) return '—';
+  var d = new Date(s + (s.length===10?'T12:00:00':'')); // prevent UTC offset
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function renderBoardMinutes(){
+  var meetings = getBPMeetings();
+  var myName   = getBPName();
+  var statusCls = {Draft:'msbp-draft', Reviewed:'msbp-reviewed', Approved:'msbp-approved'};
+
+  // Compute pending ack count for badge
+  var pending = 0;
+  if(myName){
+    pending = meetings.filter(function(m){
+      if(!m.distributedDate) return false;
+      if(m.minutesStatus==='Draft') return false;
+      var acks = m.acknowledgements||[];
+      return !acks.some(function(a){ return a.name.toLowerCase()===myName.toLowerCase(); });
+    }).length;
+  }
+  var badge = document.getElementById('ackBadge');
+  if(badge){ badge.textContent = pending; badge.style.display = pending>0 ? '' : 'none'; }
+
+  // Summary bar
+  var sumEl = document.getElementById('bpAckSummary');
+  if(sumEl){
+    if(pending > 0 && myName){
+      sumEl.style.display = '';
+      sumEl.innerHTML = '<div style="background:#fef9c3;border:1.5px solid #fde047;border-radius:var(--radius-lg);padding:12px 18px;font-size:13px;font-weight:600;color:#854d0e">⚠️ You have '+pending+' set'+(pending>1?'s':'')+' of minutes pending your acknowledgement.</div>';
+    } else if(!myName){
+      sumEl.style.display = '';
+      sumEl.innerHTML = '<div style="background:var(--gray-100);border:1.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:12px 18px;font-size:13px;color:var(--text-muted)">Enter your name in the header to track your acknowledgement status.</div>';
+    } else {
+      sumEl.style.display = 'none';
+    }
+  }
+
+  var listEl = document.getElementById('bpMinutesList');
+  if(!listEl) return;
+  listEl.innerHTML = meetings.slice().reverse().map(function(m){
+    var acks = m.acknowledgements || [];
+    var status = m.minutesStatus || 'Draft';
+    var distributed = !!m.distributedDate;
+    var myAck = myName ? acks.find(function(a){ return a.name.toLowerCase()===myName.toLowerCase(); }) : null;
+    var isActionable = distributed && status !== 'Draft';
+
+    var ackBadgeHtml = '';
+    if(!distributed){
+      ackBadgeHtml = '<span class="ack-status ack-draft">⏳ Draft — not yet distributed</span>';
+    } else if(myAck){
+      ackBadgeHtml = '<span class="ack-status ack-done">✅ Acknowledged</span>';
+    } else if(isActionable && myName){
+      ackBadgeHtml = '<span class="ack-status ack-pending">🟡 Pending Your Acknowledgement</span>';
+    } else if(isActionable){
+      ackBadgeHtml = '<span class="ack-status ack-draft">Distributed — enter name to acknowledge</span>';
+    }
+
+    return '<div class="min-row" id="bpm-'+m.id+'">'
+      +'<div class="min-row-header" onclick="toggleBPRow(\''+m.id+'\')">'
+      +'<div style="flex:1;min-width:0">'
+      +'<h4>'+fmtBPDate(m.date)+' — '+escBP(m.type)+' Meeting</h4>'
+      +'<div class="min-row-meta">'
+      +'<span class="min-status-bp '+((statusCls[status]||'msbp-draft'))+'">'+status+'</span>'
+      +(m.distributedDate ? ' · Distributed '+fmtBPDate(m.distributedDate) : '')
+      +' · Acknowledged by '+acks.length+' member'+(acks.length!==1?'s':'')
+      +'</div>'
+      +'</div>'
+      +'<div style="display:flex;align-items:center;gap:10px">'
+      +ackBadgeHtml
+      +'<span class="min-row-toggle">▾</span>'
+      +'</div>'
+      +'</div>'
+      +'<div class="min-row-body" id="bpmbody-'+m.id+'">'
+      +renderBPMinutesBody(m, myAck, isActionable, myName)
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderBPMinutesBody(m, myAck, isActionable, myName){
+  var acks = m.acknowledgements || [];
+  var html = '';
+  // Minutes text
+  if(m.minutesText && m.minutesText.trim().length > 10){
+    html += '<div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Minutes</div>';
+    html += '<div class="min-text-view">'+escBP(m.minutesText)+'</div>';
+  } else {
+    html += '<div style="color:var(--text-muted);font-size:13px;padding:10px 0">Minutes have not been entered yet.</div>';
+  }
+  // Acknowledgements received
+  if(acks.length > 0){
+    html += '<div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin:12px 0 6px">Acknowledgements received ('+acks.length+')</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:4px">';
+    acks.forEach(function(a){
+      html += '<span style="display:inline-flex;align-items:center;gap:4px;background:var(--teal-light);color:var(--teal);font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px">✓ '+escBP(a.name)+(a.ts ? '<span style="opacity:.6;font-weight:400;margin-left:3px">'+new Date(a.ts).toLocaleDateString()+'</span>' : '')+'</span>';
+    });
+    html += '</div>';
+  }
+  // Acknowledgement form or confirmation
+  if(isActionable){
+    if(myAck){
+      html += '<div class="ack-done-box">✅ Acknowledged by '+escBP(myAck.name)+' on '+new Date(myAck.ts).toLocaleString()+'</div>';
+    } else {
+      html += '<div class="ack-form">';
+      html += '<div style="font-weight:700;font-size:14px;margin-bottom:6px">Submit Your Acknowledgement</div>';
+      html += '<label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;margin-bottom:12px">'
+        +'<input type="checkbox" id="ackCheck-'+m.id+'" style="width:16px;height:16px" />'
+        +'I have read and acknowledge these minutes as accurate.</label>';
+      if(!myName){
+        html += '<div style="font-size:12px;margin-bottom:8px">Your name: <input type="text" id="ackName-'+m.id+'" placeholder="Your full name" style="padding:5px 10px;border:1.5px solid var(--teal);border-radius:var(--radius);font-size:12px;font-family:inherit;margin-left:4px;width:200px" /></div>';
+      } else {
+        html += '<div style="font-size:12px;margin-bottom:8px;color:var(--text-muted)">Acknowledging as: <strong>'+escBP(myName)+'</strong></div>';
+      }
+      html += '<button class="ack-btn" onclick="submitAck(\''+m.id+'\')">Submit Acknowledgement →</button>';
+      html += '</div>';
+    }
+  }
+  return html;
+}
+
+function toggleBPRow(id){
+  var row = document.getElementById('bpm-'+id);
+  if(row) row.classList.toggle('open');
+}
+
+function submitAck(id){
+  var checkEl = document.getElementById('ackCheck-'+id);
+  if(!checkEl || !checkEl.checked){ alert('Please check the acknowledgement box first.'); return; }
+  var nameEl = document.getElementById('ackName-'+id);
+  var name = getBPName() || (nameEl ? nameEl.value.trim() : '');
+  if(!name){ alert('Please enter your name.'); return; }
+  var meetings = getBPMeetings();
+  var m = meetings.find(function(x){ return x.id===id; });
+  if(!m){ alert('Meeting not found. Please refresh.'); return; }
+  if(!m.acknowledgements) m.acknowledgements = [];
+  var already = m.acknowledgements.some(function(a){ return a.name.toLowerCase()===name.toLowerCase(); });
+  if(already){ alert('You have already acknowledged these minutes.'); return; }
+  m.acknowledgements.push({name:name, ts:new Date().toISOString()});
+  saveBPMeetings(meetings);
+  if(!getBPName()){ saveBPName(name); renderNameBar(); }
+  renderBoardMinutes();
+  // Re-open the row
+  var row = document.getElementById('bpm-'+id);
+  if(row){ row.classList.add('open'); }
+}
+
+// ── Action Items (board view) ──────────────────────────────────────────────────
+var BP_ACTIONS_SEED = [
+  {id:'a1', desc:'File FY2025 990 extension', assigned:'Walker Somerville', due:'2026-07-15', status:'In Progress'},
+  {id:'a2', desc:'Update COI policy and collect board signatures', assigned:'Margaret Sullivan', due:'2026-06-30', status:'Overdue'},
+  {id:'a3', desc:'Post board meeting minutes to GuideStar', assigned:'Walker Somerville', due:'2026-07-01', status:'Not Started'},
+  {id:'a4', desc:'Research VA charitable registration requirements', assigned:'Rachel Hawthorne', due:'2026-07-31', status:'In Progress'},
+  {id:'a5', desc:'Recruit 2 new board members (open seats)', assigned:'Walker Somerville', due:'2026-09-30', status:'Not Started'},
+  {id:'a6', desc:'Submit GuideOne D&O insurance application', assigned:'Walker Somerville', due:'2026-07-15', status:'In Progress'},
+  {id:'a7', desc:'Write succession plan document', assigned:'Walker Somerville', due:'2026-08-15', status:'Not Started'},
+  {id:'a8', desc:'Adopt conflict of interest policy', assigned:'Board', due:'2026-09-01', status:'Not Started'}
+];
+
+function getBPActions(){
+  try { return JSON.parse(localStorage.getItem('camino_actions')) || BP_ACTIONS_SEED.map(function(a){ return Object.assign({},a); }); }
+  catch(e){ return BP_ACTIONS_SEED.map(function(a){ return Object.assign({},a); }); }
+}
+function saveBPActions(d){ localStorage.setItem('camino_actions', JSON.stringify(d)); }
+
+function renderBoardActions(filter){
+  var el = document.getElementById('bpActionsList');
+  if(!el) return;
+  var actions = getBPActions();
+  var today = new Date().toISOString().split('T')[0];
+  var filtered = actions.filter(function(a){
+    if(filter==='all') return true;
+    if(filter==='open') return a.status!=='Complete';
+    if(filter==='overdue') return a.status==='Overdue' || (a.status!=='Complete' && a.due && a.due < today);
+    if(filter==='done') return a.status==='Complete';
+    return true;
+  });
+  if(filtered.length===0){ el.innerHTML='<div style="color:var(--text-muted);font-size:13px;padding:20px 0">No items match this filter.</div>'; return; }
+  var statusCls = {Overdue:'aib-overdue','In Progress':'aib-inprog','Not Started':'aib-open',Complete:'aib-done'};
+  var statusEmoji = {Overdue:'🔴','In Progress':'🟡','Not Started':'⚪',Complete:'✅'};
+  el.innerHTML = filtered.map(function(a, idx){
+    var realIdx = actions.indexOf(a);
+    var isOverdue = (a.status!=='Complete' && a.due && a.due < today) || a.status==='Overdue';
+    var sts = isOverdue ? 'Overdue' : a.status;
+    return '<div class="ai-item">'
+      +'<span class="ai-priority">'+(statusEmoji[sts]||'⚪')+'</span>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-weight:600;font-size:13px">'+escBP(a.desc)+'</div>'
+      +'<div style="font-size:11px;color:var(--text-muted);margin-top:2px">Assigned: '+escBP(a.assigned)+' · Due: '+fmtBPDate(a.due)+'</div>'
+      +'</div>'
+      +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">'
+      +'<span class="ai-badge '+(statusCls[sts]||'aib-open')+'">'+sts+'</span>'
+      +(a.status!=='Complete' ? '<button style="font-size:11px;padding:3px 10px;border:1px solid var(--teal);border-radius:3px;background:none;color:var(--teal);cursor:pointer;font-family:inherit" onclick="markBPActionDone('+realIdx+')">Mark complete</button>' : '')
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function filterBPActions(f, btn){
+  document.querySelectorAll('.aifbtn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderBoardActions(f);
+}
+
+function markBPActionDone(i){
+  var actions = getBPActions();
+  if(!actions[i]) return;
+  actions[i].status = 'Complete';
+  saveBPActions(actions);
+  renderBoardActions('all');
+  document.querySelectorAll('.aifbtn').forEach(function(b){ if(b.textContent.includes('All')) b.click(); });
+}
+
+// ── COI e-acknowledgement ──────────────────────────────────────────────────────
+function renderCOIStatus(){
+  var el = document.getElementById('coiStatus');
+  if(!el) return;
+  var signed = null;
+  try { signed = JSON.parse(localStorage.getItem('bp_coi_signed')); } catch(e){}
+  var name = getBPName();
+  if(signed && signed.name){
+    el.innerHTML = '<div class="coi-signed-box">✅ Acknowledged by '+escBP(signed.name)+' on '+new Date(signed.ts).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'<br><span style="font-size:11px;font-weight:400;color:#15803d">Annual COI disclosure for FY2026. Next review due January 2027.</span></div>'
+      +'<div style="margin-top:12px"><button style="font-size:12px;padding:5px 14px;border:1px solid var(--gray-200);border-radius:var(--radius);background:none;cursor:pointer;font-family:inherit;color:var(--text-muted)" onclick="resetCOI()">Re-sign COI for this year</button></div>';
+  } else {
+    el.innerHTML = '<div style="margin-bottom:10px;font-size:12px;color:var(--text-muted)">Please sign below to complete your annual COI disclosure for FY2026.</div>'
+      +(name ? '<div style="font-size:13px;margin-bottom:10px">Signing as: <strong>'+escBP(name)+'</strong></div>' : '<div style="font-size:13px;margin-bottom:10px">Your name: <input type="text" id="coiNameInput" placeholder="Enter your full name" style="padding:6px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px;font-family:inherit;width:220px;margin-left:4px" /></div>')
+      +'<label style="display:flex;align-items:flex-start;gap:10px;font-size:13px;cursor:pointer;margin-bottom:14px">'
+      +'<input type="checkbox" id="coiCheck" style="margin-top:3px;width:16px;height:16px;flex-shrink:0" />'
+      +'I confirm I have read this policy and have disclosed all potential conflicts of interest for FY2026.</label>'
+      +'<button class="ack-btn" onclick="signCOI()">Sign Conflict of Interest Disclosure</button>';
+  }
+}
+
+function signCOI(){
+  var check = document.getElementById('coiCheck');
+  if(!check || !check.checked){ alert('Please confirm you have read and understood the policy.'); return; }
+  var nameInp = document.getElementById('coiNameInput');
+  var name = getBPName() || (nameInp ? nameInp.value.trim() : '');
+  if(!name){ alert('Please enter your name.'); return; }
+  var record = {name:name, ts:new Date().toISOString(), year:'FY2026'};
+  localStorage.setItem('bp_coi_signed', JSON.stringify(record));
+  if(!getBPName()){ saveBPName(name); renderNameBar(); }
+  renderCOIStatus();
+}
+
+function resetCOI(){
+  localStorage.removeItem('bp_coi_signed');
+  renderCOIStatus();
 }
 
 // ── Risk data ─────────────────────────────────────────────────────────────────

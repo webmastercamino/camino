@@ -539,6 +539,18 @@
     .meeting-row { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
     .meeting-row:last-child { border-bottom: none; }
     .meeting-date { font-weight: 700; min-width: 90px; flex-shrink: 0; }
+    .min-status{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.3px}
+    .min-draft{background:var(--gray-200);color:var(--gray-600)}
+    .min-reviewed{background:#dbeafe;color:#1d4ed8}
+    .min-approved{background:#dcfce7;color:#16a34a}
+    .min-archived{background:var(--gray-100);color:var(--text-muted)}
+    .meeting-expand{padding:14px 0 4px;border-top:1px solid var(--border);margin-top:10px}
+    .ack-chip{display:inline-flex;align-items:center;gap:3px;background:var(--teal-light);color:var(--teal);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin:2px}
+    .min-text-area{width:100%;min-height:280px;font-family:monospace;font-size:11px;line-height:1.6;padding:10px;border:1.5px solid var(--border);border-radius:var(--radius);resize:vertical;box-sizing:border-box}
+    .min-dash{background:var(--gray-100);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:18px;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .min-dash-stat{text-align:center;min-width:80px}
+    .min-dash-num{font-size:22px;font-weight:800;line-height:1}
+    .min-dash-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:2px}
     .meeting-info { flex: 1; min-width: 0; }
     .meeting-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 4px; background: var(--teal-light); color: var(--teal); margin-bottom: 4px; display: inline-block; }
     .meeting-agenda { color: var(--muted); font-size: 12px; margin-top: 4px; line-height: 1.5; }
@@ -1059,6 +1071,7 @@
 
     <!-- Meetings -->
     <div class="bg-tab-pane" id="bg-meetings">
+      <div id="minutesDashboard"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
         <div style="font-weight:700;font-size:14px">Meeting Log</div>
         <button class="btn btn-primary btn-sm" onclick="addMeeting()">+ Log Meeting</button>
@@ -2607,8 +2620,44 @@ function saveInvestment(i) {
 const BOARD_MEMBERS = ['Walker Somerville','Seiny Somerville','Margaret Sullivan','James Okonkwo','Rachel Hawthorne','Daniel Park','Linda Castillo','Thomas Briggs'];
 
 const MEETINGS_SEED = [
-  { id: 'm1', date: '2026-03-20', type: 'Regular', quorum: true,  attendance: 'Walker, Seiny, Margaret, James, Rachel',         agenda: 'Q1 financials, Honduras site visit planning, board recruitment',       minutesUrl: '' },
-  { id: 'm2', date: '2026-06-05', type: 'Regular', quorum: true,  attendance: 'Walker, Seiny, Margaret, James, Rachel, Daniel', agenda: 'Q2 review, holiday campaign planning, 990 FY2025 update',               minutesUrl: '' }
+  {
+    id: 'm1', date: '2026-01-15', type: 'Annual', quorum: true,
+    attendance: 'Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville, Seiny Lopez',
+    agenda: 'Annual organizational review, officer elections, 2026 budget approval, strategic plan',
+    minutesStatus: 'Approved',
+    minutesText: 'CAMINO Honduras, Inc.\nBoard of Directors Meeting Minutes\nAnnual Meeting — January 15, 2026\nLocation: Video call (Zoom)\nCalled to order: 10:02 AM by Margaret Chen (Board Chair)\n\nATTENDANCE\nPresent: Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville, Seiny Lopez\nAbsent: None\nQuorum: Yes (6 of 6 members present)\n\nAPPROVAL OF PREVIOUS MINUTES\nMotion to approve December 12, 2025 minutes: James Morrison\nSecond: Rachel Park\nVote: Approved unanimously\n\nREPORTS\nExecutive Director Report: Walker reported 17 homes built in 2025, 65 families on waitlist. Honduras operations stable. Seiny managing community partnerships effectively.\nFinancial Report: FY2025 surplus of $2,500. Operating reserve at $4,200 — below target. 990-N filed November 2025.\nProgram Report: Rio Lindo community development on track. Church planting initiative added 2 new partner churches.\n\nOLD BUSINESS\n1. Insurance purchase — discussed GuideOne and Brotherhood Mutual quotes. Tabled pending D&O quotes (Q2 2026 deadline set).\n2. Board composition — agreed to recruit 2–3 independent members by September 2026.\n\nNEW BUSINESS\n1. 2026 operating budget of $120,000 APPROVED unanimously.\n2. Thanksgiving 2026 website launch target APPROVED.\n3. Corporate mission trip channel designated as Phase 2 priority.\n\nACTION ITEMS\n• Walker: Obtain D&O and liability insurance quotes by April 1, 2026.\n• Walker: Identify 2–3 independent board candidates by June 1, 2026.\n• Walker: Begin succession plan document by March 15, 2026.\n• Board: Review and adopt conflict of interest policy at March meeting.\n\nNEXT MEETING\nRegular Meeting — March 18, 2026, 10:00 AM Eastern · Video call\n\nMeeting adjourned: 11:47 AM\nRespectfully submitted,\nMargaret Chen, Secretary',
+    minutesUrl: '', draftBy: 'Margaret Chen', draftDate: '2026-01-22', distributedDate: '2026-01-25',
+    approvalMethod: 'Voice vote at next meeting', approvalDate: '2026-03-18',
+    acknowledgements: [
+      {name:'Margaret Chen',ts:'2026-01-26T09:15:00'},{name:'James Morrison',ts:'2026-01-27T14:30:00'},
+      {name:'Rachel Park',ts:'2026-01-28T10:00:00'},{name:'Daniel Foster',ts:'2026-01-29T16:45:00'},
+      {name:'Walker Somerville',ts:'2026-01-26T08:00:00'},{name:'Seiny Lopez',ts:'2026-01-30T11:20:00'}
+    ]
+  },
+  {
+    id: 'm2', date: '2026-03-18', type: 'Regular', quorum: true,
+    attendance: 'Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville',
+    agenda: 'Q1 financials, approval of January minutes, insurance vote, board recruitment update',
+    minutesStatus: 'Approved',
+    minutesText: 'CAMINO Honduras, Inc.\nBoard of Directors Meeting Minutes\nRegular Meeting — March 18, 2026\nLocation: Video call (Zoom)\nCalled to order: 10:05 AM by Margaret Chen (Board Chair)\n\nATTENDANCE\nPresent: Margaret Chen, James Morrison, Rachel Park, Daniel Foster, Walker Somerville\nAbsent: Seiny Lopez (excused)\nQuorum: Yes (5 of 6 members present)\n\nAPPROVAL OF PREVIOUS MINUTES\nMotion to approve January 15, 2026 Annual Meeting minutes: Daniel Foster\nSecond: James Morrison\nVote: Approved unanimously\n\nREPORTS\nExecutive Director Report: Q1 income $24,600 — on plan. 4 homes underway in Tapiquilares. Culpeper group trip confirmed July 2026 (14 participants).\nFinancial Report: Operating reserve steady at $4,200. Insurance quotes received from GuideOne — $2,800/yr for D&O + liability.\nProgram Report: Rio Lindo community: 2 new families in intake process. Cornerstone Community (Culpeper) confirmed for July trip.\n\nOLD BUSINESS\n1. Insurance — GuideOne quotes reviewed. MOTION to authorize Walker to purchase D&O + general liability from GuideOne: Margaret Chen / Second: James Morrison. Vote: Approved 5-0.\n2. Board recruitment — Walker has 2 candidates in conversation. Target: confirmed by June 2026.\n\nNEW BUSINESS\n1. Conflict of Interest Policy (draft) presented. Tabled for review — vote at June meeting.\n2. Site visit: Walker proposes board member on-site visit October 2026.\n\nACTION ITEMS\n• Walker: Submit GuideOne insurance application by April 15, 2026.\n• Walker: Schedule candidate interviews by May 1, 2026.\n• Margaret: Revise COI policy draft and redistribute by May 15, 2026.\n• All board: Review COI policy draft before June meeting.\n\nNEXT MEETING\nRegular Meeting — June 10, 2026, 10:00 AM Eastern · Video call\n\nMeeting adjourned: 11:52 AM\nRespectfully submitted,\nMargaret Chen, Secretary',
+    minutesUrl: '', draftBy: 'Margaret Chen', draftDate: '2026-03-25', distributedDate: '2026-03-28',
+    approvalMethod: 'Voice vote at next meeting', approvalDate: '2026-06-10',
+    acknowledgements: [
+      {name:'Margaret Chen',ts:'2026-03-29T10:10:00'},{name:'James Morrison',ts:'2026-03-30T09:00:00'},
+      {name:'Rachel Park',ts:'2026-04-01T14:20:00'},{name:'Daniel Foster',ts:'2026-04-02T11:05:00'},
+      {name:'Walker Somerville',ts:'2026-03-29T07:45:00'}
+    ]
+  },
+  {
+    id: 'm3', date: '2026-06-10', type: 'Regular', quorum: true,
+    attendance: 'Margaret Chen, James Morrison, Rachel Park, Walker Somerville',
+    agenda: 'Q2 review, holiday campaign planning, 990 FY2025 update, COI policy vote',
+    minutesStatus: 'Draft',
+    minutesText: 'CAMINO Honduras, Inc.\nBoard of Directors Meeting Minutes\nRegular Meeting — June 10, 2026\nLocation: Video call (Zoom)\nCalled to order: 10:08 AM by Margaret Chen (Board Chair)\n\nATTENDANCE\nPresent: Margaret Chen, James Morrison, Rachel Park, Walker Somerville\nAbsent: Daniel Foster (excused), Seiny Lopez (excused)\nQuorum: Yes (4 of 6 members present)\n\nAPPROVAL OF PREVIOUS MINUTES\nMotion to approve March 18, 2026 minutes: [Name]\nSecond: [Name]\nVote: [Approved / Not approved]\n\nREPORTS\nExecutive Director Report: [summary — Walker to complete]\nFinancial Report: YTD income $59,600 vs. budget $60,000 — essentially on plan. Corporate/grants line behind at 17% of plan. Operating reserve stable at $4,200.\nProgram Report: [summary]\n\nOLD BUSINESS\n[items]\n\nNEW BUSINESS\n1. Holiday campaign planning — Thanksgiving 2026 website launch target confirmed.\n2. 990 FY2025 — e-Postcard due November 2026. Walker to calendar.\n3. COI Policy — [vote result]\n\nACTION ITEMS\n[auto-populated from action items logged in this meeting]\n\nNEXT MEETING\nQ3 2026 Board Meeting — August 15, 2026, 10:00 AM Eastern · Video call\n\nMeeting adjourned: [time]\nRespectfully submitted,\nMargaret Chen, Secretary',
+    minutesUrl: '', draftBy: 'Margaret Chen', draftDate: '2026-06-17', distributedDate: '',
+    approvalMethod: 'Voice vote at next meeting', approvalDate: '',
+    acknowledgements: []
+  }
 ];
 const NEXT_MEETING_SEED = { date: '2026-07-17', agendaItems: ['Q2 2026 financial review','Honduras site visit debrief','Holiday giving campaign planning','Board recruitment — open seats'] };
 
@@ -2693,23 +2742,146 @@ function renderBoardHealth() {
     </div>`;
 }
 
+function renderMinutesDashboard(meetings) {
+  const el = document.getElementById('minutesDashboard');
+  if (!el) return;
+  const pendingAck = meetings.filter(m => (m.minutesStatus === 'Reviewed' || m.minutesStatus === 'Approved') && m.distributedDate && (m.acknowledgements||[]).length < 6).length;
+  const lastApproved = meetings.filter(m => m.minutesStatus === 'Approved').sort((a,b) => b.date.localeCompare(a.date))[0];
+  const noMinutes = meetings.filter(m => !m.minutesText || m.minutesText.trim().length < 20).length;
+  const allOk = pendingAck === 0 && noMinutes === 0;
+  el.innerHTML = `<div class="min-dash">
+    <div style="flex:1;min-width:160px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px">Minutes Status</div>
+      <div style="font-size:13px;font-weight:700;color:${allOk ? 'var(--teal)' : 'var(--amber-dark)'}">${allOk ? '✅ Minutes up to date' : '⚠️ Action needed'}</div>
+    </div>
+    <div class="min-dash-stat">
+      <div class="min-dash-num" style="color:${pendingAck>0?'var(--amber-dark)':'var(--teal)'}">${pendingAck}</div>
+      <div class="min-dash-lbl">Pending acknowledgement</div>
+    </div>
+    <div class="min-dash-stat">
+      <div class="min-dash-num" style="color:var(--teal);font-size:14px">${lastApproved ? fmtDate(lastApproved.date) : '—'}</div>
+      <div class="min-dash-lbl">Last approved</div>
+    </div>
+    <div class="min-dash-stat">
+      <div class="min-dash-num" style="color:${noMinutes>0?'var(--coral)':'var(--teal)'}">${noMinutes}</div>
+      <div class="min-dash-lbl">Without minutes</div>
+    </div>
+  </div>`;
+}
+
 function renderMeetings() {
   const el = document.getElementById('meetingsList');
   if (!el) return;
   const meetings = getMeetings();
+  renderMinutesDashboard(meetings);
+  const minCls = {Draft:'min-draft',Reviewed:'min-reviewed',Approved:'min-approved',Archived:'min-archived'};
   el.innerHTML = meetings.length === 0 ? '<div style="color:var(--muted);font-size:13px">No meetings logged yet.</div>' :
     meetings.slice().reverse().map((m, ri) => {
       const i = meetings.length - 1 - ri;
-      return `<div class="meeting-row">
-        <div style="flex:1;min-width:0">
-          <div style="font-weight:700;font-size:13px">${fmtDate(m.date)} — ${escHtml(m.type)}</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px">Quorum: ${m.quorum ? 'Yes' : 'No'} · Attendance: ${escHtml(m.attendance)}</div>
-          <div style="font-size:12px;color:var(--muted)">Agenda: ${escHtml(m.agenda)}</div>
-          ${m.minutesUrl ? `<div style="font-size:12px;margin-top:2px"><a href="${escHtml(m.minutesUrl)}" target="_blank">View minutes ↗</a></div>` : ''}
+      const acks = m.acknowledgements || [];
+      const status = m.minutesStatus || 'Draft';
+      return `<div class="meeting-row" style="flex-direction:column;align-items:stretch">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span style="font-weight:700;font-size:13px">${fmtDate(m.date)} — ${escHtml(m.type)} Meeting</span>
+              <span class="min-status ${minCls[status]||'min-draft'}">${status}</span>
+              ${acks.length > 0 ? `<span style="font-size:11px;color:var(--muted)">${acks.length} acknowledged</span>` : ''}
+            </div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">Quorum: ${m.quorum ? 'Yes' : 'No'} · ${escHtml(m.attendance||'')}</div>
+            <div style="font-size:12px;color:var(--muted)">Agenda: ${escHtml(m.agenda||'')}</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-shrink:0;align-items:center">
+            <button class="btn btn-secondary btn-sm" onclick="toggleMeetingExpand(${i})">📋 Minutes</button>
+            <button class="btn btn-ghost btn-sm" onclick="editMeeting(${i})">✏️</button>
+          </div>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="editMeeting(${i})" style="flex-shrink:0">✏️</button>
+        <div id="m-expand-${i}" style="display:none" class="meeting-expand"></div>
       </div>`;
     }).join('');
+}
+
+function toggleMeetingExpand(i) {
+  const el = document.getElementById('m-expand-' + i);
+  if (!el) return;
+  if (el.style.display !== 'none') { el.style.display = 'none'; return; }
+  el.innerHTML = renderMinutesDetail(getMeetings()[i], i);
+  el.style.display = 'block';
+}
+
+function renderMinutesDetail(m, i) {
+  const acks = m.acknowledgements || [];
+  const minCls = {Draft:'min-draft',Reviewed:'min-reviewed',Approved:'min-approved',Archived:'min-archived'};
+  const status = m.minutesStatus || 'Draft';
+  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;font-size:12px">
+    <div>
+      <div style="font-weight:700;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)">Minutes Info</div>
+      <div>Status: <span class="min-status ${minCls[status]||'min-draft'}">${status}</span>
+        <select id="mstatus-${i}" style="margin-left:8px;font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:3px" onchange="updateMinutesStatus(${i})">
+          ${['Draft','Reviewed','Approved','Archived'].map(s=>`<option${status===s?' selected':''}>${s}</option>`).join('')}
+        </select>
+      </div>
+      <div style="margin-top:5px">Draft by: <b>${escHtml(m.draftBy||'—')}</b>${m.draftDate ? ' on ' + fmtDate(m.draftDate) : ''}</div>
+      <div style="margin-top:4px">Distributed: ${m.distributedDate ? fmtDate(m.distributedDate) : '<span style="color:var(--coral)">Not yet distributed</span>'}</div>
+      <div style="margin-top:4px">Approval method: ${escHtml(m.approvalMethod||'Voice vote at next meeting')}</div>
+      ${m.approvalDate ? `<div style="margin-top:4px">Approved: ${fmtDate(m.approvalDate)}</div>` : ''}
+      ${m.minutesUrl ? `<div style="margin-top:4px"><a href="${escHtml(m.minutesUrl)}" target="_blank">External doc ↗</a></div>` : ''}
+    </div>
+    <div>
+      <div style="font-weight:700;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)">Electronic Acknowledgements (${acks.length})</div>
+      ${acks.length === 0 ? '<div style="color:var(--muted);font-size:12px">None yet</div>' :
+        acks.map(a => `<span class="ack-chip">✓ ${escHtml(a.name)}<span style="opacity:.65;margin-left:4px;font-weight:400">${a.ts ? new Date(a.ts).toLocaleDateString() : ''}</span></span>`).join('')}
+    </div>
+  </div>
+  <div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+      <div style="font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)">Minutes Text</div>
+      <button class="btn btn-secondary btn-sm" onclick="generateMinutesDraft(${i})">📝 Generate Template</button>
+    </div>
+    <textarea class="min-text-area" id="mtext-${i}" placeholder="Enter meeting minutes here, or click Generate Template to start from a structured draft…">${escHtml(m.minutesText||'')}</textarea>
+    <div style="display:flex;gap:10px;margin-top:8px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="saveMinutesText(${i})">Save Minutes</button>
+      <div style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px">
+        External URL: <input type="url" id="murl-${i}" value="${escHtml(m.minutesUrl||'')}" style="font-size:11px;padding:3px 7px;border:1px solid var(--border);border-radius:3px;width:180px" placeholder="Google Drive link…"/>
+      </div>
+    </div>
+  </div>`;
+}
+
+function saveMinutesText(i) {
+  const meetings = getMeetings();
+  if (!meetings[i]) return;
+  meetings[i].minutesText = document.getElementById('mtext-' + i).value;
+  const urlEl = document.getElementById('murl-' + i);
+  if (urlEl) meetings[i].minutesUrl = urlEl.value.trim();
+  saveMeetings(meetings);
+  toast('Minutes saved.');
+}
+
+function updateMinutesStatus(i) {
+  const meetings = getMeetings();
+  if (!meetings[i]) return;
+  const sel = document.getElementById('mstatus-' + i);
+  if (sel) meetings[i].minutesStatus = sel.value;
+  saveMeetings(meetings);
+  renderMeetings();
+  toast('Status updated.');
+}
+
+function generateMinutesDraft(i) {
+  const meetings = getMeetings();
+  const m = meetings[i];
+  if (!m) return;
+  const prevMtg = i > 0 ? meetings[i-1] : null;
+  const prevDate = prevMtg ? fmtDate(prevMtg.date) : '[previous meeting date]';
+  const actions = getActions().filter(a => a.status !== 'Complete').map(a => '• ' + a.desc + ' — ' + a.assigned + ' (due ' + a.due + ')').join('\n') || '• [None currently logged]';
+  const draft = `CAMINO Honduras, Inc.\nBoard of Directors Meeting Minutes\n${escHtml(m.type)} Meeting — ${fmtDate(m.date)}\nLocation: [Location / Video call]\nCalled to order: [Time] by [Board Chair]\n\nATTENDANCE\nPresent: ${m.attendance||'[list]'}\nAbsent: [list]\nQuorum: ${m.quorum?'Yes':'No'} ([X] of [Y] members present)\n\nAPPROVAL OF PREVIOUS MINUTES\nMotion to approve ${prevDate} minutes: [Name]\nSecond: [Name]\nVote: Approved / Not approved\n\nREPORTS\nExecutive Director Report: [summary]\nFinancial Report: [summary]\nProgram Report: [summary]\n\nOLD BUSINESS\n[items]\n\nNEW BUSINESS\n[items]\n\nACTION ITEMS\n${actions}\n\nNEXT MEETING\n[date, time, location]\n\nMeeting adjourned: [time]\nRespectfully submitted,\n[Secretary name]`;
+  const textarea = document.getElementById('mtext-' + i);
+  if (!textarea) return;
+  if (textarea.value && textarea.value.trim().length > 20) {
+    if (!confirm('Overwrite current minutes with template?')) return;
+  }
+  textarea.value = draft;
 }
 
 function editMeeting(i) {
@@ -2721,14 +2893,25 @@ function editMeeting(i) {
     <div style="font-weight:700;margin-bottom:10px">Edit Meeting</div>
     <div class="form-row">
       <div class="form-group"><label>Date</label><input type="date" id="me_date" value="${m.date}" /></div>
-      <div class="form-group"><label>Type</label><select id="me_type"><option ${m.type==='Regular'?'selected':''}>Regular</option><option ${m.type==='Special'?'selected':''}>Special</option><option ${m.type==='Annual'?'selected':''}>Annual</option></select></div>
+      <div class="form-group"><label>Type</label><select id="me_type"><option${m.type==='Regular'?' selected':''}>Regular</option><option${m.type==='Special'?' selected':''}>Special</option><option${m.type==='Annual'?' selected':''}>Annual</option></select></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Quorum met</label><select id="me_quorum"><option value="1" ${m.quorum?'selected':''}>Yes</option><option value="0" ${!m.quorum?'selected':''}>No</option></select></div>
-      <div class="form-group"><label>Attendance</label><input type="text" id="me_att" value="${escHtml(m.attendance)}" /></div>
+      <div class="form-group"><label>Quorum met</label><select id="me_quorum"><option value="1"${m.quorum?' selected':''}>Yes</option><option value="0"${!m.quorum?' selected':''}>No</option></select></div>
+      <div class="form-group"><label>Attendance</label><input type="text" id="me_att" value="${escHtml(m.attendance||'')}" /></div>
     </div>
-    <div class="form-group"><label>Agenda summary</label><input type="text" id="me_agenda" value="${escHtml(m.agenda)}" /></div>
-    <div class="form-group"><label>Minutes URL</label><input type="url" id="me_url" value="${escHtml(m.minutesUrl)}" /></div>
+    <div class="form-group"><label>Agenda summary</label><input type="text" id="me_agenda" value="${escHtml(m.agenda||'')}" /></div>
+    <div class="form-row">
+      <div class="form-group"><label>Draft by</label><input type="text" id="me_draftby" value="${escHtml(m.draftBy||'')}" placeholder="Secretary name" /></div>
+      <div class="form-group"><label>Draft date</label><input type="date" id="me_draftdate" value="${m.draftDate||''}" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Distributed date</label><input type="date" id="me_distdate" value="${m.distributedDate||''}" /></div>
+      <div class="form-group"><label>Approval method</label><select id="me_appmeth"><option${(m.approvalMethod||'').includes('Voice')?' selected':''}>Voice vote at next meeting</option><option${(m.approvalMethod||'').includes('Electronic')?' selected':''}>Electronic acknowledgement</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Approval date</label><input type="date" id="me_appdate" value="${m.approvalDate||''}" /></div>
+      <div class="form-group"><label>Minutes status</label><select id="me_minstatus"><option${(m.minutesStatus||'')==='Draft'?' selected':''}>Draft</option><option${(m.minutesStatus||'')==='Reviewed'?' selected':''}>Reviewed</option><option${(m.minutesStatus||'')==='Approved'?' selected':''}>Approved</option><option${(m.minutesStatus||'')==='Archived'?' selected':''}>Archived</option></select></div>
+    </div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-primary btn-sm" onclick="saveMeeting(${i})">Save</button>
       <button class="btn btn-ghost btn-sm" onclick="renderMeetings()">Cancel</button>
@@ -2738,12 +2921,17 @@ function editMeeting(i) {
 
 function saveMeeting(i) {
   const meetings = getMeetings();
-  meetings[i].date       = document.getElementById('me_date').value;
-  meetings[i].type       = document.getElementById('me_type').value;
-  meetings[i].quorum     = document.getElementById('me_quorum').value === '1';
-  meetings[i].attendance = document.getElementById('me_att').value.trim();
-  meetings[i].agenda     = document.getElementById('me_agenda').value.trim();
-  meetings[i].minutesUrl = document.getElementById('me_url').value.trim();
+  meetings[i].date            = document.getElementById('me_date').value;
+  meetings[i].type            = document.getElementById('me_type').value;
+  meetings[i].quorum          = document.getElementById('me_quorum').value === '1';
+  meetings[i].attendance      = document.getElementById('me_att').value.trim();
+  meetings[i].agenda          = document.getElementById('me_agenda').value.trim();
+  meetings[i].draftBy         = document.getElementById('me_draftby').value.trim();
+  meetings[i].draftDate       = document.getElementById('me_draftdate').value;
+  meetings[i].distributedDate = document.getElementById('me_distdate').value;
+  meetings[i].approvalMethod  = document.getElementById('me_appmeth').value;
+  meetings[i].approvalDate    = document.getElementById('me_appdate').value;
+  meetings[i].minutesStatus   = document.getElementById('me_minstatus').value;
   saveMeetings(meetings);
   renderMeetings();
   renderBoardHealth();
@@ -2763,7 +2951,10 @@ function addMeeting() {
       <div class="form-group"><label>Attendance</label><input type="text" id="me_att" /></div>
     </div>
     <div class="form-group"><label>Agenda summary</label><input type="text" id="me_agenda" /></div>
-    <div class="form-group"><label>Minutes URL</label><input type="url" id="me_url" /></div>
+    <div class="form-row">
+      <div class="form-group"><label>Draft by</label><input type="text" id="me_draftby" placeholder="Secretary name" /></div>
+      <div class="form-group"><label>Draft date</label><input type="date" id="me_draftdate" /></div>
+    </div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-primary btn-sm" onclick="saveNewMeeting()">Save</button>
       <button class="btn btn-ghost btn-sm" onclick="renderMeetings()">Cancel</button>
@@ -2773,7 +2964,18 @@ function addMeeting() {
 
 function saveNewMeeting() {
   const meetings = getMeetings();
-  meetings.push({ id: 'm' + meetings.length, date: document.getElementById('me_date').value, type: document.getElementById('me_type').value, quorum: document.getElementById('me_quorum').value === '1', attendance: document.getElementById('me_att').value.trim(), agenda: document.getElementById('me_agenda').value.trim(), minutesUrl: document.getElementById('me_url').value.trim() });
+  meetings.push({
+    id: 'm' + meetings.length,
+    date: document.getElementById('me_date').value,
+    type: document.getElementById('me_type').value,
+    quorum: document.getElementById('me_quorum').value === '1',
+    attendance: document.getElementById('me_att').value.trim(),
+    agenda: document.getElementById('me_agenda').value.trim(),
+    draftBy: document.getElementById('me_draftby').value.trim(),
+    draftDate: document.getElementById('me_draftdate').value,
+    distributedDate: '', approvalMethod: 'Voice vote at next meeting', approvalDate: '',
+    minutesStatus: 'Draft', minutesText: '', minutesUrl: '', acknowledgements: []
+  });
   saveMeetings(meetings);
   renderMeetings();
   renderBoardHealth();
