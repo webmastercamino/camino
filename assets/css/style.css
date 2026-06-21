@@ -1186,9 +1186,16 @@ a  { text-decoration: none; color: inherit; }
 
 /* ── Theme toggle button (public nav) ── */
 .theme-toggle-btn {
-  background: none; border: 1.5px solid var(--gray-200); border-radius: 20px;
-  padding: 4px 12px; font-size: 12px; cursor: pointer; font-family: inherit;
-  color: var(--text-muted); display: flex; align-items: center; gap: 5px;
-  transition: border-color .15s; white-space: nowrap; margin-right: 10px;
+  width: 36px; height: 36px;
+  background: none; border: none;
+  border-radius: 8px;
+  font-size: 18px; line-height: 1;
+  cursor: pointer; font-family: inherit;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s;
+  padding: 0; flex-shrink: 0;
+  margin-right: 6px;
 }
-.theme-toggle-btn:hover { border-color: var(--teal); color: var(--teal); }
+.theme-toggle-btn:hover { background: var(--gray-100); color: var(--text); }
+[data-theme="dark"] .theme-toggle-btn:hover { background: rgba(255,255,255,.1); color: #e5e7eb; }

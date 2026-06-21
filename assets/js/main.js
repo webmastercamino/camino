@@ -6,7 +6,13 @@
     document.body.dataset.theme = theme;
     localStorage.setItem(THEME_KEY, theme);
     document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
-      btn.textContent = theme === 'dark' ? '☀ Light mode' : '🌙 Dark mode';
+      const isMobile = btn.dataset.mobile === 'true';
+      if (isMobile) {
+        btn.textContent = theme === 'dark' ? '☀  Light mode' : '🌙  Dark mode';
+      } else {
+        btn.textContent = theme === 'dark' ? '☀' : '🌙';
+      }
+      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
       btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
     });
   }
@@ -16,25 +22,26 @@
   // Apply on load (default light)
   applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 
-  // Inject toggle button just BEFORE the .nav-cta ("Give now") button
+  // Inject icon-only toggle just BEFORE the .nav-cta (Donate) button
   document.addEventListener('DOMContentLoaded', function () {
     const btn = document.createElement('button');
     btn.className = 'theme-toggle-btn';
+    btn.setAttribute('aria-label', 'Toggle dark mode');
     btn.onclick = toggleTheme;
     const navCta = document.querySelector('.nav-cta');
     if (navCta && navCta.parentNode) {
       navCta.parentNode.insertBefore(btn, navCta);
     }
-    // Also add to mobile menu footer if present
+    // Full-width labeled version in mobile menu
     const mobileMenu = document.getElementById('mobileMenu');
     if (mobileMenu) {
       const mb = btn.cloneNode(true);
-      mb.className = 'theme-toggle-btn';
-      mb.style.cssText = 'margin:12px 16px 4px;width:calc(100% - 32px)';
+      mb.dataset.mobile = 'true';
+      mb.style.cssText = 'margin:12px 16px 4px;width:calc(100% - 32px);justify-content:center;font-size:14px;padding:10px';
       mb.onclick = toggleTheme;
       mobileMenu.appendChild(mb);
     }
-    // Re-apply so button labels update correctly after inject
+    // Re-apply so icons update after inject
     applyTheme(localStorage.getItem(THEME_KEY) || 'light');
   });
 })();

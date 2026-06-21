@@ -1184,16 +1184,6 @@ function adminLogout(){
 
   <div class="sidebar-footer" style="padding:14px 18px;font-size:11px;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.08)">
     <button onclick="adminLogout()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;width:100%;margin-bottom:8px">⬅ Log out</button>
-    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
-      <span style="font-size:10px;letter-spacing:.5px;text-transform:uppercase">☀</span>
-      <label style="position:relative;width:32px;height:18px;flex-shrink:0;cursor:pointer">
-        <input type="checkbox" id="adminThemeToggle" onchange="applyPortalTheme(this.checked?'dark':'light')" style="opacity:0;width:0;height:0;position:absolute" />
-        <span id="adminThemeTrack" style="position:absolute;inset:0;background:#4b5563;border-radius:9px;transition:background .2s">
-          <span id="adminThemeKnob" style="position:absolute;top:2px;left:2px;width:14px;height:14px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)"></span>
-        </span>
-      </label>
-      <span style="font-size:10px;letter-spacing:.5px;text-transform:uppercase">🌙</span>
-    </div>
     CAMINO Admin · localStorage POC<br>
     Cloudflare Workers backend planned.
   </div>
