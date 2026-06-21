@@ -689,6 +689,53 @@
     .qr-progress-bar { background:var(--teal); height:8px; border-radius:20px; width:0; transition:width .3s; }
     .qr-progress-text { font-size:12px; color:var(--muted); margin-bottom:16px; }
     .review-log-entry { padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius); margin-bottom:8px; }
+
+    /* ── Policy & Risk Watch ── */
+    .pw-overview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; margin-bottom:20px; }
+    .pw-overview-tile { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius); padding:14px 16px; }
+    .pw-overview-tile.pw-critical { border-left:4px solid var(--red); }
+    .pw-overview-tile.pw-moderate { border-left:4px solid var(--amber); }
+    .pw-overview-tile.pw-good { border-left:4px solid #22c55e; }
+    .pw-tile-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); margin-bottom:6px; }
+    .pw-tile-val { font-size:14px; font-weight:700; line-height:1.3; }
+    .pw-tile-sub { font-size:11px; color:var(--muted); margin-top:3px; }
+    .pw-review-bar { background:var(--surface); border:1.5px solid #fde68a; border-left:4px solid var(--amber); border-radius:var(--radius); padding:14px 18px; margin-bottom:20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .pw-review-bar span { flex:1; font-size:13px; font-weight:600; color:var(--amber-dark); min-width:200px; }
+    .pw-source-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .pw-source-table th { text-align:left; padding:8px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); border-bottom:1.5px solid var(--border); background:#f8f8f8; white-space:nowrap; }
+    .pw-source-table td { padding:10px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+    .pw-source-table tr:last-child td { border-bottom:none; }
+    .pw-source-table tr:hover td { background:var(--teal-light); }
+    .rel-critical { background:#fee2e2; color:#991b1b; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; white-space:nowrap; }
+    .rel-high { background:#ffedd5; color:#9a3412; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; white-space:nowrap; }
+    .rel-medium { background:#fef9c3; color:#713f12; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; white-space:nowrap; }
+    .pw-notes-cell input { width:100%; padding:5px 8px; border:1.5px solid var(--border); border-radius:4px; font-size:12px; font-family:inherit; }
+    .pw-notes-cell input:focus { border-color:var(--teal); outline:none; }
+    .pw-ngo-card { background:var(--surface); border:2px solid var(--teal); border-radius:var(--radius-lg); padding:20px 24px; margin-bottom:20px; }
+    .pw-ngo-card-title { font-size:15px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+    .pw-ngo-kv { display:flex; justify-content:space-between; gap:12px; font-size:13px; padding:7px 0; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+    .pw-ngo-kv:last-child { border-bottom:none; }
+    .pw-ngo-kv > span:first-child { color:var(--muted); flex-shrink:0; }
+    .pw-ngo-kv > span:last-child { font-weight:600; text-align:right; max-width:60%; }
+    .pw-nicaragua-note { background:#fef9c3; border-left:4px solid #eab308; border-radius:var(--radius); padding:12px 16px; font-size:12px; color:#713f12; line-height:1.6; margin-top:14px; }
+    .pw-dept-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+    .pw-dept-card { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius); padding:16px; }
+    .pw-dept-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .pw-dept-name { font-size:14px; font-weight:700; }
+    .pw-dept-notes { width:100%; margin-top:8px; padding:6px 10px; border:1.5px solid var(--border); border-radius:var(--radius); font-size:12px; font-family:inherit; resize:none; min-height:50px; }
+    .pw-dept-notes:focus { outline:none; border-color:var(--teal); }
+    .pw-dept-date { font-size:11px; color:var(--muted); margin-top:6px; }
+    .pw-risk-el { background:#fee2e2; color:#991b1b; }
+    .pw-risk-mod { background:#fef9c3; color:#713f12; }
+    .pw-risk-low { background:#dcfce7; color:#166534; }
+    .pw-sanctions-card { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; }
+    .pw-sanctions-card h4 { font-size:13px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+    .pw-status-ok { background:#dcfce7; color:#166534; font-size:10px; font-weight:700; padding:2px 9px; border-radius:10px; }
+    .pw-status-watch { background:#fef9c3; color:#713f12; font-size:10px; font-weight:700; padding:2px 9px; border-radius:10px; }
+    .pw-tab-pane { display:none; }
+    .pw-tab-pane.active { display:block; }
+    .pw-source-name { font-weight:600; }
+    .pw-source-url { font-size:11px; color:var(--muted); font-family:monospace; }
   </style>
 </head>
 <body>
@@ -750,6 +797,11 @@
     </button>
     <button class="nav-item" data-panel="crisis" onclick="switchPanel('crisis', this)">
       <span class="nav-item__icon">🚨</span> Crisis Comms
+    </button>
+
+    <div class="sidebar-tag" style="margin-top:8px">Intelligence</div>
+    <button class="nav-item" data-panel="policywatch" onclick="switchPanel('policywatch', this)">
+      <span class="nav-item__icon">🌍</span> Policy &amp; Risk Watch
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Links</div>
@@ -1464,6 +1516,181 @@
     </div>
   </div>
 
+  <!-- ══ PANEL: Policy & Risk Watch ══ -->
+  <div id="panel-policywatch" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Policy &amp; Risk Watch</div>
+        <div class="panel-sub">Board-level monitoring of government, regulatory, and security developments affecting CAMINO operations in Honduras.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="addPolicyToAgenda()">📋 Add to Board Agenda</button>
+        <button class="btn btn-primary btn-sm" onclick="generatePolicySummary()">📄 Generate Summary</button>
+      </div>
+    </div>
+
+    <!-- Quarterly review prompt -->
+    <div id="pwReviewBanner" class="grant-qr-banner" style="display:none">
+      <span id="pwReviewBannerText">⚠️ Policy &amp; Risk Review overdue — last review was more than 85 days ago.</span>
+      <button class="btn btn-sm btn-amber" onclick="markPolicyReviewed()">Mark Reviewed</button>
+    </div>
+
+    <!-- Overview tiles -->
+    <div class="pw-overview-grid" id="pwOverviewGrid"></div>
+
+    <!-- Review bar -->
+    <div class="pw-review-bar">
+      <span id="pwLastReviewLabel">Last Board Review: <strong>June 15, 2026</strong> · Recommended cadence: Quarterly</span>
+      <button class="btn btn-sm btn-primary" onclick="markPolicyReviewed()">✓ Mark Reviewed</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="panel-tabs">
+      <button class="panel-tab-btn active" onclick="setPWTab('us')">🇺🇸 US Government</button>
+      <button class="panel-tab-btn" onclick="setPWTab('hn')">🇭🇳 Honduras &amp; NGO Law</button>
+      <button class="panel-tab-btn" onclick="setPWTab('regional')">🗺️ Regional Security</button>
+      <button class="panel-tab-btn" onclick="setPWTab('funding')">💰 Funding &amp; Sanctions</button>
+    </div>
+
+    <!-- Tab: US Government -->
+    <div class="pw-tab-pane active" id="pw-tab-us">
+      <div class="card">
+        <div class="card-title">🇺🇸 US Government Sources</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Key US government sources relevant to CAMINO's operations, travel safety, and 501(c)(3) compliance. Review before each trip and quarterly for regulatory changes.</p>
+        <div style="overflow-x:auto">
+          <table class="pw-source-table" id="pwSourceTableUS"></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Honduras & NGO Law -->
+    <div class="pw-tab-pane" id="pw-tab-hn">
+      <!-- NGO Law Status Card -->
+      <div class="pw-ngo-card">
+        <div class="pw-ngo-card-title">⚖️ Honduras NGO Regulatory Status</div>
+        <div class="pw-ngo-kv">
+          <span>Current law</span>
+          <span>Ley de Organizaciones No Gubernamentales (1990, amended 2011)</span>
+        </div>
+        <div class="pw-ngo-kv">
+          <span>Foreign funding restrictions</span>
+          <span><span class="pw-status-ok">No active restrictions</span> as of June 2026 — monitoring</span>
+        </div>
+        <div class="pw-ngo-kv">
+          <span>CAMINO ONG registration</span>
+          <span id="pwONGStatus"><span class="pw-status-ok">Active</span> · Registered with SRE</span>
+        </div>
+        <div class="pw-ngo-kv">
+          <span>Last renewed</span>
+          <span id="pwONGRenewed">March 2025</span>
+        </div>
+        <div class="pw-ngo-kv">
+          <span>Renewal due</span>
+          <span id="pwONGDue"><strong style="color:var(--amber)">March 2026</strong> — <em>verify with SRE</em></span>
+        </div>
+        <div class="pw-ngo-kv">
+          <span>Required to operate in Honduras</span>
+          <span>Yes — foreign NGOs must register with SRE (Secretaría de Relaciones Exteriores)</span>
+        </div>
+        <div class="pw-ngo-kv">
+          <span>Registration authority</span>
+          <span><a href="https://sre.gob.hn" target="_blank" style="color:var(--teal)">sre.gob.hn ↗</a></span>
+        </div>
+        <div class="pw-nicaragua-note">
+          <strong>⚠️ Regional Watch — Nicaragua precedent:</strong> Nicaragua's <em>Ley Especial de Control de las Organizaciones sin Fines de Lucro</em> (Law 1040, 2020) resulted in the forced dissolution of 3,000+ NGOs and expulsion of international faith-based organizations. Honduras has not enacted equivalent legislation, but similar bills have been introduced in the Honduran Congress. The board should review this risk annually and maintain good standing with Honduran authorities.
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn btn-ghost btn-sm" onclick="window.open('https://gobiernotransparente.gob.hn','_blank')">View Honduras ONG Registry ↗</button>
+        </div>
+      </div>
+
+      <!-- Honduran sources table -->
+      <div class="card">
+        <div class="card-title">🇭🇳 Honduran Government Sources</div>
+        <div style="overflow-x:auto">
+          <table class="pw-source-table" id="pwSourceTableHN"></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Regional Security -->
+    <div class="pw-tab-pane" id="pw-tab-regional">
+      <!-- Department map card -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">🗺️ Honduras Department Security Assessment</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Staff-maintained assessment of key departments. Update after each security review or significant incident. This is CAMINO's internal read — always cross-reference with State Dept advisory.</p>
+        <div class="pw-dept-grid" id="pwDeptGrid"></div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="saveDeptAssessments()">Save Assessments</button>
+          <span style="font-size:11px;color:var(--muted);align-self:center" id="pwDeptSaved"></span>
+        </div>
+      </div>
+
+      <!-- Regional sources table -->
+      <div class="card">
+        <div class="card-title">📰 Regional Security &amp; Civil Society Sources</div>
+        <div style="overflow-x:auto">
+          <table class="pw-source-table" id="pwSourceTableRegional"></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Funding & Sanctions -->
+    <div class="pw-tab-pane" id="pw-tab-funding">
+      <div class="pw-sanctions-card">
+        <h4>🏦 OFAC Sanctions Check</h4>
+        <p style="font-size:13px;margin-bottom:10px">Honduras is <strong>not</strong> on any US Treasury OFAC sanctions list. Wire transfers to Honduras are permitted for registered nonprofits. Last verified: <strong id="pwOFACDate">June 15, 2026</strong>.</p>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <span class="pw-status-ok">✅ Honduras — Not Sanctioned</span>
+          <button class="btn btn-ghost btn-sm" onclick="window.open('https://home.treasury.gov/policy-issues/office-of-foreign-assets-control-sanctions-programs-and-country-information','_blank')">Verify on OFAC ↗</button>
+          <button class="btn btn-ghost btn-sm" onclick="logOFACVerification()">Log Verification</button>
+        </div>
+      </div>
+
+      <div class="pw-sanctions-card">
+        <h4>🏧 AML / KYC — International Wire Transfers</h4>
+        <p style="font-size:13px;margin-bottom:10px">International wire transfers from the US to Honduras require documentation. CAMINO should maintain transfer records showing: recipient name &amp; bank, purpose of funds, authorization (board minute or budget line), and amount in USD.</p>
+        <div class="form-group" style="margin-bottom:0">
+          <label for="pwAMLNotes">Internal notes</label>
+          <textarea id="pwAMLNotes" rows="2" placeholder="e.g. Transfers go to Seiny Somerville personal account at Banco Atlántida — document each transfer with a memo referencing the approved budget line."></textarea>
+        </div>
+      </div>
+
+      <div class="pw-sanctions-card">
+        <h4>🌐 Honduras Foreign Funding Law</h4>
+        <p style="font-size:13px;margin-bottom:10px">No current restrictions on registered NGOs receiving foreign donations in Honduras as of June 2026. Registered NGOs with SRE may receive international funds. Monitor for proposed legislation.</p>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+          <span class="pw-status-ok">No active restrictions</span>
+          <span class="pw-status-watch">⚠️ Monitor — legislative proposals pending</span>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label for="pwFundingNotes">Notes</label>
+          <textarea id="pwFundingNotes" rows="2" placeholder="Add notes on recent legislative developments…"></textarea>
+        </div>
+      </div>
+
+      <div class="pw-sanctions-card">
+        <h4>📋 IRS Schedule F Threshold</h4>
+        <p style="font-size:13px;margin-bottom:10px">CAMINO must file <strong>Schedule F (Form 990)</strong> if total foreign expenditures exceed <strong>$10,000/year</strong>. Given the home-construction program (~$5,500/home), this threshold is likely met. Ensure Schedule F is included with each 990 filing.</p>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div class="form-group" style="margin-bottom:0;min-width:180px">
+            <label for="pwScheduleFEstimate">Current year foreign spend estimate ($)</label>
+            <input type="number" id="pwScheduleFEstimate" placeholder="e.g. 48000" value="48000" />
+          </div>
+          <div style="font-size:13px;color:var(--muted);align-self:flex-end;padding-bottom:2px">→ <strong style="color:var(--red)">Schedule F filing required</strong> (exceeds $10K threshold)</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="saveFundingNotes()" style="margin-top:10px">Save Notes</button>
+        <button class="btn btn-ghost btn-sm" onclick="window.open('https://www.irs.gov/forms-pubs/about-schedule-f-form-990','_blank')">IRS Schedule F Info ↗</button>
+      </div>
+    </div>
+
+    <!-- Review log -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-title">📋 Policy Review Log</div>
+      <div id="pwReviewLog"><div style="font-size:13px;color:var(--muted);text-align:center;padding:20px">No reviews recorded yet.</div></div>
+    </div>
+  </div>
+
 </main>
 
 <!-- ══════════════════ MODAL: Post ══════════════════ -->
@@ -1951,6 +2178,7 @@ const PANEL_TITLES = {
   grants:     'Grant Management',
   comms:      'Communication Plan',
   crisis:     'Crisis Communications',
+  policywatch: 'Policy & Risk Watch',
 };
 
 function switchPanel(id, el) {
@@ -1969,6 +2197,7 @@ function switchPanel(id, el) {
   if (id === 'grants')     renderGrantsPanel();
   if (id === 'comms')      renderCommsPanel();
   if (id === 'crisis')     renderCrisisPanel();
+  if (id === 'policywatch') renderPolicyWatch();
 }
 
 // ── Toast ──
@@ -5745,6 +5974,374 @@ function downloadTemplate(textareaId, filename) {
   a.href = URL.createObjectURL(blob);
   a.download = filename.replace(/[^a-z0-9\-]/gi, '-').toLowerCase() + '.txt';
   a.click();
+}
+
+// ═══════════════════════ POLICY & RISK WATCH ═══════════════════════
+
+const PW_SOURCES_US = [
+  { id:'pw_us_1', name:'State Dept Travel Advisory — Honduras', url:'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/honduras-travel-advisory.html', relevance:'critical', lastChecked:'2026-06-15', status:'Level 2 — Exercise Increased Caution', notes:'Review before every trip departure' },
+  { id:'pw_us_2', name:'US Embassy Tegucigalpa — ACS Alerts', url:'https://hn.usembassy.gov/u-s-citizen-services/', relevance:'critical', lastChecked:'2026-06-15', status:'Active — monitoring alerts', notes:'Security notices for Americans in Honduras' },
+  { id:'pw_us_3', name:'CDC Travel Health — Honduras', url:'https://wwwnc.cdc.gov/travel/destinations/traveler/none/honduras', relevance:'high', lastChecked:'2026-05-01', status:'Routine vaccines recommended', notes:'Check 6 weeks before departure; Zika, malaria prophylaxis for rural areas' },
+  { id:'pw_us_4', name:'USAID Honduras Mission', url:'https://www.usaid.gov/honduras', relevance:'medium', lastChecked:'2026-04-10', status:'Active programs', notes:'Funding priorities affect local partner orgs. Watch for alignment opportunities.' },
+  { id:'pw_us_5', name:'OFAC Sanctions List Search', url:'https://home.treasury.gov/policy-issues/office-of-foreign-assets-control-sanctions-programs-and-country-information', relevance:'medium', lastChecked:'2026-06-15', status:'Honduras not sanctioned', notes:'Verify annually or before large wire transfers' },
+  { id:'pw_us_6', name:'IRS — Schedule F (Form 990)', url:'https://www.irs.gov/forms-pubs/about-schedule-f-form-990', relevance:'medium', lastChecked:'2026-03-01', status:'Current — filing required over $10K', notes:'Track rule changes; CAMINO exceeds threshold — file with every 990' },
+  { id:'pw_us_7', name:'US Congress — Nonprofit Foreign Activity', url:'https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22search%22%3A%22nonprofit+foreign+501c3%22%7D', relevance:'medium', lastChecked:'2026-06-01', status:'No pending restrictive bills', notes:'Monitor for proposed 501(c)(3) foreign activity restrictions' },
+];
+
+const PW_SOURCES_HN = [
+  { id:'pw_hn_1', name:'Honduran Congress (Congreso Nacional)', url:'https://congreso.gob.hn', relevance:'critical', lastChecked:'2026-06-01', status:'In session — monitor', notes:'Watch for NGO restriction legislation, foreign-funding bills' },
+  { id:'pw_hn_2', name:'Honduras La Gaceta (Official Gazette)', url:'https://transparencia.gob.hn', relevance:'critical', lastChecked:'2026-05-15', status:'Active publication', notes:'All enacted laws published here; check for ONG regulatory changes' },
+  { id:'pw_hn_3', name:'Honduras Immigration (DGME)', url:'https://migracion.gob.hn', relevance:'critical', lastChecked:'2026-06-15', status:'90-day tourist entry — US citizens no visa required', notes:'Verify current entry requirements before each trip group departure' },
+  { id:'pw_hn_4', name:'Honduras Foreign Relations (SRE)', url:'https://sre.gob.hn', relevance:'high', lastChecked:'2026-03-10', status:'Active — CAMINO registered', notes:'Handles foreign NGO registration; contact point for ONG renewal' },
+  { id:'pw_hn_5', name:'Honduras ONG Registry (Gobierno Transparente)', url:'https://gobiernotransparente.gob.hn', relevance:'high', lastChecked:'2026-03-10', status:'CAMINO registration active', notes:'Verify annually; registration lapse could affect operational legitimacy' },
+  { id:'pw_hn_6', name:'ATIC Security Alerts', url:'https://atic.gob.hn', relevance:'high', lastChecked:'2026-06-01', status:'Monitor ongoing', notes:'Criminal investigation agency — public alerts on organized crime activity by region' },
+];
+
+const PW_SOURCES_REGIONAL = [
+  { id:'pw_reg_1', name:'InSight Crime — Honduras', url:'https://insightcrime.org/honduras-organized-crime-news/', relevance:'critical', notes:'Organized crime and gang activity analysis by department; essential for trip-area security briefings' },
+  { id:'pw_reg_2', name:'CIVICUS Monitor — Honduras', url:'https://monitor.civicus.org/country/honduras/', relevance:'high', notes:'Civic space rating: currently "Obstructed." Tracks NGO operating environment and press freedom' },
+  { id:'pw_reg_3', name:'Freedom House — Honduras', url:'https://freedomhouse.org/country/honduras', relevance:'high', notes:'Annual Freedom in the World report. Tracks democratic backsliding that affects NGO operations' },
+  { id:'pw_reg_4', name:'Human Rights Watch — Honduras', url:'https://www.hrw.org/americas/honduras', relevance:'medium', notes:'Annual report + ad-hoc alerts. Relevant for understanding community context and donor optics' },
+  { id:'pw_reg_5', name:'ReliefWeb — Honduras', url:'https://reliefweb.int/country/hnd', relevance:'medium', notes:'Humanitarian situation reports, natural disaster alerts, flooding/hurricane risk updates' },
+  { id:'pw_reg_6', name:'Crisis Group — Central America', url:'https://www.crisisgroup.org/latin-america-caribbean/central-america', relevance:'medium', notes:'Regional stability analysis — useful for board-level risk discussion' },
+];
+
+const PW_DEPT_DEFAULT = [
+  { id:'dept_cortes', name:'Cortés', city:'San Pedro Sula, Choloma', risk:'elevated', emoji:'⚠️', notes:'Exercise caution in certain urban areas. SPS homicide rate elevated. Rural/church areas generally safer for teams.', lastUpdated:'2026-06-15' },
+  { id:'dept_comayagua', name:'Comayagua', city:'Comayagua city, La Paz', risk:'moderate', emoji:'🟡', notes:'Generally safe for mission trips. Central valley region with established church networks. Standard urban precautions apply.', lastUpdated:'2026-06-15' },
+  { id:'dept_francisco', name:'Francisco Morazán', city:'Tegucigalpa, Amarateca', risk:'elevated', emoji:'⚠️', notes:'Capital city — elevated urban caution. Avoid driving after dark. Airport transit is safe; minimize city-center time.', lastUpdated:'2026-06-15' },
+  { id:'dept_atlantida', name:'Atlántida', city:'La Ceiba, Tela', risk:'lower', emoji:'🟢', notes:'Coastal region with lower risk profile. Popular for mission groups. Normal tourist-area precautions.', lastUpdated:'2026-06-15' },
+  { id:'dept_colon', name:'Colón', city:'Trujillo, Garifuna coast', risk:'moderate', emoji:'🟡', notes:'Moderate risk. Trujillo and Garifuna communities generally safe. Remote roads — travel in daylight, with local guide.', lastUpdated:'2026-06-15' },
+  { id:'dept_copan', name:'Copán', city:'Santa Rosa de Copán, Copán Ruinas', risk:'lower', emoji:'🟢', notes:'Western highlands — lower risk. Copán Ruinas is tourist-friendly. Good access via Guatemalan border region.', lastUpdated:'2026-06-15' },
+];
+
+const PW_DEFAULT_REVIEW = { date: '2026-06-15', reviewer: 'Walker Somerville', notes: 'Annual risk review completed. State Dept level 2 advisory unchanged. ONG registration status confirmed with SRE. Nicaragua precedent discussed at board meeting.' };
+
+function renderPolicyWatch() {
+  const stored = JSON.parse(localStorage.getItem('camino_policy_data') || '{}');
+
+  // Quarterly review banner check
+  const reviews = JSON.parse(localStorage.getItem('camino_policy_reviews') || '[]');
+  const allReviews = reviews.length ? reviews : [PW_DEFAULT_REVIEW];
+  const lastReview = allReviews[0];
+  const daysSince = Math.floor((new Date('2026-06-20') - new Date(lastReview.date)) / 86400000);
+  const banner = document.getElementById('pwReviewBanner');
+  if (daysSince > 85) {
+    banner.style.display = 'flex';
+    document.getElementById('pwReviewBannerText').textContent = `⚠️ Policy & Risk Review due — last review was ${daysSince} days ago (${lastReview.date}).`;
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Last review label
+  document.getElementById('pwLastReviewLabel').innerHTML =
+    `Last Board Review: <strong>${lastReview.date}</strong> by ${lastReview.reviewer} &nbsp;·&nbsp; Recommended cadence: Quarterly`;
+
+  // Overview tiles
+  document.getElementById('pwOverviewGrid').innerHTML = `
+    <div class="pw-overview-tile pw-moderate">
+      <div class="pw-tile-label">🇺🇸 US Travel Advisory</div>
+      <div class="pw-tile-val">Level 2</div>
+      <div class="pw-tile-sub">Exercise Increased Caution</div>
+    </div>
+    <div class="pw-overview-tile pw-good">
+      <div class="pw-tile-label">🇭🇳 Honduras NGO Status</div>
+      <div class="pw-tile-val">Active</div>
+      <div class="pw-tile-sub">Monitoring regulatory environment</div>
+    </div>
+    <div class="pw-overview-tile pw-moderate">
+      <div class="pw-tile-label">🌐 Foreign Funding Risk</div>
+      <div class="pw-tile-val">Moderate</div>
+      <div class="pw-tile-sub">Tracking pending legislation</div>
+    </div>
+    <div class="pw-overview-tile pw-good">
+      <div class="pw-tile-label">🏦 OFAC / Sanctions</div>
+      <div class="pw-tile-val">Clear</div>
+      <div class="pw-tile-sub">Honduras not sanctioned</div>
+    </div>
+    <div class="pw-overview-tile ${daysSince > 85 ? 'pw-critical' : 'pw-good'}">
+      <div class="pw-tile-label">📋 Last Review</div>
+      <div class="pw-tile-val">${daysSince}d ago</div>
+      <div class="pw-tile-sub">${lastReview.date}</div>
+    </div>
+  `;
+
+  // Render US sources table
+  renderPWSourceTable('pwSourceTableUS', PW_SOURCES_US, stored);
+  // Render HN sources table
+  renderPWSourceTable('pwSourceTableHN', PW_SOURCES_HN, stored);
+  // Render Regional sources table
+  renderPWSourceTable('pwSourceTableRegional', PW_SOURCES_REGIONAL, stored, true);
+
+  // Department grid
+  const depts = JSON.parse(localStorage.getItem('camino_dept_assessments') || 'null') || PW_DEPT_DEFAULT;
+  renderDeptGrid(depts);
+
+  // Funding notes
+  const fundingData = JSON.parse(localStorage.getItem('camino_policy_funding') || '{}');
+  if (document.getElementById('pwAMLNotes')) document.getElementById('pwAMLNotes').value = fundingData.aml || '';
+  if (document.getElementById('pwFundingNotes')) document.getElementById('pwFundingNotes').value = fundingData.foreign || '';
+  if (document.getElementById('pwScheduleFEstimate')) document.getElementById('pwScheduleFEstimate').value = fundingData.scheduleF || 48000;
+
+  // Review log
+  renderPWReviewLog(allReviews);
+}
+
+function renderPWSourceTable(tableId, sources, stored, noUrl) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const urlCol = !noUrl;
+  t.innerHTML = `<thead><tr>
+    <th>Source</th>
+    ${urlCol ? '<th>URL</th>' : ''}
+    <th>Relevance</th>
+    <th>Last Checked</th>
+    <th>Status</th>
+    <th>Notes</th>
+    <th>Actions</th>
+  </tr></thead><tbody>${sources.map(s => {
+    const saved = stored[s.id] || {};
+    const checked = saved.lastChecked || s.lastChecked || '—';
+    const status = saved.status || s.status || '';
+    const notes = saved.notes || s.notes || '';
+    const relLabel = s.relevance === 'critical' ? '🔴 Critical' : s.relevance === 'high' ? '🟠 High' : '🟡 Medium';
+    const relClass = s.relevance === 'critical' ? 'rel-critical' : s.relevance === 'high' ? 'rel-high' : 'rel-medium';
+    return `<tr>
+      <td>
+        <div class="pw-source-name">${s.name}</div>
+        ${s.url && !urlCol ? `<div class="pw-source-url">${s.url.replace('https://','')}</div>` : ''}
+      </td>
+      ${urlCol ? `<td style="max-width:180px;word-break:break-word"><a href="${s.url}" target="_blank" style="color:var(--teal);font-size:12px">${s.url.replace('https://','').split('/')[0]} ↗</a></td>` : ''}
+      <td><span class="${relClass}">${relLabel}</span></td>
+      <td style="white-space:nowrap;font-size:12px">${checked}</td>
+      <td style="font-size:12px;max-width:140px">${status}</td>
+      <td class="pw-notes-cell" style="min-width:160px"><input type="text" value="${notes.replace(/"/g,'&quot;')}" placeholder="Add notes…" onchange="savePWSourceNote('${s.id}', this.value, '${tableId}')" /></td>
+      <td style="white-space:nowrap">
+        ${s.url ? `<button class="btn btn-ghost btn-sm" onclick="window.open('${s.url}','_blank')">Open ↗</button>` : ''}
+        <button class="btn btn-ghost btn-sm" onclick="logPWSourceReview('${s.id}')" style="margin-top:4px">Log Review</button>
+      </td>
+    </tr>`;
+  }).join('')}</tbody>`;
+}
+
+function renderDeptGrid(depts) {
+  const grid = document.getElementById('pwDeptGrid');
+  if (!grid) return;
+  grid.innerHTML = depts.map(d => {
+    const riskClass = d.risk === 'elevated' ? 'pw-risk-el' : d.risk === 'lower' ? 'pw-risk-low' : 'pw-risk-mod';
+    const riskLabel = d.risk === 'elevated' ? '⚠️ Elevated' : d.risk === 'lower' ? '🟢 Lower Risk' : '🟡 Moderate';
+    return `<div class="pw-dept-card">
+      <div class="pw-dept-header">
+        <span style="font-size:20px">${d.emoji}</span>
+        <div>
+          <div class="pw-dept-name">${d.name}</div>
+          <div style="font-size:11px;color:var(--muted)">${d.city}</div>
+        </div>
+        <span class="status-pill ${riskClass}" style="margin-left:auto;font-size:10px">${riskLabel}</span>
+      </div>
+      <div class="form-group" style="margin-bottom:4px">
+        <label style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)">Risk level</label>
+        <select data-dept="${d.id}" class="dept-risk-sel" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:inherit;background:#fff;outline:none">
+          <option value="lower" ${d.risk==='lower'?'selected':''}>🟢 Lower Risk</option>
+          <option value="moderate" ${d.risk==='moderate'?'selected':''}>🟡 Moderate</option>
+          <option value="elevated" ${d.risk==='elevated'?'selected':''}>⚠️ Elevated</option>
+        </select>
+      </div>
+      <textarea class="pw-dept-notes dept-notes-ta" data-dept="${d.id}" rows="2" placeholder="Assessment notes…">${d.notes}</textarea>
+      <div class="pw-dept-date">Last updated: ${d.lastUpdated || '—'}</div>
+    </div>`;
+  }).join('');
+}
+
+function saveDeptAssessments() {
+  const stored = JSON.parse(localStorage.getItem('camino_dept_assessments') || 'null') || JSON.parse(JSON.stringify(PW_DEPT_DEFAULT));
+  document.querySelectorAll('.dept-notes-ta').forEach(ta => {
+    const id = ta.dataset.dept;
+    const d = stored.find(x => x.id === id);
+    if (d) d.notes = ta.value;
+  });
+  document.querySelectorAll('.dept-risk-sel').forEach(sel => {
+    const id = sel.dataset.dept;
+    const d = stored.find(x => x.id === id);
+    if (d) {
+      d.risk = sel.value;
+      d.lastUpdated = '2026-06-20';
+    }
+  });
+  localStorage.setItem('camino_dept_assessments', JSON.stringify(stored));
+  const saved = document.getElementById('pwDeptSaved');
+  if (saved) { saved.textContent = '✓ Saved'; setTimeout(() => { saved.textContent = ''; }, 2000); }
+  toast('Department assessments saved.');
+}
+
+function savePWSourceNote(id, value, tableId) {
+  const stored = JSON.parse(localStorage.getItem('camino_policy_data') || '{}');
+  if (!stored[id]) stored[id] = {};
+  stored[id].notes = value;
+  localStorage.setItem('camino_policy_data', JSON.stringify(stored));
+}
+
+function logPWSourceReview(id) {
+  const stored = JSON.parse(localStorage.getItem('camino_policy_data') || '{}');
+  if (!stored[id]) stored[id] = {};
+  stored[id].lastChecked = '2026-06-20';
+  localStorage.setItem('camino_policy_data', JSON.stringify(stored));
+  toast('Review logged for source.');
+  renderPolicyWatch();
+}
+
+function markPolicyReviewed() {
+  const name = prompt('Board member name completing this review:', 'Walker Somerville');
+  if (!name) return;
+  const notes = prompt('Brief notes for the review log (optional):', 'Quarterly policy & risk review completed. No material changes to report.') || '';
+  const reviews = JSON.parse(localStorage.getItem('camino_policy_reviews') || '[]');
+  reviews.unshift({ date: '2026-06-20', reviewer: name, notes });
+  localStorage.setItem('camino_policy_reviews', JSON.stringify(reviews));
+  toast('Policy review logged.');
+  renderPolicyWatch();
+}
+
+function logOFACVerification() {
+  const stored = JSON.parse(localStorage.getItem('camino_policy_data') || '{}');
+  stored['ofac_verified'] = '2026-06-20';
+  localStorage.setItem('camino_policy_data', JSON.stringify(stored));
+  document.getElementById('pwOFACDate').textContent = '2026-06-20';
+  toast('OFAC verification logged.');
+}
+
+function saveFundingNotes() {
+  const data = {
+    aml: (document.getElementById('pwAMLNotes') || {}).value || '',
+    foreign: (document.getElementById('pwFundingNotes') || {}).value || '',
+    scheduleF: (document.getElementById('pwScheduleFEstimate') || {}).value || 48000,
+  };
+  localStorage.setItem('camino_policy_funding', JSON.stringify(data));
+  toast('Funding notes saved.');
+}
+
+function renderPWReviewLog(reviews) {
+  const log = document.getElementById('pwReviewLog');
+  if (!log) return;
+  if (!reviews.length) {
+    log.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:20px">No reviews recorded yet.</div>';
+    return;
+  }
+  log.innerHTML = reviews.map(r => `
+    <div class="review-log-entry">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:6px">
+        <span style="font-size:13px;font-weight:700">📋 ${r.date}</span>
+        <span style="font-size:12px;color:var(--muted)">Reviewed by: ${r.reviewer}</span>
+      </div>
+      <div style="font-size:12px;color:var(--text);line-height:1.5">${r.notes || 'No notes recorded.'}</div>
+    </div>
+  `).join('');
+}
+
+function setPWTab(tabId) {
+  document.querySelectorAll('#panel-policywatch .panel-tab-btn').forEach(b => {
+    const target = b.textContent.toLowerCase().includes('us gov') || b.textContent.includes('🇺🇸') ? 'us'
+      : b.textContent.includes('🇭🇳') ? 'hn'
+      : b.textContent.includes('🗺️') ? 'regional'
+      : 'funding';
+    b.classList.toggle('active', target === tabId);
+  });
+  document.querySelectorAll('.pw-tab-pane').forEach(p => p.classList.toggle('active', p.id === 'pw-tab-' + tabId));
+}
+
+function addPolicyToAgenda() {
+  const meetings = JSON.parse(localStorage.getItem('camino_meetings') || '[]');
+  const next = meetings.find(m => m.status === 'Draft') || meetings[0];
+  if (!next) { toast('No upcoming meetings found. Add a meeting in Board Governance first.'); return; }
+  const agendaKey = 'camino_agenda_' + next.id;
+  const agenda = JSON.parse(localStorage.getItem(agendaKey) || '[]');
+  if (!agenda.includes('Policy & Risk Watch Report')) {
+    agenda.push('Policy & Risk Watch Report');
+    localStorage.setItem(agendaKey, JSON.stringify(agenda));
+    toast(`"Policy & Risk Watch Report" added to agenda for ${next.date} meeting.`);
+  } else {
+    toast('Already on agenda for the next meeting.');
+  }
+}
+
+function generatePolicySummary() {
+  const reviews = JSON.parse(localStorage.getItem('camino_policy_reviews') || '[]');
+  const allReviews = reviews.length ? reviews : [PW_DEFAULT_REVIEW];
+  const lastReview = allReviews[0];
+  const depts = JSON.parse(localStorage.getItem('camino_dept_assessments') || 'null') || PW_DEPT_DEFAULT;
+  const elevated = depts.filter(d => d.risk === 'elevated').map(d => d.name).join(', ');
+  const lower = depts.filter(d => d.risk === 'lower').map(d => d.name).join(', ');
+
+  const summary = `CAMINO HONDURAS — POLICY & RISK WATCH SUMMARY
+Prepared for Board Review | Date: June 20, 2026
+Last Formal Review: ${lastReview.date} by ${lastReview.reviewer}
+============================================================
+
+EXECUTIVE RISK OVERVIEW
+• US State Dept Travel Advisory — Honduras: Level 2 (Exercise Increased Caution)
+• Honduras NGO Operating Status: Active — CAMINO ONG registration current with SRE
+• Foreign Funding Risk: Moderate — no active restrictions; monitoring pending legislation
+• OFAC / US Sanctions: Honduras not sanctioned — transfers permitted for registered nonprofits
+• Schedule F Filing: Required — CAMINO foreign expenditures exceed $10,000/year threshold
+
+US GOVERNMENT SOURCES — KEY UPDATES
+• State Dept Travel Advisory: Level 2 unchanged. Review before each trip departure.
+• US Embassy ACS Alerts: No active emergency alerts as of last check (June 2026).
+• CDC Travel Health: Routine vaccines + Zika/malaria precautions for rural areas.
+• IRS Schedule F: No rule changes. Include with 990 filing annually.
+• OFAC: Honduras remains clear. Last verified June 15, 2026.
+
+HONDURAS REGULATORY ENVIRONMENT
+• Current NGO Law: Ley de Organizaciones No Gubernamentales (1990, amended 2011)
+• Foreign funding restrictions: None currently active for registered NGOs
+• ONG Registration: Active with SRE — verify renewal annually each March
+• ⚠️ WATCH: Legislative proposals modeled on Nicaragua's Law 1040 have been
+  introduced in the Honduran Congress. No action as of June 2026, but board
+  should monitor annually. Nicaragua expelled 3,000+ NGOs under Law 1040 (2020).
+
+REGIONAL SECURITY — DEPARTMENT ASSESSMENT
+• Elevated risk: ${elevated || 'None'}
+• Moderate: ${depts.filter(d=>d.risk==='moderate').map(d=>d.name).join(', ') || 'None'}
+• Lower risk: ${lower || 'None'}
+• CIVICUS rating: "Obstructed" — civic space restrictions exist; monitor for changes
+• Freedom House: Partial Freedom — democratic institutions under pressure
+
+FUNDING & SANCTIONS
+• Honduras: Not on any OFAC sanctions list
+• Wire transfers: Permitted — maintain documentation for each transfer (purpose, recipient, amount)
+• AML/KYC: Ensure transfer memos reference board-approved budget lines
+• Schedule F: File with Form 990 — estimated foreign spend $48,000/year
+
+RECOMMENDED BOARD ACTIONS
+1. Confirm ONG registration renewal with SRE (due March 2026 — verify current status)
+2. Brief trip leaders on Level 2 advisory and embassy alert subscription
+3. Review department security assessments before each trip departure
+4. Assign board member to monitor Honduran Congress session for NGO bills
+5. Schedule next Policy & Risk Watch review: September 2026
+
+============================================================
+This summary was generated from the CAMINO Admin Policy & Risk Watch dashboard.
+Review quarterly and present to board at scheduled governance review meetings.`;
+
+  const win = window.open('', '_blank');
+  if (!win) { toast('Pop-up blocked — please allow pop-ups for this site.'); return; }
+  win.document.write(`<html><head><title>Policy & Risk Summary — CAMINO Honduras</title>
+  <style>
+    body { font-family: monospace; font-size: 13px; line-height: 1.7; padding: 32px; max-width: 800px; margin: 0 auto; color: #1a1a18; }
+    h1 { font-size: 16px; margin-bottom: 4px; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    .actions { margin-bottom: 20px; display: flex; gap: 10px; }
+    button { padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; font-family: monospace; font-size: 13px; font-weight: 600; }
+    .btn-print { background: #0F6E56; color: #fff; }
+    .btn-copy  { background: #f0f0f0; color: #333; }
+    @media print { .actions { display: none; } }
+  </style></head><body>
+  <div class="actions">
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
+    <button class="btn-copy" onclick="navigator.clipboard.writeText(document.getElementById('summaryText').textContent).then(()=>alert('Copied!'))">📋 Copy Text</button>
+  </div>
+  <pre id="summaryText">${summary.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
+  </body></html>`);
+  win.document.close();
 }
 </script>
 </body>
