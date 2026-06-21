@@ -38,6 +38,22 @@ Warm amber/earth tones with teal accents. Brand color: `#BA7517` (amber). See th
 
 ## Session Log
 
+### 2026-06-20 — Donor comms plan, crisis playbooks, gift log, address fields, preference center
+- What changed:
+  - **admin/index.html**: Communication Plan panel — 4 tabs: This Month (monthly touchpoint dashboard, "Mark contacted" per touchpoint), Cadence Plans (per-tier visual calendar with month dots), Channel Map (11-row × 4-tier physical/email/SMS matrix, Print Mailing Labels for Major donors), Preferences (per-donor channel/frequency/topic grid with Edit modal)
+  - **admin/index.html**: Crisis Communications panel — 6 pre-written playbooks (🔴 Data Breach, 🔴 Cyber Incident, 🟠 Leadership Crisis, 🟠 Financial Crisis, 🟡 In-Field Emergency, 🟡 Natural Disaster). Each has 3–4 audience-targeted templates (board, donor-facing, compliance checklist, etc.) with copy/download. Activate button → crisis log entry + red banner. "Run Crisis Drill" mode. Resolve button.
+  - **admin/index.html**: Per-donor additions in detail view — mailing address (inline edit form, saves to localStorage), comms preferences summary (links to edit modal), gift log (in-kind, stock, planned, matching — date, description, estimated value, notes), communication history (log entry per touchpoint, "Mark contacted" feeds this log)
+  - **admin/index.html**: 3 new modals — Comms Preferences (channels × 5, frequency × 3, topics × 6, opt-out), Gift Log entry, Log Communication (type, date, notes)
+  - **admin/index.html**: "Log communication" button in donor detail now opens real modal instead of stub toast
+  - **communications/preferences.html**: Public self-service preference center — email lookup, channel toggles, frequency tiers, topic checkboxes, CAN-SPAM unsubscribe, URL param pre-fill (`?email=...`)
+- Status: Complete. Committed 0ac272e and pushed to main.
+- Next steps:
+  1. Fix Formspree `YOUR_FORM_ID` in contact.html (broken contact form — #1 priority)
+  2. Add Mailchimp params to newsletter forms (index.html, stories.html)
+  3. Replace placeholder board member names/bios/photos in about/board.html
+  4. Set real WhatsApp group link in trips/jul-2026-culpeper.html
+  5. Wire `?email=` param into Mailchimp/Formspree to pre-fill public preference center
+
 ### 2026-06-20 — Grant Management: dual-jurisdiction, Future status, org profile extensions
 - What changed:
   - **admin/index.html — Compliance dates**: Added Schedule F (Form 990 foreign activities), FBAR (FinCEN 114), Honduras ONG registration as dated entries in the compliance calendar
