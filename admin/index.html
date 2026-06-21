@@ -8733,3 +8733,79 @@ function deleteOpsTask(id) {
   saveOpsTasks(getOpsTasks().filter(t=>t.id!==id));
   renderOpsCalendar();renderOpsTable(); toast('Task deleted.');
 }
+function updatePostNotifyPreview() {
+  const tripId  = document.getElementById('postTripId')?.value;
+  const checked = document.getElementById('postNotifyDonors')?.checked;
+  const preview = document.getElementById('postNotifyPreview');
+  if (!preview) return;
+  if (checked && tripId) {
+    const trip    = (tripsData||[]).find(t => t.id === tripId);
+    const project = trip?.linkedProjectId ? getProjects().find(p => p.id === trip.linkedProjectId) : null;
+    preview.style.display = '';
+    if (project && project.donors.length) {
+      preview.textContent = '📬 Will notify: ' + project.donors.map(d => d.donorName).join(', ') + ' — "' + project.name + '"';
+    } else {
+      preview.style.background = '#fff7ed';
+      preview.style.borderColor = 'var(--amber)';
+      preview.style.color = 'var(--amber-dark)';
+      preview.textContent = '⚠️ This trip has no linked project with donors. Link a project via Mission Trips first.';
+    }
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CRM — PROJECT STEWARDSHIP SUMMARY
+// ═══════════════════════════════════════════════════════════════════
+
+function buildProjectUpdatesSummary() {
+  const active = getProjects().filter(p => p.status !== 'Complete');
+  if (!active.length) return '';
+  const notifs = getDonorNotifications();
+  const rows = active.map(p => {
+    const sent    = notifs.filter(n => n.projectId === p.id && n.status === 'Sent').sort((a,b) => b.createdAt.localeCompare(a.createdAt))[0];
+    const next    = notifs.filter(n => n.projectId === p.id && n.status === 'Pending').sort((a,b) => a.scheduledDate.localeCompare(b.scheduledDate))[0];
+    return `
+    <div class="proj-update-row">
+      <div class="proj-update-dot"></div>
+      <div class="proj-update-info">
+        <strong>${escHtml(p.name)}</strong> <span class="proj-status-pill ps-${escHtml(p.status)}" style="font-size:9px">${escHtml(p.status)}</span><br>
+        <span style="color:var(--muted)">Last update sent: ${sent ? escHtml(sent.scheduledDate) : 'None yet'}</span>
+        &nbsp;·&nbsp;
+        <span style="color:${next?'var(--amber-dark)':'var(--teal)'};font-weight:600">${next ? '📬 Next: ' + escHtml(next.scheduledDate) : '✓ Queue clear'}</span>
+      </div>
+    </div>`;
+  }).join('');
+  return `
+  <div style="border-top:1px solid #fde68a;padding-top:12px;margin-top:12px">
+    <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">🏗️ Active Project Stewardship</div>
+    <div class="proj-update-section">
+      <h5>Project Updates</h5>
+      ${rows}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SEED: Wire July 2026 Culpeper trip → proj_001 on first load
+// ═══════════════════════════════════════════════════════════════════
+(function seedCulpeperLink() {
+  try {
+    const raw = localStorage.getItem('camino_trips');
+    if (!raw) return;
+    const trips = JSON.parse(raw);
+    let changed = false;
+    trips.forEach(t => {
+      if ((t.id === 'culpeper-jul-2026' || (t.name||'').toLowerCase().includes('culpeper')) && !t.linkedProjectId) {
+        t.linkedProjectId = 'proj_001';
+        changed = true;
+      }
+    });
+    if (changed) localStorage.setItem('camino_trips', JSON.stringify(trips));
+  } catch {}
+})();
+
+</script>
+</body>
+</html>
