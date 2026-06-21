@@ -855,6 +855,58 @@
     .medfac-meta{font-size:12px;color:var(--muted);line-height:1.5}
     .trip-health-card{background:#fffbeb;border:2px solid var(--amber);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:20px}
     .trip-health-title{font-size:14px;font-weight:700;color:var(--amber-dark);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+
+    /* ══ PROJECT REGISTRY ══ */
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 12px; transition: border-color .15s; }
+    .project-card:hover { border-color: var(--teal); }
+    .project-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .project-card__name { font-size: 15px; font-weight: 700; }
+    .project-card__meta { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+    .project-type-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .5px; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+    .pt-HouseBuild    { background: #fef9c3; color: #854d0e; }
+    .pt-WaterWell     { background: #e0f2fe; color: #0369a1; }
+    .pt-School        { background: #f0fdf4; color: #166534; }
+    .pt-MedicalSupply { background: #fee2e2; color: #991b1b; }
+    .pt-CommunityCenter { background: #f3e8ff; color: #7c3aed; }
+    .pt-Other         { background: #f3f4f6; color: #6b7280; }
+    .proj-status-pill { display:inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 3px 9px; border-radius: 20px; }
+    .ps-Planning  { background: #f0f0f0; color: var(--muted); }
+    .ps-Active    { background: var(--teal-light); color: var(--teal); }
+    .ps-Complete  { background: #e8fce8; color: #166534; }
+    .project-funding-bar { margin: 10px 0 6px; }
+    .funding-bar-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+    .funding-bar-fill { height: 100%; border-radius: 3px; background: var(--teal); transition: width .4s; }
+    .project-donors-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+    .project-donor-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--amber-light); color: var(--amber-dark); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; border: 1px solid #fde68a; }
+    /* ══ NOTIFICATION QUEUE ══ */
+    .notif-queue-card { background: var(--surface); border: 1.5px solid var(--border); border-left: 4px solid var(--amber); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 10px; }
+    .notif-queue-card.nq-sent    { border-left-color: #22c55e; opacity: .8; }
+    .notif-queue-card.nq-skipped { border-left-color: #9ca3af; opacity: .65; }
+    .nq-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+    .nq-donor { font-size: 14px; font-weight: 700; }
+    .nq-project { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .nq-trigger { font-size: 11px; color: var(--muted); font-style: italic; }
+    .nq-message-preview { font-size: 12px; color: var(--text); background: #f8f8f8; border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 12px; margin: 8px 0; line-height: 1.6; white-space: pre-wrap; font-family: inherit; }
+    .nq-message-edit { width: 100%; font-size: 12px; font-family: inherit; border: 1.5px solid var(--teal); border-radius: var(--radius); padding: 8px 12px; line-height: 1.6; resize: vertical; min-height: 100px; outline: none; box-sizing: border-box; }
+    .nq-status-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+    .nqs-Pending { background: var(--amber-light); color: var(--amber-dark); }
+    .nqs-Sent    { background: #dcfce7; color: #166534; }
+    .nqs-Skipped { background: #f3f4f6; color: #6b7280; }
+    /* ══ MILESTONE SECTION ══ */
+    .milestone-section { background: #f0faf7; border: 1.5px solid var(--teal); border-radius: var(--radius-lg); padding: 16px 20px; margin-top: 16px; }
+    .milestone-section h4 { font-size: 12px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 12px; }
+    .milestone-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .milestone-btn { padding: 7px 14px; border: 1.5px solid var(--teal); border-radius: 20px; background: #fff; font-size: 12px; font-weight: 600; color: var(--teal); cursor: pointer; transition: all .15s; font-family: inherit; }
+    .milestone-btn:hover { background: var(--teal); color: #fff; }
+    .linked-project-banner { display: flex; align-items: center; gap: 10px; background: var(--teal-light); border: 1.5px solid var(--teal); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 12px; flex-wrap: wrap; font-size: 13px; }
+    .lp-name { font-weight: 700; color: var(--teal); }
+    /* ══ PROJECT UPDATES in CRM ══ */
+    .proj-update-section { background: #f0faf7; border: 1px solid #b2dfdb; border-radius: var(--radius); padding: 10px 14px; margin-top: 8px; }
+    .proj-update-section h5 { font-size: 10px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 8px; }
+    .proj-update-row { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 1px solid #d1f0e8; font-size: 12px; }
+    .proj-update-row:last-child { border-bottom: none; }
+    .proj-update-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 4px; }
+    .proj-update-info { flex: 1; line-height: 1.5; color: var(--text); }
   </style>
 </head>
 <body>
@@ -879,6 +931,9 @@
     <div class="sidebar-tag" style="margin-top:8px">Trips</div>
     <button class="nav-item" data-panel="trips" onclick="switchPanel('trips', this)">
       <span class="nav-item__icon">✈️</span> Mission Trips
+    </button>
+    <button class="nav-item" data-panel="projects" onclick="switchPanel('projects', this)">
+      <span class="nav-item__icon">🏗️</span> Projects
     </button>
 
     <div class="sidebar-tag" style="margin-top:8px">Site</div>
@@ -1015,6 +1070,31 @@
       <div style="font-size:12px;color:var(--muted);line-height:1.7">
         <strong>Note:</strong> Edits save to <code>localStorage</code> — they persist in this browser but won't update <code>data/trips.json</code>. When Cloudflare Workers is wired up, save actions will POST to the KV backend.
       </div>
+    </div>
+  </div>
+
+
+  <!-- ══ PANEL: Projects ══ -->
+  <div id="panel-projects" class="panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Project Registry</div>
+        <div class="panel-sub">Track house builds, wells, and community projects — and the donors behind them.</div>
+      </div>
+      <button class="btn btn-primary" onclick="openProjectModal()">+ Add project</button>
+    </div>
+    <div id="projectsList"></div>
+    <div class="card" style="margin-top:28px">
+      <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span>📬 Pending Donor Notifications</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="renderNotificationQueue('all')">All</button>
+          <button class="btn btn-ghost btn-sm" onclick="renderNotificationQueue('Pending')">Pending</button>
+          <button class="btn btn-ghost btn-sm" onclick="renderNotificationQueue('Sent')">Sent</button>
+          <button class="btn btn-ghost btn-sm" onclick="renderNotificationQueue('Skipped')">Skipped</button>
+        </div>
+      </div>
+      <div id="notifQueueList" style="margin-top:12px"></div>
     </div>
   </div>
 
@@ -2012,6 +2092,72 @@
 
 </main>
 
+<!-- ══════════════════ MODAL: Project ══════════════════ -->
+<div class="modal-overlay" id="projectModal">
+  <div class="modal" style="max-width:600px">
+    <button class="modal-close" onclick="closeProjectModal()">×</button>
+    <div class="modal-title" id="projectModalTitle">Add project</div>
+    <div class="form-group">
+      <label for="projName">Project name</label>
+      <input type="text" id="projName" placeholder="e.g. Colonia Suyapa House Build" />
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="projType">Type</label>
+        <select id="projType">
+          <option value="HouseBuild">🏠 House Build</option>
+          <option value="WaterWell">💧 Water Well / Filter</option>
+          <option value="School">🏫 School</option>
+          <option value="MedicalSupply">🩺 Medical Supply</option>
+          <option value="CommunityCenter">🏛️ Community Center</option>
+          <option value="Other">📦 Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="projStatus">Status</label>
+        <select id="projStatus">
+          <option>Planning</option>
+          <option>Active</option>
+          <option>Complete</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="projCommunity">Community name</label>
+        <input type="text" id="projCommunity" placeholder="e.g. Colonia Suyapa" />
+      </div>
+      <div class="form-group">
+        <label for="projRegion">Region / City</label>
+        <input type="text" id="projRegion" placeholder="e.g. Tegucigalpa" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="projEstCompletion">Est. completion date</label>
+        <input type="date" id="projEstCompletion" />
+      </div>
+      <div class="form-group">
+        <label for="projGoal">Funding goal ($)</label>
+        <input type="number" id="projGoal" placeholder="6500" min="0" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Funding donors</label>
+      <div id="projDonorRows"></div>
+      <button class="btn btn-ghost btn-sm" onclick="addProjectDonorRow('',0,'')" style="margin-top:6px">+ Add donor</button>
+    </div>
+    <div class="form-group">
+      <label for="projNotes">Notes</label>
+      <textarea id="projNotes" rows="2" placeholder="Any field notes about the project…"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeProjectModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProject()">Save project</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════════════ MODAL: Post ══════════════════ -->
 <div class="modal-overlay" id="postModal">
   <div class="modal">
@@ -2050,6 +2196,19 @@
         <option>Published</option>
       </select>
     </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Linked Trip (optional)</label>
+        <select id="postTripId"><option value="">— None —</option></select>
+      </div>
+      <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--teal);text-transform:none;letter-spacing:0;margin-bottom:0">
+          <input type="checkbox" id="postNotifyDonors" style="width:16px;height:16px;accent-color:var(--teal)" />
+          Notify linked donors when this posts
+        </label>
+      </div>
+    </div>
+    <div id="postNotifyPreview" style="display:none;background:var(--teal-light);border:1px solid var(--teal);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--teal);margin-bottom:8px"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closePostModal()">Cancel</button>
       <button class="btn btn-primary" onclick="savePost()">Save post</button>
@@ -2104,6 +2263,11 @@
     <div class="form-group">
       <label for="tripWhatsapp">WhatsApp Group Link (optional)</label>
       <input type="url" id="tripWhatsapp" placeholder="https://chat.whatsapp.com/…" />
+    </div>
+    <div class="form-group">
+      <label for="tripLinkedProject">Linked Project (optional)</label>
+      <select id="tripLinkedProject"><option value="">— None —</option></select>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Link this trip to a project to enable donor stewardship notifications.</div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeTripModal()">Cancel</button>
@@ -2624,6 +2788,7 @@
 const PANEL_TITLES = {
   calendar:   'Social Calendar',
   trips:      'Mission Trips',
+  projects:   'Project Registry',
   content:    'Site Pages',
   donations:  'Donations',
   crm:        'Donors & CRM',
@@ -2643,6 +2808,7 @@ function switchPanel(id, el) {
   el.classList.add('active');
   document.getElementById('mainTitle').textContent = PANEL_TITLES[id] || id;
   if (id === 'trips')      renderTrips();
+  if (id === 'projects')    renderProjectsPanel();
   if (id === 'content')    renderPages();
   if (id === 'donations')  renderUTMLinks();
   if (id === 'traveldocs') renderTravelDocs();
@@ -2793,6 +2959,17 @@ function openPostModal(dateStr, editId) {
   document.getElementById('postCaption').value  = '';
   document.getElementById('postImage').value    = '';
   document.getElementById('postStatus').value   = 'Draft';
+  // Populate trip dropdown
+  const ptSel = document.getElementById('postTripId');
+  if (ptSel) {
+    ptSel.innerHTML = '<option value="">— None —</option>' +
+      (tripsData||[]).map(t => `<option value="${escHtml(t.id)}">${escHtml(t.name)}</option>`).join('');
+    ptSel.onchange = updatePostNotifyPreview;
+  }
+  const notifCb = document.getElementById('postNotifyDonors');
+  if (notifCb) { notifCb.checked = false; notifCb.onchange = updatePostNotifyPreview; }
+  const previewEl = document.getElementById('postNotifyPreview');
+  if (previewEl) previewEl.style.display = 'none';
   if (editId) {
     const p = getPosts().find(x => x.id === editId);
     if (p) {
@@ -2801,6 +2978,8 @@ function openPostModal(dateStr, editId) {
       document.getElementById('postCaption').value  = p.caption;
       document.getElementById('postImage').value    = p.image || '';
       document.getElementById('postStatus').value   = p.status;
+      if (ptSel)   ptSel.value    = p.tripId || '';
+      if (notifCb) notifCb.checked = p.notifyDonors || false;
     }
   }
   document.getElementById('postModal').classList.add('open');
@@ -2816,13 +2995,16 @@ function savePost() {
   const editId   = document.getElementById('postEditId').value;
   if (!date || !caption) { alert('Date and caption are required.'); return; }
   const posts = getPosts();
+  const postTripId      = document.getElementById('postTripId')?.value || '';
+  const notifyDonors    = document.getElementById('postNotifyDonors')?.checked || false;
   if (editId) {
     const idx = posts.findIndex(p => p.id === editId);
-    if (idx > -1) posts[idx] = { ...posts[idx], date, platform, caption, image, status };
+    if (idx > -1) posts[idx] = { ...posts[idx], date, platform, caption, image, status, tripId: postTripId, notifyDonors };
   } else {
-    posts.push({ id: 'p_' + Date.now(), date, platform, caption, image, status });
+    posts.push({ id: 'p_' + Date.now(), date, platform, caption, image, status, tripId: postTripId, notifyDonors });
   }
   savePosts(posts);
+  if (notifyDonors && postTripId) queuePostNotifications(postTripId, caption, date);
   closePostModal();
   renderCal();
   if (selectedDay) showDayDetail(selectedDay);
@@ -2926,7 +3108,9 @@ async function renderTrips() {
           </div>
           <button class="btn btn-ghost btn-sm" onclick="copyTripURL('${fullSlug}', this)" title="Copy trip URL">📋 Copy URL</button>
           <span class="copy-feedback" id="cf-${tid}">Copied!</span>
+          ${trip.linkedProjectId ? `<span class="proj-status-pill ps-Active" style="font-size:10px;cursor:default">🏗️ ${escHtml(getProjectName(trip.linkedProjectId))}</span>` : ''}
           <button class="btn btn-ghost btn-sm" onclick="toggleTripExpand('${tid}')" id="expandBtn-${tid}">👥 Participants</button>
+          ${trip.linkedProjectId ? `<button class="btn btn-amber btn-sm" onclick="openNotifyDonorsModal('${tid}')">📬 Notify Donors</button>` : ''}
           <button class="btn btn-ghost btn-sm btn-icon" onclick="openTripModal('${tid}')" title="Edit">✏️</button>
           <button class="btn btn-ghost btn-sm btn-icon" onclick="deleteTrip('${tid}')" title="Delete">🗑</button>
         </div>
@@ -2962,6 +3146,13 @@ function openTripModal(editId) {
     if (el) el.value = '';
   });
   document.getElementById('tripStatus').value = 'Planning';
+  // Populate linked project dropdown
+  const lpSel = document.getElementById('tripLinkedProject');
+  if (lpSel) {
+    const projs = getProjects();
+    lpSel.innerHTML = '<option value="">— None —</option>' +
+      projs.map(p => `<option value="${escHtml(p.id)}">${escHtml(p.name)} (${escHtml(p.status)})</option>`).join('');
+  }
   if (editId) {
     const t = tripsData.find(x => x.id === editId);
     if (t) {
@@ -2973,6 +3164,7 @@ function openTripModal(editId) {
       document.getElementById('tripCoordinator').value = t.coordinator || '';
       document.getElementById('tripSlug').value        = t.slug || '';
       document.getElementById('tripWhatsapp').value    = t.whatsappLink || '';
+      if (lpSel) lpSel.value = t.linkedProjectId || '';
     }
   }
   document.getElementById('tripModal').classList.add('open');
@@ -2993,6 +3185,7 @@ function saveTrip() {
     coordinator:   document.getElementById('tripCoordinator').value.trim(),
     slug:          document.getElementById('tripSlug').value.trim(),
     whatsappLink:  document.getElementById('tripWhatsapp').value.trim(),
+    linkedProjectId: document.getElementById('tripLinkedProject')?.value || '',
     participantCount: 0,
   };
   if (editId) {
@@ -3171,6 +3364,7 @@ function renderTripExpandContent(tripId, activeFilter) {
       </div>` : ''}
 
       <div style="border-top:1.5px solid var(--border);margin:20px 0;"></div>
+      ${trip.linkedProjectId ? renderMilestoneSection(tripId, trip) : ""}
       <div id="notifSection-${tripId}">${renderNotifSection(tripId, trip, paxList)}</div>
     </div>`;
 }
@@ -4671,6 +4865,7 @@ function renderPriorityWidget() {
               <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:11px" onclick="event.stopPropagation();openFollowUpModal('${d.id}')">Follow Up</button>
             </div>`).join('')}
         </div>` : ''}
+      ${buildProjectUpdatesSummary()}
     </div>`;
 }
 
@@ -7625,6 +7820,571 @@ function renderPolicyWatch() {
     if (saved.migration && document.getElementById('polMigrationNotes')) document.getElementById('polMigrationNotes').value = saved.migration;
   }, 100);
 }
+
+
+// ═══════════════════════════════════════════════════════════════════
+// PROJECT REGISTRY
+// ═══════════════════════════════════════════════════════════════════
+
+const PROJECT_SEED = [
+  {
+    id: 'proj_001',
+    name: 'Colonia Suyapa House Build',
+    type: 'HouseBuild',
+    community: 'Colonia Suyapa',
+    region: 'Tegucigalpa',
+    estimatedCompletion: '2026-10-31',
+    fundingGoalCents: 650000,
+    fundedCents: 550000,
+    status: 'Active',
+    donors: [
+      { donorId: 'donor_grace_cc',        donorName: 'Grace Community Church',  amountCents: 400000 },
+      { donorId: 'donor_rodriguez_ff',    donorName: 'Rodriguez Family Fund',   amountCents: 150000 },
+    ],
+    notes: 'Primary build for July 2026 Culpeper trip. Family of 5 — mother, father, three children.',
+    lastMilestone: '',
+    lastMilestoneDate: '',
+  },
+  {
+    id: 'proj_002',
+    name: 'El Progreso Water Filter Installation',
+    type: 'WaterWell',
+    community: 'El Progreso',
+    region: 'Yoro',
+    estimatedCompletion: '2027-02-28',
+    fundingGoalCents: 220000,
+    fundedCents: 80000,
+    status: 'Planning',
+    donors: [
+      { donorId: 'donor_smith_family',    donorName: 'Smith Family',            amountCents: 80000  },
+    ],
+    notes: 'Bio-sand filter system for 40 families in underserved neighborhood.',
+    lastMilestone: '',
+    lastMilestoneDate: '',
+  },
+];
+
+function getProjects() {
+  try {
+    const raw = localStorage.getItem('camino_projects');
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  localStorage.setItem('camino_projects', JSON.stringify(PROJECT_SEED));
+  return PROJECT_SEED.map(p => ({ ...p }));
+}
+function saveProjects(list) { localStorage.setItem('camino_projects', JSON.stringify(list)); }
+
+function getProjectName(id) {
+  if (!id) return '';
+  const p = getProjects().find(x => x.id === id);
+  return p ? p.name : id;
+}
+
+function renderProjectsPanel() {
+  renderProjectsList();
+  renderNotificationQueue('all');
+}
+
+function renderProjectsList() {
+  const el = document.getElementById('projectsList');
+  if (!el) return;
+  const projects = getProjects();
+  if (!projects.length) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:8px 0">No projects yet. Click "+ Add project" to create one.</p>';
+    return;
+  }
+  const TYPE_LABELS = { HouseBuild:'🏠 House Build', WaterWell:'💧 Water Well / Filter', School:'🏫 School',
+    MedicalSupply:'🩺 Medical Supply', CommunityCenter:'🏛️ Community Center', Other:'📦 Other' };
+  el.innerHTML = projects.map(p => {
+    const pct        = p.fundingGoalCents > 0 ? Math.min(100, Math.round((p.fundedCents / p.fundingGoalCents) * 100)) : 0;
+    const barColor   = pct >= 100 ? '#22c55e' : 'var(--teal)';
+    const linkedTrips= (tripsData||[]).filter(t => t.linkedProjectId === p.id);
+    const notifs     = getDonorNotifications().filter(n => n.projectId === p.id);
+    const pending    = notifs.filter(n => n.status === 'Pending').length;
+    const typeLabel  = TYPE_LABELS[p.type] || p.type;
+    return `
+    <div class="project-card">
+      <div class="project-card__header">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap">
+            <span class="project-type-badge pt-${escHtml(p.type)}">${typeLabel}</span>
+            <span class="proj-status-pill ps-${escHtml(p.status)}">${escHtml(p.status)}</span>
+            ${pending ? `<span style="font-size:10px;font-weight:700;background:var(--amber-light);color:var(--amber-dark);padding:2px 8px;border-radius:20px">📬 ${pending} pending</span>` : ''}
+          </div>
+          <div class="project-card__name">${escHtml(p.name)}</div>
+          <div class="project-card__meta">${escHtml(p.community)}, ${escHtml(p.region)} &nbsp;·&nbsp; Est. completion: ${escHtml(p.estimatedCompletion||'TBD')}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="openProjectModal('${escHtml(p.id)}')" title="Edit">✏️</button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteProject('${escHtml(p.id)}')" title="Delete">🗑</button>
+        </div>
+      </div>
+      <div class="project-funding-bar">
+        <div class="funding-bar-track"><div class="funding-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)">
+          <span>$${(p.fundedCents/100).toLocaleString()} raised of $${(p.fundingGoalCents/100).toLocaleString()}</span>
+          <span style="font-weight:700;color:${barColor}">${pct}% funded</span>
+        </div>
+      </div>
+      <div class="project-donors-row">
+        <span style="font-size:11px;font-weight:700;color:var(--muted);margin-right:2px">Funded by:</span>
+        ${p.donors.map(d => `<span class="project-donor-chip">💛 ${escHtml(d.donorName)} · $${(d.amountCents/100).toLocaleString()}</span>`).join('')}
+        ${!p.donors.length ? '<span style="font-size:11px;color:var(--muted);font-style:italic">No donors linked yet.</span>' : ''}
+      </div>
+      ${linkedTrips.length ? `<div style="font-size:11px;color:var(--teal);font-weight:600;margin-top:6px">✈️ Linked trips: ${linkedTrips.map(t=>escHtml(t.name)).join(', ')}</div>` : ''}
+      ${p.lastMilestone ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">Last milestone: <strong>${escHtml(p.lastMilestone)}</strong> on ${escHtml(p.lastMilestoneDate)}</div>` : ''}
+      ${p.notes ? `<div style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">${escHtml(p.notes)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+let _editingProjectId = null;
+
+function openProjectModal(editId) {
+  _editingProjectId = editId || null;
+  document.getElementById('projectModalTitle').textContent = editId ? 'Edit project' : 'Add project';
+  ['projName','projCommunity','projRegion','projEstCompletion','projNotes'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('projGoal').value   = '';
+  document.getElementById('projType').value   = 'HouseBuild';
+  document.getElementById('projStatus').value = 'Planning';
+  document.getElementById('projDonorRows').innerHTML = '';
+  if (editId) {
+    const p = getProjects().find(x => x.id === editId);
+    if (p) {
+      document.getElementById('projName').value          = p.name;
+      document.getElementById('projType').value          = p.type;
+      document.getElementById('projCommunity').value     = p.community;
+      document.getElementById('projRegion').value        = p.region;
+      document.getElementById('projStatus').value        = p.status;
+      document.getElementById('projEstCompletion').value = p.estimatedCompletion || '';
+      document.getElementById('projGoal').value          = p.fundingGoalCents > 0 ? (p.fundingGoalCents/100).toFixed(0) : '';
+      document.getElementById('projNotes').value         = p.notes || '';
+      (p.donors || []).forEach(d => addProjectDonorRow(d.donorName, d.amountCents, d.donorId));
+    }
+  }
+  document.getElementById('projectModal').classList.add('open');
+}
+function closeProjectModal() { document.getElementById('projectModal').classList.remove('open'); }
+
+function addProjectDonorRow(name, amountCents, donorId) {
+  const container = document.getElementById('projDonorRows');
+  const rowId = 'pdr_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
+  const div = document.createElement('div');
+  div.id = rowId;
+  div.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px';
+  div.innerHTML = `
+    <input type="text"   placeholder="Donor / org name"  value="${escHtml(name||'')}"  class="proj-donor-name"   style="flex:2;padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit" />
+    <input type="number" placeholder="Amount $"           value="${amountCents>0?(amountCents/100).toFixed(0):''}" class="proj-donor-amount" style="flex:1;padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit" min="0" />
+    <input type="hidden" class="proj-donor-id" value="${escHtml(donorId||'')}"/>
+    <button class="btn btn-ghost btn-sm btn-icon" onclick="document.getElementById('${rowId}').remove()" title="Remove">✕</button>`;
+  container.appendChild(div);
+}
+
+function saveProject() {
+  const name = document.getElementById('projName').value.trim();
+  if (!name) { alert('Project name is required.'); return; }
+  const rows   = document.querySelectorAll('#projDonorRows > div');
+  const donors = [];
+  let totalFunded = 0;
+  rows.forEach(row => {
+    const dn  = row.querySelector('.proj-donor-name')?.value.trim();
+    const da  = parseFloat(row.querySelector('.proj-donor-amount')?.value || 0) || 0;
+    const did = row.querySelector('.proj-donor-id')?.value || ('donor_' + Date.now());
+    if (dn) { donors.push({ donorId: did, donorName: dn, amountCents: Math.round(da*100) }); totalFunded += Math.round(da*100); }
+  });
+  const projects = getProjects();
+  const existing = _editingProjectId ? projects.find(x => x.id === _editingProjectId) : null;
+  const data = {
+    id:                  _editingProjectId || 'proj_' + Date.now(),
+    name,
+    type:                document.getElementById('projType').value,
+    community:           document.getElementById('projCommunity').value.trim(),
+    region:              document.getElementById('projRegion').value.trim(),
+    estimatedCompletion: document.getElementById('projEstCompletion').value,
+    fundingGoalCents:    Math.round(parseFloat(document.getElementById('projGoal').value||0)*100),
+    fundedCents:         totalFunded,
+    status:              document.getElementById('projStatus').value,
+    donors,
+    notes:               document.getElementById('projNotes').value.trim(),
+    lastMilestone:       existing?.lastMilestone || '',
+    lastMilestoneDate:   existing?.lastMilestoneDate || '',
+  };
+  if (_editingProjectId) {
+    const idx = projects.findIndex(x => x.id === _editingProjectId);
+    if (idx > -1) projects[idx] = data; else projects.push(data);
+  } else { projects.push(data); }
+  saveProjects(projects);
+  closeProjectModal();
+  renderProjectsPanel();
+  toast('Project saved.');
+}
+
+function deleteProject(id) {
+  if (!confirm('Delete this project? Linked notifications will remain in the queue.')) return;
+  saveProjects(getProjects().filter(p => p.id !== id));
+  renderProjectsPanel();
+  toast('Project deleted.');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MILESTONE NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════════════
+
+const MILESTONES = [
+  { key: 'foundation', label: '🪨 Foundation Poured'  },
+  { key: 'walls',      label: '🧱 Walls Up'           },
+  { key: 'roof',       label: '🏚️ Roof On'             },
+  { key: 'keys',       label: '🔑 Keys Handed Over'   },
+  { key: 'moved_in',   label: '👨‍👩‍👧 Family Moved In'    },
+];
+
+function renderMilestoneSection(tripId, trip) {
+  const project = getProjects().find(p => p.id === trip.linkedProjectId);
+  if (!project) return '';
+  const pending = getDonorNotifications().filter(n => n.projectId === project.id && n.status === 'Pending').length;
+  return `
+  <div class="milestone-section">
+    <div class="linked-project-banner">
+      <span style="font-size:20px">🏗️</span>
+      <div>
+        <span class="lp-name">${escHtml(project.name)}</span>
+        <span style="font-size:11px;color:var(--teal);margin-left:8px">${escHtml(project.community)}, ${escHtml(project.region)}</span>
+        ${pending ? `<span style="font-size:10px;font-weight:700;background:var(--amber-light);color:var(--amber-dark);padding:2px 8px;border-radius:20px;margin-left:8px">📬 ${pending} notification${pending>1?'s':''} pending</span>` : ''}
+      </div>
+    </div>
+    <h4>🎯 Record a Build Milestone</h4>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Tap a milestone to auto-generate a warm donor notification draft. You can edit before marking as sent.</div>
+    <div class="milestone-btns">
+      ${MILESTONES.map(m => `<button class="milestone-btn" onclick="triggerMilestone('${escHtml(tripId)}','${m.key}','${escHtml(m.label)}','${escHtml(project.id)}')">${m.label}</button>`).join('')}
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">
+      Donors on file: ${project.donors.length ? project.donors.map(d=>`<strong>${escHtml(d.donorName)}</strong>`).join(', ') : '<em>None linked yet</em>'}
+      ${project.lastMilestone ? ` &nbsp;·&nbsp; Last: <strong>${escHtml(project.lastMilestone)}</strong> (${escHtml(project.lastMilestoneDate)})` : ''}
+    </div>
+  </div>`;
+}
+
+function triggerMilestone(tripId, milestoneKey, milestoneLabel, projectId) {
+  const project = getProjects().find(p => p.id === projectId);
+  const trip    = tripsData.find(t => t.id === tripId);
+  if (!project) { toast('Project not found.'); return; }
+  const today = new Date().toISOString().slice(0,10);
+  // Record milestone on project
+  const projects = getProjects();
+  const pidx = projects.findIndex(p => p.id === projectId);
+  if (pidx > -1) { projects[pidx].lastMilestone = milestoneLabel; projects[pidx].lastMilestoneDate = today; saveProjects(projects); }
+  // Queue a notification draft per donor
+  if (!project.donors.length) { toast('No donors linked to this project yet. Add donors in the Projects panel.'); return; }
+  project.donors.forEach(donor => {
+    const msg = buildMilestoneMessage(donor.donorName, project, milestoneLabel, trip);
+    queueDonorNotification({ donorId: donor.donorId, donorName: donor.donorName,
+      projectId: project.id, projectName: project.name,
+      triggerType: 'milestone', triggerTitle: milestoneLabel + ' — ' + project.community,
+      scheduledDate: today, message: msg });
+    console.log('[CAMINO] Queued milestone notification:', { donor: donor.donorName, milestone: milestoneLabel });
+  });
+  toast(project.donors.length + ' donor notification draft' + (project.donors.length!==1?'s':'') + ' created. Review in the Projects panel.');
+  renderTripExpandContent(tripId, 'all');
+}
+
+function buildMilestoneMessage(donorName, project, milestoneLabel, trip) {
+  // Strip emoji prefix for clean prose
+  const clean = milestoneLabel.replace(/^[\u{1F000}-\u{1FFFF}\u{2700}-\u{27BF}️⃣][️⃣]?\s*/gu,'').trim();
+  const tripLine = trip ? trip.name : 'our team in Honduras';
+  return `Dear ${donorName},
+
+We have an exciting update on the ${project.name} — the "${clean}" milestone was reached today by ${tripLine} in ${project.community}.
+
+Your generosity made this moment possible. The family who will call this place home took one step closer to moving in today, and it's because of people like you who chose to invest in something real and lasting.
+
+${project.lastMilestone && project.lastMilestone !== milestoneLabel ? `The last update we shared with you was "${project.lastMilestone.replace(/^[\u{1F000}-\u{1FFFF}\u{2700}-\u{27BF}️⃣][️⃣]?\s*/gu,'').trim()}" — and now we're here.
+
+` : ''}We'll have photos for you soon from ${project.community}, ${project.region}.
+
+Thank you for making this possible. Your gift is not just building walls — it's building a future for a family in Honduras.
+
+With deep gratitude,
+Walker & the CAMINO Team`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DONOR NOTIFICATION QUEUE
+// ═══════════════════════════════════════════════════════════════════
+
+function getDonorNotifications() {
+  try {
+    const raw = localStorage.getItem('camino_donor_notifications');
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return seedDonorNotifications();
+}
+function saveDonorNotifications(list) { localStorage.setItem('camino_donor_notifications', JSON.stringify(list)); }
+
+function seedDonorNotifications() {
+  const seed = [
+    {
+      id: 'dn_seed_001',
+      donorId: 'donor_grace_cc', donorName: 'Grace Community Church',
+      projectId: 'proj_001', projectName: 'Colonia Suyapa House Build',
+      triggerType: 'milestone', triggerTitle: '🪨 Foundation Poured — Colonia Suyapa',
+      scheduledDate: '2026-07-03',
+      message: `Dear Grace Community Church,
+
+We have an exciting update on the Colonia Suyapa House Build — the foundation was poured today by our July Culpeper team on the ground.
+
+Your $4,000 gift helped break ground on this project, and today that investment became concrete — literally. The family of five who will soon call this home watched our team work with grateful eyes.
+
+We'll have photos coming your way from Colonia Suyapa, Tegucigalpa very soon.
+
+Thank you for making this possible. Your gift is not just building walls — it's building a future for a family in Honduras.
+
+With deep gratitude,
+Walker & the CAMINO Team`,
+      status: 'Pending', createdAt: '2026-07-03T18:00:00Z',
+    },
+    {
+      id: 'dn_seed_002',
+      donorId: 'donor_rodriguez_ff', donorName: 'Rodriguez Family Fund',
+      projectId: 'proj_001', projectName: 'Colonia Suyapa House Build',
+      triggerType: 'post', triggerTitle: 'July 3 — Build Day 3 Update (Social Post)',
+      scheduledDate: '2026-07-03',
+      message: `Dear Rodriguez Family Fund,
+
+Day 3 of the build in Colonia Suyapa and the energy on-site is unlike anything we've seen. Your $1,500 contribution is visible in every block being laid, every beam being set.
+
+We posted new photos from the field today and we wanted you to see them with context — because this is your project as much as it is ours. The family checks in each afternoon. The kids run up to the team. It is a privilege to be there.
+
+More updates soon from Tegucigalpa.
+
+With love from Honduras,
+Walker & the CAMINO Team`,
+      status: 'Pending', createdAt: '2026-07-03T19:00:00Z',
+    },
+  ];
+  localStorage.setItem('camino_donor_notifications', JSON.stringify(seed));
+  return seed;
+}
+
+function queueDonorNotification(opts) {
+  const list = getDonorNotifications();
+  list.unshift({
+    id:            'dn_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+    donorId:       opts.donorId,
+    donorName:     opts.donorName,
+    projectId:     opts.projectId,
+    projectName:   opts.projectName,
+    triggerType:   opts.triggerType,
+    triggerTitle:  opts.triggerTitle,
+    scheduledDate: opts.scheduledDate,
+    message:       opts.message,
+    status:        'Pending',
+    createdAt:     new Date().toISOString(),
+  });
+  saveDonorNotifications(list);
+}
+
+function queuePostNotifications(tripId, caption, scheduledDate) {
+  const trip = (tripsData||[]).find(t => t.id === tripId);
+  if (!trip?.linkedProjectId) return;
+  const project = getProjects().find(p => p.id === trip.linkedProjectId);
+  if (!project) return;
+  const preview = caption.length > 140 ? caption.slice(0,140) + '…' : caption;
+  project.donors.forEach(donor => {
+    const msg = `Dear ${donor.donorName},
+
+We wanted to share a field update directly with you from ${project.community}.
+
+The ${trip.name} team has posted new photos and a progress note from the ${project.name} site — and we thought you should see it first. Because this is your project as much as ours.
+
+"${preview}"
+
+Your investment is writing this story. We're grateful every single day for your partnership.
+
+With love from Honduras,
+Walker & the CAMINO Team`;
+    queueDonorNotification({ donorId: donor.donorId, donorName: donor.donorName,
+      projectId: project.id, projectName: project.name,
+      triggerType: 'post', triggerTitle: 'Social post — ' + scheduledDate,
+      scheduledDate, message: msg });
+  });
+  toast('Donor notifications queued for ' + project.donors.length + ' linked donor' + (project.donors.length!==1?'s':'') + '.');
+}
+
+let _notifFilter = 'all';
+
+function renderNotificationQueue(filter) {
+  _notifFilter = filter || _notifFilter;
+  const el = document.getElementById('notifQueueList');
+  if (!el) return;
+  let list = getDonorNotifications();
+  if (_notifFilter !== 'all') list = list.filter(n => n.status === _notifFilter);
+  if (!list.length) {
+    el.innerHTML = `<p style="color:var(--muted);font-size:13px;padding:8px 0">No notifications${_notifFilter !== 'all' ? ' with status "' + _notifFilter + '"' : ''} yet.</p>`;
+    return;
+  }
+  const typeIcon = { milestone: '🎯', post: '📸', manual: '✉️' };
+  el.innerHTML = list.map(n => {
+    const cls = { Pending:'', Sent:' nq-sent', Skipped:' nq-skipped' }[n.status] || '';
+    return `
+    <div class="notif-queue-card${cls}" id="nqc-${escHtml(n.id)}">
+      <div class="nq-header">
+        <div>
+          <div class="nq-donor">${escHtml(n.donorName)}</div>
+          <div class="nq-project">🏗️ ${escHtml(n.projectName)}</div>
+        </div>
+        <span class="nq-status-badge nqs-${escHtml(n.status)}">${escHtml(n.status)}</span>
+      </div>
+      <div class="nq-trigger">${typeIcon[n.triggerType]||'📩'} ${escHtml(n.triggerTitle)} &nbsp;·&nbsp; Send date: <strong>${escHtml(n.scheduledDate)}</strong></div>
+      <div class="nq-message-preview" id="nqprev-${escHtml(n.id)}">${escHtml(n.message)}</div>
+      <textarea class="nq-message-edit" id="nqedit-${escHtml(n.id)}" style="display:none">${escHtml(n.message)}</textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center">
+        ${n.status === 'Pending' ? `
+          <button class="btn btn-primary btn-sm" onclick="markNotifSent('${escHtml(n.id)}')">✅ Mark Sent</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleNotifEdit('${escHtml(n.id)}')">✏️ Edit Message</button>
+          <button class="btn btn-ghost btn-sm" onclick="markNotifSkipped('${escHtml(n.id)}')">⏭ Skip</button>
+        ` : ''}
+        ${n.status === 'Sent'    ? `<span style="font-size:11px;color:#166534;font-weight:600">✔ Sent ${escHtml(n.scheduledDate)}</span>` : ''}
+        ${n.status === 'Skipped' ? `<button class="btn btn-ghost btn-sm" onclick="restoreNotif('${escHtml(n.id)}')">↩ Restore</button>` : ''}
+        <button class="btn btn-ghost btn-sm btn-icon" style="margin-left:auto" onclick="deleteNotif('${escHtml(n.id)}')" title="Delete">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleNotifEdit(id) {
+  const prev = document.getElementById('nqprev-' + id);
+  const edit = document.getElementById('nqedit-' + id);
+  if (!prev || !edit) return;
+  const isEditing = edit.style.display !== 'none';
+  if (isEditing) {
+    const list = getDonorNotifications();
+    const idx  = list.findIndex(n => n.id === id);
+    if (idx > -1) { list[idx].message = edit.value; saveDonorNotifications(list); }
+    prev.textContent   = edit.value;
+    edit.style.display = 'none';
+    prev.style.display = '';
+  } else {
+    edit.style.display = '';
+    prev.style.display = 'none';
+    edit.focus();
+  }
+}
+
+function markNotifSent(id) {
+  const list = getDonorNotifications(), idx = list.findIndex(n => n.id === id);
+  if (idx > -1) { list[idx].status = 'Sent'; saveDonorNotifications(list); }
+  console.log('[CAMINO] Notification marked Sent:', id);
+  renderNotificationQueue(); toast('Notification marked as sent.');
+}
+function markNotifSkipped(id) {
+  const list = getDonorNotifications(), idx = list.findIndex(n => n.id === id);
+  if (idx > -1) { list[idx].status = 'Skipped'; saveDonorNotifications(list); }
+  renderNotificationQueue(); toast('Notification skipped.');
+}
+function restoreNotif(id) {
+  const list = getDonorNotifications(), idx = list.findIndex(n => n.id === id);
+  if (idx > -1) { list[idx].status = 'Pending'; saveDonorNotifications(list); }
+  renderNotificationQueue(); toast('Notification restored to Pending.');
+}
+function deleteNotif(id) {
+  if (!confirm('Delete this notification?')) return;
+  saveDonorNotifications(getDonorNotifications().filter(n => n.id !== id));
+  renderNotificationQueue(); toast('Notification deleted.');
+}
+
+function openNotifyDonorsModal(tripId) {
+  const trip    = (tripsData||[]).find(t => t.id === tripId);
+  const project = trip?.linkedProjectId ? getProjects().find(p => p.id === trip.linkedProjectId) : null;
+  if (!project) { toast('No project linked to this trip. Edit the trip to link one.'); return; }
+  if (!project.donors.length) { toast('No donors are linked to "' + project.name + '" yet. Add them in the Projects panel.'); return; }
+  if (confirm(`Queue update notifications for all ${project.donors.length} donor(s) linked to "${project.name}"?\n\nThis creates editable drafts in the Projects panel — nothing sends until you click "Mark Sent".`)) {
+    const today = new Date().toISOString().slice(0,10);
+    project.donors.forEach(donor => {
+      queueDonorNotification({ donorId: donor.donorId, donorName: donor.donorName,
+        projectId: project.id, projectName: project.name,
+        triggerType: 'manual', triggerTitle: 'Manual update — ' + trip.name,
+        scheduledDate: today,
+        message: buildMilestoneMessage(donor.donorName, project, '📸 Latest Update', trip) });
+    });
+    toast(project.donors.length + ' notification draft' + (project.donors.length!==1?'s':'') + ' created. Review in the Projects panel.');
+  }
+}
+
+function updatePostNotifyPreview() {
+  const tripId  = document.getElementById('postTripId')?.value;
+  const checked = document.getElementById('postNotifyDonors')?.checked;
+  const preview = document.getElementById('postNotifyPreview');
+  if (!preview) return;
+  if (checked && tripId) {
+    const trip    = (tripsData||[]).find(t => t.id === tripId);
+    const project = trip?.linkedProjectId ? getProjects().find(p => p.id === trip.linkedProjectId) : null;
+    preview.style.display = '';
+    if (project && project.donors.length) {
+      preview.textContent = '📬 Will notify: ' + project.donors.map(d => d.donorName).join(', ') + ' — "' + project.name + '"';
+    } else {
+      preview.style.background = '#fff7ed';
+      preview.style.borderColor = 'var(--amber)';
+      preview.style.color = 'var(--amber-dark)';
+      preview.textContent = '⚠️ This trip has no linked project with donors. Link a project via Mission Trips first.';
+    }
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CRM — PROJECT STEWARDSHIP SUMMARY
+// ═══════════════════════════════════════════════════════════════════
+
+function buildProjectUpdatesSummary() {
+  const active = getProjects().filter(p => p.status !== 'Complete');
+  if (!active.length) return '';
+  const notifs = getDonorNotifications();
+  const rows = active.map(p => {
+    const sent    = notifs.filter(n => n.projectId === p.id && n.status === 'Sent').sort((a,b) => b.createdAt.localeCompare(a.createdAt))[0];
+    const next    = notifs.filter(n => n.projectId === p.id && n.status === 'Pending').sort((a,b) => a.scheduledDate.localeCompare(b.scheduledDate))[0];
+    return `
+    <div class="proj-update-row">
+      <div class="proj-update-dot"></div>
+      <div class="proj-update-info">
+        <strong>${escHtml(p.name)}</strong> <span class="proj-status-pill ps-${escHtml(p.status)}" style="font-size:9px">${escHtml(p.status)}</span><br>
+        <span style="color:var(--muted)">Last update sent: ${sent ? escHtml(sent.scheduledDate) : 'None yet'}</span>
+        &nbsp;·&nbsp;
+        <span style="color:${next?'var(--amber-dark)':'var(--teal)'};font-weight:600">${next ? '📬 Next: ' + escHtml(next.scheduledDate) : '✓ Queue clear'}</span>
+      </div>
+    </div>`;
+  }).join('');
+  return `
+  <div style="border-top:1px solid #fde68a;padding-top:12px;margin-top:12px">
+    <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">🏗️ Active Project Stewardship</div>
+    <div class="proj-update-section">
+      <h5>Project Updates</h5>
+      ${rows}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SEED: Wire July 2026 Culpeper trip → proj_001 on first load
+// ═══════════════════════════════════════════════════════════════════
+(function seedCulpeperLink() {
+  try {
+    const raw = localStorage.getItem('camino_trips');
+    if (!raw) return;
+    const trips = JSON.parse(raw);
+    let changed = false;
+    trips.forEach(t => {
+      if ((t.id === 'culpeper-jul-2026' || (t.name||'').toLowerCase().includes('culpeper')) && !t.linkedProjectId) {
+        t.linkedProjectId = 'proj_001';
+        changed = true;
+      }
+    });
+    if (changed) localStorage.setItem('camino_trips', JSON.stringify(trips));
+  } catch {}
+})();
+
 </script>
 </body>
 </html>
