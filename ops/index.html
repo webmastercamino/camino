@@ -602,7 +602,7 @@
 (function() {
   if (sessionStorage.getItem('camino_ops_auth') === 'true') {
     document.getElementById('opsGate').style.display = 'none';
-    document.getElementById('opsApp').style.display  = '';
+    document.getElementById('opsApp').style.display  = 'block';
     initOps();
   }
 })();
@@ -612,7 +612,7 @@ function checkOpsPw() {
   if (pw === 'camino-ops') {
     sessionStorage.setItem('camino_ops_auth', 'true');
     document.getElementById('opsGate').style.display = 'none';
-    document.getElementById('opsApp').style.display  = '';
+    document.getElementById('opsApp').style.display  = 'block';
     initOps();
   } else {
     document.getElementById('opsPwErr').style.display = '';
